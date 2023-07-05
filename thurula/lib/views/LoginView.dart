@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'WelcomeView.dart';
+
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
 
@@ -81,6 +83,17 @@ class _LoginViewState extends State<LoginView> {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     // home page
+                    if (usernameController.text == "admin@gmail.com" &&
+                        passwordController.text == "password") {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => WelcomeView(
+                                  username: usernameController.text)));
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Invalid Credentials')));
+                    }
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Please fill input')),
