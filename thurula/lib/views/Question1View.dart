@@ -24,39 +24,85 @@ class Question1View extends StatelessWidget {
               child: Container(
                 height: 400,
                 color: const Color.fromARGB(255, 220, 104, 145),
-                child: const Center(
-                  child: Text("Are you pregnant?",
-                      style: TextStyle(color: Colors.white, fontSize: 20)),
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 150, 0, 0),
+                    child: Column(
+                      children: [
+                        const Text("Are you pregnant?",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 20)),
+                        Center(
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(100, 30, 20, 0),
+                                child: ElevatedButton(
+                                    style: TextButton.styleFrom(
+                                      // padding: const EdgeInsets.fromLTRB(
+                                      //     100, 10, 100, 10),
+                                      backgroundColor: Colors.white,
+                                      textStyle: const TextStyle(fontSize: 15),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            30), // <-- Radius
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text('YES',
+                                        style: TextStyle(color: Colors.black))),
+                              ),
+                              Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(20, 30, 20, 0),
+                                  child: ElevatedButton(
+                                      style: TextButton.styleFrom(
+                                        // padding: const EdgeInsets.fromLTRB(
+                                        //     100, 10, 100, 10),
+                                        backgroundColor: Colors.white,
+                                        textStyle:
+                                            const TextStyle(fontSize: 15),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              30), // <-- Radius
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text('NO',
+                                          style:
+                                              TextStyle(color: Colors.black)))),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            const Center(
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(40, 20, 40, 0),
-                child: Text("hi",
-                    textAlign: TextAlign.center,
-                    style:
-                        TextStyle(color: Color.fromARGB(255, 220, 104, 145))),
               ),
             ),
             Center(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
+                padding: const EdgeInsets.fromLTRB(180, 60, 0, 0),
                 child: ElevatedButton(
                   style: TextButton.styleFrom(
-                    padding: const EdgeInsets.fromLTRB(100, 10, 100, 10),
+                    padding: const EdgeInsets.fromLTRB(50, 15, 50, 15),
                     foregroundColor: Colors.white,
                     backgroundColor: const Color.fromARGB(255, 88, 119, 161),
                     textStyle:
                         const TextStyle(fontSize: 15, color: Colors.white),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(80), // <-- Radius
+                      borderRadius: BorderRadius.circular(30), // <-- Radius
                     ),
                   ),
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: const Text("Let's get started"),
+                  child: const Text("Next"),
                 ),
               ),
             ),
