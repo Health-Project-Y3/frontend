@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thurula/services/auth/user.dart';
 
 import 'WelcomeView.dart';
 
@@ -80,11 +81,13 @@ class _LoginViewState extends State<LoginView> {
                     borderRadius: BorderRadius.circular(30), // <-- Radius
                   ),
                 ),
-                onPressed: () {
+                onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     // home page
-                    if (usernameController.text == "admin@gmail.com" &&
-                        passwordController.text == "password") {
+                    if(await User(usernameController.text,passwordController.text).login())
+                    // if (usernameController.text == "admin@gmail.com" &&
+                    //     passwordController.text == "password")
+                    {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
