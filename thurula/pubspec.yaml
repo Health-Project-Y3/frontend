@@ -39,6 +39,7 @@ dependencies:
   provider: ^6.0.5
   flutter_custom_clippers: ^2.1.0
   fl_chart: ^0.63.0
+  http: ^1.1.0
 
 dev_dependencies:
   flutter_test:
