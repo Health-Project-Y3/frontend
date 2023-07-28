@@ -18,74 +18,383 @@ class MenuView extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Welcome Page'),
+          title: const Text('Explore Thurula'),
         ),
         body: GridView.count(crossAxisCount: 3, children: [
           Column(
-            mainAxisSize: MainAxisSize.min,
             children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 20, 0, 10),
-                child: IconButton(
-                    icon: const Icon(Icons.baby_changing_station,
-                        size: 60, color: Color.fromARGB(255, 220, 104, 145)),
-                    // label: const Text("Baby Tracker"),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const MenuView()));
-                    }),
-              ),
+              IconButton(
+                  icon: const Icon(Icons.person,
+                      size: 60, color: Color.fromARGB(255, 220, 104, 145)),
+                  // label: const Text("Baby Tracker"),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomeView()));
+                  }),
               const Padding(
-                padding: EdgeInsets.fromLTRB(15, 3, 0, 0),
-                child: Center(
-                    child: Text("Baby Tracker",
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold))),
-              )
+                padding: EdgeInsets.fromLTRB(17, 10, 0, 0),
+                child: Text(
+                  "Growth Tracker",
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+              ),
             ],
           ),
-          IconButton(
-              icon: const Icon(
-                Icons.person,
-                size: 60,
-                color: const Color.fromARGB(255, 220, 104, 145),
+          Column(
+            children: [
+              IconButton(
+                  icon: const Icon(Icons.person,
+                      size: 60, color: Color.fromARGB(255, 220, 104, 145)),
+                  // label: const Text("Baby Tracker"),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MenuView()));
+                  }),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(12, 10, 0, 0),
+                child: Text(
+                  "Vaccination Tracker",
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
               ),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const MenuView()));
-              }),
-          IconButton(
-              icon: const Icon(
-                Icons.person,
-                size: 60,
-                color: const Color.fromARGB(255, 220, 104, 145),
+            ],
+          ),
+          Column(
+            children: [
+              IconButton(
+                  icon: const Icon(Icons.person,
+                      size: 60, color: Color.fromARGB(255, 220, 104, 145)),
+                  // label: const Text("Baby Tracker"),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MenuView()));
+                  }),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(12, 10, 0, 0),
+                child: Text(
+                  "Feeding Monitoring",
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
               ),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const MenuView()));
-              }),
-          IconButton(
-              icon: const Icon(
-                Icons.person,
-                size: 60,
-                color: const Color.fromARGB(255, 220, 104, 145),
+            ],
+          ),
+          Column(
+            children: [
+              IconButton(
+                  icon: const Icon(Icons.person,
+                      size: 60, color: Color.fromARGB(255, 220, 104, 145)),
+                  // label: const Text("Baby Tracker"),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MenuView()));
+                  }),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(12, 10, 0, 0),
+                child: Text(
+                  "Nap Time Monitoring",
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
               ),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const MenuView()));
-              }),
-          IconButton(
-              icon: const Icon(
-                Icons.person,
-                size: 60,
-                color: const Color.fromARGB(255, 220, 104, 145),
+            ],
+          ),
+          Column(
+            children: [
+              IconButton(
+                  icon: const Icon(Icons.person,
+                      size: 60, color: Color.fromARGB(255, 220, 104, 145)),
+                  // label: const Text("Baby Tracker"),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MenuView()));
+                  }),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(12, 10, 0, 0),
+                child: Text(
+                  "Diaper Change Monitoring",
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
               ),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const MenuView()));
-              })
+            ],
+          ),
+          Column(
+            children: [
+              IconButton(
+                  icon: const Icon(Icons.person,
+                      size: 60, color: Color.fromARGB(255, 220, 104, 145)),
+                  // label: const Text("Baby Tracker"),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MenuView()));
+                  }),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(12, 10, 0, 0),
+                child: Text(
+                  "Store Recommandations",
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
+          Column(
+            children: [
+              IconButton(
+                  icon: const Icon(Icons.person,
+                      size: 60, color: Color.fromARGB(255, 220, 104, 145)),
+                  // label: const Text("Baby Tracker"),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MenuView()));
+                  }),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(12, 10, 0, 0),
+                child: Text(
+                  "Photo Album",
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
+          Column(
+            children: [
+              IconButton(
+                  icon: const Icon(Icons.person,
+                      size: 60, color: Color.fromARGB(255, 220, 104, 145)),
+                  // label: const Text("Baby Tracker"),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MenuView()));
+                  }),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(12, 10, 0, 0),
+                child: Text(
+                  "Vision Test",
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
+          Column(
+            children: [
+              IconButton(
+                  icon: const Icon(Icons.person,
+                      size: 60, color: Color.fromARGB(255, 220, 104, 145)),
+                  // label: const Text("Baby Tracker"),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MenuView()));
+                  }),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(12, 10, 0, 0),
+                child: Text(
+                  "Skill Development Exercises",
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
+          Column(
+            children: [
+              IconButton(
+                  icon: const Icon(Icons.person,
+                      size: 60, color: Color.fromARGB(255, 220, 104, 145)),
+                  // label: const Text("Baby Tracker"),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MenuView()));
+                  }),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(12, 10, 0, 0),
+                child: Text(
+                  "Pregnancy Timeline",
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
+          Column(
+            children: [
+              IconButton(
+                  icon: const Icon(Icons.person,
+                      size: 60, color: Color.fromARGB(255, 220, 104, 145)),
+                  // label: const Text("Baby Tracker"),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MenuView()));
+                  }),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(12, 10, 0, 0),
+                child: Text(
+                  "Health Monitoring",
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
+          Column(
+            children: [
+              IconButton(
+                  icon: const Icon(Icons.person,
+                      size: 60, color: Color.fromARGB(255, 220, 104, 145)),
+                  // label: const Text("Baby Tracker"),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MenuView()));
+                  }),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(12, 10, 0, 0),
+                child: Text(
+                  "Exercise Recommendations",
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
+          Column(
+            children: [
+              IconButton(
+                  icon: const Icon(Icons.person,
+                      size: 60, color: Color.fromARGB(255, 220, 104, 145)),
+                  // label: const Text("Baby Tracker"),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MenuView()));
+                  }),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(12, 10, 0, 0),
+                child: Text(
+                  "Baby Name Suggestions",
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
+          Column(
+            children: [
+              IconButton(
+                  icon: const Icon(Icons.person,
+                      size: 60, color: Color.fromARGB(255, 220, 104, 145)),
+                  // label: const Text("Baby Tracker"),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MenuView()));
+                  }),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(12, 10, 0, 0),
+                child: Text(
+                  "Food Recommendations",
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
+          Column(
+            children: [
+              IconButton(
+                  icon: const Icon(Icons.person,
+                      size: 60, color: Color.fromARGB(255, 220, 104, 145)),
+                  // label: const Text("Baby Tracker"),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MenuView()));
+                  }),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(12, 10, 0, 0),
+                child: Text(
+                  "Forum",
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
+          Column(
+            children: [
+              IconButton(
+                  icon: const Icon(Icons.person,
+                      size: 60, color: Color.fromARGB(255, 220, 104, 145)),
+                  // label: const Text("Baby Tracker"),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MenuView()));
+                  }),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(12, 10, 0, 0),
+                child: Text(
+                  "Product Recommendations",
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
+          Column(
+            children: [
+              IconButton(
+                  icon: const Icon(Icons.person,
+                      size: 60, color: Color.fromARGB(255, 220, 104, 145)),
+                  // label: const Text("Baby Tracker"),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MenuView()));
+                  }),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(12, 10, 0, 0),
+                child: Text(
+                  "Article Recommendations",
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
         ]));
   }
 }
