@@ -13,6 +13,7 @@ class NapService {
     }
   }
 
+  ///Get all naps for a given baby [id]
   Future<List<NapTimes>> getBabyNaps(String id) async {
     var response = await http.get(Uri.parse(getRoute('naps/baby/$id')));
     if (response.statusCode == 200) {
@@ -31,24 +32,27 @@ class NapService {
     var response = await http.post(
       Uri.parse(getRoute('naps')),
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(nap),
+      body: jsonEncode(NapTimes.toJson(nap)),
     );
     if (response.statusCode == 201) {
       return NapTimes.fromJson(jsonDecode(response.body));
     } else {
+      print(response.body);
       throw Exception('Failed to create nap');
     }
   }
 
+  ///Replace the entire nap that shares the same id as the nap passed in
   Future<NapTimes> updateNap(NapTimes nap) async {
     var response = await http.put(
-      Uri.parse(getRoute('naps/${nap.id}')),
+      Uri.parse(getRoute('naps')),
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(nap),
+      body: jsonEncode(NapTimes.toJson(nap)),
     );
     if (response.statusCode == 201) {
       return NapTimes.fromJson(jsonDecode(response.body));
     } else {
+      print(response.body);
       throw Exception('Failed to update nap');
     }
   }
@@ -60,11 +64,12 @@ class NapService {
     }
   }
 
+  /// Edit only one field of the nap [key] with [value] eg. id="64a9cb10ec5c9834ff73fc36"  key = 'sleepNotes', value = 'Nap was good'
   Future<NapTimes> patchNap(String id, String key, dynamic value) async {
     var response = await http.patch(
       Uri.parse(getRoute('naps/$id')),
       headers: {'Content-Type': 'application/json-patch+json'},
-      body: jsonEncode({"path": key, "op": "replace", "value": value}),
+      body: jsonEncode([{"path": key, "op": "replace", "value": value}]),
     );
     if (response.statusCode == 200) {
       return NapTimes.fromJson(jsonDecode(response.body));
@@ -75,7 +80,7 @@ class NapService {
 
   Future<NapTimes> startNap(String babyId) async {
     var response = await http.post(
-      Uri.parse(getRoute('naps/start')),
+      Uri.parse(getRoute('naps/startnap')),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(babyId),
     );
@@ -88,7 +93,7 @@ class NapService {
 
   Future<NapTimes> endNap(String napId) async {
     var response = await http.post(
-      Uri.parse(getRoute('naps/end')),
+      Uri.parse(getRoute('naps/endnap')),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(napId),
     );
@@ -101,9 +106,9 @@ class NapService {
 
   Future<NapTimes> rateNap(String napId, int sleepQuality) async {
     var response = await http.post(
-      Uri.parse(getRoute('naps/rate')),
+      Uri.parse(getRoute('naps/ratenap')),
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({"napId": napId, "sleepQuality": sleepQuality}),
+      body: jsonEncode({"id": napId, "sleepQuality": sleepQuality}),
     );
     if (response.statusCode == 201) {
       return NapTimes.fromJson(jsonDecode(response.body));
@@ -116,7 +121,7 @@ class NapService {
     var response = await http.post(
       Uri.parse(getRoute('naps/sleepnotes')),
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({"napId": napId, "sleepNotes": sleepNotes}),
+      body: jsonEncode({"id": napId, "sleepNotes": sleepNotes}),
     );
     if (response.statusCode == 201) {
       return NapTimes.fromJson(jsonDecode(response.body));
