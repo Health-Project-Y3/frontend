@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 
 import 'HomeView.dart';
+import 'childcare/exercise/ExerciseView.dart';
 import 'childcare/vision/VisionMenuView.dart';
 
 // import 'package:provider/provider.dart';
@@ -208,12 +209,12 @@ class MenuView extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const MenuView()));
+                            builder: (context) => ExerciseView()));
                   }),
               const Padding(
                 padding: EdgeInsets.fromLTRB(12, 10, 0, 0),
                 child: Text(
-                  "Skill Development Exercises",
+                  "Check list",
                   style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),

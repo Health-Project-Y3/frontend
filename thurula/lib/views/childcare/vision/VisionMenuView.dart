@@ -5,6 +5,7 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 
 import '../../MenuView.dart';
 import '../../Question2View.dart';
+import './SnellenCardView.dart';
 
 // import 'package:provider/provider.dart';
 
@@ -101,7 +102,7 @@ class VisionMenuView extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const Question2View()));
+                            builder: (context) => SnellenCardView()));
                   },
                   child: const Text("Visual Activity"),
                 ),
