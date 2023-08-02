@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:thurula/services/auth/user.dart';
-
+import 'package:thurula/services/auth/user_service.dart';
 import 'WelcomeView.dart';
 
 class LoginView extends StatefulWidget {
@@ -84,7 +83,7 @@ class _LoginViewState extends State<LoginView> {
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     // home page
-                    if(await User(usernameController.text,passwordController.text).login())
+                    if(await UserService().login(usernameController.text,passwordController.text))
                     // if (usernameController.text == "admin@gmail.com" &&
                     //     passwordController.text == "password")
                     {
