@@ -111,13 +111,21 @@ class _NapTimerState extends State<NapTimer> {
                 SizedBox(width: 10,),
               ],
             ),
-            SizedBox(height: 30), // Add some spacing between timer card and image
-            Image.asset(
-              'assets/images/sleeping_image.png', // Replace with your image asset path
-              width: 150,
-              height: 150,
+            SizedBox(height: 30),
+            Center(
+              child: Container(
+                width: 150,
+                height: 150,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/sleeping_image.png'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
             ),
-            SizedBox(height: 10), // Add some spacing between image and "Mary is sleeping" text
+            SizedBox(height: 20),
             Text(
               isSleeping ? 'Mary is sleeping' : 'Start Mary\'s sleep timer',
               style: TextStyle(

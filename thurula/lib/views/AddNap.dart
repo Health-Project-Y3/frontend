@@ -143,7 +143,7 @@ class _AddNapState extends State<AddNap> {
                 onPressed: () {
                   // Implement the action to add nap details
                 },
-                style: ElevatedButton.styleFrom(primary: Colors.pink),
+                style: ElevatedButton.styleFrom(primary:const Color.fromARGB(255, 220, 104, 145)),
                 child: Text('Add Nap'),
               ),
             ),

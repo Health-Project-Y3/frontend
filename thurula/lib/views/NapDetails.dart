@@ -46,7 +46,7 @@ class NapDetails extends StatelessWidget {
             SizedBox(height: 8),
             Center(
               child: Text(
-                "Adeepa's Nap Details",
+                "Mary's Nap Details",
 
                 style: TextStyle(
                   fontSize: 16,
