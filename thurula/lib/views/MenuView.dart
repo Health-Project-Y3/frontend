@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 
 import 'HomeView.dart';
-import 'Question2View.dart';
+import 'childcare/vision/VisionMenuView.dart';
+
 // import 'package:provider/provider.dart';
 
 class MenuView extends StatelessWidget {
@@ -185,7 +186,7 @@ class MenuView extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const MenuView()));
+                            builder: (context) => const VisionMenuView()));
                   }),
               const Padding(
                 padding: EdgeInsets.fromLTRB(12, 10, 0, 0),
