@@ -68,7 +68,7 @@ class _AddNapState extends State<AddNap> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Baby Nap Timer'),
+        title: Text('Add Baby Nap Details'),
         // centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 220, 104, 145),
         elevation: 0,
@@ -88,7 +88,7 @@ class _AddNapState extends State<AddNap> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             SizedBox(height: 16),
-            // Calendar component as a popup modal
+            // Calendar component
             TextFormField(
               readOnly: true,
               onTap: _showDatePicker,
@@ -137,11 +137,11 @@ class _AddNapState extends State<AddNap> {
             ),
 
             SizedBox(height: 16),
-            // Button to add nap details
+            // Button,add nap details
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  // Implement the action to add nap details
+                  // action to add nap details
                 },
                 style: ElevatedButton.styleFrom(primary:const Color.fromARGB(255, 220, 104, 145)),
                 child: Text('Add Nap'),

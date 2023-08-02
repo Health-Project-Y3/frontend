@@ -124,7 +124,7 @@ class NapDetails extends StatelessWidget {
     List<String> days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']; // Days of the week
 
     for (int i = 0; i < 7; i++) {
-      double barHeight = (i + 1) * 30.0; // Vary the height for each bar
+      double barHeight = (i + 1) * 30.0; // Change height for each bar
 
       bars.add(
         Container(

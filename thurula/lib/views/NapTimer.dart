@@ -134,7 +134,7 @@ class _NapTimerState extends State<NapTimer> {
                 color: Colors.blue,
               ),
             ),
-            SizedBox(height: 40), // Add some spacing between "Mary is sleeping" text and buttons
+            SizedBox(height: 40), // spacing between "Mary is sleeping" text and buttons
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -159,7 +159,7 @@ class _NapTimerState extends State<NapTimer> {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: saveData, // Add your saveData function here
+              onPressed: saveData, // saveData function
               style: ElevatedButton.styleFrom(
                 primary: const Color.fromARGB(255, 220, 104, 145),
                 onPrimary: Colors.white,
@@ -206,45 +206,3 @@ Widget buildTimeCard({required String time, required String header}) {
 
 
 
-
-
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       home: DefaultTabController(
-//         length: 3,
-//         child: Scaffold(
-//           appBar: AppBar(
-//             bottom: PreferredSize(
-//               preferredSize: const Size.fromHeight(48.0), // height of  TabBar
-//               child: Container(
-//                 color: const Color.fromARGB(255, 220, 104, 145),
-//                 child: const TabBar(
-//                   tabs: [
-//                     Tab(
-//                       text: "Start Nap",
-//                     ),
-//                     Tab(
-//                       text: "Nap Details",
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//             title: const Text('Nap Tracker'),
-//           ),
-//
-//
-//           body:  const TabBarView(
-//             children: [
-//                 Text("First trimester"),
-//             ],
-//
-//
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
