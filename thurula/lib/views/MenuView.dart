@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 // import 'package:thurula/views/widgets/wave_widget.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:thurula/views/PregnancyTimelineView.dart';
+import 'package:thurula/views/BabyNamesView.dart';
 
 import 'HomeView.dart';
 import 'Question2View.dart';
@@ -296,7 +297,7 @@ class MenuView extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const MenuView()));
+                            builder: (context) => const BabyNamesView()));
                   }),
               const Padding(
                 padding: EdgeInsets.fromLTRB(12, 10, 0, 0),
