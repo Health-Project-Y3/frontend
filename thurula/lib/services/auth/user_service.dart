@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'package:sqflite/sqflite.dart';
+import 'package:thurula/constants/routes.dart';
 import '../../database/local_database.dart';
 import '../../models/user_model.dart';
+import '../../utils/shared_preferences.dart';
 
 
 class UserService {
@@ -21,7 +23,7 @@ class UserService {
     try {
       // send a post request to the API endpoint
       var response = await http.post(
-        Uri.parse('http://10.0.2.2:5154/api/Auth/login'),
+        Uri.parse(getRoute("Auth/login")),
         headers: {'Content-Type': 'application/json'},
         body: body,
       );
@@ -30,6 +32,8 @@ class UserService {
       if (response.statusCode == 200) {
         // login successful, do something with the response data
         print(response.body);
+        // save the token in shared preferences
+        SharedPref.setString('JWT', response.body);
         return true;
       } else {
         // login failed, handle the error
