@@ -1,22 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:thurula/views/NapDetails.dart';
 
-void main() => runApp(BabyCareApp());
 
-class BabyCareApp extends StatelessWidget {
+
+class AddNap extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: AddNapPage(),
-    );
-  }
+  _AddNapState createState() => _AddNapState();
 }
 
-class AddNapPage extends StatefulWidget {
-  @override
-  _AddNapPageState createState() => _AddNapPageState();
-}
-
-class _AddNapPageState extends State<AddNapPage> {
+class _AddNapState extends State<AddNap> {
   DateTime? _selectedDate;
   TimeOfDay? _selectedStartTime;
   TimeOfDay? _selectedEndTime;
@@ -76,8 +68,19 @@ class _AddNapPageState extends State<AddNapPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Nap'),
-        backgroundColor: Colors.pink,
+        title: Text('Baby Nap Timer'),
+        // centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 220, 104, 145),
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => NapDetails()),
+            );
+          },
+        ),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),

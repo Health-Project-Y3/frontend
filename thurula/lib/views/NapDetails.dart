@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:thurula/views/NapTimer.dart';
+import 'package:thurula/views/AddNap.dart';
 import 'package:thurula/views/MenuView.dart';
 
 
@@ -71,7 +72,10 @@ class NapDetails extends StatelessWidget {
                 SizedBox(width: 16),
                 ElevatedButton(
                   onPressed: () {
-
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AddNap()),
+                    );
                   },
                   style: ElevatedButton.styleFrom(primary: const Color.fromARGB(255, 220, 104, 145),),
                   child: Text('Add Nap'),
