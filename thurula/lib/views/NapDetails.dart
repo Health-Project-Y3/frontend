@@ -1,23 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:thurula/views/NapTimer.dart';
+import 'package:thurula/views/MenuView.dart';
 
-void main() => runApp(BabyCareApp());
 
-class BabyCareApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: DashboardScreen(),
-    );
-  }
-}
-
-class DashboardScreen extends StatelessWidget {
+class NapDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Baby Nap Dashboard'),
-        backgroundColor: Colors.pink,
+        title: Text('Baby Nap Details'),
+        // centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 220, 104, 145),
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MenuView()),
+            );
+          },
+        ),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
@@ -32,7 +36,7 @@ class DashboardScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
-                    image: AssetImage('images/pic.png'),
+                    image: AssetImage('assets/images/sleeping_image.png'),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -42,21 +46,37 @@ class DashboardScreen extends StatelessWidget {
             Center(
               child: Text(
                 "Adeepa's Nap Details",
+
                 style: TextStyle(
                   fontSize: 16,
+                  color: Colors.blue,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
             SizedBox(height: 16),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  // Implement the action for adding nap details
-                },
-                style: ElevatedButton.styleFrom(primary: Colors.pink),
-                child: Text('Add Nap'),
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => NapTimer()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(primary: const Color.fromARGB(255, 220, 104, 145),),
+                  child: Text('Nap Timer'),
+                ),
+                SizedBox(width: 16),
+                ElevatedButton(
+                  onPressed: () {
+
+                  },
+                  style: ElevatedButton.styleFrom(primary: const Color.fromARGB(255, 220, 104, 145),),
+                  child: Text('Add Nap'),
+                ),
+              ],
             ),
             SizedBox(height: 16),
             Row(
@@ -64,14 +84,15 @@ class DashboardScreen extends StatelessWidget {
                 Expanded(
                   child: NapStatCard(
                     title: 'Total Naps',
-                    value: '7', // Change this value to match your data
+
+                    value: '7',
                   ),
                 ),
                 SizedBox(width: 16),
                 Expanded(
                   child: NapStatCard(
                     title: 'Total Sleep Hours',
-                    value: '35', // Change this value to match your data
+                    value: '35',
                   ),
                 ),
               ],
@@ -92,6 +113,8 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
+
+
   List<Widget> buildBarChart() {
     List<Widget> bars = [];
     List<String> days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']; // Days of the week
@@ -104,7 +127,7 @@ class DashboardScreen extends StatelessWidget {
           width: 20,
           padding: EdgeInsets.all(20),
           height: barHeight,
-          color: Colors.pink,
+          color: Colors.blue,
         ),
       );
     }
@@ -174,7 +197,7 @@ class NapStatCard extends StatelessWidget {
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: Colors.pink,
+                color: const Color.fromARGB(255, 220, 104, 145),
               ),
             ),
           ],

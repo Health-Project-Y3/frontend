@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:thurula/views/NapDetails.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
@@ -73,15 +73,17 @@ class _NapTimerState extends State<NapTimer> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Nap Timer'),
-        centerTitle: true,
+        title: Text('Baby Nap Timer'),
+        // centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 220, 104, 145),
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            // Add your back button functionality here
-            Navigator.of(context).pop();
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => NapDetails()),
+            );
           },
         ),
       ),
