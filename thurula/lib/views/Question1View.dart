@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:thurula/views/widgets/wave_widget.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+
+import 'HomeView.dart';
+import 'Question2View.dart';
 // import 'package:provider/provider.dart';
 
 class Question1View extends StatelessWidget {
@@ -100,7 +103,10 @@ class Question1View extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomeView()));
                   },
                   child: const Text("Next"),
                 ),
