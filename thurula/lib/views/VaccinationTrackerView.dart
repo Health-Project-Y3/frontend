@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thurula/views/MenuView.dart';
 
 class VaccinationTrackerView extends StatelessWidget {
   const VaccinationTrackerView({super.key});
@@ -28,6 +29,18 @@ class VaccinationTrackerView extends StatelessWidget {
               ),
             ),
             title: const Text('Vaccination Tracker'),
+            actions: <Widget>[
+              Padding(
+                  padding: const EdgeInsets.only(right: 10.0),
+                  child: IconButton(
+                      icon: const Icon(Icons.menu),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const MenuView()));
+                      })),
+            ],
           ),
           body: TabBarView(
             children: [
@@ -48,7 +61,7 @@ class VaccinationTrackerView extends StatelessWidget {
                     padding: const EdgeInsets.all(10.0),
                     child: ListTile(
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0)),
+                          borderRadius: BorderRadius.circular(20.0)),
                       tileColor: const Color.fromARGB(255, 255, 255, 255),
                       leading: const Icon(Icons.calendar_today,
                           color: Color.fromARGB(255, 220, 104, 145)),
