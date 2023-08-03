@@ -40,8 +40,8 @@ class PregnancyTimelineView extends StatelessWidget {
                 children: [
                   const Center(
                       child: Padding(
-                    padding: EdgeInsets.all(20.0),
-                    child: Text("First trimester",
+                        padding: EdgeInsets.all(20.0),
+                        child: Text("First trimester",
                         style: TextStyle(
                           color: Color.fromARGB(255, 220, 104, 145),
                           fontFamily: 'Montserrat',
