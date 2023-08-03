@@ -43,6 +43,7 @@ class _SnellenCardViewState extends State<SnellenCardView>
         child: Scaffold(
           appBar: AppBar(
             title: const Row(children: [Text('Snellen Card Test')]),
+            backgroundColor: Color.fromARGB(255, 220, 104, 145),
             actions: <Widget>[
               Padding(
                   padding: const EdgeInsets.only(right: 10.0),
@@ -156,23 +157,32 @@ class FirstPage extends StatelessWidget {
                 child: Icon(Icons.download, color: Colors.black),
               )),
         ),
-        Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 20, 10, 0),
-              child: SizedBox(
-                height: 250,
-                child: ListView.builder(
-                    itemCount: list.length,
-                    itemBuilder: (BuildContext ctxt, int index) {
-                      return Text(
-                        "${index + 1}.${list[index]}",
-                        style: const TextStyle(fontSize: 16),
-                      );
-                    }),
-              ),
-            ),
-          ],
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 20, 10, 0),
+          child: Card(
+              elevation: 20,
+              child: Container(
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 20, 10, 0),
+                      child: SizedBox(
+                        height: 250,
+                        child: ListView.builder(
+                            itemCount: list.length,
+                            itemBuilder: (BuildContext ctxt, int index) {
+                              return Text(
+                                "${index + 1}.${list[index]}",
+                                style: const TextStyle(fontSize: 16),
+                              );
+                            }),
+                      ),
+                    ),
+                  ],
+                ),
+              )),
         ),
       ],
     ));
@@ -257,23 +267,32 @@ class SecondPage extends StatelessWidget {
                 child: Icon(Icons.download, color: Colors.black),
               )),
         ),
-        Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 20, 10, 0),
-              child: SizedBox(
-                height: 250,
-                child: ListView.builder(
-                    itemCount: list.length,
-                    itemBuilder: (BuildContext ctxt, int index) {
-                      return Text(
-                        "${index + 1}.${list[index]}",
-                        style: const TextStyle(fontSize: 16),
-                      );
-                    }),
-              ),
-            ),
-          ],
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 20, 10, 0),
+          child: Card(
+              elevation: 20,
+              child: Container(
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 20, 10, 0),
+                      child: SizedBox(
+                        height: 200,
+                        child: ListView.builder(
+                            itemCount: list.length,
+                            itemBuilder: (BuildContext ctxt, int index) {
+                              return Text(
+                                "${index + 1}.${list[index]}",
+                                style: const TextStyle(fontSize: 16),
+                              );
+                            }),
+                      ),
+                    ),
+                  ],
+                ),
+              )),
         ),
       ],
     ));
@@ -357,23 +376,32 @@ class ThirdPage extends StatelessWidget {
                 child: Icon(Icons.download, color: Colors.black),
               )),
         ),
-        Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 20, 10, 0),
-              child: SizedBox(
-                height: 250,
-                child: ListView.builder(
-                    itemCount: list.length,
-                    itemBuilder: (BuildContext ctxt, int index) {
-                      return Text(
-                        "${index + 1}.${list[index]}",
-                        style: const TextStyle(fontSize: 16),
-                      );
-                    }),
-              ),
-            ),
-          ],
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Card(
+              elevation: 20,
+              child: Container(
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 20, 10, 0),
+                      child: SizedBox(
+                        height: 150,
+                        child: ListView.builder(
+                            itemCount: list.length,
+                            itemBuilder: (BuildContext ctxt, int index) {
+                              return Text(
+                                "${index + 1}.${list[index]}",
+                                style: const TextStyle(fontSize: 16),
+                              );
+                            }),
+                      ),
+                    ),
+                  ],
+                ),
+              )),
         ),
       ],
     ));

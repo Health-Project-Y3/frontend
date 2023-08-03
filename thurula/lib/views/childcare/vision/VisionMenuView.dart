@@ -21,6 +21,7 @@ class VisionMenuView extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: const Row(children: [Text('Vision Test')]),
+          backgroundColor: Color.fromARGB(255, 220, 104, 145),
           actions: <Widget>[
             Padding(
                 padding: const EdgeInsets.only(right: 10.0),

@@ -21,6 +21,7 @@ class MenuView extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Explore Thurula'),
+          backgroundColor: Color.fromARGB(255, 220, 104, 145),
         ),
         body: GridView.count(crossAxisCount: 3, children: [
           Column(
