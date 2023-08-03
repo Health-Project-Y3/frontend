@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thurula/views/MenuView.dart';
 
 class PregnancyTimelineView extends StatelessWidget {
   const PregnancyTimelineView({super.key});
@@ -33,6 +34,18 @@ class PregnancyTimelineView extends StatelessWidget {
               ),
             ),
             title: const Text('Pregnancy Timeline'),
+            actions: <Widget>[
+              Padding(
+                  padding: const EdgeInsets.only(right: 10.0),
+                  child: IconButton(
+                      icon: const Icon(Icons.menu),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const MenuView()));
+                      })),
+            ],
           ),
           body: TabBarView(
             children: [
