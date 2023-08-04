@@ -4,7 +4,7 @@ import 'package:thurula/constants/routes.dart';
 import '../models/naptimes_model.dart';
 
 class NapService {
-  Future<NapTimes> getNap(String id) async {
+  static Future<NapTimes> getNap(String id) async {
     var response = await http.get(Uri.parse(getRoute('naps/$id')));
     if (response.statusCode == 200) {
       return NapTimes.fromJson(jsonDecode(response.body));
@@ -14,7 +14,7 @@ class NapService {
   }
 
   ///Get all naps for a given baby [id]
-  Future<List<NapTimes>> getBabyNaps(String id) async {
+  static Future<List<NapTimes>> getBabyNaps(String id) async {
     var response = await http.get(Uri.parse(getRoute('naps/baby/$id')));
     if (response.statusCode == 200) {
       List<NapTimes> naps = [];
@@ -28,7 +28,7 @@ class NapService {
     }
   }
 
-  Future<NapTimes> createNap(NapTimes nap) async {
+  static Future<NapTimes> createNap(NapTimes nap) async {
     var response = await http.post(
       Uri.parse(getRoute('naps')),
       headers: {'Content-Type': 'application/json'},
@@ -43,7 +43,7 @@ class NapService {
   }
 
   ///Replace the entire nap that shares the same id as the nap passed in
-  Future<NapTimes> updateNap(NapTimes nap) async {
+  static Future<NapTimes> updateNap(NapTimes nap) async {
     var response = await http.put(
       Uri.parse(getRoute('naps')),
       headers: {'Content-Type': 'application/json'},
@@ -52,12 +52,11 @@ class NapService {
     if (response.statusCode == 201) {
       return NapTimes.fromJson(jsonDecode(response.body));
     } else {
-      print(response.body);
       throw Exception('Failed to update nap');
     }
   }
 
-  Future<void> deleteNap(String id) async {
+  static Future<void> deleteNap(String id) async {
     var response = await http.delete(Uri.parse(getRoute('naps/$id')));
     if (response.statusCode != 204) {
       throw Exception('Failed to delete nap');
@@ -65,7 +64,7 @@ class NapService {
   }
 
   /// Edit only one field of the nap [key] with [value] eg. id="64a9cb10ec5c9834ff73fc36"  key = 'sleepNotes', value = 'Nap was good'
-  Future<NapTimes> patchNap(String id, String key, dynamic value) async {
+  static Future<NapTimes> patchNap(String id, String key, dynamic value) async {
     var response = await http.patch(
       Uri.parse(getRoute('naps/$id')),
       headers: {'Content-Type': 'application/json-patch+json'},
@@ -78,7 +77,7 @@ class NapService {
     }
   }
 
-  Future<NapTimes> startNap(String babyId) async {
+  static Future<NapTimes> startNap(String babyId) async {
     var response = await http.post(
       Uri.parse(getRoute('naps/startnap')),
       headers: {'Content-Type': 'application/json'},
@@ -91,7 +90,7 @@ class NapService {
     }
   }
 
-  Future<NapTimes> endNap(String napId) async {
+  static Future<NapTimes> endNap(String napId) async {
     var response = await http.post(
       Uri.parse(getRoute('naps/endnap')),
       headers: {'Content-Type': 'application/json'},
@@ -104,7 +103,7 @@ class NapService {
     }
   }
 
-  Future<NapTimes> rateNap(String napId, int sleepQuality) async {
+  static Future<NapTimes> rateNap(String napId, int sleepQuality) async {
     var response = await http.post(
       Uri.parse(getRoute('naps/ratenap')),
       headers: {'Content-Type': 'application/json'},
@@ -117,7 +116,7 @@ class NapService {
     }
   }
 
-  Future<NapTimes> addSleepNotes(String napId, String sleepNotes) async {
+  static Future<NapTimes> addSleepNotes(String napId, String sleepNotes) async {
     var response = await http.post(
       Uri.parse(getRoute('naps/sleepnotes')),
       headers: {'Content-Type': 'application/json'},

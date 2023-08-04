@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:thurula/services/local_service.dart';
+import 'package:thurula/services/naps_service.dart';
 import 'package:thurula/views/NapDetails.dart';
+
+import '../models/naptimes_model.dart';
 
 
 
@@ -64,16 +68,35 @@ class _AddNapState extends State<AddNap> {
     }
   }
 
+  void addNapData(){
+    //create combined datetime object using data
+    var startTime = DateTime(_selectedDate!.year, _selectedDate!.month, _selectedDate!.day, _selectedStartTime!.hour, _selectedStartTime!.minute);
+    var endTime = DateTime(_selectedDate!.year, _selectedDate!.month, _selectedDate!.day, _selectedEndTime!.hour, _selectedEndTime!.minute);
+    LocalService.getCurrentBabyId().then(
+        (id)=>{
+          NapService.createNap(
+            NapTimes(
+              babyId: id,
+              startTime: startTime,
+              endTime: endTime,
+              sleepNotes: "Went to sleep at ${_selectedStartTime!.hour}:${_selectedStartTime!.minute} and woke up at ${_selectedEndTime!.hour}:${_selectedEndTime!.minute}"
+            ),
+          )
+        }
+    );
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Baby Nap Details'),
+        title: const Text('Add Baby Nap Details'),
         // centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 220, 104, 145),
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.push(
               context,
@@ -87,12 +110,12 @@ class _AddNapState extends State<AddNap> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             // Calendar component
             TextFormField(
               readOnly: true,
               onTap: _showDatePicker,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Date',
                 labelStyle: TextStyle(color: Colors.black),
                 suffixIcon: Icon(Icons.calendar_today, color: Colors.black),
@@ -104,7 +127,7 @@ class _AddNapState extends State<AddNap> {
               ),
             ),
 
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             // Time selection for starting nap
             TimeSelectionClock(
               label: 'Start Time',
@@ -112,7 +135,7 @@ class _AddNapState extends State<AddNap> {
               onTap: () => _showTimePicker('start'),
             ),
 
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             // Time selection for ending nap
             TimeSelectionClock(
               label: 'End Time',
@@ -120,11 +143,11 @@ class _AddNapState extends State<AddNap> {
               onTap: () => _showTimePicker('end'),
             ),
 
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             // Display number of hours baby slept
             TextFormField(
               readOnly: true,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Number of Hours Slept',
                 labelStyle: TextStyle(color: Colors.black),
                 suffixIcon: Icon(Icons.access_time, color: Colors.black),
@@ -136,15 +159,13 @@ class _AddNapState extends State<AddNap> {
               ),
             ),
 
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             // Button,add nap details
             Center(
               child: ElevatedButton(
-                onPressed: () {
-                  // action to add nap details
-                },
-                style: ElevatedButton.styleFrom(primary:const Color.fromARGB(255, 220, 104, 145)),
-                child: Text('Add Nap'),
+                onPressed: addNapData,
+                style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 220, 104, 145)),
+                child: const Text('Add Nap'),
               ),
             ),
           ],

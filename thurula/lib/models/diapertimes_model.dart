@@ -29,7 +29,7 @@ class DiaperTimes {
     return {
       'id': diaperTimes.id,
       'babyId': diaperTimes.babyId,
-      'time': diaperTimes.time.toString(),
+      'time': diaperTimes.time?.toIso8601String(),
       'diaperNotes': diaperTimes.diaperNotes,
       'diaperType': diaperTimes.diaperType,
       'loggedBy': diaperTimes.loggedBy,
