@@ -4,9 +4,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class DiaperService {
-  static Future<DiaperTimes> getDiaper(String babyId) async {
+  static Future<DiaperTimes> getDiaper(String diaperId) async {
     var response = await http.get(
-      Uri.parse(getRoute('diapers/$babyId')),
+      Uri.parse(getRoute('diapers/$diaperId')),
       headers: {'Content-Type': 'application/json'},
     );
     if (response.statusCode == 200) {
