@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'package:thurula/services/local_service.dart';
+import 'package:thurula/services/naps_service.dart';
 import 'package:thurula/views/NapDetails.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
+
+import '../models/naptimes_model.dart';
 
 class NapTimer extends StatefulWidget {
   const NapTimer({super.key});
@@ -9,11 +12,12 @@ class NapTimer extends StatefulWidget {
   @override
   State<NapTimer> createState() => _NapTimerState();
 }
-bool isSleeping = false;
 
+bool isSleeping = false;
+DateTime? startTime;
+DateTime? endTime;
 
 class _NapTimerState extends State<NapTimer> {
-  
   String formatTime(int milliSeconds) {
     var secs = milliSeconds ~/ 1000;
     var hours = (secs ~/ 3600).toString().padLeft(2, '0');
@@ -29,56 +33,63 @@ class _NapTimerState extends State<NapTimer> {
   void initState() {
     super.initState();
     stopwatch = Stopwatch();
-    timer = new Timer.periodic(new Duration(milliseconds: 30), (timer) {
-      setState(() {
-
-      });
+    timer = Timer.periodic(new Duration(milliseconds: 30), (timer) {
+      setState(() {});
     });
   }
 
-@override
+  @override
   void dispose() {
-   timer.cancel();
-   super.dispose();
+    timer.cancel();
+    super.dispose();
   }
 
   void handleStopwatchStartStop() {
     if (stopwatch.isRunning) {
       stopwatch.stop();
+      endTime = DateTime.now();
       isSleeping = false; // Timer is stopped, so Mary is not sleeping.
     } else {
       stopwatch.start();
+      startTime = DateTime.now();
       isSleeping = true; // Timer is started, so Mary's sleep timer is running.
     }
     setState(() {});
   }
 
-
-
-  void resetStopwatch(){
+  void resetStopwatch() {
     stopwatch.reset();
-    setState(() {
+    setState(() {});
+  }
 
+  void saveData() {
+    LocalService.getCurrentBabyId().then((babyId) {
+      NapService.createNap(
+        NapTimes(
+          babyId: babyId,
+          startTime: startTime,
+          endTime: endTime,
+        ),
+      ).then((napId) {
+        setState(() {
+          napId = napId;
+        });
+      });
     });
-  }
-
-  void saveData(){
 
   }
-
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Baby Nap Timer'),
+        title: const Text('Baby Nap Timer'),
         // centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 220, 104, 145),
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.push(
               context,
@@ -95,28 +106,37 @@ class _NapTimerState extends State<NapTimer> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 buildTimeCard(
-                  time: formatTime(stopwatch.elapsedMilliseconds).substring(0, 2),
+                  time:
+                      formatTime(stopwatch.elapsedMilliseconds).substring(0, 2),
                   header: "HOURS",
                 ),
-                SizedBox(width: 10,),
+                const SizedBox(
+                  width: 10,
+                ),
                 buildTimeCard(
-                  time: formatTime(stopwatch.elapsedMilliseconds).substring(3, 5),
+                  time:
+                      formatTime(stopwatch.elapsedMilliseconds).substring(3, 5),
                   header: "MINUTES",
                 ),
-                SizedBox(width: 10,),
+                const SizedBox(
+                  width: 10,
+                ),
                 buildTimeCard(
-                  time: formatTime(stopwatch.elapsedMilliseconds).substring(6, 8),
+                  time:
+                      formatTime(stopwatch.elapsedMilliseconds).substring(6, 8),
                   header: "SECONDS",
                 ),
-                SizedBox(width: 10,),
+                const SizedBox(
+                  width: 10,
+                ),
               ],
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Center(
               child: Container(
                 width: 150,
                 height: 150,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
                     image: AssetImage('assets/images/sleeping_image.png'),
@@ -125,16 +145,17 @@ class _NapTimerState extends State<NapTimer> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Text(
               isSleeping ? 'Mary is sleeping' : 'Start Mary\'s sleep timer',
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
                 color: Colors.blue,
               ),
             ),
-            SizedBox(height: 40), // spacing between "Mary is sleeping" text and buttons
+            const SizedBox(height: 40),
+            // spacing between "Mary is sleeping" text and buttons
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -146,34 +167,32 @@ class _NapTimerState extends State<NapTimer> {
                     color: Colors.white,
                   ),
                 ),
-                SizedBox(width: 50,),
+                const SizedBox(
+                  width: 50,
+                ),
                 FloatingActionButton(
                   onPressed: resetStopwatch,
                   backgroundColor: Colors.lightBlueAccent,
-                  child: Icon(
+                  child: const Icon(
                     Icons.refresh,
                     color: Colors.white,
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: saveData, // saveData function
               style: ElevatedButton.styleFrom(
-                primary: const Color.fromARGB(255, 220, 104, 145),
-                onPrimary: Colors.white,
+                foregroundColor: Colors.white, backgroundColor: const Color.fromARGB(255, 220, 104, 145),
               ),
-              child: Text('Save Data'),
+              child: const Text('Save Data'),
             ),
           ],
         ),
       ),
     );
   }
-
-
-
 }
 
 Widget buildTimeCard({required String time, required String header}) {
@@ -182,27 +201,26 @@ Widget buildTimeCard({required String time, required String header}) {
     children: [
       Container(
         decoration: BoxDecoration(
-          color:const Color.fromARGB(255, 220, 104, 145),
-          borderRadius: BorderRadius.circular(20)
+            color: const Color.fromARGB(255, 220, 104, 145),
+            borderRadius: BorderRadius.circular(20)),
+        child: Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Text(
+            time,
+            style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 60,
+                color: Colors.black54),
+          ),
         ),
-        child: Padding(padding: EdgeInsets.all(8.0),
-        child: Text(time,style: TextStyle(fontWeight: FontWeight.bold, fontSize: 60, color: Colors.black54 ),),),
       ),
-      SizedBox(height: 10,),
-      Text(header, style: TextStyle(color: Colors.blue),)
+      const SizedBox(
+        height: 10,
+      ),
+      Text(
+        header,
+        style: const TextStyle(color: Colors.blue),
+      )
     ],
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

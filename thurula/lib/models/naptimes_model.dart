@@ -34,12 +34,16 @@ class NapTimes {
     return {
       'id': napTimes.id,
       'babyId': napTimes.babyId,
-      'startTime': napTimes.startTime.toString(),
-      'endTime': napTimes.endTime.toString(),
+      'startTime': napTimes.startTime?.toIso8601String(),
+      'endTime': napTimes.endTime?.toIso8601String(),
       'sleepNotes': napTimes.sleepNotes,
       'sleepQuality': napTimes.sleepQuality,
       'loggedBy': napTimes.loggedBy,
     };
+  }
+
+  static int getNapDuration(NapTimes napTimes) {
+    return napTimes.endTime!.difference(napTimes.startTime!).inMinutes;
   }
 
   @override
