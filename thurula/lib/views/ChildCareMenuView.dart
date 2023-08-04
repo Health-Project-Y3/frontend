@@ -1,14 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// import 'package:thurula/views/widgets/wave_widget.dart';
-import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:thurula/views/MenuView.dart';
-import 'package:thurula/views/PregnancyTimelineView.dart';
 import 'package:thurula/views/VaccinationTrackerView.dart';
 import 'package:thurula/views/length_chart_view.dart';
 
-import 'HomeView.dart';
-import 'Question2View.dart';
 // import 'package:provider/provider.dart';
 
 class ChildCareMenuView extends StatelessWidget {
@@ -23,271 +18,464 @@ class ChildCareMenuView extends StatelessWidget {
     return Scaffold(
         backgroundColor: const Color.fromARGB(255, 227, 227, 227),
         body: GridView.count(crossAxisCount: 3, children: [
-          Column(
-            children: [
-              IconButton(
-                  icon: const Icon(Icons.person,
-                      size: 60, color: Color.fromARGB(255, 220, 104, 145)),
-                  // label: const Text("Baby Tracker"),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const LengthChartView()));
-                  }),
-              const Padding(
-                padding: EdgeInsets.fromLTRB(17, 10, 0, 0),
-                child: Text(
-                  "Growth Tracker",
-                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
+          //Growth Tracker
+          Padding(
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: InkResponse(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LengthChartView(),
+                    ),
+                  );
+                },
+                child: Container(
+                  width: 200, 
+                  height: 250, 
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        child: Image.asset(
+                            'assets/images/menu-icons/growth.png',
+                            height: 60),
+                      ),
+                      const SizedBox(
+                          height: 20), 
+                      const Text("Growth Tracker",
+                          style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: Color.fromARGB(255, 220, 104, 145),
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold))
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              IconButton(
-                  icon: const Icon(Icons.person,
-                      size: 60, color: Color.fromARGB(255, 220, 104, 145)),
-                  // label: const Text("Baby Tracker"),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                const VaccinationTrackerView()));
-                  }),
-              const Padding(
-                padding: EdgeInsets.fromLTRB(12, 10, 0, 0),
-                child: Text(
-                  "Vaccination Tracker",
-                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
+              )),
+//Vaccination Tracker
+          Padding(
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: InkResponse(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const VaccinationTrackerView(),
+                    ),
+                  );
+                },
+                child: Container(
+                  width: 200, 
+                  height: 250, 
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        child: Image.asset(
+                            'assets/images/menu-icons/vaccine.png',
+                            height: 60),
+                      ),
+                      const SizedBox(
+                          height: 20), 
+                      const Text("Vaccination\nTracker",
+                          style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: Color.fromARGB(255, 220, 104, 145),
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold))
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              IconButton(
-                  icon: const Icon(Icons.person,
-                      size: 60, color: Color.fromARGB(255, 220, 104, 145)),
-                  // label: const Text("Baby Tracker"),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const MenuView()));
-                  }),
-              const Padding(
-                padding: EdgeInsets.fromLTRB(12, 10, 0, 0),
-                child: Text(
-                  "Feeding Monitoring",
-                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
+              )),
+//Feeding Monitoring
+          Padding(
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: InkResponse(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MenuView(),
+                    ),
+                  );
+                },
+                child: Container(
+                  width: 200, 
+                  height: 250, 
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        child: Image.asset(
+                            'assets/images/menu-icons/feeding.png',
+                            height: 60),
+                      ),
+                      const SizedBox(
+                          height: 20), 
+                      const Text("Feeding\nMonitoring",
+                          style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: Color.fromARGB(255, 220, 104, 145),
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold))
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              IconButton(
-                  icon: const Icon(Icons.person,
-                      size: 60, color: Color.fromARGB(255, 220, 104, 145)),
-                  // label: const Text("Baby Tracker"),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const MenuView()));
-                  }),
-              const Padding(
-                padding: EdgeInsets.fromLTRB(12, 10, 0, 0),
-                child: Text(
-                  "Nap Time Monitoring",
-                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
+              )),
+//Nap Time Monitoring
+          Padding(
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: InkResponse(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MenuView(),
+                    ),
+                  );
+                },
+                child: Container(
+                  width: 200, 
+                  height: 250, 
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        child: Image.asset('assets/images/menu-icons/nap.png',
+                            height: 60),
+                      ),
+                      const SizedBox(
+                          height: 20), 
+                      const Text("Nap Time\nMonitoring",
+                          style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: Color.fromARGB(255, 220, 104, 145),
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold))
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              IconButton(
-                  icon: const Icon(Icons.person,
-                      size: 60, color: Color.fromARGB(255, 220, 104, 145)),
-                  // label: const Text("Baby Tracker"),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const MenuView()));
-                  }),
-              const Padding(
-                padding: EdgeInsets.fromLTRB(12, 10, 0, 0),
-                child: Text(
-                  "Diaper Change Monitoring",
-                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
+              )),
+//Diaper Change Monitoring
+          Padding(
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: InkResponse(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MenuView(),
+                    ),
+                  );
+                },
+                child: Container(
+                  width: 200, 
+                  height: 250, 
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        child: Image.asset(
+                            'assets/images/menu-icons/diaper.png',
+                            height: 60),
+                      ),
+                      const SizedBox(
+                          height: 20), 
+                      const Text("Diaper Change\nMonitoring",
+                          style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: Color.fromARGB(255, 220, 104, 145),
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold))
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              IconButton(
-                  icon: const Icon(Icons.person,
-                      size: 60, color: Color.fromARGB(255, 220, 104, 145)),
-                  // label: const Text("Baby Tracker"),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const MenuView()));
-                  }),
-              const Padding(
-                padding: EdgeInsets.fromLTRB(12, 10, 0, 0),
-                child: Text(
-                  "Photo Album",
-                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
+              )),
+//Photo Album
+          Padding(
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: InkResponse(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MenuView(),
+                    ),
+                  );
+                },
+                child: Container(
+                  width: 200, 
+                  height: 250, 
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        child: Image.asset('assets/images/menu-icons/album.png',
+                            height: 60),
+                      ),
+                      const SizedBox(
+                          height: 20), 
+                      const Text("Photo Album",
+                          style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: Color.fromARGB(255, 220, 104, 145),
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold))
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              IconButton(
-                  icon: const Icon(Icons.person,
-                      size: 60, color: Color.fromARGB(255, 220, 104, 145)),
-                  // label: const Text("Baby Tracker"),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const MenuView()));
-                  }),
-              const Padding(
-                padding: EdgeInsets.fromLTRB(12, 10, 0, 0),
-                child: Text(
-                  "Vision Test",
-                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
+              )),
+//Vision Test
+          Padding(
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: InkResponse(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MenuView(),
+                    ),
+                  );
+                },
+                child: Container(
+                  width: 200, 
+                  height: 250, 
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        child: Image.asset(
+                            'assets/images/menu-icons/vision.png',
+                            height: 60),
+                      ),
+                      const SizedBox(
+                          height: 20), 
+                      const Text("Vision Test",
+                          style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: Color.fromARGB(255, 220, 104, 145),
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold))
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              IconButton(
-                  icon: const Icon(Icons.person,
-                      size: 60, color: Color.fromARGB(255, 220, 104, 145)),
-                  // label: const Text("Baby Tracker"),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const MenuView()));
-                  }),
-              const Padding(
-                padding: EdgeInsets.fromLTRB(12, 10, 0, 0),
-                child: Text(
-                  "Skill Development Exercises",
-                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
+              )),
+          //Skill Development Exercises
+          Padding(
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: InkResponse(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MenuView(),
+                    ),
+                  );
+                },
+                child: Container(
+                  width: 200, 
+                  height: 250, 
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        child: Image.asset(
+                            'assets/images/menu-icons/skills.png',
+                            height: 60),
+                      ),
+                      const SizedBox(
+                          height: 20), 
+                      const Text("Skill Development\nExercises",
+                          style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: Color.fromARGB(255, 220, 104, 145),
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold))
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              IconButton(
-                  icon: const Icon(Icons.person,
-                      size: 60, color: Color.fromARGB(255, 220, 104, 145)),
-                  // label: const Text("Baby Tracker"),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const MenuView()));
-                  }),
-              const Padding(
-                padding: EdgeInsets.fromLTRB(12, 10, 0, 0),
-                child: Text(
-                  "Food Recommendations",
-                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
+              )),
+          //Food Recommendations
+          Padding(
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: InkResponse(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MenuView(),
+                    ),
+                  );
+                },
+                child: Container(
+                  width: 200, 
+                  height: 250, 
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        child: Image.asset('assets/images/menu-icons/food2.png',
+                            height: 60),
+                      ),
+                      const SizedBox(
+                          height: 20), 
+                      const Text("Food\nRecommendations",
+                          style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: Color.fromARGB(255, 220, 104, 145),
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold))
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              IconButton(
-                  icon: const Icon(Icons.person,
-                      size: 60, color: Color.fromARGB(255, 220, 104, 145)),
-                  // label: const Text("Baby Tracker"),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const MenuView()));
-                  }),
-              const Padding(
-                padding: EdgeInsets.fromLTRB(12, 10, 0, 0),
-                child: Text(
-                  "Forum",
-                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
+              )),
+          //Forum
+          Padding(
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: InkResponse(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MenuView(),
+                    ),
+                  );
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        child: Image.asset('assets/images/menu-icons/forum.png',
+                            height: 60),
+                      ),
+                      const SizedBox(
+                          height: 20), 
+                      const Text('Forum',
+                          style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: Color.fromARGB(255, 220, 104, 145),
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold))
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              IconButton(
-                  icon: const Icon(Icons.person,
-                      size: 60, color: Color.fromARGB(255, 220, 104, 145)),
-                  // label: const Text("Baby Tracker"),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const MenuView()));
-                  }),
-              const Padding(
-                padding: EdgeInsets.fromLTRB(12, 10, 0, 0),
-                child: Text(
-                  "Product Recommendations",
-                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
+              )),
+          // Product Recommendations
+          Padding(
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: InkResponse(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MenuView(),
+                    ),
+                  );
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        child: Image.asset(
+                            'assets/images/menu-icons/products2.png',
+                            height: 60),
+                      ),
+                      const SizedBox(
+                          height: 20), 
+                      const Text('Product\nRecommendations',
+                          style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: Color.fromARGB(255, 220, 104, 145),
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold))
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              IconButton(
-                  icon: const Icon(Icons.person,
-                      size: 60, color: Color.fromARGB(255, 220, 104, 145)),
-                  // label: const Text("Baby Tracker"),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const MenuView()));
-                  }),
-              const Padding(
-                padding: EdgeInsets.fromLTRB(12, 10, 0, 0),
-                child: Text(
-                  "Article Recommendations",
-                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
+              )),
+          //Article Recommendations
+          Padding(
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: InkResponse(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MenuView(),
+                    ),
+                  );
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        child: Image.asset(
+                            'assets/images/menu-icons/article2.png',
+                            height: 60),
+                      ),
+                      const SizedBox(
+                          height: 20), 
+                      const Text('Article\nRecommendations',
+                          style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: Color.fromARGB(255, 220, 104, 145),
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold))
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
+              )),
         ]));
   }
 }
