@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:thurula/views/MenuView.dart';
+import 'package:thurula/views/menu_view.dart';
 
 class PregnancyTimelineView extends StatelessWidget {
   const PregnancyTimelineView({super.key});
