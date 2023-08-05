@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:thurula/views/MenuView.dart';
+import 'package:thurula/views/menu_view.dart';
 
-class VaccinationTrackerView extends StatelessWidget {
-  const VaccinationTrackerView({super.key});
+class VaccinationTrackerView2 extends StatelessWidget {
+  const VaccinationTrackerView2({super.key});
 
   @override
   Widget build(BuildContext context) {
