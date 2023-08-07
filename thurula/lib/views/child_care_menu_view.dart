@@ -1,12 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// import 'package:thurula/views/widgets/wave_widget.dart';
-import 'package:thurula/views/MenuView.dart';
-import 'package:thurula/views/PregnancyTimelineView.dart';
+import 'package:thurula/views/menu_view.dart';
+import 'package:thurula/views/vaccination_tracker_view.dart';
+import 'package:thurula/views/length_chart_view.dart';
 
 // import 'package:provider/provider.dart';
 
-class PregnancyMenuView extends StatelessWidget {
-  const PregnancyMenuView({super.key});
+class ChildCareMenuView extends StatelessWidget {
+  const ChildCareMenuView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class PregnancyMenuView extends StatelessWidget {
     return Scaffold(
         backgroundColor: const Color.fromARGB(255, 227, 227, 227),
         body: GridView.count(crossAxisCount: 3, children: [
-          //Pregnancy Timeline
+          //Growth Tracker
           Padding(
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: InkResponse(
@@ -25,7 +26,7 @@ class PregnancyMenuView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const PregnancyTimelineView(),
+                      builder: (context) => const LengthChartView(),
                     ),
                   );
                 },
@@ -41,11 +42,11 @@ class PregnancyMenuView extends StatelessWidget {
                     children: [
                       ClipRRect(
                         child: Image.asset(
-                            'assets/images/menu-icons/timeline.png',
+                            'assets/images/menu-icons/growth.png',
                             height: 60),
                       ),
                       const SizedBox(height: 20),
-                      const Text('Pregancny Timeline',
+                      const Text("Growth Tracker",
                           style: TextStyle(
                               fontFamily: 'Montserrat',
                               color: Color.fromARGB(255, 220, 104, 145),
@@ -55,7 +56,7 @@ class PregnancyMenuView extends StatelessWidget {
                   ),
                 ),
               )),
-          //Health Monitoring
+//Vaccination Tracker
           Padding(
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: InkResponse(
@@ -63,11 +64,13 @@ class PregnancyMenuView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const MenuView(),
+                      builder: (context) => const VaccinationTrackerView(),
                     ),
                   );
                 },
                 child: Container(
+                  width: 200,
+                  height: 250,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20.0),
@@ -77,11 +80,11 @@ class PregnancyMenuView extends StatelessWidget {
                     children: [
                       ClipRRect(
                         child: Image.asset(
-                            'assets/images/menu-icons/healthcare.png',
+                            'assets/images/menu-icons/vaccine.png',
                             height: 60),
                       ),
                       const SizedBox(height: 20),
-                      const Text('Health Monitoring',
+                      const Text("Vaccination\nTracker",
                           style: TextStyle(
                               fontFamily: 'Montserrat',
                               color: Color.fromARGB(255, 220, 104, 145),
@@ -91,7 +94,7 @@ class PregnancyMenuView extends StatelessWidget {
                   ),
                 ),
               )),
-          //Exercise Recommendations
+//Feeding Monitoring
           Padding(
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: InkResponse(
@@ -104,6 +107,8 @@ class PregnancyMenuView extends StatelessWidget {
                   );
                 },
                 child: Container(
+                  width: 200,
+                  height: 250,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20.0),
@@ -113,11 +118,11 @@ class PregnancyMenuView extends StatelessWidget {
                     children: [
                       ClipRRect(
                         child: Image.asset(
-                            'assets/images/menu-icons/exercises.png',
+                            'assets/images/menu-icons/feeding.png',
                             height: 60),
                       ),
                       const SizedBox(height: 20),
-                      const Text('Exercise\nRecommendations',
+                      const Text("Feeding\nMonitoring",
                           style: TextStyle(
                               fontFamily: 'Montserrat',
                               color: Color.fromARGB(255, 220, 104, 145),
@@ -127,7 +132,7 @@ class PregnancyMenuView extends StatelessWidget {
                   ),
                 ),
               )),
-          //Baby Name Suggestions
+//Nap Time Monitoring
           Padding(
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: InkResponse(
@@ -140,6 +145,45 @@ class PregnancyMenuView extends StatelessWidget {
                   );
                 },
                 child: Container(
+                  width: 200,
+                  height: 250,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        child: Image.asset('assets/images/menu-icons/nap.png',
+                            height: 60),
+                      ),
+                      const SizedBox(height: 20),
+                      const Text("Nap Time\nMonitoring",
+                          style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: Color.fromARGB(255, 220, 104, 145),
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold))
+                    ],
+                  ),
+                ),
+              )),
+//Diaper Change Monitoring
+          Padding(
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: InkResponse(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MenuView(),
+                    ),
+                  );
+                },
+                child: Container(
+                  width: 200,
+                  height: 250,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20.0),
@@ -149,11 +193,11 @@ class PregnancyMenuView extends StatelessWidget {
                     children: [
                       ClipRRect(
                         child: Image.asset(
-                            'assets/images/menu-icons/healthcare.png',
+                            'assets/images/menu-icons/diaper.png',
                             height: 60),
                       ),
                       const SizedBox(height: 20),
-                      const Text('Health Monitoring',
+                      const Text("Diaper Change\nMonitoring",
                           style: TextStyle(
                               fontFamily: 'Montserrat',
                               color: Color.fromARGB(255, 220, 104, 145),
@@ -163,7 +207,7 @@ class PregnancyMenuView extends StatelessWidget {
                   ),
                 ),
               )),
-          //Exercise Recommendations
+//Photo Album
           Padding(
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: InkResponse(
@@ -176,6 +220,8 @@ class PregnancyMenuView extends StatelessWidget {
                   );
                 },
                 child: Container(
+                  width: 200,
+                  height: 250,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20.0),
@@ -184,11 +230,11 @@ class PregnancyMenuView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ClipRRect(
-                        child: Image.asset('assets/images/menu-icons/names.png',
+                        child: Image.asset('assets/images/menu-icons/album.png',
                             height: 60),
                       ),
                       const SizedBox(height: 20),
-                      const Text('Baby Name\nSuggestions',
+                      const Text("Photo Album",
                           style: TextStyle(
                               fontFamily: 'Montserrat',
                               color: Color.fromARGB(255, 220, 104, 145),
@@ -198,7 +244,7 @@ class PregnancyMenuView extends StatelessWidget {
                   ),
                 ),
               )),
-//Food Recommendations
+//Vision Test
           Padding(
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: InkResponse(
@@ -211,6 +257,8 @@ class PregnancyMenuView extends StatelessWidget {
                   );
                 },
                 child: Container(
+                  width: 200,
+                  height: 250,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20.0),
@@ -219,11 +267,12 @@ class PregnancyMenuView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ClipRRect(
-                        child: Image.asset('assets/images/menu-icons/food.png',
+                        child: Image.asset(
+                            'assets/images/menu-icons/vision.png',
                             height: 60),
                       ),
                       const SizedBox(height: 20),
-                      const Text('Food\nRecommendations',
+                      const Text("Vision Test",
                           style: TextStyle(
                               fontFamily: 'Montserrat',
                               color: Color.fromARGB(255, 220, 104, 145),
@@ -233,7 +282,82 @@ class PregnancyMenuView extends StatelessWidget {
                   ),
                 ),
               )),
-//Forum
+          //Skill Development Exercises
+          Padding(
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: InkResponse(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MenuView(),
+                    ),
+                  );
+                },
+                child: Container(
+                  width: 200,
+                  height: 250,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        child: Image.asset(
+                            'assets/images/menu-icons/skills.png',
+                            height: 60),
+                      ),
+                      const SizedBox(height: 20),
+                      const Text("Skill Development\nExercises",
+                          style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: Color.fromARGB(255, 220, 104, 145),
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold))
+                    ],
+                  ),
+                ),
+              )),
+          //Food Recommendations
+          Padding(
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: InkResponse(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MenuView(),
+                    ),
+                  );
+                },
+                child: Container(
+                  width: 200,
+                  height: 250,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        child: Image.asset('assets/images/menu-icons/food2.png',
+                            height: 60),
+                      ),
+                      const SizedBox(height: 20),
+                      const Text("Food\nRecommendations",
+                          style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: Color.fromARGB(255, 220, 104, 145),
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold))
+                    ],
+                  ),
+                ),
+              )),
+          //Forum
           Padding(
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: InkResponse(
@@ -290,7 +414,7 @@ class PregnancyMenuView extends StatelessWidget {
                     children: [
                       ClipRRect(
                         child: Image.asset(
-                            'assets/images/menu-icons/products.png',
+                            'assets/images/menu-icons/products2.png',
                             height: 60),
                       ),
                       const SizedBox(height: 20),
@@ -326,7 +450,7 @@ class PregnancyMenuView extends StatelessWidget {
                     children: [
                       ClipRRect(
                         child: Image.asset(
-                            'assets/images/menu-icons/article.png',
+                            'assets/images/menu-icons/article2.png',
                             height: 60),
                       ),
                       const SizedBox(height: 20),
