@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 // import 'package:thurula/views/widgets/wave_widget.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 
-import 'MenuView.dart';
+import 'menu_view.dart';
 import 'Question2View.dart';
 // import 'package:provider/provider.dart';
 
