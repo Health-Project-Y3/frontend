@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:thurula/views/NapTimer.dart';
 import 'package:thurula/views/AddNap.dart';
 import 'package:thurula/views/MenuView.dart';
-
+import 'package:thurula/views/NapRecords.dart';
 
 class NapDetails extends StatelessWidget {
   @override
@@ -11,7 +11,6 @@ class NapDetails extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text('Baby Nap Details'),
-        // centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 220, 104, 145),
         elevation: 0,
         leading: IconButton(
@@ -25,103 +24,134 @@ class NapDetails extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            SizedBox(height: 16),
-            Center(
-              child: Container(
-                width: 150,
-                height: 150,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/sleeping_image.png'),
-                    fit: BoxFit.cover,
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(height: 16),
+              Center(
+                child: Container(
+                  width: 150,
+                  height: 150,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/sleeping_image.png'),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(height: 8),
-            Center(
-              child: Text(
-                "Mary's Nap Details",
-
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.blue,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => NapTimer()),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(primary: const Color.fromARGB(255, 220, 104, 145),),
-                  child: Text('Nap Timer'),
-                ),
-                SizedBox(width: 16),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => AddNap()),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(primary: const Color.fromARGB(255, 220, 104, 145),),
-                  child: Text('Add Nap'),
-                ),
-              ],
-            ),
-            SizedBox(height: 16),
-            Row(
-              children: [
-                Expanded(
-                  child: NapStatCard(
-                    title: 'Total Naps',
-
-                    value: '7',
+              SizedBox(height: 8),
+              Center(
+                child: Text(
+                  "Mary's Nap Details",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.blue,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(width: 16),
-                Expanded(
-                  child: NapStatCard(
-                    title: 'Total Sleep Hours',
-                    value: '35',
+              ),
+              SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => NapTimer()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: const Color.fromARGB(255, 220, 104, 145),
+                    ),
+                    child: Text('Nap Timer'),
+                  ),
+                  SizedBox(width: 16),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => AddNap()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: const Color.fromARGB(255, 220, 104, 145),
+                    ),
+                    child: Text('Add Nap'),
+                  ),
+                ],
+              ),
+              SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    child: NapStatCard(
+                      title: 'Total Naps',
+                      value: '7',
+                    ),
+                  ),
+                  SizedBox(width: 16),
+                  Expanded(
+                    child: NapStatCard(
+                      title: 'Total Sleep Hours',
+                      value: '35',
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 2),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8),
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => NapRecords()), // Replace with your actual widget name
+                      );
+                    },
+                    child: Text(
+                      'All Nap Details',
+                      style: TextStyle(
+                        color: const Color.fromARGB(255, 220, 104, 145),
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
                   ),
                 ),
-              ],
-            ),
-            SizedBox(height: 16),
-            Container(
-              height: 300,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: buildBarChart(),
+              ),
+              SizedBox(height: 4),
+              Container(
+                height: 200,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: buildBarChart(),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
-
-
-
   List<Widget> buildBarChart() {
     List<Widget> bars = [];
-    List<String> days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']; // Days of the week
+    List<String> days = [
+      'Mon',
+      'Tue',
+      'Wed',
+      'Thu',
+      'Fri',
+      'Sat',
+      'Sun'
+    ]; // Days of the week
 
     for (int i = 0; i < 7; i++) {
       double barHeight = (i + 1) * 30.0; // Change height for each bar
