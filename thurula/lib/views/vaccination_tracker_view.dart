@@ -1,28 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:thurula/views/menu_view.dart';
-import 'package:thurula/services/vaccination_service.dart';
-import 'package:thurula/models/vaccination_model.dart';
-//import 'package:thurula/services/local_service.dart';
 
-class VaccinationTrackerView extends StatefulWidget {
+class VaccinationTrackerView extends StatelessWidget {
   const VaccinationTrackerView({super.key});
-
-  @override
-  _VaccinationTrackerViewState createState() => _VaccinationTrackerViewState();
-}
-
-class _VaccinationTrackerViewState extends State<VaccinationTrackerView> {
-  late Future<List<Vaccination>> upcomingVaccinations;
-  late Future<List<Vaccination>> completedVaccinations;
-  late String babyId;
-
-  @override
-  void initState() {
-    super.initState();
-    babyId = "64cd599fc65bbef9519bc04c";
-    upcomingVaccinations = VaccinationService.getDueVaccinations(babyId);
-    completedVaccinations = VaccinationService.getCompletedVaccinations(babyId);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,174 +12,162 @@ class _VaccinationTrackerViewState extends State<VaccinationTrackerView> {
           backgroundColor: const Color.fromARGB(255, 227, 227, 227),
           appBar: AppBar(
             bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(48.0),
+              preferredSize: const Size.fromHeight(48.0), // height of  TabBar
               child: Container(
-                color: const Color.fromARGB(255, 220, 104, 145),
+                color: const Color.fromARGB(255, 227, 227, 227),
                 child: const TabBar(
                   tabs: [
-                    Tab(text: "Upcoming"),
-                    Tab(text: "Completed"),
+                    Tab(
+                      text: "Upcoming",
+                    ),
+                    Tab(
+                      text: "Completed",
+                    ),
                   ],
                 ),
               ),
             ),
             title: const Text('Vaccination Tracker'),
-            actions: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: IconButton(
-                  icon: const Icon(Icons.menu),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const MenuView()),
-                    );
-                  },
-                ),
-              ),
-            ],
           ),
           body: TabBarView(
             children: [
-              buildVaccinationTabUpcoming(
-                  upcomingVaccinations), // Upcoming vaccinations
-              buildVaccinationTabCompleted(
-                  completedVaccinations), // Completed vaccinations
+              Column(
+                children: [
+                  const Center(
+                      child: Padding(
+                    padding: EdgeInsets.all(20.0),
+                    child: Text("Upcoming Vaccination Appointments",
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 88, 119, 161),
+                          fontFamily: 'Montserrat',
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        )),
+                  )),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: ListTile(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0)),
+                      tileColor: const Color.fromARGB(255, 255, 255, 255),
+                      leading: const Icon(Icons.calendar_today,
+                          color: Color.fromARGB(255, 220, 104, 145)),
+                      title: const Text('BCG Vaccine'),
+                      subtitle: const Text('Saturday, 19th August 2023'),
+                      trailing: TextButton(
+                        onPressed: () {
+                          // Handle Completed button press
+                        },
+                        style: TextButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5.0)),
+                          backgroundColor:
+                              const Color.fromARGB(255, 220, 104, 145),
+                        ),
+                        child: const Text('Completed'),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: ListTile(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0)),
+                      tileColor: const Color.fromARGB(255, 255, 255, 255),
+                      leading: const Icon(Icons.calendar_today,
+                          color: Color.fromARGB(255, 220, 104, 145)),
+                      title: const Text('Polio Vaccine'),
+                      subtitle: const Text('Thursday, 31st August 2023'),
+                      trailing: TextButton(
+                        onPressed: () {
+                          // Handle Completed button press
+                        },
+                        style: TextButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5.0)),
+                          backgroundColor:
+                              const Color.fromARGB(255, 220, 104, 145),
+                        ),
+                        child: const Text('Completed'),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: ListTile(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0)),
+                      tileColor: const Color.fromARGB(255, 255, 255, 255),
+                      leading: const Icon(Icons.calendar_today,
+                          color: Color.fromARGB(255, 220, 104, 145)),
+                      title: const Text('DTaP Vaccine'),
+                      subtitle: const Text('Wednesday, 20th September 2023'),
+                      trailing: TextButton(
+                        onPressed: () {
+                          // Handle Completed button press
+                        },
+                        style: TextButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5.0)),
+                          backgroundColor:
+                              const Color.fromARGB(255, 220, 104, 145),
+                        ),
+                        child: const Text('Completed'),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              Column(
+                children: [
+                  const Center(
+                      child: Padding(
+                    padding: EdgeInsets.all(20.0),
+                    child: Text("Completed Vaccination Appointments",
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 88, 119, 161),
+                          fontFamily: 'Montserrat',
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        )),
+                  )),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: ListTile(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0)),
+                      tileColor: const Color.fromARGB(255, 255, 255, 255),
+                      leading: const Icon(Icons.calendar_today,
+                          color: Color.fromARGB(255, 220, 104, 145)),
+                      title: const Text('Hepatitis B  - 1st Dose'),
+                      subtitle: const Text('Wednesday, 10th May 2023'),
+                      trailing: const Icon(Icons.done,
+                          color: Color.fromARGB(255, 220, 104, 145)),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: ListTile(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0)),
+                      tileColor: const Color.fromARGB(255, 255, 255, 255),
+                      leading: const Icon(Icons.calendar_today,
+                          color: Color.fromARGB(255, 220, 104, 145)),
+                      title: const Text('Hepatitis B  - 2nd Dose'),
+                      subtitle: const Text('Monday, 12th July 2023'),
+                      trailing: const Icon(Icons.done,
+                          color: Color.fromARGB(255, 220, 104, 145)),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
       ),
-    );
-  }
-
-  buildVaccinationTabUpcoming(Future<List<Vaccination>> upcomingVaccinations) {
-    return FutureBuilder<List<Vaccination>>(
-      future: upcomingVaccinations,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
-        } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Center(
-            child: Text('No upcoming vaccinations'),
-          );
-        } else {
-          List<Vaccination> vaccinations = snapshot.data!;
-          return Column(
-            children: [
-              const Center(
-                child: Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: Text(
-                    "Upcoming Vaccination Appointments",
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 88, 119, 161),
-                      fontFamily: 'Montserrat',
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-              for (var vaccination in vaccinations)
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: ListTile(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0)),
-                    tileColor: const Color.fromARGB(255, 255, 255, 255),
-                    leading: const Icon(Icons.calendar_today,
-                        color: Color.fromARGB(255, 220, 104, 145)),
-                    title: Text(vaccination.name ?? ''),
-                    subtitle: Text(vaccination.description ?? ''),
-                    trailing: TextButton(
-                      onPressed: () async {
-                        await VaccinationService.markCompletedVaccination(
-                            babyId, vaccination.id);
-                        setState(() {
-                          // Refresh the UI to reflect the changes
-                          upcomingVaccinations =
-                              VaccinationService.getDueVaccinations(babyId);
-                          completedVaccinations =
-                              VaccinationService.getCompletedVaccinations(
-                                  babyId);
-                        });
-                      },
-                      style: TextButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
-                        backgroundColor:
-                            const Color.fromARGB(255, 220, 104, 145),
-                      ),
-                      child: const Text('Completed'),
-                    ),
-                  ),
-                ),
-            ],
-          );
-        }
-      },
-    );
-  }
-
-  buildVaccinationTabCompleted(
-      Future<List<Vaccination>> completedVaccinations) {
-    return FutureBuilder<List<Vaccination>>(
-      future: completedVaccinations,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
-        } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Center(
-            child: Text('No Completed vaccinations'),
-          );
-        } else {
-          List<Vaccination> vaccinations = snapshot.data!;
-          return Column(
-            children: [
-              const Center(
-                child: Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: Text(
-                    "Completed Vaccination Appointments",
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 88, 119, 161),
-                      fontFamily: 'Montserrat',
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-              for (var vaccination in vaccinations)
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: ListTile(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    tileColor: const Color.fromARGB(255, 255, 255, 255),
-                    leading: const Icon(
-                      Icons.calendar_today,
-                      color: Color.fromARGB(255, 220, 104, 145),
-                    ),
-                    title: Text(vaccination.name ?? ''),
-                    subtitle: Text(vaccination.description ?? ''),
-                    trailing: const Icon(
-                      Icons.done,
-                      color: Color.fromARGB(255, 220, 104, 145),
-                    ),
-                  ),
-                ),
-            ],
-          );
-        }
-      },
     );
   }
 }

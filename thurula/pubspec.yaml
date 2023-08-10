@@ -67,6 +67,8 @@ flutter:
     - assets/images/
     - assets/images/fetus-size/
     - assets/images/menu-icons/
+    - assets/images/pregnancy-home/
+    - assets/fonts/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
@@ -91,6 +93,13 @@ fonts:
       - asset: assets/fonts/Montserrat-Italic.ttf
         style: italic
       - asset: assets/fonts/Montserrat-Bold.ttf
+        weight: 700
+  - family: Inter
+    fonts:
+      - asset: assets/fonts/Inter-Regular.ttf
+      - asset: assets/fonts/Inter-Italic.ttf
+        style: italic
+      - asset: assets/fonts/Inter-Bold.ttf
         weight: 700
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
