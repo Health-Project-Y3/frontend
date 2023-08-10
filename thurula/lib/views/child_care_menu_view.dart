@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:thurula/views/menu_view.dart';
 import 'package:thurula/views/vaccination_tracker_view.dart';
@@ -11,10 +10,6 @@ class ChildCareMenuView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    final bool keyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
-    // final model = Provider.of<HomeModel>(context);
-
     return Scaffold(
         backgroundColor: const Color.fromARGB(255, 227, 227, 227),
         body: GridView.count(crossAxisCount: 3, children: [

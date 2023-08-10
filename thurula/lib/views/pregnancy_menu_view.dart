@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-// import 'package:thurula/views/widgets/wave_widget.dart';
 import 'package:thurula/views/menu_view.dart';
 import 'package:thurula/views/pregnancy_timeline_view.dart';
-
-// import 'package:provider/provider.dart';
 
 class PregnancyMenuView extends StatelessWidget {
   const PregnancyMenuView({super.key});
@@ -159,7 +156,7 @@ class PregnancyMenuView extends StatelessWidget {
                   ),
                 ),
               )),
-          //Exercise Recommendations
+          //Baby Name Suggestions
           Padding(
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: InkResponse(
@@ -215,118 +212,12 @@ class PregnancyMenuView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ClipRRect(
-                        child: Image.asset('assets/images/menu-icons/food.png',
-                            height: 60),
-                      ),
-                      const SizedBox(height: 20),
-                      const Text('Food\nRecommendations',
-                          style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              color: Color.fromARGB(255, 220, 104, 145),
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold))
-                    ],
-                  ),
-                ),
-              )),
-//Forum
-          Padding(
-              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-              child: InkResponse(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const MenuView(),
-                    ),
-                  );
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ClipRRect(
-                        child: Image.asset('assets/images/menu-icons/forum.png',
-                            height: 60),
-                      ),
-                      const SizedBox(height: 20),
-                      const Text('Forum',
-                          style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              color: Color.fromARGB(255, 220, 104, 145),
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold))
-                    ],
-                  ),
-                ),
-              )),
-          // Product Recommendations
-          Padding(
-              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-              child: InkResponse(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const MenuView(),
-                    ),
-                  );
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ClipRRect(
                         child: Image.asset(
-                            'assets/images/menu-icons/products.png',
+                            'assets/images/menu-icons/vaccine.png',
                             height: 60),
                       ),
                       const SizedBox(height: 20),
-                      const Text('Product\nRecommendations',
-                          style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              color: Color.fromARGB(255, 220, 104, 145),
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold))
-                    ],
-                  ),
-                ),
-              )),
-          //Article Recommendations
-          Padding(
-              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-              child: InkResponse(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const MenuView(),
-                    ),
-                  );
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ClipRRect(
-                        child: Image.asset(
-                            'assets/images/menu-icons/article.png',
-                            height: 60),
-                      ),
-                      const SizedBox(height: 20),
-                      const Text('Article\nRecommendations',
+                      const Text('Vaccination Tracking',
                           style: TextStyle(
                               fontFamily: 'Montserrat',
                               color: Color.fromARGB(255, 220, 104, 145),
