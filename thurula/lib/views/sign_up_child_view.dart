@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:thurula/views/MenuView.dart';
+import 'package:thurula/views/menu_view.dart';
 
 class SignUpChildView extends StatelessWidget {
   const SignUpChildView({Key? key}) : super(key: key);
