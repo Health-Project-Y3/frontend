@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:thurula/views/NapDetails.dart';
+import 'package:thurula/views/DIaperChange.dart';
 // import 'package:thurula/views/widgets/wave_widget.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 
@@ -120,7 +121,7 @@ class MenuView extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const MenuView()));
+                            builder: (context) =>  DiaperChange()));
                   }),
               const Padding(
                 padding: EdgeInsets.fromLTRB(12, 10, 0, 0),
