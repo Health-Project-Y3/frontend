@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:thurula/views/diaper_change.dart';
+import 'package:thurula/views/nap_details.dart';
 import 'package:thurula/views/child_vaccination_tracker_view.dart';
 import 'package:thurula/views/length_chart_view.dart';
 import 'package:thurula/views/login_view.dart';
@@ -183,7 +185,7 @@ class ChildHomeView extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const ChildHomeView(),
+                              builder: (context) => NapDetails(),
                             ),
                           );
                         },
@@ -229,7 +231,7 @@ class ChildHomeView extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const ChildHomeView(),
+                              builder: (context) => DiaperChange(),
                             ),
                           );
                         },

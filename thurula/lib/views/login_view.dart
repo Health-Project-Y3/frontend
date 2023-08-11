@@ -17,8 +17,9 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-        body: Stack(
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      body: SingleChildScrollView(
+        child: Stack(
           children: [
             Form(
               key: _formKey,
@@ -28,100 +29,100 @@ class _LoginViewState extends State<LoginView> {
                   right: 25,
                 ),
                 child: Center(
-                    child: Column(
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.only(
-                        top: 50,
-                        right: 25,
+                  child: Column(
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(
+                          top: 50,
+                          right: 25,
+                        ),
+                        child: Image(
+                          image: AssetImage('assets/images/login.png'),
+                          height: 400,
+                        ),
                       ),
-                      child: Image(
-                        image: AssetImage('assets/images/login.png'),
-                        height: 400,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        left: 30,
-                        top: 50,
-                        right: 30,
-                      ),
-                      child: TextFormField(
-                        style: const TextStyle(color: Colors.grey),
-                        controller: usernameController,
-                        decoration: const InputDecoration(
-                          hintText: 'Username',
-                          hintStyle: TextStyle(color: Colors.grey),
-                          filled: true,
-                          fillColor: Colors.white,
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                width: 2,
-                                color: Color.fromRGBO(220, 104, 145,
-                                    1)), // Customize outline border color
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15.0)),
-                          ),
-                          border: OutlineInputBorder(
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 30,
+                          top: 50,
+                          right: 30,
+                        ),
+                        child: TextFormField(
+                          style: const TextStyle(color: Colors.grey),
+                          controller: usernameController,
+                          decoration: const InputDecoration(
+                            hintText: 'Username',
+                            hintStyle: TextStyle(color: Colors.grey),
+                            filled: true,
+                            fillColor: Colors.white,
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 2,
+                                  color: Color.fromRGBO(220, 104, 145, 1)),
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(15.0)),
+                              BorderRadius.all(Radius.circular(15.0)),
+                            ),
+                            border: OutlineInputBorder(
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(15.0)),
+                                borderSide: BorderSide(
+                                  width: 2,
+                                  color: Color.fromARGB(255, 220, 104, 145),
+                                )),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your username';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 30,
+                          top: 20,
+                          right: 30,
+                        ),
+                        child: TextFormField(
+                          style: const TextStyle(color: Colors.grey),
+                          controller: passwordController,
+                          obscureText: true,
+                          decoration: const InputDecoration(
+                            hintText: 'Password',
+                            hintStyle: TextStyle(color: Colors.grey),
+                            filled: true,
+                            fillColor: Colors.white,
+                            enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 width: 2,
                                 color: Color.fromARGB(255, 220, 104, 145),
-                              )),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter you username';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        left: 30,
-                        top: 20,
-                        right: 30,
-                      ),
-                      child: TextFormField(
-                        style: const TextStyle(color: Colors.grey),
-                        controller: passwordController,
-                        obscureText: true,
-                        decoration: const InputDecoration(
-                          hintText: 'Password',
-                          hintStyle: TextStyle(color: Colors.grey),
-                          filled: true,
-                          fillColor: Colors.white,
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 2,
-                              color: Color.fromARGB(255, 220, 104, 145),
-                            ), // Customize outline border color
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15.0)),
-                          ),
-                          border: OutlineInputBorder(
+                              ),
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(15.0)),
-                              borderSide: BorderSide(
-                                width: 2,
-                                color: Color.fromARGB(255, 220, 104, 145),
-                              )),
+                              BorderRadius.all(Radius.circular(15.0)),
+                            ),
+                            border: OutlineInputBorder(
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(15.0)),
+                                borderSide: BorderSide(
+                                  width: 2,
+                                  color: Color.fromARGB(255, 220, 104, 145),
+                                )),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your password';
+                            }
+                            return null;
+                          },
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your password';
-                          }
-                          return null;
-                        },
                       ),
-                    ),
-                    Padding(
+                      Padding(
                         padding: const EdgeInsets.only(
                           left: 30,
                           top: 30,
                           right: 30,
+                          bottom: 20, // Add bottom padding
                         ),
                         child: ElevatedButton(
                           onPressed: () async {
@@ -134,7 +135,7 @@ class _LoginViewState extends State<LoginView> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        const PregnancyHomeView(),
+                                    const PregnancyHomeView(),
                                   ),
                                 );
                               } else if (username == "Nadeeka" &&
@@ -160,7 +161,7 @@ class _LoginViewState extends State<LoginView> {
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color.fromARGB(
-                                255, 220, 104, 145), // Set the button color
+                                255, 220, 104, 145),
                             padding: const EdgeInsets.symmetric(
                                 vertical: 12, horizontal: 50),
                             shape: RoundedRectangleBorder(
@@ -174,9 +175,11 @@ class _LoginViewState extends State<LoginView> {
                               fontSize: 20,
                             ),
                           ),
-                        ))
-                  ],
-                )),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
             Positioned(
@@ -188,6 +191,8 @@ class _LoginViewState extends State<LoginView> {
               ),
             ),
           ],
-        ));
+        ),
+      ),
+    );
   }
 }
