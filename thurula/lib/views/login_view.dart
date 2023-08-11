@@ -139,6 +139,15 @@ class _LoginViewState extends State<LoginView> {
                                         const PregnancyHomeView(),
                                   ),
                                 );
+                              } else if (username == "anne" &&
+                                  password == "anee@123") {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const PregnancyHomeView(),
+                                  ),
+                                );
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
