@@ -278,110 +278,154 @@ class PregnancyHomeView extends StatelessWidget {
               ),
             ),
           ),
+
+          // days left
           Positioned(
-              top: 230,
-              left: 20,
-              child: Container(
-                width: 400,
-                height: 200,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 2,
-                      blurRadius: 5,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: Center(
+            top: 230,
+            left: 20,
+            right: 20,
+            child: Container(
+              width: 400,
+              height: 200,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 1,
+                    blurRadius: 4,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Center(
+                child: FittedBox(
+                  fit: BoxFit.contain, // Scale the content to fit within the container
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(
-                            10.0), // change this to the desired amount of padding
+                        // padding top
+                        padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
                         child: ClipRRect(
                           child: Image.asset(
-                              'assets/images/pregnancy-home/countdown.png',
-                              height: 120),
+                            'assets/images/pregnancy-home/countdown1.jpg',
+                            height: 150,
+                          ),
                         ),
                       ),
-                      const Expanded(
+                      const Padding(
+                        padding: EdgeInsets.only(bottom: 20.0),
                         child: Text(
-                          '70 days left for your bundle of joy to arrive!',
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 88, 119, 161),
-                            fontSize: 16.0,
-                            height: 1.5,
-                            fontFamily: 'Inter',
-                          ), // change this to the desired text color
+                        '70 days left for your bundle of joy to arrive!',
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 88, 119, 161),
+                          fontSize: 16.0,
+                          fontFamily: 'Inter',
+                          ),
                         ),
-                      ),
+                      )
                     ],
                   ),
                 ),
-              )),
+              ),
+            ),
+          ),
+
+          // baby size
           Positioned(
-              top: 450,
-              left: 20,
+            top: 440,
+            left: 20,
+            right: 20,
+            child: IntrinsicHeight(
               child: Container(
-                width: 400,
-                height: 150,
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 231, 159, 159),
-                  borderRadius: BorderRadius.circular(10.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 2,
-                      blurRadius: 5,
-                      offset: const Offset(0, 3),
+              width: 400,
+              // height: 200,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 1,
+                    blurRadius: 4,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Row(
+                      children: [
+                        Icon(
+                          Icons.square,
+                          size: 10,
+                          color: Color.fromARGB(255, 88, 119, 161),
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          'Week 25 Day 6',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 88, 119, 161),
+                          ),
+                        ),
+                        Spacer(), // Spacer to push the length and weight to the right
+                        Text(
+                          '34.6 cm 660.0 g',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Color.fromARGB(255, 88, 119, 161),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    const Text(
+                      'You baby is putting on fat and growing chubbier, which helps the baby adapt to the relatively low temperature of the outside world after leaving the womb.',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        const Text(
+                          'Baby in the womb',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 88, 119, 161),
+                          ),
+                        ),
+                        Image.asset(
+                          'assets/images/pregnancy-home/size.png',
+                          height: 80,
+                        ),
+                      ],
                     ),
                   ],
                 ),
-                child: Center(
-                  child: Row(
-                    children: [
-                      const Expanded(
-                          child: Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: Text(
-                          'Your baby is as big as a Strawberry',
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 88, 119, 161),
-                              fontSize: 18.0,
-                              height: 1.5,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight
-                                  .bold), // change this to the desired text color
-                        ),
-                      )),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 5.0,
-                          right: 10.0,
-                        ), // change this to the desired amount of padding
-                        child: ClipRRect(
-                          child: Image.asset(
-                              'assets/images/pregnancy-home/size.png',
-                              height: 80),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              )),
+              ),
+            ),
+          ),
+          ),
+
           Positioned(
-              top: 630,
-              left: 50,
-              right: 50,
+              top: 670,
+              left: 20,
+              right: 20,
               child: Container(
                 width: 380,
                 height: 80,
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 88, 119, 161),
+                  color: const Color.fromARGB(255, 220, 104, 145),
                   borderRadius: BorderRadius.circular(10.0),
                   boxShadow: [
                     BoxShadow(
