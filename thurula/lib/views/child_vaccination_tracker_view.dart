@@ -12,12 +12,10 @@ class ChildVaccinationTrackerView extends StatefulWidget {
   ChildVaccinationTrackerView({super.key});
 
   @override
-  _PregnancyVaccinationTrackerViewState createState() =>
-      _PregnancyVaccinationTrackerViewState();
+  _ChildVaccinationTrackerView createState() => _ChildVaccinationTrackerView();
 }
 
-class _PregnancyVaccinationTrackerViewState
-    extends State<ChildVaccinationTrackerView> {
+class _ChildVaccinationTrackerView extends State<ChildVaccinationTrackerView> {
   List<VaccinationDetails> upcomingVaccinations = [
     VaccinationDetails('Hib Vaccine', 'Saturday, 19th August 2023', false),
     VaccinationDetails(
