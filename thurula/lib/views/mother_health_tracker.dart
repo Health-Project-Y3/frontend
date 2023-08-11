@@ -23,8 +23,13 @@ class MotherHealthTracker extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: Colors.grey,
+                image: DecorationImage(
+                  image: AssetImage('assets/images/mom.png'),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
+
             SizedBox(height: 16),
             Text(
               "Dushanee Gamage",
