@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:thurula/views/nap_timer.dart';
 import 'package:thurula/views/add_nap.dart';
 import 'package:thurula/views/nap_records.dart';
-import 'package:thurula/views/child_home_view.dart';
+import 'package:thurula/views/pregnancy_home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
@@ -40,11 +40,14 @@ class NapDetails extends StatelessWidget {
             color: const Color.fromARGB(255, 220, 104, 145), // Back icon color
           ),
           onPressed: () {
-            // Handle back button press here
-            Navigator.pop(context); // This should navigate back correctly
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => PregnancyHomeView()),
+            );
           },
         ),
       ),
+
 
 
       body: SingleChildScrollView(
