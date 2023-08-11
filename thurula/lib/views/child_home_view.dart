@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thurula/views/child_vaccination_tracker_view.dart';
 import 'package:thurula/views/length_chart_view.dart';
+import 'package:thurula/views/login_view.dart';
 
 class ChildHomeView extends StatelessWidget {
   const ChildHomeView({super.key});
@@ -15,7 +16,7 @@ class ChildHomeView extends StatelessWidget {
             top: 50,
             left: 20,
             child: Text(
-              "Welcome Anne!",
+              "Welcome Nadeeka!",
               style: TextStyle(
                 color: Color.fromARGB(255, 220, 104, 145),
                 fontFamily: 'Inter',
@@ -478,6 +479,34 @@ class ChildHomeView extends StatelessWidget {
                   ),
                 ),
               )),
+          Positioned(
+            top: 30,
+            right: 10,
+            child: Material(
+              color: Colors.transparent,
+              child: Ink(
+                decoration: const BoxDecoration(
+                  color: Colors.transparent,
+                  shape: BoxShape.circle,
+                ),
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginView(),
+                      ),
+                    );
+                  },
+                  iconSize: 30,
+                  icon: const Icon(
+                    Icons.logout_rounded,
+                    color: Color.fromARGB(255, 220, 104, 145),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

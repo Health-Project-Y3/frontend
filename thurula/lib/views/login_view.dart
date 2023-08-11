@@ -129,8 +129,7 @@ class _LoginViewState extends State<LoginView> {
                               final username = usernameController.text;
                               final password = passwordController.text;
 
-                              if (username == "emily" &&
-                                  password == "emily@123") {
+                              if (username == "Ama" && password == "Ama@123") {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -138,8 +137,8 @@ class _LoginViewState extends State<LoginView> {
                                         const PregnancyHomeView(),
                                   ),
                                 );
-                              } else if (username == "anne" &&
-                                  password == "anne@123") {
+                              } else if (username == "Nadeeka" &&
+                                  password == "Nadeeka@123") {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -181,10 +180,10 @@ class _LoginViewState extends State<LoginView> {
               ),
             ),
             Positioned(
-              top: 10, // Adjust the top position as needed
-              right: 10, // Adjust the right position as needed
+              top: 10,
+              right: 10,
               child: Image.asset(
-                'assets/images/logo2.png', // Replace with your logo image path
+                'assets/images/logo2.png',
                 height: 120,
               ),
             ),
