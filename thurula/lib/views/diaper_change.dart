@@ -13,7 +13,8 @@ class _DiaperChange extends State<DiaperChange> {
         title: Text('Diaper Change Input'),
         backgroundColor: const Color.fromARGB(255, 220, 104, 145),
       ),
-      body: SingleChildScrollView( // Wrap the Column with SingleChildScrollView
+      body: SingleChildScrollView(
+        // Wrap the Column with SingleChildScrollView
         child: Column(
           children: [
             Container(
@@ -21,7 +22,8 @@ class _DiaperChange extends State<DiaperChange> {
               padding: EdgeInsets.all(16),
               child: CircleAvatar(
                 radius: 50,
-                backgroundImage: AssetImage('assets/images/diaper.png'), // Replace with your circular image asset
+                backgroundImage: AssetImage(
+                    'assets/images/menu-icons/diaper.png'), // Replace with your circular image asset
               ),
             ),
             Card(
@@ -47,7 +49,6 @@ class _DiaperChange extends State<DiaperChange> {
     );
   }
 }
-
 
 class DiaperChangeEntryForm extends StatefulWidget {
   @override
@@ -88,7 +89,8 @@ class _DiaperChangeEntryFormState extends State<DiaperChangeEntryForm> {
             // Handle button press
           },
           style: ElevatedButton.styleFrom(
-            primary: const Color.fromARGB(255, 220, 104, 145), // Adjust the color
+            primary:
+                const Color.fromARGB(255, 220, 104, 145), // Adjust the color
           ),
           child: Text('Add Diaper Change'),
         ),
@@ -102,7 +104,6 @@ class DiaperChangeEntry {
 
   DiaperChangeEntry(this.dateTime);
 }
-
 
 class DiaperChangeDetails extends StatelessWidget {
   @override
@@ -162,19 +163,22 @@ class DiaperChangeDetails extends StatelessWidget {
                 DataCell(Text('09:00')),
                 DataCell(Text('2023-08-10')),
                 DataCell(IconButton(icon: Icon(Icons.edit), onPressed: () {})),
-                DataCell(IconButton(icon: Icon(Icons.delete), onPressed: () {})),
+                DataCell(
+                    IconButton(icon: Icon(Icons.delete), onPressed: () {})),
               ]),
               DataRow(cells: [
                 DataCell(Text('13:30')),
                 DataCell(Text('2023-08-10')),
                 DataCell(IconButton(icon: Icon(Icons.edit), onPressed: () {})),
-                DataCell(IconButton(icon: Icon(Icons.delete), onPressed: () {})),
+                DataCell(
+                    IconButton(icon: Icon(Icons.delete), onPressed: () {})),
               ]),
               DataRow(cells: [
                 DataCell(Text('10:45')),
                 DataCell(Text('2023-08-11')),
                 DataCell(IconButton(icon: Icon(Icons.edit), onPressed: () {})),
-                DataCell(IconButton(icon: Icon(Icons.delete), onPressed: () {})),
+                DataCell(
+                    IconButton(icon: Icon(Icons.delete), onPressed: () {})),
               ]),
               // ... add more rows
             ],

@@ -131,52 +131,6 @@ class ChildHomeView extends StatelessWidget {
                           ),
                         ),
                       )),
-//Feeding Monitoring
-                  Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: InkResponse(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const ChildHomeView(),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          width: 120,
-                          height: 120,
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(223, 247, 198, 193),
-                            borderRadius: BorderRadius.circular(5.0),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 2,
-                                blurRadius: 2,
-                                offset: const Offset(0, 3),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              ClipRRect(
-                                child: Image.asset(
-                                    'assets/images/menu-icons/feeding.png',
-                                    height: 60),
-                              ),
-                              const SizedBox(height: 10),
-                              const Text("Feeding Monitoring",
-                                  style: TextStyle(
-                                      fontFamily: 'Montserrat',
-                                      color: Color.fromARGB(255, 88, 119, 161),
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold))
-                            ],
-                          ),
-                        ),
-                      )),
 //Nap Time Monitoring
                   Padding(
                       padding: const EdgeInsets.all(5.0),
@@ -260,6 +214,52 @@ class ChildHomeView extends StatelessWidget {
                               ),
                               const SizedBox(height: 10),
                               const Text("Diaper Change\nMonitoring",
+                                  style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      color: Color.fromARGB(255, 88, 119, 161),
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold))
+                            ],
+                          ),
+                        ),
+                      )),
+                  //Feeding Monitoring
+                  Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: InkResponse(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ChildHomeView(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          width: 120,
+                          height: 120,
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(223, 247, 198, 193),
+                            borderRadius: BorderRadius.circular(5.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 2,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ClipRRect(
+                                child: Image.asset(
+                                    'assets/images/menu-icons/feeding.png',
+                                    height: 60),
+                              ),
+                              const SizedBox(height: 10),
+                              const Text("Feeding Monitoring",
                                   style: TextStyle(
                                       fontFamily: 'Montserrat',
                                       color: Color.fromARGB(255, 88, 119, 161),
