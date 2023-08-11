@@ -26,17 +26,26 @@ class NapDetails extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Baby Nap Details'),
-        backgroundColor: const Color.fromARGB(255, 220, 104, 145),
+        title: Text(
+          'Baby Nap Details',
+          style: TextStyle(
+            color: const Color.fromARGB(255, 220, 104, 145), // Title color
+          ),
+        ),
+        backgroundColor: Colors.white, // Background color of the app bar
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(
+            Icons.arrow_back,
+            color: const Color.fromARGB(255, 220, 104, 145), // Back icon color
+          ),
           onPressed: () {
             // Handle back button press here
             Navigator.of(context).pop(); // Example: Navigate back
           },
         ),
       ),
+
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(16.0),
@@ -141,80 +150,18 @@ class NapDetails extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 4),
-              // Container(
-              //   height: 200,
-              //   child: FutureBuilder<Map<String, double>>(
-              //     future: fetchSleepHours(),
-              //     builder: (context, snapshot) {
-              //       if (snapshot.connectionState == ConnectionState.waiting) {
-              //         return Center(child: CircularProgressIndicator());
-              //       } else if (snapshot.hasError) {
-              //         return Center(child: Text('Error: ${snapshot.error}'));
-              //       } else if (!snapshot.hasData) {
-              //         return Center(child: Text('No data available.'));
-              //       }
-              //
-              //       final List<FlSpot> spots =
-              //           snapshot.data!.entries.map((entry) {
-              //         final dayIndex = [
-              //           'Mon',
-              //           'Tue',
-              //           'Wed',
-              //           'Thu',
-              //           'Fri',
-              //           'Sat',
-              //           'Sun'
-              //         ].indexOf(entry.key);
-              //         return FlSpot(dayIndex.toDouble(), entry.value);
-              //       }).toList();
-              //
-              //       return LineChart(
-              //         LineChartData(
-              //           gridData: FlGridData(show: false),
-              //           titlesData: FlTitlesData(
-              //             topTitles: SideTitles(showTitles: false),
-              //             leftTitles: SideTitles(showTitles: true),
-              //
-              //             bottomTitles: SideTitles(
-              //               showTitles: true,
-              //               getTitles: (value) {
-              //                 final daysOfWeek = [
-              //                   'Mon',
-              //                   'Tue',
-              //                   'Wed',
-              //                   'Thu',
-              //                   'Fri',
-              //                   'Sat',
-              //                   'Sun'
-              //                 ];
-              //                 if (value >= 0 && value < daysOfWeek.length) {
-              //                   return daysOfWeek[value.toInt()];
-              //                 }
-              //                 return '';
-              //               },
-              //             ),
-              //           ),
-              //           borderData: FlBorderData(show: true),
-              //           minX: 0,
-              //           maxX: 6,
-              //           minY: 0,
-              //           maxY: snapshot.data!.values.reduce(
-              //                   (max, value) => max > value ? max : value) +
-              //               2,
-              //           lineBarsData: [
-              //             LineChartBarData(
-              //               spots: spots,
-              //               colors: [Colors.blue],
-              //               isCurved: true,
-              //               dotData: FlDotData(show: true),
-              //             ),
-              //           ],
-              //         ),
-              //       );
-              //     },
-              //   ),
-              // ),
+
+              // Bar Chart
+              SizedBox(height: 16),
+              Container(
+                height: 300,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: buildBarChart(),
+                  ),
+                ),
+              )
             ],
           ),
         ),
@@ -223,41 +170,58 @@ class NapDetails extends StatelessWidget {
   }
 }
 
-// class LineChartPainter extends StatelessWidget {
-//   final List<double> sleepHours;
+List<Widget> buildBarChart() {
+  List<Widget> bars = [];
+  List<String> days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']; // Days of the week
 
-  // LineChartPainter(this.sleepHours);
-  //
-  // @override
-  // Widget build(BuildContext context) {
-  //   final List<FlSpot> spots = sleepHours.asMap().entries.map((entry) {
-  //     return FlSpot(entry.key.toDouble(), entry.value);
-  //   }).toList();
+  for (int i = 0; i < 7; i++) {
+    double barHeight = (i + 1) * 30.0; // Vary the height for each bar
 
-    // return LineChart(
-    //   LineChartData(
-    //     gridData: FlGridData(show: false),
-    //     titlesData: FlTitlesData(
-    //       leftTitles: SideTitles(showTitles: true),
-    //       bottomTitles: SideTitles(showTitles: true),
-    //     ),
-    //     borderData: FlBorderData(show: true),
-    //     minX: 0,
-    //     maxX: sleepHours.length.toDouble() - 1,
-    //     minY: 0,
-    //     maxY: sleepHours.reduce((max, value) => max > value ? max : value),
-    //     lineBarsData: [
-    //       LineChartBarData(
-    //         spots: spots,
-    //         colors: [Colors.blue],
-    //         isCurved: true,
-    //         dotData: FlDotData(show: true),
-    //       ),
-    //     ],
-    //   ),
-    // );
-//   }
-// }
+    bars.add(
+      Container(
+        width: 20,
+        padding: EdgeInsets.all(20),
+        height: barHeight,
+        color: Colors.pink,
+      ),
+    );
+  }
+
+  List<Widget> chartContent = [];
+
+  // Y-Axis labels
+
+  // Bars and X-Axis labels
+  for (int i = 0; i < bars.length; i++) {
+    chartContent.add(
+      Column(
+        children: [
+          Container(
+            height: 170,
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                Container(
+                  width: 65,
+                  height: 100,
+                  color: Colors.transparent,
+                ),
+                bars[i],
+              ],
+            ),
+          ),
+          SizedBox(height: 4),
+          Text(
+            days[i],
+            style: TextStyle(fontSize: 12),
+          ),
+        ],
+      ),
+    );
+  }
+
+  return chartContent;
+}
 
 class NapStatCard extends StatelessWidget {
   final String title;
