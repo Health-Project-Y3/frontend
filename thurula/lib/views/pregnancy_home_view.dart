@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thurula/views/pregnancy_menu_view.dart';
 import 'package:thurula/views/pregnancy_timeline_view.dart';
+import 'package:thurula/views/pregnancy_vaccination_tracker_view.dart';
 
 class PregnancyHomeView extends StatelessWidget {
   const PregnancyHomeView({super.key});
@@ -220,6 +221,7 @@ class PregnancyHomeView extends StatelessWidget {
                           ),
                         ),
                       )),
+                  //Vaccination Tracking
                   Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: InkResponse(
@@ -227,7 +229,8 @@ class PregnancyHomeView extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const PregnancyHomeView(),
+                              builder: (context) =>
+                                  PregnancyVaccinationTrackerView(),
                             ),
                           );
                         },
