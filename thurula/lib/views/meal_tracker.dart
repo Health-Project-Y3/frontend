@@ -13,9 +13,26 @@ class _MealTrackerState extends State<MealTracker> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Baby MealTracker'),
-        backgroundColor: Color.fromARGB(255, 220, 104, 145), // Custom app bar color
+        title: Text(
+          'Baby MealTracker',
+          style: TextStyle(
+            color: const Color.fromARGB(255, 220, 104, 145), // Title color
+          ),
+        ),
+        backgroundColor: Colors.white, // Background color of the app bar
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: const Color.fromARGB(255, 220, 104, 145), // Back icon color
+          ),
+          onPressed: () {
+            // Handle back button press here
+            Navigator.pop(context); // Navigate back
+          },
+        ),
       ),
+
+
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
