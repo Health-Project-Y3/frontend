@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:thurula/views/pregnancy_menu_view.dart';
-import 'package:thurula/views/pregnancy_timeline_view.dart';
-import 'package:thurula/views/pregnancy_vaccination_tracker_view.dart';
+import 'package:thurula/views/child_vaccination_tracker_view.dart';
+import 'package:thurula/views/length_chart_view.dart';
 
 class ChildHomeView extends StatelessWidget {
   const ChildHomeView({super.key});
@@ -36,7 +35,53 @@ class ChildHomeView extends StatelessWidget {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: <Widget>[
-                  //Pregnancy Timeline
+                  //Growth Tracker
+                  Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: InkResponse(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const LengthChartView(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          width: 120,
+                          height: 120,
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(223, 247, 198, 193),
+                            borderRadius: BorderRadius.circular(5.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 2,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ClipRRect(
+                                child: Image.asset(
+                                    'assets/images/menu-icons/growth.png',
+                                    height: 60),
+                              ),
+                              const SizedBox(height: 10),
+                              const Text("Growth Tracker",
+                                  style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      color: Color.fromARGB(255, 88, 119, 161),
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold))
+                            ],
+                          ),
+                        ),
+                      )),
+//Vaccination Tracker
                   Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: InkResponse(
@@ -45,192 +90,7 @@ class ChildHomeView extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  const PregnancyTimelineView(),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          width: 120,
-                          height: 120,
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(223, 247, 198, 193),
-                            borderRadius: BorderRadius.circular(5.0),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 2,
-                                blurRadius: 2,
-                                offset: const Offset(0, 3),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              ClipRRect(
-                                child: Image.asset(
-                                    'assets/images/menu-icons/timeline.png',
-                                    height: 60),
-                              ),
-                              const SizedBox(height: 10),
-                              const Text('Pregancny\nTimeline',
-                                  style: TextStyle(
-                                      fontFamily: 'Montserrat',
-                                      color: Color.fromARGB(255, 88, 119, 161),
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold))
-                            ],
-                          ),
-                        ),
-                      )),
-                  //Health Monitoring
-                  Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: InkResponse(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const ChildHomeView(),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          width: 120,
-                          height: 120,
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(223, 247, 198, 193),
-                            borderRadius: BorderRadius.circular(5.0),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 2,
-                                blurRadius: 2,
-                                offset: const Offset(0, 3),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              ClipRRect(
-                                child: Image.asset(
-                                    'assets/images/menu-icons/healthcare.png',
-                                    height: 60),
-                              ),
-                              const SizedBox(height: 10),
-                              const Text('Health\nMonitoring',
-                                  style: TextStyle(
-                                      fontFamily: 'Montserrat',
-                                      color: Color.fromARGB(255, 88, 119, 161),
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold))
-                            ],
-                          ),
-                        ),
-                      )),
-                  //Exercise Recommendations
-                  Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: InkResponse(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const ChildHomeView(),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          width: 120,
-                          height: 120,
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(223, 247, 198, 193),
-                            borderRadius: BorderRadius.circular(5.0),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 2,
-                                blurRadius: 2,
-                                offset: const Offset(0, 3),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              ClipRRect(
-                                child: Image.asset(
-                                    'assets/images/menu-icons/exercises.png',
-                                    height: 60),
-                              ),
-                              const SizedBox(height: 10),
-                              const Text('Exercise\nRecommendations',
-                                  style: TextStyle(
-                                      fontFamily: 'Montserrat',
-                                      color: Color.fromARGB(255, 88, 119, 161),
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold))
-                            ],
-                          ),
-                        ),
-                      )),
-                  //Baby Name Suggestions
-                  Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: InkResponse(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const ChildHomeView(),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          width: 120,
-                          height: 120,
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(223, 247, 198, 193),
-                            borderRadius: BorderRadius.circular(5.0),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 2,
-                                blurRadius: 2,
-                                offset: const Offset(0, 3),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              ClipRRect(
-                                child: Image.asset(
-                                    'assets/images/menu-icons/names.png',
-                                    height: 60),
-                              ),
-                              const SizedBox(height: 10),
-                              const Text('Baby Name\nSuggestions',
-                                  style: TextStyle(
-                                      fontFamily: 'Montserrat',
-                                      color: Color.fromARGB(255, 88, 119, 161),
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold))
-                            ],
-                          ),
-                        ),
-                      )),
-                  //Vaccination Tracking
-                  Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: InkResponse(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  PregnancyVaccinationTrackerView(),
+                                  ChildVaccinationTrackerView(),
                             ),
                           );
                         },
@@ -258,7 +118,192 @@ class ChildHomeView extends StatelessWidget {
                                     height: 60),
                               ),
                               const SizedBox(height: 10),
-                              const Text('Vaccination Tracking',
+                              const Text("Vaccination Tracker",
+                                  style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      color: Color.fromARGB(255, 88, 119, 161),
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold))
+                            ],
+                          ),
+                        ),
+                      )),
+//Feeding Monitoring
+                  Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: InkResponse(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ChildHomeView(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          width: 120,
+                          height: 120,
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(223, 247, 198, 193),
+                            borderRadius: BorderRadius.circular(5.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 2,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ClipRRect(
+                                child: Image.asset(
+                                    'assets/images/menu-icons/feeding.png',
+                                    height: 60),
+                              ),
+                              const SizedBox(height: 10),
+                              const Text("Feeding Monitoring",
+                                  style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      color: Color.fromARGB(255, 88, 119, 161),
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold))
+                            ],
+                          ),
+                        ),
+                      )),
+//Nap Time Monitoring
+                  Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: InkResponse(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ChildHomeView(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          width: 120,
+                          height: 120,
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(223, 247, 198, 193),
+                            borderRadius: BorderRadius.circular(5.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 2,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ClipRRect(
+                                child: Image.asset(
+                                    'assets/images/menu-icons/nap.png',
+                                    height: 60),
+                              ),
+                              const SizedBox(height: 10),
+                              const Text("Nap Time Monitoring",
+                                  style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      color: Color.fromARGB(255, 88, 119, 161),
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold))
+                            ],
+                          ),
+                        ),
+                      )),
+//Diaper Change Monitoring
+                  Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: InkResponse(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ChildHomeView(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          width: 120,
+                          height: 120,
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(223, 247, 198, 193),
+                            borderRadius: BorderRadius.circular(5.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 2,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ClipRRect(
+                                child: Image.asset(
+                                    'assets/images/menu-icons/diaper.png',
+                                    height: 50),
+                              ),
+                              const SizedBox(height: 10),
+                              const Text("Diaper Change\nMonitoring",
+                                  style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      color: Color.fromARGB(255, 88, 119, 161),
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold))
+                            ],
+                          ),
+                        ),
+                      )),
+
+                  //Skill Development Exercises
+                  Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: InkResponse(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ChildHomeView(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          width: 120,
+                          height: 120,
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(223, 247, 198, 193),
+                            borderRadius: BorderRadius.circular(5.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 2,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ClipRRect(
+                                child: Image.asset(
+                                    'assets/images/menu-icons/skills.png',
+                                    height: 55),
+                              ),
+                              const SizedBox(height: 10),
+                              const Text("Skill Development\nExercises",
                                   style: TextStyle(
                                       fontFamily: 'Montserrat',
                                       color: Color.fromARGB(255, 88, 119, 161),
@@ -369,10 +414,10 @@ class ChildHomeView extends StatelessWidget {
               )),
           Positioned(
               top: 630,
-              left: 50,
-              right: 50,
+              left: 40,
+              right: 40,
               child: Container(
-                width: 380,
+                width: 400,
                 height: 80,
                 decoration: BoxDecoration(
                   color: const Color.fromARGB(255, 88, 119, 161),
@@ -395,7 +440,7 @@ class ChildHomeView extends StatelessWidget {
                           left: 15.0,
                         ),
                         child: Text(
-                          'Your next vaccine is in',
+                          'Baby\'s next vaccine is in',
                           style: TextStyle(
                               color: Color.fromARGB(255, 255, 255, 255),
                               fontSize: 20.0,

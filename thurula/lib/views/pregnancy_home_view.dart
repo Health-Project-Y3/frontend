@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:thurula/views/pregnancy_menu_view.dart';
 import 'package:thurula/views/pregnancy_timeline_view.dart';
 import 'package:thurula/views/pregnancy_vaccination_tracker_view.dart';
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:thurula/views/menu_view.dart';
+import 'package:thurula/views/child_home_view.dart';
 import 'package:thurula/views/pregnancy_home_view.dart';
-import 'package:thurula/views/pregnancy_menu_view.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -140,12 +139,11 @@ class _LoginViewState extends State<LoginView> {
                                   ),
                                 );
                               } else if (username == "anne" &&
-                                  password == "anee@123") {
+                                  password == "anne@123") {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        const PregnancyHomeView(),
+                                    builder: (context) => const ChildHomeView(),
                                   ),
                                 );
                               } else {
