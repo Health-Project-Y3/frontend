@@ -41,10 +41,11 @@ class NapDetails extends StatelessWidget {
           ),
           onPressed: () {
             // Handle back button press here
-            Navigator.of(context).pop(); // Example: Navigate back
+            Navigator.pop(context); // This should navigate back correctly
           },
         ),
       ),
+
 
       body: SingleChildScrollView(
         child: Padding(
