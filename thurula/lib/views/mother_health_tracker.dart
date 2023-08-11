@@ -9,9 +9,25 @@ class MotherHealthTracker extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFFDC6891),
-        title: Text("Mother Health Tracker"),
+        backgroundColor: Colors.white, // Background color of the app bar
+        title: Text(
+          "Mother Health Tracker",
+          style: TextStyle(
+            color: const Color.fromARGB(255, 220, 104, 145), // Title color
+          ),
+        ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: const Color.fromARGB(255, 220, 104, 145), // Back icon color
+          ),
+          onPressed: () {
+            // Handle back button press here
+            Navigator.pop(context); // Navigate back
+          },
+        ),
       ),
+
       backgroundColor: Color(0xFFFFFFFF),
       body: Center(
         child: Column(
@@ -23,8 +39,13 @@ class MotherHealthTracker extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: Colors.grey,
+                image: DecorationImage(
+                  image: AssetImage('assets/images/mom.png'),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
+
             SizedBox(height: 16),
             Text(
               "Dushanee Gamage",

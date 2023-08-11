@@ -40,11 +40,15 @@ class NapDetails extends StatelessWidget {
             color: const Color.fromARGB(255, 220, 104, 145), // Back icon color
           ),
           onPressed: () {
-            // Handle back button press here
-            Navigator.of(context).pop(); // Example: Navigate back
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ChildHomeView()),
+            );
           },
         ),
       ),
+
+
 
       body: SingleChildScrollView(
         child: Padding(
