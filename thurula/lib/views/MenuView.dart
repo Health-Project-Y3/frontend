@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:thurula/views/MotherHealthTracker.dart';
 import 'package:thurula/views/NapDetails.dart';
-import 'package:thurula/views/DIaperChange.dart';
+import 'package:thurula/views/DiaperChange.dart';
+import 'package:thurula/views/MealTracker.dart';
+
 // import 'package:thurula/views/widgets/wave_widget.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 
@@ -77,7 +80,7 @@ class MenuView extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const MenuView()));
+                            builder: (context) =>  MealTracker()));
                   }),
               const Padding(
                 padding: EdgeInsets.fromLTRB(12, 10, 0, 0),
@@ -148,7 +151,7 @@ class MenuView extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.fromLTRB(12, 10, 0, 0),
                 child: Text(
-                  "Store Recommandations",
+                  "Store Recommendations",
                   style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
@@ -253,7 +256,7 @@ class MenuView extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const MenuView()));
+                            builder: (context) =>  MotherHealthTracker()));
                   }),
               const Padding(
                 padding: EdgeInsets.fromLTRB(12, 10, 0, 0),
