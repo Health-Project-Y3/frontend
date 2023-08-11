@@ -70,6 +70,8 @@ flutter:
     - assets/images/menu-icons/
     - assets/images/pregnancy-home/
     - assets/images/pregnancy-home/calendar/
+    - assets/images/child-home/
+    - assets/images/child-home/calendar/
     - assets/fonts/
 
   # To add assets to your application, add an assets section, like this:
