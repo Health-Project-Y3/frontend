@@ -4,6 +4,7 @@ import 'package:thurula/views/mother_health_tracker.dart';
 import 'package:thurula/views/pregnancy_timeline_view.dart';
 import 'package:thurula/views/pregnancy_vaccination_tracker_view.dart';
 import 'package:thurula/views/pregnancy_exercise_recommendations_view.dart';
+import 'package:thurula/views/pregnancy_baby_names_view.dart';
 
 class PregnancyHomeView extends StatelessWidget {
   const PregnancyHomeView({super.key});
@@ -75,12 +76,15 @@ class PregnancyHomeView extends StatelessWidget {
                                     height: 60),
                               ),
                               const SizedBox(height: 10),
-                              const Text('Pregancny\nTimeline',
-                                  style: TextStyle(
-                                      fontFamily: 'Montserrat',
-                                      color: Color.fromARGB(255, 88, 119, 161),
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold))
+                              // center aligned text
+                              const Text(
+                                'Pregnancy\nTimeline',
+                                style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    color: Color.fromARGB(255, 88, 119, 161),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold)
+                                ),
                             ],
                           ),
                         ),
@@ -185,7 +189,7 @@ class PregnancyHomeView extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const PregnancyHomeView(),
+                              builder: (context) => const BabyNames(),
                             ),
                           );
                         },
