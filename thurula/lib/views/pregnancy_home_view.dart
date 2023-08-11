@@ -52,7 +52,7 @@ class PregnancyHomeView extends StatelessWidget {
                           width: 120,
                           height: 120,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: const Color.fromARGB(223, 247, 198, 193),
                             borderRadius: BorderRadius.circular(5.0),
                             boxShadow: [
                               BoxShadow(
@@ -75,7 +75,7 @@ class PregnancyHomeView extends StatelessWidget {
                               const Text('Pregancny\nTimeline',
                                   style: TextStyle(
                                       fontFamily: 'Montserrat',
-                                      color: Color.fromARGB(255, 220, 104, 145),
+                                      color: Color.fromARGB(255, 88, 119, 161),
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold))
                             ],
@@ -98,7 +98,7 @@ class PregnancyHomeView extends StatelessWidget {
                           width: 120,
                           height: 120,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: const Color.fromARGB(223, 247, 198, 193),
                             borderRadius: BorderRadius.circular(5.0),
                             boxShadow: [
                               BoxShadow(
@@ -121,7 +121,7 @@ class PregnancyHomeView extends StatelessWidget {
                               const Text('Health\nMonitoring',
                                   style: TextStyle(
                                       fontFamily: 'Montserrat',
-                                      color: Color.fromARGB(255, 220, 104, 145),
+                                      color: Color.fromARGB(255, 88, 119, 161),
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold))
                             ],
@@ -144,7 +144,7 @@ class PregnancyHomeView extends StatelessWidget {
                           width: 120,
                           height: 120,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: const Color.fromARGB(223, 247, 198, 193),
                             borderRadius: BorderRadius.circular(5.0),
                             boxShadow: [
                               BoxShadow(
@@ -167,7 +167,7 @@ class PregnancyHomeView extends StatelessWidget {
                               const Text('Exercise\nRecommendations',
                                   style: TextStyle(
                                       fontFamily: 'Montserrat',
-                                      color: Color.fromARGB(255, 220, 104, 145),
+                                      color: Color.fromARGB(255, 88, 119, 161),
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold))
                             ],
@@ -190,7 +190,7 @@ class PregnancyHomeView extends StatelessWidget {
                           width: 120,
                           height: 120,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: const Color.fromARGB(223, 247, 198, 193),
                             borderRadius: BorderRadius.circular(5.0),
                             boxShadow: [
                               BoxShadow(
@@ -213,7 +213,7 @@ class PregnancyHomeView extends StatelessWidget {
                               const Text('Baby Name\nSuggestions',
                                   style: TextStyle(
                                       fontFamily: 'Montserrat',
-                                      color: Color.fromARGB(255, 220, 104, 145),
+                                      color: Color.fromARGB(255, 88, 119, 161),
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold))
                             ],
@@ -235,7 +235,7 @@ class PregnancyHomeView extends StatelessWidget {
                           width: 120,
                           height: 120,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: const Color.fromARGB(223, 247, 198, 193),
                             borderRadius: BorderRadius.circular(5.0),
                             boxShadow: [
                               BoxShadow(
@@ -258,7 +258,7 @@ class PregnancyHomeView extends StatelessWidget {
                               const Text('Vaccination Tracking',
                                   style: TextStyle(
                                       fontFamily: 'Montserrat',
-                                      color: Color.fromARGB(255, 220, 104, 145),
+                                      color: Color.fromARGB(255, 88, 119, 161),
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold))
                             ],
@@ -319,9 +319,9 @@ class PregnancyHomeView extends StatelessWidget {
               left: 20,
               child: Container(
                 width: 400,
-                height: 200,
+                height: 150,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: const Color.fromARGB(255, 231, 159, 159),
                   borderRadius: BorderRadius.circular(10.0),
                   boxShadow: [
                     BoxShadow(
@@ -337,12 +337,12 @@ class PregnancyHomeView extends StatelessWidget {
                     children: [
                       const Expanded(
                           child: Padding(
-                        padding: EdgeInsets.all(15.0),
+                        padding: EdgeInsets.all(10.0),
                         child: Text(
                           'Your baby is as big as a Strawberry',
                           style: TextStyle(
                               color: Color.fromARGB(255, 88, 119, 161),
-                              fontSize: 16.0,
+                              fontSize: 18.0,
                               height: 1.5,
                               fontFamily: 'Inter',
                               fontWeight: FontWeight
@@ -350,12 +350,80 @@ class PregnancyHomeView extends StatelessWidget {
                         ),
                       )),
                       Padding(
-                        padding: const EdgeInsets.all(
-                            10.0), // change this to the desired amount of padding
+                        padding: const EdgeInsets.only(
+                          left: 5.0,
+                          right: 10.0,
+                        ), // change this to the desired amount of padding
                         child: ClipRRect(
                           child: Image.asset(
                               'assets/images/pregnancy-home/size.png',
                               height: 80),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )),
+          Positioned(
+              top: 630,
+              left: 50,
+              right: 50,
+              child: Container(
+                width: 380,
+                height: 80,
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 88, 119, 161),
+                  borderRadius: BorderRadius.circular(10.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: Center(
+                  child: Row(
+                    children: [
+                      const Expanded(
+                          child: Padding(
+                        padding: EdgeInsets.only(
+                          left: 15.0,
+                        ),
+                        child: Text(
+                          'Your next vaccine is in',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 255, 255, 255),
+                              fontSize: 20.0,
+                              height: 1.5,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight
+                                  .bold), // change this to the desired text color
+                        ),
+                      )),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 5.0,
+                        ), // change this to the desired amount of padding
+                        child: ClipRRect(
+                          child: Image.asset(
+                              'assets/images/pregnancy-home/calendar/9.png',
+                              height: 60),
+                        ),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.all(
+                            10.0), // change this to the desired amount of padding
+                        child: Text(
+                          'Days',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 255, 255, 255),
+                              fontSize: 20.0,
+                              height: 1.5,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight
+                                  .bold), // change this to the desired text color
                         ),
                       ),
                     ],
