@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:thurula/views/menu_view.dart';
-import 'package:thurula/views/vaccination_tracker_view.dart';
+import 'package:thurula/views/child_vaccination_tracker_view.dart';
 import 'package:thurula/views/length_chart_view.dart';
 
 // import 'package:provider/provider.dart';
@@ -59,7 +59,7 @@ class ChildCareMenuView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const VaccinationTrackerView(),
+                      builder: (context) => ChildVaccinationTrackerView(),
                     ),
                   );
                 },
