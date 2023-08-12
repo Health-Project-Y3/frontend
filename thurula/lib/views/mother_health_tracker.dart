@@ -9,17 +9,17 @@ class MotherHealthTracker extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white, // Background color of the app bar
-        title: Text(
+        backgroundColor: const Color.fromARGB(255, 220, 104, 145), // Background color of the app bar
+        title: const Text(
           "Mother Health Tracker",
           style: TextStyle(
-            color: const Color.fromARGB(255, 220, 104, 145), // Title color
+            color: Color.fromARGB(255, 255, 255, 255), // Title color
           ),
         ),
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
-            color: const Color.fromARGB(255, 220, 104, 145), // Back icon color
+            color: Color.fromARGB(255, 255, 255, 255), // Back icon color
           ),
           onPressed: () {
             // Handle back button press here
@@ -36,7 +36,7 @@ class MotherHealthTracker extends StatelessWidget {
             Container(
               width: 120,
               height: 120,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 color: Colors.grey,
                 image: DecorationImage(
@@ -46,16 +46,16 @@ class MotherHealthTracker extends StatelessWidget {
               ),
             ),
 
-            SizedBox(height: 16),
-            Text(
-              "Dushanee Gamage",
+            const SizedBox(height: 16),
+            const Text(
+              "Ama Gamage",
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
                 color: Color(0xFF5877A1),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -65,7 +65,7 @@ class MotherHealthTracker extends StatelessWidget {
                   isBold: true,
                   fontSize: 20,
                 ),
-                SizedBox(width: 16),
+                const SizedBox(width: 16),
                 DashboardCard(
                   label: "Weight",
                   value: "63Kg",
@@ -86,14 +86,20 @@ class MotherHealthTracker extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 45),
-            FullWidthCard(
-              label: "Doctor recommendations",
-              value: "You are in good health conditions mummy",
-              isBold: true,
-              fontSize: 18,
+            const SizedBox(height: 45),
+            // padding
+            Padding(
+                // left and right padding
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: FullWidthCard(
+                  label: "Doctor recommendations",
+                  value: "You are in good health conditions mummy",
+                  isBold: true,
+                  fontSize: 18,
+                ),
+
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
                 showDialog(
@@ -105,7 +111,7 @@ class MotherHealthTracker extends StatelessWidget {
                 primary: Color(0xFFDC6891),
                 textStyle: TextStyle(color: Colors.white),
               ),
-              child: Text('Add Record'),
+              child: const Text('Add Record'),
             ),
           ],
         ),
@@ -119,7 +125,7 @@ class DashboardCard extends StatelessWidget {
   final bool isBold;
   final double fontSize;
 
-  DashboardCard({required this.label, required this.value, this.isBold = false, this.fontSize = 14});
+  DashboardCard({super.key, required this.label, required this.value, this.isBold = false, this.fontSize = 14});
 
   @override
   Widget build(BuildContext context) {
@@ -137,15 +143,15 @@ class DashboardCard extends StatelessWidget {
           Text(
             label,
             style: TextStyle(
-              color: Color(0xFF5877A1),
+              color: const Color(0xFF5877A1),
               fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
               fontSize: fontSize,
             ),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             value,
-            style: TextStyle(
+            style: const TextStyle(
               color: Color(0xFF5877A1),
             ),
           ),
