@@ -13,17 +13,17 @@ class _MealTrackerState extends State<MealTracker> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Baby MealTracker',
           style: TextStyle(
-            color: const Color.fromARGB(255, 220, 104, 145), // Title color
+            color: Colors.white, // Title color
           ),
         ),
-        backgroundColor: Colors.white, // Background color of the app bar
+        backgroundColor: const Color.fromARGB(255, 220, 104, 145), // Background color of the app bar
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
-            color: const Color.fromARGB(255, 220, 104, 145), // Back icon color
+            color: Colors.white, // Back icon color
           ),
           onPressed: () {
             // Handle back button press here
@@ -141,7 +141,7 @@ class _FeedingEntryFormState extends State<FeedingEntryForm> {
           )
               .toList(),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         ElevatedButton(
           onPressed: () async {
             final pickedDateTime = await showDatePicker(
@@ -157,7 +157,9 @@ class _FeedingEntryFormState extends State<FeedingEntryForm> {
               });
             }
           },
-          child: Text('Select Date'),
+          child: Text(
+              'Select Date',
+          ),
         ),
         SizedBox(height: 16),
         ElevatedButton(
@@ -249,11 +251,11 @@ class _FeedingTypeCircle extends StatelessWidget {
             child: Container(
               width: 20,
               height: 20,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.green,
+                color: Color.fromARGB(255, 88, 119, 161),
               ),
-              child: Center(
+              child: const Center(
                 child: Icon(
                   Icons.add,
                   color: Colors.white,
@@ -284,9 +286,9 @@ class _AddFeedingCircle extends StatelessWidget {
             child: Container(
               width: 60,
               height: 60,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.green,
+                color: Color.fromARGB(255, 88, 119, 161),
               ),
               child: Center(
                 child: Icon(

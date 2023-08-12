@@ -60,9 +60,9 @@ class ChildHomeView extends StatelessWidget {
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 2,
+                                spreadRadius: 0.5,
                                 blurRadius: 2,
-                                offset: const Offset(0, 3),
+                                offset: const Offset(0, 2),
                               ),
                             ],
                           ),
@@ -77,7 +77,7 @@ class ChildHomeView extends StatelessWidget {
                               const SizedBox(height: 10),
                               const Text("Growth Tracker",
                                   style: TextStyle(
-                                      fontFamily: 'Montserrat',
+                                      fontFamily: 'Inter',
                                       color: Color.fromARGB(255, 88, 119, 161),
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold))
@@ -107,9 +107,9 @@ class ChildHomeView extends StatelessWidget {
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 2,
+                                spreadRadius: 0.5,
                                 blurRadius: 2,
-                                offset: const Offset(0, 3),
+                                offset: const Offset(0, 2),
                               ),
                             ],
                           ),
@@ -124,7 +124,7 @@ class ChildHomeView extends StatelessWidget {
                               const SizedBox(height: 10),
                               const Text("Vaccination Tracker",
                                   style: TextStyle(
-                                      fontFamily: 'Montserrat',
+                                      fontFamily: 'Inter',
                                       color: Color.fromARGB(255, 88, 119, 161),
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold))
@@ -151,11 +151,11 @@ class ChildHomeView extends StatelessWidget {
                             color: const Color.fromARGB(223, 247, 198, 193),
                             borderRadius: BorderRadius.circular(5.0),
                             boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 2,
-                                blurRadius: 2,
-                                offset: const Offset(0, 3),
+                              BoxShadow
+                                (color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 0.5,
+                      blurRadius: 2,
+                      offset: const Offset(0, 2),
                               ),
                             ],
                           ),
@@ -170,7 +170,7 @@ class ChildHomeView extends StatelessWidget {
                               const SizedBox(height: 10),
                               const Text("Nap Time Monitoring",
                                   style: TextStyle(
-                                      fontFamily: 'Montserrat',
+                                      fontFamily: 'Inter',
                                       color: Color.fromARGB(255, 88, 119, 161),
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold))
@@ -197,11 +197,11 @@ class ChildHomeView extends StatelessWidget {
                             color: const Color.fromARGB(223, 247, 198, 193),
                             borderRadius: BorderRadius.circular(5.0),
                             boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 2,
-                                blurRadius: 2,
-                                offset: const Offset(0, 3),
+                              BoxShadow
+                                (color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 0.5,
+                      blurRadius: 2,
+                      offset: const Offset(0, 2),
                               ),
                             ],
                           ),
@@ -216,7 +216,7 @@ class ChildHomeView extends StatelessWidget {
                               const SizedBox(height: 10),
                               const Text("Diaper Change\nMonitoring",
                                   style: TextStyle(
-                                      fontFamily: 'Montserrat',
+                                      fontFamily: 'Inter',
                                       color: Color.fromARGB(255, 88, 119, 161),
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold))
@@ -243,11 +243,11 @@ class ChildHomeView extends StatelessWidget {
                             color: const Color.fromARGB(223, 247, 198, 193),
                             borderRadius: BorderRadius.circular(5.0),
                             boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 2,
-                                blurRadius: 2,
-                                offset: const Offset(0, 3),
+                              BoxShadow
+                                (color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 0.5,
+                      blurRadius: 2,
+                      offset: const Offset(0, 2),
                               ),
                             ],
                           ),
@@ -262,7 +262,7 @@ class ChildHomeView extends StatelessWidget {
                               const SizedBox(height: 10),
                               const Text("Feeding Monitoring",
                                   style: TextStyle(
-                                      fontFamily: 'Montserrat',
+                                      fontFamily: 'Inter',
                                       color: Color.fromARGB(255, 88, 119, 161),
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold))
@@ -290,11 +290,11 @@ class ChildHomeView extends StatelessWidget {
                             color: const Color.fromARGB(223, 247, 198, 193),
                             borderRadius: BorderRadius.circular(5.0),
                             boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 2,
-                                blurRadius: 2,
-                                offset: const Offset(0, 3),
+                              BoxShadow
+                                (color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 0.5,
+                      blurRadius: 2,
+                      offset: const Offset(0, 2),
                               ),
                             ],
                           ),
@@ -309,7 +309,7 @@ class ChildHomeView extends StatelessWidget {
                               const SizedBox(height: 10),
                               const Text("Skill Development\nExercises",
                                   style: TextStyle(
-                                      fontFamily: 'Montserrat',
+                                      fontFamily: 'Inter',
                                       color: Color.fromARGB(255, 88, 119, 161),
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold))
@@ -324,6 +324,7 @@ class ChildHomeView extends StatelessWidget {
           Positioned(
               top: 230,
               left: 20,
+              right: 20,
               child: Container(
                 width: 400,
                 height: 200,
@@ -333,9 +334,9 @@ class ChildHomeView extends StatelessWidget {
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 2,
-                      blurRadius: 5,
-                      offset: const Offset(0, 3),
+                      spreadRadius: 0.5,
+                      blurRadius: 2,
+                      offset: const Offset(0, 2),
                     ),
                   ],
                 ),
@@ -369,6 +370,7 @@ class ChildHomeView extends StatelessWidget {
           Positioned(
               top: 450,
               left: 20,
+              right: 20,
               child: Container(
                 width: 400,
                 height: 150,
@@ -378,60 +380,85 @@ class ChildHomeView extends StatelessWidget {
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 2,
-                      blurRadius: 5,
-                      offset: const Offset(0, 3),
+                      spreadRadius: 0.5,
+                      blurRadius: 2,
+                      offset: const Offset(0, 2),
                     ),
                   ],
                 ),
                 child: Center(
+                  // child: Row(
+                  //   children: [
+                  //     const Expanded(
+                  //         child: Padding(
+                  //           padding: EdgeInsets.all(10.0),
+                  //           child: Text(
+                  //             'Your baby is 10kg and 70cm tall!',
+                  //             style: TextStyle(
+                  //             color: Color.fromARGB(255, 88, 119, 161),
+                  //             fontSize: 18.0,
+                  //             height: 1.5,
+                  //             fontFamily: 'Inter',
+                  //             fontWeight: FontWeight
+                  //                 .bold), // change this to the desired text color
+                  //       ),
+                  //     )),
+                  //     Padding(
+                  //       padding: const EdgeInsets.only(
+                  //         left: 5.0,
+                  //         right: 10.0,
+                  //       ), // change this to the desired amount of padding
+                  //       child: ClipRRect(
+                  //         child: Image.asset(
+                  //             'assets/images/child-home/size.png',
+                  //             height: 80),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Expanded(
-                          child: Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: Text(
-                          'Your baby is 10kg and 70cm tall!',
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 88, 119, 161),
-                              fontSize: 18.0,
-                              height: 1.5,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight
-                                  .bold), // change this to the desired text color
+                      const Text(
+                        'Your baby is 10kg and 70cm \ntall!',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 88, 119, 161),
                         ),
-                      )),
-                      Padding(
-                        padding: const EdgeInsets.only(
+                      ),
+                      const Padding(
+                      //   padding on left and right
+                        padding: EdgeInsets.only(
                           left: 5.0,
                           right: 10.0,
-                        ), // change this to the desired amount of padding
-                        child: ClipRRect(
-                          child: Image.asset(
-                              'assets/images/child-home/size.png',
-                              height: 80),
-                        ),
+                        )
+                      ),
+                      Image.asset(
+                        'assets/images/child-home/size.png',
+                        height: 60,
                       ),
                     ],
                   ),
                 ),
               )),
           Positioned(
-              top: 630,
-              left: 40,
-              right: 40,
+              bottom: 20,
+              left: 20,
+              right: 20,
               child: Container(
                 width: 400,
                 height: 80,
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 88, 119, 161),
+                  color: const Color.fromARGB(255, 255, 255, 255),
                   borderRadius: BorderRadius.circular(10.0),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 2,
-                      blurRadius: 5,
-                      offset: const Offset(0, 3),
+                      spreadRadius: 0.5,
+                      blurRadius: 2,
+                      offset: const Offset(0, 2),
                     ),
                   ],
                 ),
@@ -440,24 +467,24 @@ class ChildHomeView extends StatelessWidget {
                     children: [
                       const Expanded(
                           child: Padding(
-                        padding: EdgeInsets.only(
-                          left: 15.0,
-                        ),
-                        child: Text(
-                          'Baby\'s next vaccine is in',
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 255, 255, 255),
-                              fontSize: 20.0,
-                              height: 1.5,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight
-                                  .bold), // change this to the desired text color
-                        ),
-                      )),
+                            padding: EdgeInsets.only(
+                              left: 22.0,
+                            ),
+                            child: Text(
+                              'Baby\'s next vaccine is in',
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 88, 119, 161),
+                                  fontSize: 17.0,
+                                  height: 1.5,
+                                  fontFamily: 'Inter',
+                                  fontWeight: FontWeight
+                                      .bold),
+                            ),
+                          )),
                       Padding(
                         padding: const EdgeInsets.only(
-                          left: 5.0,
-                        ), // change this to the desired amount of padding
+                          left: 0.0,
+                        ),
                         child: ClipRRect(
                           child: Image.asset(
                               'assets/images/child-home/calendar/30.png',
@@ -465,17 +492,19 @@ class ChildHomeView extends StatelessWidget {
                         ),
                       ),
                       const Padding(
-                        padding: EdgeInsets.all(
-                            10.0), // change this to the desired amount of padding
+                        // padding right
+                        padding: EdgeInsets.only(
+                          right: 22.0, left: 10.0,
+                        ),
                         child: Text(
-                          'Days',
+                          'days',
                           style: TextStyle(
-                              color: Color.fromARGB(255, 255, 255, 255),
-                              fontSize: 20.0,
+                              color: Color.fromARGB(255, 88, 119, 161),
+                              fontSize: 17.0,
                               height: 1.5,
                               fontFamily: 'Inter',
                               fontWeight: FontWeight
-                                  .bold), // change this to the desired text color
+                                  .bold),
                         ),
                       ),
                     ],
