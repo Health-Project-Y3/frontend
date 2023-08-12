@@ -160,7 +160,12 @@ class _BabyNamePageState extends State<BabyNamePage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text('Filter by Letter:'),
+              const Text(
+                  'Filter by Letter:',
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 88, 119, 161),
+                  ),
+              ),
               const SizedBox(width: 10),
               DropdownButton<String>(
                 value: filterLetter,
@@ -187,15 +192,39 @@ class _BabyNamePageState extends State<BabyNamePage> {
             scrollDirection: Axis.horizontal,
             child: DataTable(
               columns: const [
-                DataColumn(label: Text('Name')),
-                DataColumn(label: Text('Meaning')),
+                DataColumn(label: Text('Name',
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 88, 119, 161),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )
+                ),
+                DataColumn(label: Text('Meaning',
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 88, 119, 161),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )
+                ),
               ],
               rows: names
                   .map<DataRow>(
                     (name) => DataRow(
                   cells: [
-                    DataCell(Text(name.name)),
-                    DataCell(Text(name.meaning)),
+                    DataCell(Text(
+                        name.name,
+                        style: const TextStyle(
+                          color: Color.fromARGB(255, 131, 131, 131)
+                        ),)
+                    ),
+                    DataCell(Text(
+                        name.meaning,
+                        style: const TextStyle(
+                            color: Color.fromARGB(255, 131, 131, 131)
+                        ),
+                    )),
                   ],
                 ),
               )

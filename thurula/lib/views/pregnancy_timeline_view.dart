@@ -13,7 +13,7 @@ class PregnancyTimelineView extends StatelessWidget {
       home: DefaultTabController(
         length: 4,
         child: Scaffold(
-          // backgroundColor: const Color.fromARGB(255, 227, 227, 227),
+          backgroundColor: const Color.fromARGB(255, 247, 247, 247),
 
           appBar: AppBar(
             backgroundColor: const Color.fromARGB(255, 220, 104, 145),
@@ -48,6 +48,7 @@ class PregnancyTimelineView extends StatelessWidget {
                     )
                   ],
                   indicatorColor: Colors.white,
+
                 ),
               ),
             ),
