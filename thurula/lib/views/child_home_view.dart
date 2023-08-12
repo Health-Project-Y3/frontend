@@ -29,7 +29,7 @@ class ChildHomeView extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 70,
+            top: 100,
             left: 5,
             right: 5,
             child: Container(
@@ -55,7 +55,7 @@ class ChildHomeView extends StatelessWidget {
                           width: 120,
                           height: 120,
                           decoration: BoxDecoration(
-                            color: const Color.fromARGB(223, 247, 198, 193),
+                            color: Colors.white,
                             borderRadius: BorderRadius.circular(5.0),
                             boxShadow: [
                               BoxShadow(
@@ -102,7 +102,7 @@ class ChildHomeView extends StatelessWidget {
                           width: 120,
                           height: 120,
                           decoration: BoxDecoration(
-                            color: const Color.fromARGB(223, 247, 198, 193),
+                            color: Colors.white,
                             borderRadius: BorderRadius.circular(5.0),
                             boxShadow: [
                               BoxShadow(
@@ -148,7 +148,7 @@ class ChildHomeView extends StatelessWidget {
                           width: 120,
                           height: 120,
                           decoration: BoxDecoration(
-                            color: const Color.fromARGB(223, 247, 198, 193),
+                            color: Colors.white,
                             borderRadius: BorderRadius.circular(5.0),
                             boxShadow: [
                               BoxShadow
@@ -194,7 +194,7 @@ class ChildHomeView extends StatelessWidget {
                           width: 120,
                           height: 120,
                           decoration: BoxDecoration(
-                            color: const Color.fromARGB(223, 247, 198, 193),
+                            color: Colors.white,
                             borderRadius: BorderRadius.circular(5.0),
                             boxShadow: [
                               BoxShadow
@@ -240,14 +240,14 @@ class ChildHomeView extends StatelessWidget {
                           width: 120,
                           height: 120,
                           decoration: BoxDecoration(
-                            color: const Color.fromARGB(223, 247, 198, 193),
+                            color: Colors.white,
                             borderRadius: BorderRadius.circular(5.0),
                             boxShadow: [
-                              BoxShadow
-                                (color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 0.5,
-                      blurRadius: 2,
-                      offset: const Offset(0, 2),
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 0.5,
+                                blurRadius: 2,
+                                offset: const Offset(0, 2),
                               ),
                             ],
                           ),
@@ -270,7 +270,6 @@ class ChildHomeView extends StatelessWidget {
                           ),
                         ),
                       )),
-
                   //Skill Development Exercises
                   Padding(
                       padding: const EdgeInsets.all(5.0),
@@ -287,7 +286,7 @@ class ChildHomeView extends StatelessWidget {
                           width: 120,
                           height: 120,
                           decoration: BoxDecoration(
-                            color: const Color.fromARGB(223, 247, 198, 193),
+                            color: Colors.white,
                             borderRadius: BorderRadius.circular(5.0),
                             boxShadow: [
                               BoxShadow
@@ -322,7 +321,7 @@ class ChildHomeView extends StatelessWidget {
             ),
           ),
           Positioned(
-              top: 230,
+              top: 260,
               left: 20,
               right: 20,
               child: Container(
@@ -354,7 +353,7 @@ class ChildHomeView extends StatelessWidget {
                       ),
                       const Expanded(
                         child: Text(
-                          'Your Baby is 100 days Old!',
+                          'Your baby is 100 days old!',
                           style: TextStyle(
                             color: Color.fromARGB(255, 88, 119, 161),
                             fontSize: 16.0,
@@ -368,14 +367,14 @@ class ChildHomeView extends StatelessWidget {
                 ),
               )),
           Positioned(
-              top: 450,
+              top: 480,
               left: 20,
               right: 20,
               child: Container(
                 width: 400,
                 height: 150,
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 249, 201, 201),
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(10.0),
                   boxShadow: [
                     BoxShadow(
@@ -387,36 +386,6 @@ class ChildHomeView extends StatelessWidget {
                   ],
                 ),
                 child: Center(
-                  // child: Row(
-                  //   children: [
-                  //     const Expanded(
-                  //         child: Padding(
-                  //           padding: EdgeInsets.all(10.0),
-                  //           child: Text(
-                  //             'Your baby is 10kg and 70cm tall!',
-                  //             style: TextStyle(
-                  //             color: Color.fromARGB(255, 88, 119, 161),
-                  //             fontSize: 18.0,
-                  //             height: 1.5,
-                  //             fontFamily: 'Inter',
-                  //             fontWeight: FontWeight
-                  //                 .bold), // change this to the desired text color
-                  //       ),
-                  //     )),
-                  //     Padding(
-                  //       padding: const EdgeInsets.only(
-                  //         left: 5.0,
-                  //         right: 10.0,
-                  //       ), // change this to the desired amount of padding
-                  //       child: ClipRRect(
-                  //         child: Image.asset(
-                  //             'assets/images/child-home/size.png',
-                  //             height: 80),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
-
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -444,23 +413,23 @@ class ChildHomeView extends StatelessWidget {
                 ),
               )),
           Positioned(
-              bottom: 20,
+              bottom: 40,
               left: 20,
               right: 20,
               child: Container(
                 width: 400,
                 height: 80,
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 255, 255, 255),
+                  color: const Color.fromARGB(255, 238, 198, 212),
                   borderRadius: BorderRadius.circular(10.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 0.5,
-                      blurRadius: 2,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
+                  // boxShadow: [
+                  //   BoxShadow(
+                  //     color: Colors.grey.withOpacity(0.5),
+                  //     spreadRadius: 0.5,
+                  //     blurRadius: 2,
+                  //     offset: const Offset(0, 2),
+                  //   ),
+                  // ],
                 ),
                 child: Center(
                   child: Row(
