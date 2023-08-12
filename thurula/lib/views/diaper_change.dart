@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class DiaperChange extends StatefulWidget {
+  const DiaperChange({super.key});
+
   @override
   _DiaperChange createState() => _DiaperChange();
 }
@@ -10,18 +12,18 @@ class _DiaperChange extends State<DiaperChange> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Diaper Change Input',
           style: TextStyle(
-            color: const Color.fromARGB(255, 220, 104, 145), // Title color
+            color: Colors.white, // Title color
           ),
         ),
-        backgroundColor: Colors.white, // Background color of the app bar
+        backgroundColor: const Color.fromARGB(255, 220, 104, 145),
         elevation: 0,
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
-            color: const Color.fromARGB(255, 220, 104, 145), // Back icon color
+            color: Colors.white, // Back icon color
           ),
           onPressed: () {
             // Handle back button press here
@@ -38,8 +40,8 @@ class _DiaperChange extends State<DiaperChange> {
           children: [
             Container(
               alignment: Alignment.center,
-              padding: EdgeInsets.all(16),
-              child: CircleAvatar(
+              padding: const EdgeInsets.all(16),
+              child: const CircleAvatar(
                 radius: 50,
                 backgroundImage: AssetImage(
                     'assets/images/menu-icons/diaper.png'), // Replace with your circular image asset
@@ -108,8 +110,7 @@ class _DiaperChangeEntryFormState extends State<DiaperChangeEntryForm> {
             // Handle button press
           },
           style: ElevatedButton.styleFrom(
-            primary:
-                const Color.fromARGB(255, 220, 104, 145), // Adjust the color
+            backgroundColor: const Color.fromARGB(255, 220, 104, 145),
           ),
           child: Text('Add Diaper Change'),
         ),
@@ -132,16 +133,13 @@ class DiaperChangeDetails extends StatelessWidget {
       child: Stack(
         children: [
           Positioned(
-            left: 0,
-            right: 0,
             child: Container(
-              color: Colors.blue, // Replace with your desired color
-              padding: EdgeInsets.all(10),
-              child: Center(
+              padding: const EdgeInsets.all(10),
+              child: const Center(
                 child: Text(
                   'Diaper Change Details',
                   style: TextStyle(
-                    color: Colors.white, // Text color for the header
+                    color: Color.fromARGB(255, 220, 104, 145), // Text color for the header
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
@@ -150,8 +148,9 @@ class DiaperChangeDetails extends StatelessWidget {
             ),
           ),
           DataTable(
-            headingRowHeight: 80, // Adjust the header row height as needed
-            columns: [
+            dividerThickness: 0,
+            headingRowHeight: 60, // Adjust the header row height as needed
+            columns: const [
               DataColumn(
                 label: Align(
                   alignment: Alignment.bottomCenter,
@@ -179,25 +178,72 @@ class DiaperChangeDetails extends StatelessWidget {
             ],
             rows: [
               DataRow(cells: [
-                DataCell(Text('09:00')),
-                DataCell(Text('2023-08-10')),
-                DataCell(IconButton(icon: Icon(Icons.edit), onPressed: () {})),
+                const DataCell(Text('09:00')),
+                const DataCell(Text('2023-08-10')),
                 DataCell(
-                    IconButton(icon: Icon(Icons.delete), onPressed: () {})),
+                    SizedBox(
+                      width: 30, // Adjust the width as needed
+                      child: IconButton(
+                        icon: const Icon(Icons.edit),
+                        onPressed: () {
+                        },
+                      ),
+                    ),
+                ),
+                //
+                DataCell(
+                    SizedBox(
+                      width: 20, // Adjust the width as needed
+                      child: IconButton(
+                        icon: const Icon(Icons.delete),
+                        onPressed: () {},
+                      ),
+                    ),
+                ),
               ]),
               DataRow(cells: [
                 DataCell(Text('13:30')),
                 DataCell(Text('2023-08-10')),
-                DataCell(IconButton(icon: Icon(Icons.edit), onPressed: () {})),
                 DataCell(
-                    IconButton(icon: Icon(Icons.delete), onPressed: () {})),
+                SizedBox(
+                      width: 30, // Adjust the width as needed
+                      child: IconButton(
+                        icon: const Icon(Icons.edit),
+                        onPressed: () {},
+                      ),
+                    ),
+                ),
+                DataCell(
+                    SizedBox(
+                      width: 20, // Adjust the width as needed
+                      child: IconButton(
+                        icon: const Icon(Icons.delete),
+                        onPressed: () {},
+                      ),
+                    ),
+                ),
               ]),
               DataRow(cells: [
-                DataCell(Text('10:45')),
-                DataCell(Text('2023-08-11')),
-                DataCell(IconButton(icon: Icon(Icons.edit), onPressed: () {})),
+                const DataCell(Text('10:45')),
+                const DataCell(Text('2023-08-11')),
                 DataCell(
-                    IconButton(icon: Icon(Icons.delete), onPressed: () {})),
+                SizedBox(
+                      width: 30, // Adjust the width as needed
+                      child: IconButton(
+                        icon: const Icon(Icons.edit),
+                        onPressed: () {},
+                      ),
+                    ),
+                ),
+                DataCell(
+                    SizedBox(
+                      width: 20, // Adjust the width as needed
+                      child: IconButton(
+                        icon: const Icon(Icons.delete),
+                        onPressed: () {},
+                      ),
+                    ),
+                ),
               ]),
               // ... add more rows
             ],

@@ -3,8 +3,6 @@ import 'package:thurula/views/nap_timer.dart';
 import 'package:thurula/views/add_nap.dart';
 import 'package:thurula/views/nap_records.dart';
 import 'package:thurula/views/child_home_view.dart';
-import 'package:flutter/material.dart';
-import 'package:fl_chart/fl_chart.dart';
 
 class NapDetails extends StatelessWidget {
   Future<Map<String, double>> fetchSleepHours() async {
@@ -26,18 +24,18 @@ class NapDetails extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text(
+        backgroundColor: const Color.fromARGB(255, 220, 104, 145),
+        title: const Text(
           'Baby Nap Details',
           style: TextStyle(
-            color: const Color.fromARGB(255, 220, 104, 145), // Title color
+            color: Colors.white, // Title color
           ),
         ),
-        backgroundColor: Colors.white, // Background color of the app bar
         elevation: 0,
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
-            color: const Color.fromARGB(255, 220, 104, 145), // Back icon color
+            color: Colors.white, // Back icon color
           ),
           onPressed: () {
             Navigator.push(
@@ -47,8 +45,6 @@ class NapDetails extends StatelessWidget {
           },
         ),
       ),
-
-
 
       body: SingleChildScrollView(
         child: Padding(
@@ -70,18 +66,18 @@ class NapDetails extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 8),
-              Center(
+              const SizedBox(height: 8),
+              const Center(
                 child: Text(
                   "Mary's Nap Details",
                   style: TextStyle(
                     fontSize: 16,
-                    color: Colors.blue,
+                    color: Color.fromARGB(255, 88, 119, 161),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -93,7 +89,7 @@ class NapDetails extends StatelessWidget {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: const Color.fromARGB(255, 220, 104, 145),
+                      backgroundColor: const Color.fromARGB(255, 220, 104, 145),
                     ),
                     child: Text('Nap Timer'),
                   ),
@@ -106,7 +102,7 @@ class NapDetails extends StatelessWidget {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: const Color.fromARGB(255, 220, 104, 145),
+                      backgroundColor: const Color.fromARGB(255, 220, 104, 145),
                     ),
                     child: Text('Add Nap'),
                   ),
@@ -144,10 +140,10 @@ class NapDetails extends StatelessWidget {
                                 NapRecords()), // Replace with your actual widget name
                       );
                     },
-                    child: Text(
+                    child: const Text(
                       'All Nap Details',
                       style: TextStyle(
-                        color: const Color.fromARGB(255, 220, 104, 145),
+                        color: Color.fromARGB(255, 220, 104, 145),
                         decoration: TextDecoration.underline,
                       ),
                     ),
@@ -180,13 +176,12 @@ List<Widget> buildBarChart() {
 
   for (int i = 0; i < 7; i++) {
     double barHeight = (i + 1) * 30.0; // Vary the height for each bar
-
     bars.add(
       Container(
         width: 20,
         padding: EdgeInsets.all(20),
         height: barHeight,
-        color: Colors.pink,
+        color: Color.fromARGB(255, 88, 119, 161),
       ),
     );
   }
@@ -206,7 +201,7 @@ List<Widget> buildBarChart() {
               alignment: Alignment.bottomCenter,
               children: [
                 Container(
-                  width: 65,
+                  width: 50,
                   height: 100,
                   color: Colors.transparent,
                 ),
@@ -231,7 +226,7 @@ class NapStatCard extends StatelessWidget {
   final String title;
   final String value;
 
-  NapStatCard({required this.title, required this.value});
+  NapStatCard({super.key, required this.title, required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -244,18 +239,18 @@ class NapStatCard extends StatelessWidget {
           children: [
             Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               value,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: const Color.fromARGB(255, 220, 104, 145),
+                color: Color.fromARGB(255, 220, 104, 145),
               ),
             ),
           ],
