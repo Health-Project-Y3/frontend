@@ -13,13 +13,15 @@ class PregnancyTimelineView extends StatelessWidget {
       home: DefaultTabController(
         length: 4,
         child: Scaffold(
-          backgroundColor: const Color.fromARGB(255, 227, 227, 227),
+          // backgroundColor: const Color.fromARGB(255, 227, 227, 227),
+
           appBar: AppBar(
-            backgroundColor: const Color.fromARGB(255, 227, 227, 227),
+            backgroundColor: const Color.fromARGB(255, 220, 104, 145),
+            // backgroundColor: const Color.fromARGB(255, 227, 227, 227),
             leading: IconButton(
               icon: const Icon(
                 Icons.arrow_back,
-                color: Color.fromARGB(255, 88, 119, 161),
+                color: Color.fromARGB(255, 255, 255, 255),
               ),
               onPressed: () {
                 // Handle back button press here
@@ -45,13 +47,14 @@ class PregnancyTimelineView extends StatelessWidget {
                       text: "Week 4",
                     )
                   ],
+                  indicatorColor: Colors.white,
                 ),
               ),
             ),
             title: const Text(
               'Pregnancy Timeline',
               style: TextStyle(
-                color: Color.fromARGB(255, 88, 119, 161),
+                color: Color.fromARGB(255, 255, 255, 255),
               ),
             ),
           ),
