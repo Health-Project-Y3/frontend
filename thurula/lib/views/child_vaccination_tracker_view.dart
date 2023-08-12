@@ -55,7 +55,7 @@ class _ChildVaccinationTrackerView extends State<ChildVaccinationTrackerView> {
               bottom: PreferredSize(
                 preferredSize: const Size.fromHeight(50.0), // height of  TabBar
                 child: Container(
-                  color: Color.fromARGB(255, 220, 104, 145),
+                  color: const Color.fromARGB(255, 220, 104, 145),
                   child: const TabBar(
                     tabs: [
                       Tab(
