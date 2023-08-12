@@ -51,7 +51,7 @@ class ChildCareMenuView extends StatelessWidget {
                   ),
                 ),
               )),
-//Vaccination Tracker
+        //Vaccination Tracker
           Padding(
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: InkResponse(
@@ -202,7 +202,7 @@ class ChildCareMenuView extends StatelessWidget {
                   ),
                 ),
               )),
-//Photo Album
+          //Photo Album
           Padding(
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: InkResponse(

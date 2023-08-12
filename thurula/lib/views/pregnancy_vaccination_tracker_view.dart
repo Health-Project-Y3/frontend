@@ -41,11 +41,11 @@ class _PregnancyVaccinationTrackerViewState
       home: DefaultTabController(
         length: 2,
         child: Scaffold(
-          backgroundColor: Color.fromARGB(255, 244, 200, 200),
+          backgroundColor: const Color.fromARGB(255, 247, 247, 247),
           appBar: AppBar(
-            backgroundColor: Color.fromARGB(255, 244, 200, 200),
+            backgroundColor: const Color.fromARGB(255, 220, 104, 145),
             leading: IconButton(
-              icon: Icon(Icons.arrow_back),
+              icon: const Icon(Icons.arrow_back),
               onPressed: () {
                 // Handle back button press here
                 Navigator.of(context).pop(); // Example: Navigate back
@@ -54,7 +54,7 @@ class _PregnancyVaccinationTrackerViewState
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(50.0), // height of  TabBar
               child: Container(
-                color: Color.fromARGB(255, 220, 104, 145),
+                color: const Color.fromARGB(255, 220, 104, 145),
                 child: const TabBar(
                   tabs: [
                     Tab(
@@ -64,13 +64,14 @@ class _PregnancyVaccinationTrackerViewState
                       text: "Completed",
                     ),
                   ],
+                  indicatorColor: Colors.white,
                 ),
               ),
             ),
             title: const Text(
               'Vaccination Tracker',
               style: TextStyle(
-                color: Color.fromARGB(255, 88, 119, 161),
+                color: Colors.white,
               ),
             ),
           ),
@@ -80,15 +81,8 @@ class _PregnancyVaccinationTrackerViewState
                 children: [
                   const Center(
                       child: Padding(
-                    padding: EdgeInsets.all(20.0),
-                    child: Text("Upcoming Vaccination Appointments",
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 88, 119, 161),
-                          fontFamily: 'Montserrat',
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        )),
-                  )),
+                        padding: EdgeInsets.all(20.0),
+                    )),
                   for (var vaccine in upcomingVaccinations)
                     _buildVaccinationTile(vaccine),
                 ],
@@ -98,13 +92,6 @@ class _PregnancyVaccinationTrackerViewState
                   const Center(
                       child: Padding(
                     padding: EdgeInsets.all(20.0),
-                    child: Text("Completed Vaccination Appointments",
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 88, 119, 161),
-                          fontFamily: 'Montserrat',
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        )),
                   )),
                   for (var vaccine in completedVaccinations)
                     _buildCompletedVaccinationTile(vaccine),
