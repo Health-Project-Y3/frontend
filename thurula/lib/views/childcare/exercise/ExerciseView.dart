@@ -2,8 +2,12 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:permission_handler/permission_handler.dart';
+import '../../../models/checklist_model.dart';
+import '../../../services/checklist_service.dart';
 import '../../MenuView.dart';
 
 final GlobalKey<NavigatorState> _navKey = GlobalKey<NavigatorState>();
@@ -186,6 +190,16 @@ class _NewbornState extends State<Newborn> {
   final List<String> reminders = [
     "Swaddling helps keep baby calm and asleep when he/she is startled.",
   ];
+  late Future<Checklists> checklist1;
+
+  void display() async {
+    final checklist1 =
+        await ChecklistService.getChecklist('64cbb52cf2083327515c7058');
+    await checklist1;
+    String? checklistCategory = checklist1.category;
+
+    //return checklistCategory;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -204,10 +218,25 @@ class _NewbornState extends State<Newborn> {
               children: [
                 ExpansionPanel(
                     headerBuilder: (context, isOpen) {
-                      return const Padding(
-                          padding: EdgeInsets.all(15),
-                          child: Text("General Baby Milestones",
-                              style: const TextStyle(fontSize: 16)));
+                      return Padding(
+                        padding: EdgeInsets.all(15),
+                        child: FutureBuilder<Checklists>(
+                          future: checklist1,
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Text('Loading...');
+                            } else if (snapshot.hasError) {
+                              return Text('Error: ${snapshot.error}');
+                            } else {
+                              String? category = snapshot.data!
+                                  .category; // Replace 'category' with the appropriate property of the Checklists object
+                              return Text(category!,
+                                  style: const TextStyle(fontSize: 16));
+                            }
+                          },
+                        ),
+                      );
                     },
                     body: Container(
                         padding: const EdgeInsets.all(20),
