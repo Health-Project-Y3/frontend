@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:thurula/views/LoginView.dart';
+import 'package:thurula/views/login_view.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 

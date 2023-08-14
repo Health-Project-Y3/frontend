@@ -2,7 +2,7 @@ name: thurula
 description: A new Flutter project.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.3 <4.0.0'
+  sdk: ">=3.0.3 <4.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -30,8 +30,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-    
-
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -40,6 +38,15 @@ dependencies:
   date_field: ^3.0.5
   flutter_custom_clippers: ^2.1.0
   http: ^1.1.0
+  date_field: ^3.0.5
+  sqflite: ^2.3.0
+  path: ^1.8.3
+  shared_preferences: ^2.2.0
+  buttons_tabbar: ^1.3.7+1
+  fl_chart: ^0.63.0
+
+  stop_watch_timer: ^3.0.1
+  http: ^1.1.0
   dio: ^4.0.0
   path_provider: ^2.0.2
   permission_handler: ^8.0.0+2
@@ -47,7 +54,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  
+
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
@@ -60,13 +67,23 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
   assets:
-      - assets/images/
+    - assets/images/
+    - assets/images/fetus-size/
+    - assets/images/menu-icons/
+    - assets/images/pregnancy-home/
+    - assets/images/pregnancy-home/calendar/
+    - assets/images/child-home/
+    - assets/images/child-home/calendar/
+    - assets/fonts/
+    - assets/images/sleeping_image.png
+    - assets/images/exercises/
+    - assets/images/menu-tiles/
+    - assets/images/mom.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
@@ -84,17 +101,20 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
+fonts:
+  - family: Montserrat
+    fonts:
+      - asset: assets/fonts/Montserrat-Regular.ttf
+      - asset: assets/fonts/Montserrat-Italic.ttf
+        style: italic
+      - asset: assets/fonts/Montserrat-Bold.ttf
+        weight: 700
+  - family: Inter
+    fonts:
+      - asset: assets/fonts/Inter-Regular.ttf
+      - asset: assets/fonts/Inter-Italic.ttf
+        style: italic
+      - asset: assets/fonts/Inter-Bold.ttf
+        weight: 700
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
