@@ -34,6 +34,9 @@ class UserService {
         print(response.body);
         // save the token in shared preferences
         SharedPref.setString('JWT', response.body);
+        SharedPref.setString('USERID',"64aa7bcddd01ede8be01ca6c");
+        SharedPref.setString('USERNAME',username);
+        SharedPref.setString('BABYID',"64cd599fc65bbef9519bc04c");
         return true;
       } else {
         // login failed, handle the error
