@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'package:sqflite/sqflite.dart';
 import 'package:thurula/constants/routes.dart';
+import 'package:thurula/services/local_service.dart';
 import '../../database/local_database.dart';
 import '../../models/user_model.dart';
 import '../../utils/shared_preferences.dart';
@@ -34,9 +35,9 @@ class UserService {
         print(response.body);
         // save the token in shared preferences
         SharedPref.setString('JWT', response.body);
-        SharedPref.setString('USERID',"64aa7bcddd01ede8be01ca6c");
         SharedPref.setString('USERNAME',username);
-        SharedPref.setString('BABYID',"64cd599fc65bbef9519bc04c");
+        LocalService().setCurrentUserId("64aa7bcddd01ede8be01ca6c");
+        LocalService().setCurrentBabyId("64cd599fc65bbef9519bc04c");
         return true;
       } else {
         // login failed, handle the error
