@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import '../../MenuView.dart';
+import 'package:thurula/views/child_care_menu_view.dart';
 
 final GlobalKey<NavigatorState> _navKey = GlobalKey<NavigatorState>();
 
@@ -53,7 +53,8 @@ class _SnellenCardViewState extends State<SnellenCardView>
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const MenuView()));
+                                builder: (context) =>
+                                    const ChildCareMenuView()));
                       })),
             ],
             bottom: TabBar(

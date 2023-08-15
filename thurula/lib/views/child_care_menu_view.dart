@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:thurula/views/menu_view.dart';
 import 'package:thurula/views/vaccination_tracker_view.dart';
 import 'package:thurula/views/length_chart_view.dart';
+import 'package:thurula/views/childcare/vision/VisionMenuView.dart';
+import 'package:thurula/views/childcare/exercise/ExerciseView.dart';
 
 // import 'package:provider/provider.dart';
 
@@ -252,7 +254,7 @@ class ChildCareMenuView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const MenuView(),
+                      builder: (context) => const VisionMenuView(),
                     ),
                   );
                 },
@@ -290,7 +292,7 @@ class ChildCareMenuView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const MenuView(),
+                      builder: (context) => ExerciseView(),
                     ),
                   );
                 },
@@ -310,7 +312,7 @@ class ChildCareMenuView extends StatelessWidget {
                             height: 60),
                       ),
                       const SizedBox(height: 20),
-                      const Text("Skill Development\nExercises",
+                      const Text("Checklist",
                           style: TextStyle(
                               fontFamily: 'Montserrat',
                               color: Color.fromARGB(255, 220, 104, 145),

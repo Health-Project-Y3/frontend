@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 // import 'package:thurula/views/widgets/wave_widget.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 
-import '../../MenuView.dart';
+import 'package:thurula/views/child_care_menu_view.dart';
 import '../../Question2View.dart';
 import './SnellenCardView.dart';
 
@@ -31,7 +31,7 @@ class VisionMenuView extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const MenuView()));
+                              builder: (context) => const ChildCareMenuView()));
                     })),
           ],
         ),
