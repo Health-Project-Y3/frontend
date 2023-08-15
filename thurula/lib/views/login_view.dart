@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:thurula/services/auth/user_service.dart';
-import 'WelcomeView.dart';
+import 'package:thurula/views/menu_view.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -137,7 +137,7 @@ class _LoginViewState extends State<LoginView> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => WelcomeView(
+                                        builder: (context) => MenuView(
                                             username:
                                                 usernameController.text)));
                               } else {
