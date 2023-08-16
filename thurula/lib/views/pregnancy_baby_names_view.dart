@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:thurula/views/pregnancy_home_view.dart';
 
 void main() {
   runApp(const BabyNames());
@@ -128,10 +127,8 @@ class _BabyNamePageState extends State<BabyNamePage> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const PregnancyHomeView()));
+              // Handle back button press here
+              Navigator.of(context).pop();
             },
           ),
           title: const Text('Baby Names'),
