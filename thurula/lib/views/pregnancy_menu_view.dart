@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thurula/views/HomeView.dart';
 // import 'package:thurula/views/widgets/wave_widget.dart';
 import 'package:thurula/views/menu_view.dart';
 import 'package:thurula/views/pregnancy_timeline_view.dart';
@@ -59,7 +60,7 @@ class PregnancyMenuView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const MenuView(),
+                      builder: (context) => const HomeView(),
                     ),
                   );
                 },
@@ -95,7 +96,7 @@ class PregnancyMenuView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const MenuView(),
+                      builder: (context) => const HomeView(),
                     ),
                   );
                 },
@@ -131,7 +132,7 @@ class PregnancyMenuView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const MenuView(),
+                      builder: (context) => const HomeView(),
                     ),
                   );
                 },
@@ -167,7 +168,7 @@ class PregnancyMenuView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const MenuView(),
+                      builder: (context) => const HomeView(),
                     ),
                   );
                 },
@@ -202,7 +203,7 @@ class PregnancyMenuView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const MenuView(),
+                      builder: (context) => const HomeView(),
                     ),
                   );
                 },
@@ -237,7 +238,7 @@ class PregnancyMenuView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const MenuView(),
+                      builder: (context) => const HomeView(),
                     ),
                   );
                 },
@@ -272,7 +273,7 @@ class PregnancyMenuView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const MenuView(),
+                      builder: (context) => const HomeView(),
                     ),
                   );
                 },
@@ -308,7 +309,7 @@ class PregnancyMenuView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const MenuView(),
+                      builder: (context) => const HomeView(),
                     ),
                   );
                 },
