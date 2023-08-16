@@ -31,19 +31,10 @@ class ExercisesView extends StatelessWidget {
               preferredSize: const Size.fromHeight(48.0),
               child: Container(
                   color: const Color.fromARGB(255, 220, 104, 145),
-                  child: TabBar(
-                    // text color of indicator pink
-                    labelColor: const Color.fromARGB(255, 220, 104, 145),
-                    // text color of non-selected tabs
-                    unselectedLabelColor: Colors.white,
-                    indicator: BoxDecoration(
-                      borderRadius: BorderRadius.circular(13),
-                      color: const Color.fromARGB(255, 250, 238, 244),
-                    ),
-                    padding: const EdgeInsets.only(
-                        left: 10.0, right: 10.0, bottom: 5.0),
+                  child: const TabBar(
+                    indicatorColor: Colors.white,
                     isScrollable: true,
-                    tabs: const [
+                    tabs: [
                       Tab(
                         text: "First Trimester",
                       ),
