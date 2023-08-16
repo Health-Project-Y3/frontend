@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 // import 'package:thurula/views/widgets/wave_widget.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 
-import 'MenuView.dart';
+import 'menu_view.dart';
 import 'Question2View.dart';
 // import 'package:provider/provider.dart';
 
@@ -19,18 +19,13 @@ class HomeView extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: const Row(children: [Text('Home Page')]),
-          actions: <Widget>[
-            Padding(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: IconButton(
-                    icon: const Icon(Icons.menu),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const MenuView()));
-                    })),
-          ],
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              // Handle back button press here
+              Navigator.of(context).pop();
+            },
+          ),
         ),
         body: Column(
           children: [

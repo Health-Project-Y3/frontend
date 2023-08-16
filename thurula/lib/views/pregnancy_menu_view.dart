@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:thurula/views/HomeView.dart';
 // import 'package:thurula/views/widgets/wave_widget.dart';
-import 'package:thurula/views/MenuView.dart';
-import 'package:thurula/views/PregnancyTimelineView.dart';
+import 'package:thurula/views/menu_view.dart';
+import 'package:thurula/views/pregnancy_timeline_view.dart';
 
 // import 'package:provider/provider.dart';
 
@@ -10,10 +11,6 @@ class PregnancyMenuView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    final bool keyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
-    // final model = Provider.of<HomeModel>(context);
-
     return Scaffold(
         backgroundColor: const Color.fromARGB(255, 227, 227, 227),
         body: GridView.count(crossAxisCount: 3, children: [
@@ -30,8 +27,8 @@ class PregnancyMenuView extends StatelessWidget {
                   );
                 },
                 child: Container(
-                  width: 200, // Adjust the width as needed
-                  height: 250, // Adjust the height as needed
+                  width: 200,
+                  height: 250,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20.0),
@@ -44,8 +41,7 @@ class PregnancyMenuView extends StatelessWidget {
                             'assets/images/menu-icons/timeline.png',
                             height: 60),
                       ),
-                      const SizedBox(
-                          height: 20), // Add spacing between image and text
+                      const SizedBox(height: 20),
                       const Text('Pregancny Timeline',
                           style: TextStyle(
                               fontFamily: 'Montserrat',
@@ -64,7 +60,7 @@ class PregnancyMenuView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const MenuView(),
+                      builder: (context) => const HomeView(),
                     ),
                   );
                 },
@@ -81,8 +77,7 @@ class PregnancyMenuView extends StatelessWidget {
                             'assets/images/menu-icons/healthcare.png',
                             height: 60),
                       ),
-                      const SizedBox(
-                          height: 20), // Add spacing between image and text
+                      const SizedBox(height: 20),
                       const Text('Health Monitoring',
                           style: TextStyle(
                               fontFamily: 'Montserrat',
@@ -101,7 +96,7 @@ class PregnancyMenuView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const MenuView(),
+                      builder: (context) => const HomeView(),
                     ),
                   );
                 },
@@ -118,8 +113,7 @@ class PregnancyMenuView extends StatelessWidget {
                             'assets/images/menu-icons/exercises.png',
                             height: 60),
                       ),
-                      const SizedBox(
-                          height: 20), // Add spacing between image and text
+                      const SizedBox(height: 20),
                       const Text('Exercise\nRecommendations',
                           style: TextStyle(
                               fontFamily: 'Montserrat',
@@ -138,7 +132,7 @@ class PregnancyMenuView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const MenuView(),
+                      builder: (context) => const HomeView(),
                     ),
                   );
                 },
@@ -155,8 +149,7 @@ class PregnancyMenuView extends StatelessWidget {
                             'assets/images/menu-icons/healthcare.png',
                             height: 60),
                       ),
-                      const SizedBox(
-                          height: 20), // Add spacing between image and text
+                      const SizedBox(height: 20),
                       const Text('Health Monitoring',
                           style: TextStyle(
                               fontFamily: 'Montserrat',
@@ -175,7 +168,7 @@ class PregnancyMenuView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const MenuView(),
+                      builder: (context) => const HomeView(),
                     ),
                   );
                 },
@@ -191,8 +184,7 @@ class PregnancyMenuView extends StatelessWidget {
                         child: Image.asset('assets/images/menu-icons/names.png',
                             height: 60),
                       ),
-                      const SizedBox(
-                          height: 20), // Add spacing between image and text
+                      const SizedBox(height: 20),
                       const Text('Baby Name\nSuggestions',
                           style: TextStyle(
                               fontFamily: 'Montserrat',
@@ -211,7 +203,7 @@ class PregnancyMenuView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const MenuView(),
+                      builder: (context) => const HomeView(),
                     ),
                   );
                 },
@@ -227,8 +219,7 @@ class PregnancyMenuView extends StatelessWidget {
                         child: Image.asset('assets/images/menu-icons/food.png',
                             height: 60),
                       ),
-                      const SizedBox(
-                          height: 20), // Add spacing between image and text
+                      const SizedBox(height: 20),
                       const Text('Food\nRecommendations',
                           style: TextStyle(
                               fontFamily: 'Montserrat',
@@ -247,7 +238,7 @@ class PregnancyMenuView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const MenuView(),
+                      builder: (context) => const HomeView(),
                     ),
                   );
                 },
@@ -263,8 +254,7 @@ class PregnancyMenuView extends StatelessWidget {
                         child: Image.asset('assets/images/menu-icons/forum.png',
                             height: 60),
                       ),
-                      const SizedBox(
-                          height: 20), // Add spacing between image and text
+                      const SizedBox(height: 20),
                       const Text('Forum',
                           style: TextStyle(
                               fontFamily: 'Montserrat',
@@ -283,7 +273,7 @@ class PregnancyMenuView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const MenuView(),
+                      builder: (context) => const HomeView(),
                     ),
                   );
                 },
@@ -300,8 +290,7 @@ class PregnancyMenuView extends StatelessWidget {
                             'assets/images/menu-icons/products.png',
                             height: 60),
                       ),
-                      const SizedBox(
-                          height: 20), // Add spacing between image and text
+                      const SizedBox(height: 20),
                       const Text('Product\nRecommendations',
                           style: TextStyle(
                               fontFamily: 'Montserrat',
@@ -320,7 +309,7 @@ class PregnancyMenuView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const MenuView(),
+                      builder: (context) => const HomeView(),
                     ),
                   );
                 },
@@ -337,8 +326,7 @@ class PregnancyMenuView extends StatelessWidget {
                             'assets/images/menu-icons/article.png',
                             height: 60),
                       ),
-                      const SizedBox(
-                          height: 20), // Add spacing between image and text
+                      const SizedBox(height: 20),
                       const Text('Article\nRecommendations',
                           style: TextStyle(
                               fontFamily: 'Montserrat',

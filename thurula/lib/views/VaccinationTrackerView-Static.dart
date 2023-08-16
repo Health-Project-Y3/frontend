@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:thurula/views/MenuView.dart';
+import 'package:thurula/views/menu_view.dart';
 
-class VaccinationTrackerView extends StatelessWidget {
-  const VaccinationTrackerView({super.key});
+class VaccinationTrackerView2 extends StatelessWidget {
+  const VaccinationTrackerView2({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,18 +29,13 @@ class VaccinationTrackerView extends StatelessWidget {
               ),
             ),
             title: const Text('Vaccination Tracker'),
-            actions: <Widget>[
-              Padding(
-                  padding: const EdgeInsets.only(right: 10.0),
-                  child: IconButton(
-                      icon: const Icon(Icons.menu),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const MenuView()));
-                      })),
-            ],
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                // Handle back button press here
+                Navigator.of(context).pop();
+              },
+            ),
           ),
           body: TabBarView(
             children: [

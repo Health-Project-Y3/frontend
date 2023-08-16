@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:thurula/views/MenuView.dart';
-
+import 'package:thurula/views/login_view.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,6 +11,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  MaterialApp(
-        debugShowCheckedModeBanner: false, home: MenuView());
+        debugShowCheckedModeBanner: false, home: LoginView());
   }
 }
