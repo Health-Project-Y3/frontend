@@ -29,18 +29,13 @@ class VaccinationTrackerView2 extends StatelessWidget {
               ),
             ),
             title: const Text('Vaccination Tracker'),
-            actions: <Widget>[
-              Padding(
-                  padding: const EdgeInsets.only(right: 10.0),
-                  child: IconButton(
-                      icon: const Icon(Icons.menu),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const MenuView()));
-                      })),
-            ],
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                // Handle back button press here
+                Navigator.of(context).pop();
+              },
+            ),
           ),
           body: TabBarView(
             children: [

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:thurula/services/auth/user_service.dart';
+import 'package:thurula/views/WelcomeView.dart';
 import 'package:thurula/views/menu_view.dart';
 
 class LoginView extends StatefulWidget {
