@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:thurula/views/login_view.dart';
+// import 'package:thurula/views/login_view.dart';
 import 'package:thurula/views/mother_health_tracker.dart';
 import 'package:thurula/views/pregnancy_timeline_view.dart';
 import 'package:thurula/views/pregnancy_vaccination_tracker_view.dart';
@@ -341,7 +341,8 @@ class PregnancyHomeView extends StatelessWidget {
                               color: Color.fromARGB(255, 88, 119, 161),
                             ),
                           ),
-                          Spacer(), // Spacer to push the length and weight to the right
+                          Spacer(),
+                          // Spacer to push the length and weight to the right
                           Text(
                             '34.6 cm 660.0 g',
                             style: TextStyle(
@@ -409,18 +410,18 @@ class PregnancyHomeView extends StatelessWidget {
                     children: [
                       const Expanded(
                           child: Padding(
-                            padding: EdgeInsets.only(
-                            left: 40.0,
-                            ),
-                            child: Text(
-                              'Your next vaccine is in',
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 220, 104, 145),
-                                  fontSize: 16,
-                                  height: 1.5,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.bold),
-                            ),
+                        padding: EdgeInsets.only(
+                          left: 40.0,
+                        ),
+                        child: Text(
+                          'Your next vaccine is in',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 220, 104, 145),
+                              fontSize: 16,
+                              height: 1.5,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.bold),
+                        ),
                       )),
                       Padding(
                         padding: const EdgeInsets.only(

@@ -3,9 +3,8 @@ import 'package:thurula/views/child_home_view.dart';
 import 'package:thurula/views/pregnancy_home_view.dart';
 
 class MenuView extends StatelessWidget {
-  const MenuView({super.key, required this.username});
+  const MenuView({super.key});
 
-  final String username;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -41,7 +40,6 @@ class MenuView extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.logout),
                 onPressed: () {
-                  // Handle logout button press here
                   Navigator.of(context).pop(); // Example: Navigate back
                 },
               ),
