@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thurula/views/HomeView.dart';
 import 'package:thurula/views/menu_view.dart';
 
 class SignUpChildView extends StatelessWidget {
@@ -165,7 +166,7 @@ class SignUpChildView extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const MenuView(),
+                        builder: (context) => const HomeView(),
                       ),
                     );
                   },

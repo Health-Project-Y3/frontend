@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:thurula/views/HomeView.dart';
 import 'package:thurula/views/menu_view.dart';
 import 'package:thurula/views/vaccination_tracker_view.dart';
 import 'package:thurula/views/length_chart_view.dart';
@@ -104,7 +105,7 @@ class ChildCareMenuView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const MenuView(),
+                      builder: (context) => const HomeView(),
                     ),
                   );
                 },
@@ -142,7 +143,7 @@ class ChildCareMenuView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const MenuView(),
+                      builder: (context) => const HomeView(),
                     ),
                   );
                 },
@@ -179,7 +180,7 @@ class ChildCareMenuView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const MenuView(),
+                      builder: (context) => const HomeView(),
                     ),
                   );
                 },
@@ -217,7 +218,7 @@ class ChildCareMenuView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const MenuView(),
+                      builder: (context) => const HomeView(),
                     ),
                   );
                 },
@@ -330,7 +331,7 @@ class ChildCareMenuView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const MenuView(),
+                      builder: (context) => const HomeView(),
                     ),
                   );
                 },
@@ -367,7 +368,7 @@ class ChildCareMenuView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const MenuView(),
+                      builder: (context) => const HomeView(),
                     ),
                   );
                 },
@@ -402,7 +403,7 @@ class ChildCareMenuView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const MenuView(),
+                      builder: (context) => const HomeView(),
                     ),
                   );
                 },
@@ -438,7 +439,7 @@ class ChildCareMenuView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const MenuView(),
+                      builder: (context) => const HomeView(),
                     ),
                   );
                 },
