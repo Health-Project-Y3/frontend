@@ -28,6 +28,10 @@ class NapService {
     }
   }
 
+  // static Future<List<NapTimes>> getBabyNapsLastWeek(String id ) async{
+  //
+  // }
+
   static Future<NapTimes> createNap(NapTimes nap) async {
     var response = await http.post(
       Uri.parse(getRoute('naps')),

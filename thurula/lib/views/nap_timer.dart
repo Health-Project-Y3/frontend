@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:thurula/services/local_service.dart';
 import 'package:thurula/services/naps_service.dart';
-import 'package:thurula/views/NapDetails.dart';
+import 'package:thurula/views/nap_details.dart';
 import 'package:flutter/material.dart';
 
 import '../models/naptimes_model.dart';
