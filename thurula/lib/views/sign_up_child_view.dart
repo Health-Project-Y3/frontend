@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:thurula/views/HomeView.dart';
 import 'package:thurula/views/menu_view.dart';
 
 class SignUpChildView extends StatelessWidget {
@@ -30,7 +29,7 @@ class SignUpChildView extends StatelessWidget {
                 'Final Step in creating your account!',
                 style: TextStyle(
                   color: Color.fromARGB(255, 255, 255, 255),
-                  fontFamily: 'Montserrat',
+                  fontFamily: 'Inter',
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
@@ -73,7 +72,7 @@ class SignUpChildView extends StatelessWidget {
                     'Select Baby\'s Sex',
                     style: TextStyle(
                       color: Color.fromARGB(255, 255, 255, 255),
-                      fontFamily: 'Montserrat',
+                      fontFamily: 'Inter',
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
@@ -91,7 +90,7 @@ class SignUpChildView extends StatelessWidget {
                         'Male',
                         style: TextStyle(
                           color: Color.fromARGB(255, 255, 255, 255),
-                          fontFamily: 'Montserrat',
+                          fontFamily: 'Inter',
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
@@ -108,7 +107,7 @@ class SignUpChildView extends StatelessWidget {
                         'Female',
                         style: TextStyle(
                           color: Color.fromARGB(255, 255, 255, 255),
-                          fontFamily: 'Montserrat',
+                          fontFamily: 'Inter',
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
@@ -146,7 +145,7 @@ class SignUpChildView extends StatelessWidget {
                             : 'Your Baby\'s Birthdate',
                         style: const TextStyle(
                           color: Colors.grey,
-                          fontFamily: 'Montserrat',
+                          fontFamily: 'Inter',
                           fontSize: 16,
                         ),
                       ),
@@ -166,7 +165,7 @@ class SignUpChildView extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const HomeView(),
+                        builder: (context) => const MenuView(),
                       ),
                     );
                   },

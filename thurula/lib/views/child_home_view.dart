@@ -5,7 +5,6 @@ import 'package:thurula/views/diaper_change.dart';
 import 'package:thurula/views/nap_details.dart';
 import 'package:thurula/views/child_vaccination_tracker_view.dart';
 import 'package:thurula/views/length_chart_view.dart';
-import 'package:thurula/views/login_view.dart';
 import 'package:thurula/views/meal_tracker.dart';
 
 class ChildHomeView extends StatelessWidget {
@@ -308,7 +307,7 @@ class ChildHomeView extends StatelessWidget {
                                     height: 55),
                               ),
                               const SizedBox(height: 10),
-                              const Text("Skill Development\nExercises",
+                              const Text("Checklist",
                                   style: TextStyle(
                                       fontFamily: 'Inter',
                                       color: Color.fromARGB(255, 88, 119, 161),

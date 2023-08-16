@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:thurula/views/child_care_menu_view.dart';
 
 final GlobalKey<NavigatorState> _navKey = GlobalKey<NavigatorState>();
 
@@ -44,25 +43,13 @@ class _SnellenCardViewState extends State<SnellenCardView>
           appBar: AppBar(
             title: const Row(children: [Text('Snellen Card Test')]),
             backgroundColor: Color.fromARGB(255, 220, 104, 145),
-            actions: <Widget>[
-              Padding(
-                  padding: const EdgeInsets.only(right: 10.0),
-                  child: IconButton(
-                      icon: const Icon(Icons.menu),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const ChildCareMenuView()));
-                      })),
-            ],
             bottom: TabBar(
               controller: _tabController,
               isScrollable: true,
               tabs: [
                 for (final tab in tabs) Tab(text: tab),
               ],
+              indicatorColor: Colors.white,
             ),
           ),
           body: Navigator(
