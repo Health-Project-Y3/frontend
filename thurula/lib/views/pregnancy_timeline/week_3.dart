@@ -17,7 +17,7 @@ class Week3View extends StatelessWidget {
             child: Text("First trimester -  Week 3",
                 style: TextStyle(
                   color: Color.fromARGB(255, 220, 104, 145),
-                  fontFamily: 'Montserrat',
+                  fontFamily: 'Inter',
                   fontSize: 26,
                   fontWeight: FontWeight.bold,
                 )),
@@ -30,7 +30,7 @@ class Week3View extends StatelessWidget {
                 'Your Baby’s Development',
                 style: TextStyle(
                   color: Color.fromARGB(255, 88, 119, 161),
-                  fontFamily: 'Montserrat',
+                  fontFamily: 'Inter',
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
@@ -68,7 +68,7 @@ class Week3View extends StatelessWidget {
                 'Your Body',
                 style: TextStyle(
                   color: Color.fromARGB(255, 88, 119, 161),
-                  fontFamily: 'Montserrat',
+                  fontFamily: 'Inter',
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
@@ -95,7 +95,7 @@ class Week3View extends StatelessWidget {
                 'Tips for You This Week',
                 style: TextStyle(
                   color: Color.fromARGB(255, 88, 119, 161),
-                  fontFamily: 'Montserrat',
+                  fontFamily: 'Inter',
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),

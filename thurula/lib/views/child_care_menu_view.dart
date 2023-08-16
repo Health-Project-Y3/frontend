@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:thurula/views/HomeView.dart';
-import 'package:thurula/views/menu_view.dart';
 import 'package:thurula/views/vaccination_tracker_view.dart';
 import 'package:thurula/views/length_chart_view.dart';
 import 'package:thurula/views/childcare/vision/VisionMenuView.dart';
@@ -14,8 +13,8 @@ class ChildCareMenuView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    final bool keyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
+    // final size = MediaQuery.of(context).size;
+    // final bool keyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
     // final model = Provider.of<HomeModel>(context);
 
     return Scaffold(
@@ -51,7 +50,7 @@ class ChildCareMenuView extends StatelessWidget {
                       const SizedBox(height: 20),
                       const Text("Growth Tracker",
                           style: TextStyle(
-                              fontFamily: 'Montserrat',
+                              fontFamily: 'Inter',
                               color: Color.fromARGB(255, 220, 104, 145),
                               fontSize: 13,
                               fontWeight: FontWeight.bold))
@@ -89,7 +88,7 @@ class ChildCareMenuView extends StatelessWidget {
                       const SizedBox(height: 20),
                       const Text("Vaccination\nTracker",
                           style: TextStyle(
-                              fontFamily: 'Montserrat',
+                              fontFamily: 'Inter',
                               color: Color.fromARGB(255, 220, 104, 145),
                               fontSize: 13,
                               fontWeight: FontWeight.bold))
@@ -127,7 +126,7 @@ class ChildCareMenuView extends StatelessWidget {
                       const SizedBox(height: 20),
                       const Text("Feeding\nMonitoring",
                           style: TextStyle(
-                              fontFamily: 'Montserrat',
+                              fontFamily: 'Inter',
                               color: Color.fromARGB(255, 220, 104, 145),
                               fontSize: 13,
                               fontWeight: FontWeight.bold))
@@ -164,7 +163,7 @@ class ChildCareMenuView extends StatelessWidget {
                       const SizedBox(height: 20),
                       const Text("Nap Time\nMonitoring",
                           style: TextStyle(
-                              fontFamily: 'Montserrat',
+                              fontFamily: 'Inter',
                               color: Color.fromARGB(255, 220, 104, 145),
                               fontSize: 13,
                               fontWeight: FontWeight.bold))
@@ -202,7 +201,7 @@ class ChildCareMenuView extends StatelessWidget {
                       const SizedBox(height: 20),
                       const Text("Diaper Change\nMonitoring",
                           style: TextStyle(
-                              fontFamily: 'Montserrat',
+                              fontFamily: 'Inter',
                               color: Color.fromARGB(255, 220, 104, 145),
                               fontSize: 13,
                               fontWeight: FontWeight.bold))
@@ -239,7 +238,7 @@ class ChildCareMenuView extends StatelessWidget {
                       const SizedBox(height: 20),
                       const Text("Photo Album",
                           style: TextStyle(
-                              fontFamily: 'Montserrat',
+                              fontFamily: 'Inter',
                               color: Color.fromARGB(255, 220, 104, 145),
                               fontSize: 13,
                               fontWeight: FontWeight.bold))
@@ -277,7 +276,7 @@ class ChildCareMenuView extends StatelessWidget {
                       const SizedBox(height: 20),
                       const Text("Vision Test",
                           style: TextStyle(
-                              fontFamily: 'Montserrat',
+                              fontFamily: 'Inter',
                               color: Color.fromARGB(255, 220, 104, 145),
                               fontSize: 13,
                               fontWeight: FontWeight.bold))
@@ -315,7 +314,7 @@ class ChildCareMenuView extends StatelessWidget {
                       const SizedBox(height: 20),
                       const Text("Checklist",
                           style: TextStyle(
-                              fontFamily: 'Montserrat',
+                              fontFamily: 'Inter',
                               color: Color.fromARGB(255, 220, 104, 145),
                               fontSize: 13,
                               fontWeight: FontWeight.bold))
@@ -352,7 +351,7 @@ class ChildCareMenuView extends StatelessWidget {
                       const SizedBox(height: 20),
                       const Text("Food\nRecommendations",
                           style: TextStyle(
-                              fontFamily: 'Montserrat',
+                              fontFamily: 'Inter',
                               color: Color.fromARGB(255, 220, 104, 145),
                               fontSize: 13,
                               fontWeight: FontWeight.bold))
@@ -387,7 +386,7 @@ class ChildCareMenuView extends StatelessWidget {
                       const SizedBox(height: 20),
                       const Text('Forum',
                           style: TextStyle(
-                              fontFamily: 'Montserrat',
+                              fontFamily: 'Inter',
                               color: Color.fromARGB(255, 220, 104, 145),
                               fontSize: 13,
                               fontWeight: FontWeight.bold))
@@ -423,7 +422,7 @@ class ChildCareMenuView extends StatelessWidget {
                       const SizedBox(height: 20),
                       const Text('Product\nRecommendations',
                           style: TextStyle(
-                              fontFamily: 'Montserrat',
+                              fontFamily: 'Inter',
                               color: Color.fromARGB(255, 220, 104, 145),
                               fontSize: 13,
                               fontWeight: FontWeight.bold))
@@ -459,7 +458,7 @@ class ChildCareMenuView extends StatelessWidget {
                       const SizedBox(height: 20),
                       const Text('Article\nRecommendations',
                           style: TextStyle(
-                              fontFamily: 'Montserrat',
+                              fontFamily: 'Inter',
                               color: Color.fromARGB(255, 220, 104, 145),
                               fontSize: 13,
                               fontWeight: FontWeight.bold))

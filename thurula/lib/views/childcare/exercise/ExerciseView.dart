@@ -1,14 +1,8 @@
-import 'dart:io';
-
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'package:permission_handler/permission_handler.dart';
 import '../../../models/checklist_model.dart';
 import '../../../services/checklist_service.dart';
-import 'package:thurula/views/child_care_menu_view.dart';
 
 final GlobalKey<NavigatorState> _navKey = GlobalKey<NavigatorState>();
 
@@ -80,25 +74,26 @@ class _ExerciseViewState extends State<ExerciseView>
           appBar: AppBar(
             title: const Row(children: [Text('Check list')]),
             backgroundColor: Color.fromARGB(255, 220, 104, 145),
-            actions: <Widget>[
-              Padding(
-                  padding: const EdgeInsets.only(right: 10.0),
-                  child: IconButton(
-                      icon: const Icon(Icons.menu),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const ChildCareMenuView()));
-                      })),
-            ],
+            // actions: <Widget>[
+            //   Padding(
+            //       padding: const EdgeInsets.only(right: 10.0),
+            //       child: IconButton(
+            //           icon: const Icon(Icons.menu),
+            //           onPressed: () {
+            //             Navigator.push(
+            //                 context,
+            //                 MaterialPageRoute(
+            //                     builder: (context) =>
+            //                         const MenuView()));
+            //           })),
+            // ],
             bottom: TabBar(
               controller: _tabController,
               isScrollable: true,
               tabs: [
                 for (final tab in tabs) Tab(text: tab),
               ],
+              indicatorColor: Colors.white,
             ),
           ),
           body: Navigator(
@@ -158,7 +153,15 @@ class _NewbornState extends State<Newborn> {
       future: _newborns,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
+          return const SizedBox(
+            height: 10.0,
+            width: 10.0,
+            child: Center(
+                child: CircularProgressIndicator(
+                  //   color
+                  color: Color.fromARGB(255, 220, 104, 145),
+                )),
+          );
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else if (snapshot.hasData) {
@@ -219,8 +222,6 @@ class _NewbornState extends State<Newborn> {
 }
 
 class _Week2State extends State<Week2> {
-  //FirstPage({Key? key}) : super(key: key);
-
   late Future<List<Checklists>> _week2;
 
   void initState() {
@@ -247,7 +248,16 @@ class _Week2State extends State<Week2> {
       future: _week2,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
+
+          return const SizedBox(
+            height: 10.0,
+            width: 10.0,
+            child: Center(
+                child: CircularProgressIndicator(
+                  //   color
+                  color: Color.fromARGB(255, 220, 104, 145),
+                )),
+          );
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else if (snapshot.hasData) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thurula/views/child_home_view.dart';
 import 'package:thurula/views/pregnancy_home_view.dart';
+import 'package:thurula/views/login_view.dart';
 
 class MenuView extends StatelessWidget {
   const MenuView({super.key});
@@ -40,7 +41,12 @@ class MenuView extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.logout),
                 onPressed: () {
-                  Navigator.of(context).pop(); // Example: Navigate back
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LoginView(),
+                    ),
+                  );
                 },
               ),
             ],
