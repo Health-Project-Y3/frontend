@@ -12,11 +12,11 @@ class PregnancyHomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 247, 247, 247),
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: Stack(
         children: [
           const Positioned(
-            top: 50,
+            top: 20,
             left: 20,
             child: Text(
               "Welcome Ama!",
@@ -29,7 +29,7 @@ class PregnancyHomeView extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 80,
+            top: 50,
             left: 20,
             right: 20,
             child: Container(
@@ -118,6 +118,46 @@ class PregnancyHomeView extends StatelessWidget {
                           ),
                         ),
                       )),
+                  //Vaccination Tracking
+                  Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: InkResponse(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  PregnancyVaccinationTrackerView(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          width: 120,
+                          height: 120,
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 255, 255, 255),
+                            borderRadius: BorderRadius.circular(5.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 0.5,
+                                blurRadius: 3,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ClipRRect(
+                                child: Image.asset(
+                                    'assets/images/menu-tiles/vaccine2.png',
+                                    height: 100),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )),
                   //Exercise Recommendations
                   Padding(
                       padding: const EdgeInsets.all(5.0),
@@ -138,11 +178,11 @@ class PregnancyHomeView extends StatelessWidget {
                             borderRadius: BorderRadius.circular(5.0),
                             boxShadow: [
                               BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 0.5,
-                      blurRadius: 3,
-                      offset: const Offset(0, 2),
-                    ),
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 0.5,
+                                blurRadius: 3,
+                                offset: const Offset(0, 2),
+                              ),
                             ],
                           ),
                           child: Column(
@@ -177,11 +217,11 @@ class PregnancyHomeView extends StatelessWidget {
                             borderRadius: BorderRadius.circular(5.0),
                             boxShadow: [
                               BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 0.5,
-                      blurRadius: 3,
-                      offset: const Offset(0, 2),
-                    ),
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 0.5,
+                                blurRadius: 3,
+                                offset: const Offset(0, 2),
+                              ),
                             ],
                           ),
                           child: Column(
@@ -196,46 +236,6 @@ class PregnancyHomeView extends StatelessWidget {
                           ),
                         ),
                       )),
-                  //Vaccination Tracking
-                  Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: InkResponse(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  PregnancyVaccinationTrackerView(),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          width: 120,
-                          height: 120,
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 255, 255, 255),
-                            borderRadius: BorderRadius.circular(5.0),
-                            boxShadow: [
-                              BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 0.5,
-                      blurRadius: 3,
-                      offset: const Offset(0, 2),
-                    ),
-                            ],
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              ClipRRect(
-                                child: Image.asset(
-                                    'assets/images/menu-tiles/vaccine2.png',
-                                    height: 100),
-                              ),
-                            ],
-                          ),
-                        ),
-                      )),
                 ],
               ),
             ),
@@ -243,7 +243,7 @@ class PregnancyHomeView extends StatelessWidget {
 
           // days left
           Positioned(
-            top: 235,
+            top: 205,
             left: 20,
             right: 20,
             child: Container(
@@ -279,11 +279,11 @@ class PregnancyHomeView extends StatelessWidget {
                       const Padding(
                         padding: EdgeInsets.only(bottom: 20.0),
                         child: Text(
-                        '70 days left for your bundle of joy to arrive!',
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 88, 119, 161),
-                          fontSize: 16.0,
-                          fontFamily: 'Inter',
+                          '70 days left for your bundle of joy to arrive!',
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 88, 119, 161),
+                            fontSize: 16.0,
+                            fontFamily: 'Inter',
                           ),
                         ),
                       )
@@ -296,92 +296,92 @@ class PregnancyHomeView extends StatelessWidget {
 
           // baby size
           Positioned(
-            top: 445,
+            top: 415,
             left: 20,
             right: 20,
             child: IntrinsicHeight(
               child: Container(
-              width: 400,
-              // height: 200,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 0.5,
-                    blurRadius: 3,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Row(
-                      children: [
-                        // bullet point
-                        Icon(
-                          Icons.square,
-                          size: 10,
-                          color: Color.fromARGB(255, 88, 119, 161),
-                        ),
-                        SizedBox(width: 10),
-                        Text(
-                          'Week 25 Day 6',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 88, 119, 161),
-                          ),
-                        ),
-                        Spacer(), // Spacer to push the length and weight to the right
-                        Text(
-                          '34.6 cm 660.0 g',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Color.fromARGB(255, 88, 119, 161),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    const Text(
-                      'Your baby is putting on fat and growing chubbier, which helps the baby adapt to the relatively low temperature of the outside world after leaving the womb.',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        const Text(
-                          'Your baby is as big as a \nstrawberry',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 88, 119, 161),
-                          ),
-                        ),
-                        Image.asset(
-                          'assets/images/pregnancy-home/strawberry2.png',
-                          height: 80,
-                        ),
-                      ],
+                width: 400,
+                // height: 200,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 0.5,
+                      blurRadius: 3,
+                      offset: const Offset(0, 2),
                     ),
                   ],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Row(
+                        children: [
+                          // bullet point
+                          Icon(
+                            Icons.square,
+                            size: 10,
+                            color: Color.fromARGB(255, 88, 119, 161),
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            'Week 25 Day 6',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 88, 119, 161),
+                            ),
+                          ),
+                          Spacer(), // Spacer to push the length and weight to the right
+                          Text(
+                            '34.6 cm 660.0 g',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Color.fromARGB(255, 88, 119, 161),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      const Text(
+                        'Your baby is putting on fat and growing chubbier, which helps the baby adapt to the relatively low temperature of the outside world after leaving the womb.',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          const Text(
+                            'Your baby is as big as a \nstrawberry',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 88, 119, 161),
+                            ),
+                          ),
+                          Image.asset(
+                            'assets/images/pregnancy-home/strawberry2.png',
+                            height: 80,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-          ),
 
           Positioned(
-              bottom: 20,
+              bottom: 40,
               left: 20,
               right: 20,
               child: Container(
@@ -404,19 +404,18 @@ class PregnancyHomeView extends StatelessWidget {
                     children: [
                       const Expanded(
                           child: Padding(
-                            padding: EdgeInsets.only(
-                            left: 15.0,
-                            ),
-                            child: Text(
-                              'Your next vaccine is in',
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 88, 119, 161),
-                                  fontSize: 20.0,
-                                  height: 1.5,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight
-                                      .bold),
-                            ),
+                        padding: EdgeInsets.only(
+                          left: 15.0,
+                        ),
+                        child: Text(
+                          'Your next vaccine is in',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 88, 119, 161),
+                              fontSize: 20.0,
+                              height: 1.5,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.bold),
+                        ),
                       )),
                       Padding(
                         padding: const EdgeInsets.only(
@@ -429,8 +428,7 @@ class PregnancyHomeView extends StatelessWidget {
                         ),
                       ),
                       const Padding(
-                        padding: EdgeInsets.all(
-                            10.0),
+                        padding: EdgeInsets.all(10.0),
                         child: Text(
                           'days',
                           style: TextStyle(
@@ -438,8 +436,7 @@ class PregnancyHomeView extends StatelessWidget {
                               fontSize: 20.0,
                               height: 1.5,
                               fontFamily: 'Inter',
-                              fontWeight: FontWeight
-                                  .bold),
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],
@@ -447,7 +444,7 @@ class PregnancyHomeView extends StatelessWidget {
                 ),
               )),
           Positioned(
-            top: 30,
+            top: 10,
             right: 10,
             child: Material(
               color: Colors.transparent,

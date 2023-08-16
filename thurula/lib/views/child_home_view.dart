@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:thurula/views/childcare/exercise/ExerciseView.dart';
+import 'package:thurula/views/childcare/vision/VisionMenuView.dart';
 import 'package:thurula/views/diaper_change.dart';
 import 'package:thurula/views/nap_details.dart';
 import 'package:thurula/views/child_vaccination_tracker_view.dart';
@@ -16,7 +18,7 @@ class ChildHomeView extends StatelessWidget {
       body: Stack(
         children: [
           const Positioned(
-            top: 50,
+            top: 20,
             left: 20,
             child: Text(
               "Welcome Nadeeka!",
@@ -29,7 +31,7 @@ class ChildHomeView extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 100,
+            top: 50,
             left: 5,
             right: 5,
             child: Container(
@@ -151,11 +153,11 @@ class ChildHomeView extends StatelessWidget {
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(5.0),
                             boxShadow: [
-                              BoxShadow
-                                (color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 0.5,
-                      blurRadius: 2,
-                      offset: const Offset(0, 2),
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 0.5,
+                                blurRadius: 2,
+                                offset: const Offset(0, 2),
                               ),
                             ],
                           ),
@@ -197,11 +199,11 @@ class ChildHomeView extends StatelessWidget {
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(5.0),
                             boxShadow: [
-                              BoxShadow
-                                (color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 0.5,
-                      blurRadius: 2,
-                      offset: const Offset(0, 2),
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 0.5,
+                                blurRadius: 2,
+                                offset: const Offset(0, 2),
                               ),
                             ],
                           ),
@@ -278,7 +280,7 @@ class ChildHomeView extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const ChildHomeView(),
+                              builder: (context) => ExerciseView(),
                             ),
                           );
                         },
@@ -289,11 +291,11 @@ class ChildHomeView extends StatelessWidget {
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(5.0),
                             boxShadow: [
-                              BoxShadow
-                                (color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 0.5,
-                      blurRadius: 2,
-                      offset: const Offset(0, 2),
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 0.5,
+                                blurRadius: 2,
+                                offset: const Offset(0, 2),
                               ),
                             ],
                           ),
@@ -316,12 +318,58 @@ class ChildHomeView extends StatelessWidget {
                           ),
                         ),
                       )),
+                  //Skill Development Exercises
+                  Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: InkResponse(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const VisionMenuView(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          width: 120,
+                          height: 120,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(5.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 0.5,
+                                blurRadius: 2,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ClipRRect(
+                                child: Image.asset(
+                                    'assets/images/menu-icons/vision.png',
+                                    height: 55),
+                              ),
+                              const SizedBox(height: 10),
+                              const Text("Vision Test",
+                                  style: TextStyle(
+                                      fontFamily: 'Inter',
+                                      color: Color.fromARGB(255, 88, 119, 161),
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold))
+                            ],
+                          ),
+                        ),
+                      )),
                 ],
               ),
             ),
           ),
           Positioned(
-              top: 260,
+              top: 220,
               left: 20,
               right: 20,
               child: Container(
@@ -367,7 +415,7 @@ class ChildHomeView extends StatelessWidget {
                 ),
               )),
           Positioned(
-              top: 480,
+              top: 450,
               left: 20,
               right: 20,
               child: Container(
@@ -398,12 +446,11 @@ class ChildHomeView extends StatelessWidget {
                         ),
                       ),
                       const Padding(
-                      //   padding on left and right
-                        padding: EdgeInsets.only(
-                          left: 5.0,
-                          right: 10.0,
-                        )
-                      ),
+                          //   padding on left and right
+                          padding: EdgeInsets.only(
+                        left: 5.0,
+                        right: 10.0,
+                      )),
                       Image.asset(
                         'assets/images/child-home/size.png',
                         height: 60,
@@ -413,7 +460,7 @@ class ChildHomeView extends StatelessWidget {
                 ),
               )),
           Positioned(
-              bottom: 40,
+              bottom: 50,
               left: 20,
               right: 20,
               child: Container(
@@ -436,20 +483,19 @@ class ChildHomeView extends StatelessWidget {
                     children: [
                       const Expanded(
                           child: Padding(
-                            padding: EdgeInsets.only(
-                              left: 22.0,
-                            ),
-                            child: Text(
-                              'Baby\'s next vaccine is in',
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 88, 119, 161),
-                                  fontSize: 17.0,
-                                  height: 1.5,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight
-                                      .bold),
-                            ),
-                          )),
+                        padding: EdgeInsets.only(
+                          left: 22.0,
+                        ),
+                        child: Text(
+                          'Baby\'s next vaccine is in',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 88, 119, 161),
+                              fontSize: 17.0,
+                              height: 1.5,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.bold),
+                        ),
+                      )),
                       Padding(
                         padding: const EdgeInsets.only(
                           left: 0.0,
@@ -463,7 +509,8 @@ class ChildHomeView extends StatelessWidget {
                       const Padding(
                         // padding right
                         padding: EdgeInsets.only(
-                          right: 22.0, left: 10.0,
+                          right: 22.0,
+                          left: 10.0,
                         ),
                         child: Text(
                           'days',
@@ -472,8 +519,7 @@ class ChildHomeView extends StatelessWidget {
                               fontSize: 17.0,
                               height: 1.5,
                               fontFamily: 'Inter',
-                              fontWeight: FontWeight
-                                  .bold),
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],
@@ -481,7 +527,7 @@ class ChildHomeView extends StatelessWidget {
                 ),
               )),
           Positioned(
-            top: 30,
+            top: 10,
             right: 10,
             child: Material(
               color: Colors.transparent,
