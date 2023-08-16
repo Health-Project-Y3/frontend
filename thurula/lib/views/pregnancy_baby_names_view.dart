@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:thurula/views/pregnancy_home_view.dart';
+import 'package:thurula/views/menu_view.dart';
 
 void main() {
   runApp(const BabyNames());
@@ -129,10 +129,10 @@ class _BabyNamePageState extends State<BabyNamePage> {
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const PregnancyHomeView()));
-            },
+                context,
+                MaterialPageRoute(builder: (context) => const MenuView()),
+              );
+              },
           ),
           title: const Text('Baby Names'),
           bottom: const TabBar(

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'menu_view.dart';
 import 'package:thurula/views/pregnancy_exercise_timer_view.dart';
-import 'package:thurula/views/pregnancy_home_view.dart';
 
 class ExercisesView extends StatelessWidget {
   const ExercisesView({Key? key}) : super(key: key);
@@ -16,8 +15,10 @@ class ExercisesView extends StatelessWidget {
             leading: IconButton(
               icon: const Icon(Icons.arrow_back),
               onPressed: () {
-                // Handle back button press here
-                Navigator.of(context).pop();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const MenuView()));
               },
             ),
             backgroundColor: const Color.fromARGB(255, 220, 104, 145),
@@ -31,19 +32,10 @@ class ExercisesView extends StatelessWidget {
               preferredSize: const Size.fromHeight(48.0),
               child: Container(
                   color: const Color.fromARGB(255, 220, 104, 145),
-                  child: TabBar(
-                    // text color of indicator pink
-                    labelColor: const Color.fromARGB(255, 220, 104, 145),
-                    // text color of non-selected tabs
-                    unselectedLabelColor: Colors.white,
-                    indicator: BoxDecoration(
-                      borderRadius: BorderRadius.circular(13),
-                      color: const Color.fromARGB(255, 250, 238, 244),
-                    ),
-                    padding: const EdgeInsets.only(
-                        left: 10.0, right: 10.0, bottom: 5.0),
+                  child: const TabBar(
+                    indicatorColor: Colors.white,
                     isScrollable: true,
-                    tabs: const [
+                    tabs: [
                       Tab(
                         text: "First Trimester",
                       ),
