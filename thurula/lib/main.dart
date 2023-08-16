@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:thurula/views/login_view.dart';
+import 'package:thurula/views/nap_details.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,6 +12,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  MaterialApp(
-        debugShowCheckedModeBanner: false, home: LoginView());
+        debugShowCheckedModeBanner: false, home: NapDetails());
   }
 }

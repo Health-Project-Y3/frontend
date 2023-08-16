@@ -4,19 +4,34 @@ import 'package:thurula/views/add_nap.dart';
 import 'package:thurula/views/nap_records.dart';
 import 'package:thurula/views/child_home_view.dart';
 
-class NapDetails extends StatelessWidget {
-  Future<Map<String, double>> fetchSleepHours() async {
+class NapDetails extends StatefulWidget {
+  @override
+  _NapDetailsState createState() => _NapDetailsState();
+}
+
+class _NapDetailsState extends State<NapDetails> {
+  Map<String, double>? sleepHoursData;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchSleepHoursData();
+  }
+
+  Future<void> fetchSleepHoursData() async {
     // Simulating fetching sleep hour data from an API or database
     await Future.delayed(Duration(seconds: 2));
-    return {
-      'Mon': 12,
-      'Tue': 13,
-      'Wed': 12,
-      'Thu': 14,
-      'Fri': 16,
-      'Sat': 11,
-      'Sun': 13
-    }; // Sleep hour data for each day
+    setState(() {
+      sleepHoursData = {
+        'Mon': 12,
+        'Tue': 13,
+        'Wed': 12,
+        'Thu': 14,
+        'Fri': 16,
+        'Sat': 11,
+        'Sun': 13
+      }; // Sleep hour data for each day
+    });
   }
 
   @override
@@ -168,59 +183,63 @@ class NapDetails extends StatelessWidget {
       ),
     );
   }
-}
 
-List<Widget> buildBarChart() {
-  List<Widget> bars = [];
-  List<String> days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']; // Days of the week
+  List<Widget> buildBarChart() {
+    List<Widget> bars = [];
+    List<String> days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-  for (int i = 0; i < 7; i++) {
-    double barHeight = (i + 1) * 30.0; // Vary the height for each bar
-    bars.add(
-      Container(
-        width: 20,
-        padding: EdgeInsets.all(20),
-        height: barHeight,
-        color: Color.fromARGB(255, 88, 119, 161),
-      ),
-    );
-  }
+    if (sleepHoursData != null) {
+      for (int i = 0; i < days.length; i++) {
 
-  List<Widget> chartContent = [];
-
-  // Y-Axis labels
-
-  // Bars and X-Axis labels
-  for (int i = 0; i < bars.length; i++) {
-    chartContent.add(
-      Column(
-        children: [
+        double sleepHours = sleepHoursData![days[i]] ?? 0;
+        double barHeight = sleepHours * 10; // You can adjust the scaling factor
+        bars.add(
           Container(
-            height: 170,
-            child: Stack(
-              alignment: Alignment.bottomCenter,
-              children: [
-                Container(
-                  width: 50,
-                  height: 100,
-                  color: Colors.transparent,
-                ),
-                bars[i],
-              ],
-            ),
+            width: 20,
+            padding: EdgeInsets.all(20),
+            height: barHeight,
+            color: Color.fromARGB(255, 88, 119, 161),
           ),
-          SizedBox(height: 4),
-          Text(
-            days[i],
-            style: TextStyle(fontSize: 12),
-          ),
-        ],
-      ),
-    );
-  }
+        );
+      }
+    }
 
-  return chartContent;
+    List<Widget> chartContent = [];
+
+    for (int i = 0; i < bars.length; i++) {
+      chartContent.add(
+        Column(
+          children: [
+            Container(
+              height: 170,
+              child: Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  Container(
+                    width: 50,
+                    height: 100,
+                    color: Colors.transparent,
+                  ),
+                  bars[i],
+                ],
+              ),
+            ),
+            SizedBox(height: 4),
+            Text(
+              days[i],
+              style: TextStyle(fontSize: 12),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return chartContent;
+  }
 }
+
+
+
 
 class NapStatCard extends StatelessWidget {
   final String title;
