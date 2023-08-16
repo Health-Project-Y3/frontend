@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:thurula/services/local_service.dart';
-import 'package:thurula/views/menu_view.dart';
 import 'package:thurula/services/vaccination_service.dart';
 import 'package:thurula/models/vaccination_model.dart';
 
@@ -19,7 +18,7 @@ class _VaccinationTrackerViewState extends State<VaccinationTrackerView> {
   @override
   void initState() {
     super.initState();
-    babyId = LocalService().getCurrentBabyId();
+    babyId = LocalService.getCurrentBabyId();
     babyId.then((value) {
       upcomingVaccinations = VaccinationService.getDueVaccinations(value);
       completedVaccinations =

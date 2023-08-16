@@ -7,10 +7,10 @@ class LocalService{
   static Future<String> getCurrentBabyId() async{
     return SharedPref.getString('currentBabyId');
   }
-  void setCurrentUserId(String id){
+  static void setCurrentUserId(String id){
     SharedPref.setString('currentUserId', id);
   }
-  Future<String> getCurrentUserId() async{
+  static Future<String> getCurrentUserId() async{
     return SharedPref.getString('currentUserId');
   }
 }

@@ -36,8 +36,8 @@ class UserService {
         // save the token in shared preferences
         SharedPref.setString('JWT', response.body);
         SharedPref.setString('USERNAME',username);
-        LocalService().setCurrentUserId("64aa7bcddd01ede8be01ca6c");
-        LocalService().setCurrentBabyId("64cd599fc65bbef9519bc04c");
+        LocalService.setCurrentUserId("64aa7bcddd01ede8be01ca6c");
+        LocalService.setCurrentBabyId("64cd599fc65bbef9519bc04c");
         return true;
       } else {
         // login failed, handle the error
