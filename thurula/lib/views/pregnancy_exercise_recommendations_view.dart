@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'menu_view.dart';
 import 'package:thurula/views/pregnancy_exercise_timer_view.dart';
-import 'package:thurula/views/pregnancy_home_view.dart';
 
 class ExercisesView extends StatelessWidget {
   const ExercisesView({Key? key}) : super(key: key);
@@ -16,8 +15,10 @@ class ExercisesView extends StatelessWidget {
             leading: IconButton(
               icon: const Icon(Icons.arrow_back),
               onPressed: () {
-                // Handle back button press here
-                Navigator.of(context).pop();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const MenuView()));
               },
             ),
             backgroundColor: const Color.fromARGB(255, 220, 104, 145),
