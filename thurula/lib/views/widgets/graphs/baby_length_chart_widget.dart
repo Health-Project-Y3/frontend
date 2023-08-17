@@ -35,14 +35,14 @@ class _BabyLengthChartWidgetState extends State<BabyLengthChartWidget> {
             ),
             titlesData: const FlTitlesData(
               leftTitles: AxisTitles(
-                  axisNameWidget: Text('Length(cm)'),
+                  // axisNameWidget: Text('Length(cm)'),
                   sideTitles: SideTitles(
                     showTitles: true,
                     reservedSize: 40,
                     interval: 5,
                   )),
               bottomTitles: AxisTitles(
-                  axisNameWidget: Text('Weeks'),
+                  // axisNameWidget: Text('Weeks'),
                   sideTitles: SideTitles(
                       showTitles: true, reservedSize: 40)),
               topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),

@@ -13,7 +13,7 @@ class _DiaperChange extends State<DiaperChange> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Diaper Change Input',
+          'Diaper Change',
           style: TextStyle(
             color: Colors.white, // Title color
           ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:thurula/views/login_view.dart';
+// import 'package:thurula/views/login_view.dart';
 import 'package:thurula/views/mother_health_tracker.dart';
 import 'package:thurula/views/pregnancy_timeline_view.dart';
 import 'package:thurula/views/pregnancy_vaccination_tracker_view.dart';
@@ -12,25 +12,27 @@ class PregnancyHomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: const Color.fromARGB(255, 247, 247, 247),
       body: Stack(
         children: [
           const Positioned(
             top: 20,
-            left: 20,
+            left: 25,
             child: Text(
               "Welcome Ama!",
               style: TextStyle(
-                color: Color.fromARGB(255, 220, 104, 145),
+                color: Color.fromARGB(255, 88, 119, 161),
                 fontFamily: 'Inter',
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
           ),
+
+          // menu tiles
           Positioned(
-            top: 50,
-            left: 20,
+            top: 35,
+            left: 15,
             right: 20,
             child: Container(
               margin: const EdgeInsets.symmetric(vertical: 20),
@@ -158,6 +160,7 @@ class PregnancyHomeView extends StatelessWidget {
                           ),
                         ),
                       )),
+
                   //Exercise Recommendations
                   Padding(
                       padding: const EdgeInsets.all(5.0),
@@ -197,6 +200,7 @@ class PregnancyHomeView extends StatelessWidget {
                           ),
                         ),
                       )),
+
                   //Baby Name Suggestions
                   Padding(
                       padding: const EdgeInsets.all(5.0),
@@ -243,7 +247,7 @@ class PregnancyHomeView extends StatelessWidget {
 
           // days left
           Positioned(
-            top: 205,
+            top: 180,
             left: 20,
             right: 20,
             child: Container(
@@ -296,7 +300,7 @@ class PregnancyHomeView extends StatelessWidget {
 
           // baby size
           Positioned(
-            top: 415,
+            top: 390,
             left: 20,
             right: 20,
             child: IntrinsicHeight(
@@ -337,7 +341,8 @@ class PregnancyHomeView extends StatelessWidget {
                               color: Color.fromARGB(255, 88, 119, 161),
                             ),
                           ),
-                          Spacer(), // Spacer to push the length and weight to the right
+                          Spacer(),
+                          // Spacer to push the length and weight to the right
                           Text(
                             '34.6 cm 660.0 g',
                             style: TextStyle(
@@ -351,8 +356,9 @@ class PregnancyHomeView extends StatelessWidget {
                       const Text(
                         'Your baby is putting on fat and growing chubbier, which helps the baby adapt to the relatively low temperature of the outside world after leaving the womb.',
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 12,
                           color: Colors.grey,
+                          height: 1.5,
                         ),
                       ),
                       SizedBox(height: 10),
@@ -381,7 +387,7 @@ class PregnancyHomeView extends StatelessWidget {
           ),
 
           Positioned(
-              bottom: 40,
+              bottom: 13,
               left: 20,
               right: 20,
               child: Container(
@@ -405,13 +411,13 @@ class PregnancyHomeView extends StatelessWidget {
                       const Expanded(
                           child: Padding(
                         padding: EdgeInsets.only(
-                          left: 15.0,
+                          left: 40.0,
                         ),
                         child: Text(
                           'Your next vaccine is in',
                           style: TextStyle(
-                              color: Color.fromARGB(255, 88, 119, 161),
-                              fontSize: 20.0,
+                              color: Color.fromARGB(255, 220, 104, 145),
+                              fontSize: 16,
                               height: 1.5,
                               fontFamily: 'Inter',
                               fontWeight: FontWeight.bold),
@@ -420,6 +426,7 @@ class PregnancyHomeView extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(
                           left: 5.0,
+                          right: 5.0,
                         ),
                         child: ClipRRect(
                           child: Image.asset(
@@ -428,12 +435,15 @@ class PregnancyHomeView extends StatelessWidget {
                         ),
                       ),
                       const Padding(
-                        padding: EdgeInsets.all(10.0),
+                        padding: EdgeInsets.only(
+                          right: 40.0,
+                          left: 5.0,
+                        ),
                         child: Text(
                           'days',
                           style: TextStyle(
-                              color: Color.fromARGB(255, 88, 119, 161),
-                              fontSize: 20.0,
+                              color: Color.fromARGB(255, 220, 104, 145),
+                              fontSize: 16.0,
                               height: 1.5,
                               fontFamily: 'Inter',
                               fontWeight: FontWeight.bold),
@@ -443,34 +453,6 @@ class PregnancyHomeView extends StatelessWidget {
                   ),
                 ),
               )),
-          Positioned(
-            top: 10,
-            right: 10,
-            child: Material(
-              color: Colors.transparent,
-              child: Ink(
-                decoration: const BoxDecoration(
-                  color: Colors.transparent,
-                  shape: BoxShape.circle,
-                ),
-                child: IconButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LoginView(),
-                      ),
-                    );
-                  },
-                  iconSize: 30,
-                  icon: const Icon(
-                    Icons.logout_rounded,
-                    color: Color.fromARGB(255, 220, 104, 145),
-                  ),
-                ),
-              ),
-            ),
-          ),
         ],
       ),
     );
