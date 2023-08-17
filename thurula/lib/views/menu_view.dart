@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:thurula/views/child_home_view.dart';
-import 'package:thurula/views/pregnancy_home_view.dart';
+import 'package:thurula/views/childcare/child_home_view.dart';
+import 'package:thurula/views/pregnancy/pregnancy_home_view.dart';
 import 'package:thurula/views/login_view.dart';
 
 class MenuView extends StatelessWidget {

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 // import 'package:thurula/views/login_view.dart';
-import 'package:thurula/views/mother_health_tracker.dart';
-import 'package:thurula/views/pregnancy_timeline_view.dart';
-import 'package:thurula/views/pregnancy_vaccination_tracker_view.dart';
-import 'package:thurula/views/pregnancy_exercise_recommendations_view.dart';
-import 'package:thurula/views/pregnancy_baby_names_view.dart';
+import 'package:thurula/views/pregnancy/mother_health_tracker.dart';
+import 'package:thurula/views/pregnancy/pregnancy_timeline_view.dart';
+import 'package:thurula/views/pregnancy/pregnancy_vaccination_tracker_view.dart';
+import 'package:thurula/views/pregnancy/pregnancy_exercise_recommendations_view.dart';
+import 'package:thurula/views/pregnancy/pregnancy_baby_names_view.dart';
 
 class PregnancyHomeView extends StatelessWidget {
   const PregnancyHomeView({super.key});

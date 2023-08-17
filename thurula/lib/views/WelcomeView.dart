@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:thurula/views/widgets/wave_widget.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 
-import 'Question1View.dart';
+import 'signup/Question1View.dart';
 // import 'package:provider/provider.dart';
 
 class WelcomeView extends StatelessWidget {

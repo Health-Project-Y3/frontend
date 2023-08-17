@@ -14,7 +14,7 @@ class _MealTrackerState extends State<MealTracker> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Baby MealTracker',
+          'Baby Meal Tracker',
           style: TextStyle(
             color: Colors.white, // Title color
           ),
