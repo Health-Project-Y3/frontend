@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:thurula/services/local_service.dart';
-import 'package:thurula/views/menu_view.dart';
 import 'package:thurula/services/vaccination_service.dart';
 import 'package:thurula/models/vaccination_model.dart';
 
@@ -96,7 +95,7 @@ class _VaccinationTrackerViewState extends State<VaccinationTrackerView> {
                     "Upcoming Vaccination Appointments",
                     style: TextStyle(
                       color: Color.fromARGB(255, 88, 119, 161),
-                      fontFamily: 'Montserrat',
+                      fontFamily: 'Inter',
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
@@ -170,7 +169,7 @@ class _VaccinationTrackerViewState extends State<VaccinationTrackerView> {
                     "Completed Vaccination Appointments",
                     style: TextStyle(
                       color: Color.fromARGB(255, 88, 119, 161),
-                      fontFamily: 'Montserrat',
+                      fontFamily: 'Inter',
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),

@@ -45,7 +45,6 @@ class NapDetails extends StatelessWidget {
           },
         ),
       ),
-
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(16.0),
@@ -172,7 +171,15 @@ class NapDetails extends StatelessWidget {
 
 List<Widget> buildBarChart() {
   List<Widget> bars = [];
-  List<String> days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']; // Days of the week
+  List<String> days = [
+    'Mon',
+    'Tue',
+    'Wed',
+    'Thu',
+    'Fri',
+    'Sat',
+    'Sun'
+  ]; // Days of the week
 
   for (int i = 0; i < 7; i++) {
     double barHeight = (i + 1) * 30.0; // Vary the height for each bar

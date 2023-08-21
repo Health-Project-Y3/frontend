@@ -28,7 +28,7 @@ class SignUpViewQuestion extends StatelessWidget {
                 'Few more steps to go!',
                 style: TextStyle(
                   color: Color.fromARGB(255, 255, 255, 255),
-                  fontFamily: 'Montserrat',
+                  fontFamily: 'Inter',
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
@@ -40,7 +40,7 @@ class SignUpViewQuestion extends StatelessWidget {
                 'Has your baby been born yet?',
                 style: TextStyle(
                   color: Color.fromARGB(255, 255, 255, 255),
-                  fontFamily: 'Montserrat',
+                  fontFamily: 'Inter',
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),

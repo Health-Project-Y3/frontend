@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:thurula/views/HomeView.dart';
-// import 'package:thurula/views/widgets/wave_widget.dart';
-import 'package:thurula/views/menu_view.dart';
 import 'package:thurula/views/pregnancy_timeline_view.dart';
 
 // import 'package:provider/provider.dart';
@@ -42,9 +40,9 @@ class PregnancyMenuView extends StatelessWidget {
                             height: 60),
                       ),
                       const SizedBox(height: 20),
-                      const Text('Pregancny Timeline',
+                      const Text('Pregnancy Timeline',
                           style: TextStyle(
-                              fontFamily: 'Montserrat',
+                              fontFamily: 'Inter',
                               color: Color.fromARGB(255, 220, 104, 145),
                               fontSize: 13,
                               fontWeight: FontWeight.bold))
@@ -80,7 +78,7 @@ class PregnancyMenuView extends StatelessWidget {
                       const SizedBox(height: 20),
                       const Text('Health Monitoring',
                           style: TextStyle(
-                              fontFamily: 'Montserrat',
+                              fontFamily: 'Inter',
                               color: Color.fromARGB(255, 220, 104, 145),
                               fontSize: 13,
                               fontWeight: FontWeight.bold))
@@ -116,7 +114,7 @@ class PregnancyMenuView extends StatelessWidget {
                       const SizedBox(height: 20),
                       const Text('Exercise\nRecommendations',
                           style: TextStyle(
-                              fontFamily: 'Montserrat',
+                              fontFamily: 'Inter',
                               color: Color.fromARGB(255, 220, 104, 145),
                               fontSize: 13,
                               fontWeight: FontWeight.bold))
@@ -152,7 +150,7 @@ class PregnancyMenuView extends StatelessWidget {
                       const SizedBox(height: 20),
                       const Text('Health Monitoring',
                           style: TextStyle(
-                              fontFamily: 'Montserrat',
+                              fontFamily: 'Inter',
                               color: Color.fromARGB(255, 220, 104, 145),
                               fontSize: 13,
                               fontWeight: FontWeight.bold))
@@ -187,7 +185,7 @@ class PregnancyMenuView extends StatelessWidget {
                       const SizedBox(height: 20),
                       const Text('Baby Name\nSuggestions',
                           style: TextStyle(
-                              fontFamily: 'Montserrat',
+                              fontFamily: 'Inter',
                               color: Color.fromARGB(255, 220, 104, 145),
                               fontSize: 13,
                               fontWeight: FontWeight.bold))
@@ -222,7 +220,7 @@ class PregnancyMenuView extends StatelessWidget {
                       const SizedBox(height: 20),
                       const Text('Food\nRecommendations',
                           style: TextStyle(
-                              fontFamily: 'Montserrat',
+                              fontFamily: 'Inter',
                               color: Color.fromARGB(255, 220, 104, 145),
                               fontSize: 13,
                               fontWeight: FontWeight.bold))
@@ -257,7 +255,7 @@ class PregnancyMenuView extends StatelessWidget {
                       const SizedBox(height: 20),
                       const Text('Forum',
                           style: TextStyle(
-                              fontFamily: 'Montserrat',
+                              fontFamily: 'Inter',
                               color: Color.fromARGB(255, 220, 104, 145),
                               fontSize: 13,
                               fontWeight: FontWeight.bold))
@@ -293,7 +291,7 @@ class PregnancyMenuView extends StatelessWidget {
                       const SizedBox(height: 20),
                       const Text('Product\nRecommendations',
                           style: TextStyle(
-                              fontFamily: 'Montserrat',
+                              fontFamily: 'Inter',
                               color: Color.fromARGB(255, 220, 104, 145),
                               fontSize: 13,
                               fontWeight: FontWeight.bold))
@@ -329,7 +327,7 @@ class PregnancyMenuView extends StatelessWidget {
                       const SizedBox(height: 20),
                       const Text('Article\nRecommendations',
                           style: TextStyle(
-                              fontFamily: 'Montserrat',
+                              fontFamily: 'Inter',
                               color: Color.fromARGB(255, 220, 104, 145),
                               fontSize: 13,
                               fontWeight: FontWeight.bold))

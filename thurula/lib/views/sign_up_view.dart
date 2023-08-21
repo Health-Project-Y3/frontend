@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:thurula/views/sign_up_question_view.dart';
+import 'package:thurula/views/login_view.dart';
 
 class SignUpView extends StatelessWidget {
   const SignUpView({Key? key}) : super(key: key);
@@ -26,7 +27,7 @@ class SignUpView extends StatelessWidget {
                 'Let\'s get started!',
                 style: TextStyle(
                   color: Color.fromARGB(255, 255, 255, 255),
-                  fontFamily: 'Montserrat',
+                  fontFamily: 'Inter',
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
@@ -101,6 +102,41 @@ class SignUpView extends StatelessWidget {
                       enabledBorder: OutlineInputBorder(
                         borderSide: const BorderSide(
                             color:
+                            Colors.white), // Customize outline border color
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color:
+                            Colors.white), // Customize focused border color
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      suffixIcon: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.visibility,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      contentPadding: const EdgeInsets.all(10.0),
+                    ),
+                  ),
+                )),
+            Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: SizedBox(
+                  width: 350,
+                  child: TextField(
+                    obscureText: true,
+                    style: const TextStyle(color: Colors.grey),
+                    decoration: InputDecoration(
+                      hintText: 'Re-Enter Password',
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      filled: true,
+                      fillColor: Colors.white,
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color:
                                 Colors.white), // Customize outline border color
                         borderRadius: BorderRadius.circular(15.0),
                       ),
@@ -121,6 +157,7 @@ class SignUpView extends StatelessWidget {
                     ),
                   ),
                 )),
+
             Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: ElevatedButton(
@@ -148,7 +185,25 @@ class SignUpView extends StatelessWidget {
                       fontSize: 20,
                     ),
                   ),
-                ))
+                )
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const LoginView(),
+                  ),
+                );
+              },
+              child: const Text(
+                'Already have an account? Login.',
+                style: TextStyle(
+                  color: Color.fromARGB(255, 255, 255, 255),
+                  fontSize: 14,
+                ),
+              ),
+            ),
           ],
         ),
       ),

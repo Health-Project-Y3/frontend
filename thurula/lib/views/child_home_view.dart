@@ -5,7 +5,6 @@ import 'package:thurula/views/diaper_change.dart';
 import 'package:thurula/views/nap_details.dart';
 import 'package:thurula/views/child_vaccination_tracker_view.dart';
 import 'package:thurula/views/length_chart_view.dart';
-import 'package:thurula/views/login_view.dart';
 import 'package:thurula/views/meal_tracker.dart';
 
 class ChildHomeView extends StatelessWidget {
@@ -14,16 +13,16 @@ class ChildHomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: const Color.fromARGB(255, 247, 247, 247),
       body: Stack(
         children: [
           const Positioned(
             top: 20,
-            left: 20,
+            left: 25,
             child: Text(
-              "Welcome Nadeeka!",
+              "Welcome Ama!",
               style: TextStyle(
-                color: Color.fromARGB(255, 220, 104, 145),
+                color: Color.fromARGB(255, 88, 119, 161),
                 fontFamily: 'Inter',
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -31,9 +30,9 @@ class ChildHomeView extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 50,
-            left: 5,
-            right: 5,
+            top: 35,
+            left: 15,
+            right: 20,
             child: Container(
               margin: const EdgeInsets.symmetric(vertical: 20),
               height: 120,
@@ -308,7 +307,7 @@ class ChildHomeView extends StatelessWidget {
                                     height: 55),
                               ),
                               const SizedBox(height: 10),
-                              const Text("Skill Development\nExercises",
+                              const Text("Checklist",
                                   style: TextStyle(
                                       fontFamily: 'Inter',
                                       color: Color.fromARGB(255, 88, 119, 161),
@@ -369,7 +368,7 @@ class ChildHomeView extends StatelessWidget {
             ),
           ),
           Positioned(
-              top: 220,
+              top: 190,
               left: 20,
               right: 20,
               child: Container(
@@ -388,34 +387,39 @@ class ChildHomeView extends StatelessWidget {
                   ],
                 ),
                 child: Center(
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(
-                            10.0), // change this to the desired amount of padding
-                        child: ClipRRect(
-                          child: Image.asset(
-                              'assets/images/child-home/countdown.png',
-                              height: 150),
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(
+                              10.0), // change this to the desired amount of padding
+                          child: ClipRRect(
+                            child: Image.asset(
+                                'assets/images/child-home/countdown.png',
+                                height: 150),
+                          ),
                         ),
-                      ),
-                      const Expanded(
-                        child: Text(
-                          'Your baby is 100 days old!',
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 88, 119, 161),
-                            fontSize: 16.0,
-                            height: 1.5,
-                            fontFamily: 'Inter',
-                          ), // change this to the desired text color
+                        const Padding(
+                          padding: EdgeInsets.only(bottom: 20.0),
+                          child: Text(
+                            'Your baby is 100 days old!',
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 88, 119, 161),
+                              fontSize: 16.0,
+                              fontFamily: 'Inter',
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+
+                    )
                   ),
                 ),
-              )),
+              )
+          ),
           Positioned(
-              top: 450,
+              top: 410,
               left: 20,
               right: 20,
               child: Container(
@@ -467,34 +471,34 @@ class ChildHomeView extends StatelessWidget {
                 width: 400,
                 height: 80,
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 238, 198, 212),
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(10.0),
-                  // boxShadow: [
-                  //   BoxShadow(
-                  //     color: Colors.grey.withOpacity(0.5),
-                  //     spreadRadius: 0.5,
-                  //     blurRadius: 2,
-                  //     offset: const Offset(0, 2),
-                  //   ),
-                  // ],
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 0.5,
+                      blurRadius: 2,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
                 ),
                 child: Center(
                   child: Row(
                     children: [
                       const Expanded(
                           child: Padding(
-                        padding: EdgeInsets.only(
-                          left: 22.0,
-                        ),
-                        child: Text(
-                          'Baby\'s next vaccine is in',
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 88, 119, 161),
-                              fontSize: 17.0,
-                              height: 1.5,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.bold),
-                        ),
+                            padding: EdgeInsets.only(
+                            left: 22.0,
+                          ),
+                            child: Text(
+                              'Baby\'s next vaccine is in',
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 220, 104, 145),
+                                  fontSize: 17.0,
+                                  height: 1.5,
+                                  fontFamily: 'Inter',
+                                  fontWeight: FontWeight.bold),
+                            ),
                       )),
                       Padding(
                         padding: const EdgeInsets.only(
@@ -515,7 +519,7 @@ class ChildHomeView extends StatelessWidget {
                         child: Text(
                           'days',
                           style: TextStyle(
-                              color: Color.fromARGB(255, 88, 119, 161),
+                              color: Color.fromARGB(255, 220, 104, 145),
                               fontSize: 17.0,
                               height: 1.5,
                               fontFamily: 'Inter',
@@ -526,34 +530,6 @@ class ChildHomeView extends StatelessWidget {
                   ),
                 ),
               )),
-          Positioned(
-            top: 10,
-            right: 10,
-            child: Material(
-              color: Colors.transparent,
-              child: Ink(
-                decoration: const BoxDecoration(
-                  color: Colors.transparent,
-                  shape: BoxShape.circle,
-                ),
-                child: IconButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LoginView(),
-                      ),
-                    );
-                  },
-                  iconSize: 30,
-                  icon: const Icon(
-                    Icons.logout_rounded,
-                    color: Color.fromARGB(255, 220, 104, 145),
-                  ),
-                ),
-              ),
-            ),
-          ),
         ],
       ),
     );

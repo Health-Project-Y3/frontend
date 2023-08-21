@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thurula/services/auth/user_service.dart';
-import 'package:thurula/views/WelcomeView.dart';
-import 'package:thurula/views/menu_view.dart';
+import 'package:thurula/views/welcome_view.dart';
+import 'package:thurula/views/sign_up_view.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -44,8 +44,8 @@ class _LoginViewState extends State<LoginView> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
-                          left: 30,
-                          top: 50,
+                          left: 40,
+                          top: 0,
                           right: 30,
                         ),
                         child: TextFormField(
@@ -81,8 +81,8 @@ class _LoginViewState extends State<LoginView> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
-                          left: 30,
-                          top: 20,
+                          left: 40,
+                          top: 10,
                           right: 30,
                         ),
                         child: TextFormField(
@@ -121,9 +121,9 @@ class _LoginViewState extends State<LoginView> {
                       Padding(
                         padding: const EdgeInsets.only(
                           left: 30,
-                          top: 30,
+                          top: 20,
                           right: 30,
-                          bottom: 20, // Add bottom padding
+                          bottom: 0, // Add bottom padding
                         ),
                         child: ElevatedButton(
                           onPressed: () async {
@@ -131,14 +131,11 @@ class _LoginViewState extends State<LoginView> {
                               // home page
                               if (await UserService().login(
                                   usernameController.text,
-                                  passwordController.text))
-                              // if (usernameController.text == "admin@gmail.com" &&
-                              //     passwordController.text == "password")
-                              {
+                                  passwordController.text)) {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => MenuView(
+                                        builder: (context) => WelcomeHomeView(
                                             username:
                                                 usernameController.text)));
                               } else {
@@ -153,6 +150,8 @@ class _LoginViewState extends State<LoginView> {
                               );
                             }
                           },
+
+                          // login button
                           style: ElevatedButton.styleFrom(
                             backgroundColor:
                                 const Color.fromARGB(255, 220, 104, 145),
@@ -168,6 +167,23 @@ class _LoginViewState extends State<LoginView> {
                               color: Colors.white,
                               fontSize: 20,
                             ),
+                          ),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SignUpView(),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          'Don\'t have an account? Register.',
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 220, 104, 145),
+                            fontSize: 14,
                           ),
                         ),
                       ),
