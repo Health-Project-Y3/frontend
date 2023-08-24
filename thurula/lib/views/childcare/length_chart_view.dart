@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:thurula/services/baby_length_service.dart';
 import 'package:thurula/views/widgets/graphs/baby_length_chart_widget.dart';
 
-import 'widgets/graphs/point_widget.dart';
+import '../widgets/graphs/point_widget.dart';
 
 class LengthChartView extends StatefulWidget {
   const LengthChartView({super.key});

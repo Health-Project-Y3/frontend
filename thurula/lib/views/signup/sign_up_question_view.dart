@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:thurula/views/sign_up_child_view.dart';
-import 'package:thurula/views/sign_up_pregnancy_view.dart';
+import 'package:thurula/views/signup/sign_up_child_view.dart';
+import 'package:thurula/views/signup/sign_up_pregnancy_view.dart';
 
 class SignUpViewQuestion extends StatelessWidget {
   const SignUpViewQuestion({Key? key}) : super(key: key);

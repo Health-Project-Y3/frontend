@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:thurula/views/childcare/exercise/ExerciseView.dart';
 import 'package:thurula/views/childcare/vision/VisionMenuView.dart';
-import 'package:thurula/views/diaper_change.dart';
-import 'package:thurula/views/nap_details.dart';
-import 'package:thurula/views/child_vaccination_tracker_view.dart';
-import 'package:thurula/views/length_chart_view.dart';
-import 'package:thurula/views/meal_tracker.dart';
+import 'package:thurula/views/childcare/diaper_change.dart';
+import 'package:thurula/views/childcare/nap/nap_details.dart';
+import 'package:thurula/views/childcare/child_vaccination_tracker_view.dart';
+import 'package:thurula/views/childcare/length_chart_view.dart';
+import 'package:thurula/views/childcare/meal_tracker.dart';
 
 class ChildHomeView extends StatelessWidget {
   const ChildHomeView({super.key});

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:thurula/views/pregnancy_timeline/week_1.dart';
-import 'package:thurula/views/pregnancy_timeline/week_2.dart';
-import 'package:thurula/views/pregnancy_timeline/week_3.dart';
-import 'package:thurula/views/pregnancy_timeline/week_4.dart';
+import 'package:thurula/views/pregnancy/pregnancy_timeline/week_1.dart';
+import 'package:thurula/views/pregnancy/pregnancy_timeline/week_2.dart';
+import 'package:thurula/views/pregnancy/pregnancy_timeline/week_3.dart';
+import 'package:thurula/views/pregnancy/pregnancy_timeline/week_4.dart';
 
 class PregnancyTimelineView extends StatelessWidget {
   const PregnancyTimelineView({super.key});

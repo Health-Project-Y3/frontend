@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thurula/services/auth/user_service.dart';
 import 'package:thurula/views/welcome_view.dart';
-import 'package:thurula/views/sign_up_view.dart';
+import 'package:thurula/views/signup/sign_up_view.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);

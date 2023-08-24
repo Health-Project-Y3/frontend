@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:thurula/views/sign_up_question_view.dart';
+import 'package:thurula/views/signup/sign_up_question_view.dart';
 import 'package:thurula/views/login_view.dart';
 
 class SignUpView extends StatelessWidget {
