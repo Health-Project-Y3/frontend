@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thurula/views/menu_view.dart';
 
+
 class WelcomeHomeView extends StatelessWidget {
   const WelcomeHomeView({super.key, required this.username});
 

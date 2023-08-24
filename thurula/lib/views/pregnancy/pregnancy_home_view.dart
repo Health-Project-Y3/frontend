@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 // import 'package:thurula/views/login_view.dart';
 import 'package:thurula/views/pregnancy/mother_health_tracker.dart';
 import 'package:thurula/views/pregnancy/pregnancy_timeline_view.dart';
 import 'package:thurula/views/pregnancy/pregnancy_vaccination_tracker_view.dart';
 import 'package:thurula/views/pregnancy/pregnancy_exercise_recommendations_view.dart';
 import 'package:thurula/views/pregnancy/pregnancy_baby_names_view.dart';
+
+import '../../providers/user_provider.dart';
 
 class PregnancyHomeView extends StatelessWidget {
   const PregnancyHomeView({super.key});
@@ -15,12 +19,12 @@ class PregnancyHomeView extends StatelessWidget {
       backgroundColor: const Color.fromARGB(255, 247, 247, 247),
       body: Stack(
         children: [
-          const Positioned(
+          Positioned(
             top: 20,
             left: 25,
             child: Text(
-              "Welcome Ama!",
-              style: TextStyle(
+              'Welcome, ${context.read<UserProvider>().user?.fname ?? ''}',
+              style: const TextStyle(
                 color: Color.fromARGB(255, 88, 119, 161),
                 fontFamily: 'Inter',
                 fontSize: 20,

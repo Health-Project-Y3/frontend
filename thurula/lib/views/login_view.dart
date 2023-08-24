@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:thurula/providers/user_provider.dart';
 import 'package:thurula/services/auth/user_service.dart';
+import 'package:thurula/services/local_service.dart';
 import 'package:thurula/views/welcome_view.dart';
 import 'package:thurula/views/signup/sign_up_view.dart';
 
@@ -128,18 +131,27 @@ class _LoginViewState extends State<LoginView> {
                         child: ElevatedButton(
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
+                              final context = _formKey.currentContext;
                               // home page
-                              if (await UserService().login(
+                              if (await UserService.login(
                                   usernameController.text,
                                   passwordController.text)) {
+                                final userProvider = Provider.of<UserProvider>(
+                                    context!,
+                                    listen: false);
+                                final user = await UserService.getUser(
+                                    await LocalService.getCurrentUserId());
+                                if (user != null) {
+                                  userProvider.setUser(user);
+                                }
                                 Navigator.push(
-                                    context,
+                                    context!,
                                     MaterialPageRoute(
                                         builder: (context) => WelcomeHomeView(
                                             username:
                                                 usernameController.text)));
                               } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
+                                ScaffoldMessenger.of(context!).showSnackBar(
                                     const SnackBar(
                                         content: Text('Invalid Credentials')));
                               }
