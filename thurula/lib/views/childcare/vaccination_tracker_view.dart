@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:thurula/views/menu_view.dart';
+import 'package:thurula/services/local_service.dart';
 import 'package:thurula/services/vaccination_service.dart';
 import 'package:thurula/models/vaccination_model.dart';
-//import 'package:thurula/services/local_service.dart';
 
 class VaccinationTrackerView extends StatefulWidget {
   const VaccinationTrackerView({super.key});
@@ -14,14 +13,21 @@ class VaccinationTrackerView extends StatefulWidget {
 class _VaccinationTrackerViewState extends State<VaccinationTrackerView> {
   late Future<List<Vaccination>> upcomingVaccinations;
   late Future<List<Vaccination>> completedVaccinations;
-  late String babyId;
+  late Future<String> babyId;
 
   @override
   void initState() {
     super.initState();
-    babyId = "64cd599fc65bbef9519bc04c";
-    upcomingVaccinations = VaccinationService.getDueVaccinations(babyId);
-    completedVaccinations = VaccinationService.getCompletedVaccinations(babyId);
+    babyId = LocalService.getCurrentBabyId();
+    babyId.then((value) {
+      upcomingVaccinations = VaccinationService.getDueVaccinations(value);
+      completedVaccinations =
+          VaccinationService.getCompletedVaccinations(value);
+      setState(() {
+        upcomingVaccinations = upcomingVaccinations;
+        completedVaccinations = completedVaccinations;
+      });
+    });
   }
 
   @override
@@ -45,20 +51,13 @@ class _VaccinationTrackerViewState extends State<VaccinationTrackerView> {
               ),
             ),
             title: const Text('Vaccination Tracker'),
-            actions: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: IconButton(
-                  icon: const Icon(Icons.menu),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const MenuView()),
-                    );
-                  },
-                ),
-              ),
-            ],
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                // Handle back button press here
+                Navigator.of(context).pop();
+              },
+            ),
           ),
           body: TabBarView(
             children: [
@@ -96,7 +95,7 @@ class _VaccinationTrackerViewState extends State<VaccinationTrackerView> {
                     "Upcoming Vaccination Appointments",
                     style: TextStyle(
                       color: Color.fromARGB(255, 88, 119, 161),
-                      fontFamily: 'Montserrat',
+                      fontFamily: 'Inter',
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
@@ -115,16 +114,16 @@ class _VaccinationTrackerViewState extends State<VaccinationTrackerView> {
                     title: Text(vaccination.name ?? ''),
                     subtitle: Text(vaccination.description ?? ''),
                     trailing: TextButton(
-                      onPressed: () async {
-                        await VaccinationService.markCompletedVaccination(
-                            babyId, vaccination.id);
-                        setState(() {
-                          // Refresh the UI to reflect the changes
-                          upcomingVaccinations =
-                              VaccinationService.getDueVaccinations(babyId);
-                          completedVaccinations =
-                              VaccinationService.getCompletedVaccinations(
-                                  babyId);
+                      onPressed: () {
+                        babyId.then((value) {
+                          VaccinationService.markCompletedVaccination(
+                              value, vaccination.id);
+                          setState(() {
+                            // Refresh the UI to reflect the changes
+                            completedVaccinations =
+                                VaccinationService.getCompletedVaccinations(
+                                    value);
+                          });
                         });
                       },
                       style: TextButton.styleFrom(
@@ -170,7 +169,7 @@ class _VaccinationTrackerViewState extends State<VaccinationTrackerView> {
                     "Completed Vaccination Appointments",
                     style: TextStyle(
                       color: Color.fromARGB(255, 88, 119, 161),
-                      fontFamily: 'Montserrat',
+                      fontFamily: 'Inter',
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),

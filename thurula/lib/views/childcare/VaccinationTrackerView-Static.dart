@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:thurula/views/menu_view.dart';
 
 class VaccinationTrackerView2 extends StatelessWidget {
   const VaccinationTrackerView2({super.key});
@@ -29,18 +28,13 @@ class VaccinationTrackerView2 extends StatelessWidget {
               ),
             ),
             title: const Text('Vaccination Tracker'),
-            actions: <Widget>[
-              Padding(
-                  padding: const EdgeInsets.only(right: 10.0),
-                  child: IconButton(
-                      icon: const Icon(Icons.menu),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const MenuView()));
-                      })),
-            ],
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                // Handle back button press here
+                Navigator.of(context).pop();
+              },
+            ),
           ),
           body: TabBarView(
             children: [
@@ -52,7 +46,7 @@ class VaccinationTrackerView2 extends StatelessWidget {
                     child: Text("Upcoming Vaccination Appointments",
                         style: TextStyle(
                           color: Color.fromARGB(255, 88, 119, 161),
-                          fontFamily: 'Montserrat',
+                          fontFamily: 'Inter',
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         )),
@@ -142,7 +136,7 @@ class VaccinationTrackerView2 extends StatelessWidget {
                     child: Text("Completed Vaccination Appointments",
                         style: TextStyle(
                           color: Color.fromARGB(255, 88, 119, 161),
-                          fontFamily: 'Montserrat',
+                          fontFamily: 'Inter',
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         )),
