@@ -11,6 +11,7 @@ class VaccinationTrackerView extends StatefulWidget {
 }
 
 class _VaccinationTrackerViewState extends State<VaccinationTrackerView> {
+  late ValueNotifier<int> refreshCounter;
   late Future<List<Vaccination>> upcomingVaccinations;
   late Future<List<Vaccination>> completedVaccinations;
   late Future<String> babyId;
@@ -19,15 +20,23 @@ class _VaccinationTrackerViewState extends State<VaccinationTrackerView> {
   void initState() {
     super.initState();
     babyId = LocalService.getCurrentBabyId();
-    babyId.then((value) {
-      upcomingVaccinations = VaccinationService.getDueVaccinations(value);
-      completedVaccinations =
-          VaccinationService.getCompletedVaccinations(value);
-      setState(() {
-        upcomingVaccinations = upcomingVaccinations;
-        completedVaccinations = completedVaccinations;
-      });
-    });
+    refreshCounter = ValueNotifier<int>(0); // Initialize the ValueNotifier
+    _refreshData();
+  }
+
+  Future<void> _refreshData() async {
+    final babyIdValue = await babyId;
+    upcomingVaccinations = VaccinationService.getDueVaccinations(babyIdValue);
+    completedVaccinations =
+        VaccinationService.getCompletedVaccinations(babyIdValue);
+    // Increment the refresh counter to trigger UI update
+    refreshCounter.value++;
+  }
+
+  @override
+  void dispose() {
+    refreshCounter.dispose(); // Dispose the ValueNotifier
+    super.dispose();
   }
 
   @override
@@ -36,8 +45,9 @@ class _VaccinationTrackerViewState extends State<VaccinationTrackerView> {
       home: DefaultTabController(
         length: 2,
         child: Scaffold(
-          backgroundColor: const Color.fromARGB(255, 227, 227, 227),
+          backgroundColor: const Color.fromARGB(255, 247, 247, 247),
           appBar: AppBar(
+            backgroundColor: const Color.fromARGB(255, 220, 104, 145),
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(48.0),
               child: Container(
@@ -47,6 +57,7 @@ class _VaccinationTrackerViewState extends State<VaccinationTrackerView> {
                     Tab(text: "Upcoming"),
                     Tab(text: "Completed"),
                   ],
+                  indicatorColor: Colors.white,
                 ),
               ),
             ),
@@ -61,10 +72,8 @@ class _VaccinationTrackerViewState extends State<VaccinationTrackerView> {
           ),
           body: TabBarView(
             children: [
-              buildVaccinationTabUpcoming(
-                  upcomingVaccinations), // Upcoming vaccinations
-              buildVaccinationTabCompleted(
-                  completedVaccinations), // Completed vaccinations
+              buildVaccinationTabUpcoming(), // Upcoming vaccinations
+              buildVaccinationTabCompleted(), // Completed vaccinations
             ],
           ),
         ),
@@ -72,133 +81,112 @@ class _VaccinationTrackerViewState extends State<VaccinationTrackerView> {
     );
   }
 
-  buildVaccinationTabUpcoming(Future<List<Vaccination>> upcomingVaccinations) {
-    return FutureBuilder<List<Vaccination>>(
-      future: upcomingVaccinations,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
-        } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Center(
-            child: Text('No upcoming vaccinations'),
-          );
-        } else {
-          List<Vaccination> vaccinations = snapshot.data!;
-          return Column(
-            children: [
-              const Center(
-                child: Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: Text(
-                    "Upcoming Vaccination Appointments",
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 88, 119, 161),
-                      fontFamily: 'Inter',
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-              for (var vaccination in vaccinations)
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: ListTile(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0)),
-                    tileColor: const Color.fromARGB(255, 255, 255, 255),
-                    leading: const Icon(Icons.calendar_today,
-                        color: Color.fromARGB(255, 220, 104, 145)),
-                    title: Text(vaccination.name ?? ''),
-                    subtitle: Text(vaccination.description ?? ''),
-                    trailing: TextButton(
-                      onPressed: () {
-                        babyId.then((value) {
-                          VaccinationService.markCompletedVaccination(
-                              value, vaccination.id);
-                          setState(() {
-                            // Refresh the UI to reflect the changes
-                            completedVaccinations =
-                                VaccinationService.getCompletedVaccinations(
-                                    value);
-                          });
-                        });
-                      },
-                      style: TextButton.styleFrom(
-                        foregroundColor: Colors.white,
+  Widget buildVaccinationTabUpcoming() {
+    return ValueListenableBuilder<int>(
+      valueListenable: refreshCounter,
+      builder: (context, _, __) {
+        return FutureBuilder<List<Vaccination>>(
+          future: upcomingVaccinations,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return const Center(
+                child: Text('No upcoming vaccinations'),
+              );
+            } else {
+              List<Vaccination> vaccinations = snapshot.data!;
+              return Column(
+                children: [
+                  const SizedBox(height: 25.0),
+                  for (var vaccination in vaccinations)
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: ListTile(
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5.0),
+                            borderRadius: BorderRadius.circular(10.0)),
+                        tileColor: const Color.fromARGB(255, 255, 255, 255),
+                        leading: const Icon(Icons.calendar_today,
+                            color: Color.fromARGB(255, 220, 104, 145)),
+                        title: Text(vaccination.name ?? ''),
+                        subtitle: Text(vaccination.description ?? ''),
+                        trailing: TextButton(
+                          onPressed: () async {
+                            final value = await babyId;
+                            try {
+                              await VaccinationService.markCompletedVaccination(
+                                  value, vaccination.id);
+                              _refreshData(); // Update the data and UI
+                            } catch (error) {
+                              print(
+                                  'Error marking vaccination as completed: $error');
+                            }
+                          },
+                          style: TextButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
+                            backgroundColor:
+                                const Color.fromARGB(255, 220, 104, 145),
+                          ),
+                          child: const Text('Completed'),
                         ),
-                        backgroundColor:
-                            const Color.fromARGB(255, 220, 104, 145),
                       ),
-                      child: const Text('Completed'),
                     ),
-                  ),
-                ),
-            ],
-          );
-        }
+                ],
+              );
+            }
+          },
+        );
       },
     );
   }
 
-  buildVaccinationTabCompleted(
-      Future<List<Vaccination>> completedVaccinations) {
-    return FutureBuilder<List<Vaccination>>(
-      future: completedVaccinations,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
-        } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Center(
-            child: Text('No Completed vaccinations'),
-          );
-        } else {
-          List<Vaccination> vaccinations = snapshot.data!;
-          return Column(
-            children: [
-              const Center(
-                child: Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: Text(
-                    "Completed Vaccination Appointments",
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 88, 119, 161),
-                      fontFamily: 'Inter',
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+  Widget buildVaccinationTabCompleted() {
+    return ValueListenableBuilder<int>(
+      valueListenable: refreshCounter,
+      builder: (context, _, __) {
+        return FutureBuilder<List<Vaccination>>(
+          future: completedVaccinations,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return const Center(
+                child: Text('No Completed vaccinations'),
+              );
+            } else {
+              List<Vaccination> vaccinations = snapshot.data!;
+              return Column(
+                children: [
+                  const SizedBox(height: 25.0),
+                  for (var vaccination in vaccinations)
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: ListTile(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0)),
+                        tileColor: const Color.fromARGB(255, 255, 255, 255),
+                        leading: const Icon(Icons.calendar_today,
+                            color: Color.fromARGB(255, 220, 104, 145)),
+                        title: Text(vaccination.name ?? ''),
+                        subtitle: Text(vaccination.description ?? ''),
+                        trailing: const Icon(
+                          Icons.done,
+                          color: Color.fromARGB(255, 220, 104, 145),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ),
-              for (var vaccination in vaccinations)
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: ListTile(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    tileColor: const Color.fromARGB(255, 255, 255, 255),
-                    leading: const Icon(
-                      Icons.calendar_today,
-                      color: Color.fromARGB(255, 220, 104, 145),
-                    ),
-                    title: Text(vaccination.name ?? ''),
-                    subtitle: Text(vaccination.description ?? ''),
-                    trailing: const Icon(
-                      Icons.done,
-                      color: Color.fromARGB(255, 220, 104, 145),
-                    ),
-                  ),
-                ),
-            ],
-          );
-        }
+                ],
+              );
+            }
+          },
+        );
       },
     );
   }
