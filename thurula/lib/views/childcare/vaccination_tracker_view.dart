@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:thurula/services/local_service.dart';
 import 'package:thurula/services/vaccination_service.dart';
 import 'package:thurula/models/vaccination_model.dart';
+import 'package:intl/intl.dart';
 
 class VaccinationTrackerView extends StatefulWidget {
   const VaccinationTrackerView({super.key});
@@ -111,14 +112,32 @@ class _VaccinationTrackerViewState extends State<VaccinationTrackerView> {
                         leading: const Icon(Icons.calendar_today,
                             color: Color.fromARGB(255, 220, 104, 145)),
                         title: Text(vaccination.name ?? ''),
-                        subtitle: Text(vaccination.description ?? ''),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              calculateVaccinationDate(
+                                  vaccination.daysFromBirth),
+                            ),
+                            const SizedBox(height: 5),
+                            Text(
+                              calculateRemainingDays(
+                                vaccination.daysFromBirth,
+                              ),
+                              style: TextStyle(
+                                color: determineTextColor(
+                                    vaccination.daysFromBirth),
+                              ),
+                            ),
+                          ],
+                        ),
                         trailing: TextButton(
                           onPressed: () async {
                             final value = await babyId;
                             try {
                               await VaccinationService.markCompletedVaccination(
                                   value, vaccination.id);
-                              _refreshData(); // Update the data and UI
+                              _refreshData();
                             } catch (error) {
                               print(
                                   'Error marking vaccination as completed: $error');
@@ -190,4 +209,70 @@ class _VaccinationTrackerViewState extends State<VaccinationTrackerView> {
       },
     );
   }
+}
+
+String calculateVaccinationDate(int? daysFromBirth) {
+  if (daysFromBirth == null) {
+    return 'Due Date: N/A';
+  }
+
+  final currentDate = DateTime.now();
+  final vaccinationDate = currentDate.add(Duration(days: daysFromBirth));
+
+  final day = vaccinationDate.day.toString().padLeft(2, '0');
+  final month = vaccinationDate.month.toString().padLeft(2, '0');
+  final year = vaccinationDate.year.toString();
+
+  final formattedDate = '$day/$month/$year';
+  return 'Due Date: $formattedDate';
+}
+
+String calculateRemainingDays(int? daysFromBirth) {
+  if (daysFromBirth == null) {
+    return 'N/A';
+  }
+
+  final difference = daysFromBirth;
+
+  if (difference == 0) {
+    return 'Today';
+  } else if (difference == 1) {
+    return 'Tomorrow';
+  } else if (difference < 0) {
+    return 'Overdue';
+  } else if (difference > 30) {
+    final months = difference ~/ 30;
+    final remainingDays = difference % 30;
+    if (months == 1) {
+      if (remainingDays == 0) {
+        return '1 month left';
+      } else if (remainingDays == 1) {
+        return '1 month and 1 day left';
+      } else {
+        return '1 month and $remainingDays days left';
+      }
+    } else {
+      if (remainingDays == 0) {
+        return '$months months left';
+      } else if (remainingDays == 1) {
+        return '$months months and 1 day left';
+      } else {
+        return '$months months and $remainingDays days left';
+      }
+    }
+  } else {
+    return '$difference days left';
+  }
+}
+
+Color determineTextColor(int? daysFromBirth) {
+  if (daysFromBirth == null) {
+    return Colors.black;
+  }
+
+  if (daysFromBirth < 0) {
+    return Colors.red;
+  }
+
+  return Colors.green;
 }

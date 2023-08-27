@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:thurula/views/childcare/exercise/ExerciseView.dart';
+import 'package:thurula/views/childcare/vaccination_tracker_view.dart';
 import 'package:thurula/views/childcare/vision/VisionMenuView.dart';
 import 'package:thurula/views/childcare/diaper_change.dart';
 import 'package:thurula/views/childcare/nap/nap_details.dart';
-import 'package:thurula/views/childcare/child_vaccination_tracker_view.dart';
 import 'package:thurula/views/childcare/length_chart_view.dart';
 import 'package:thurula/views/childcare/meal_tracker.dart';
 
@@ -19,7 +19,7 @@ class ChildHomeView extends StatelessWidget {
       backgroundColor: const Color.fromARGB(255, 247, 247, 247),
       body: Stack(
         children: [
-           Positioned(
+          Positioned(
             top: 20,
             left: 25,
             child: Text(
@@ -98,7 +98,7 @@ class ChildHomeView extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  ChildVaccinationTrackerView(),
+                                  const VaccinationTrackerView(),
                             ),
                           );
                         },
@@ -391,36 +391,33 @@ class ChildHomeView extends StatelessWidget {
                 ),
                 child: Center(
                   child: FittedBox(
-                    fit: BoxFit.contain,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(
-                              10.0), // change this to the desired amount of padding
-                          child: ClipRRect(
-                            child: Image.asset(
-                                'assets/images/child-home/countdown.png',
-                                height: 150),
-                          ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(bottom: 20.0),
-                          child: Text(
-                            'Your baby is 100 days old!',
-                            style: TextStyle(
-                              color: Color.fromARGB(255, 88, 119, 161),
-                              fontSize: 16.0,
-                              fontFamily: 'Inter',
+                      fit: BoxFit.contain,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(
+                                10.0), // change this to the desired amount of padding
+                            child: ClipRRect(
+                              child: Image.asset(
+                                  'assets/images/child-home/countdown.png',
+                                  height: 150),
                             ),
                           ),
-                        ),
-                      ],
-
-                    )
-                  ),
+                          const Padding(
+                            padding: EdgeInsets.only(bottom: 20.0),
+                            child: Text(
+                              'Your baby is 100 days old!',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 88, 119, 161),
+                                fontSize: 16.0,
+                                fontFamily: 'Inter',
+                              ),
+                            ),
+                          ),
+                        ],
+                      )),
                 ),
-              )
-          ),
+              )),
           Positioned(
               top: 410,
               left: 20,
@@ -490,18 +487,18 @@ class ChildHomeView extends StatelessWidget {
                     children: [
                       const Expanded(
                           child: Padding(
-                            padding: EdgeInsets.only(
-                            left: 22.0,
-                          ),
-                            child: Text(
-                              'Baby\'s next vaccine is in',
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 220, 104, 145),
-                                  fontSize: 17.0,
-                                  height: 1.5,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.bold),
-                            ),
+                        padding: EdgeInsets.only(
+                          left: 22.0,
+                        ),
+                        child: Text(
+                          'Baby\'s next vaccine is in',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 220, 104, 145),
+                              fontSize: 17.0,
+                              height: 1.5,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.bold),
+                        ),
                       )),
                       Padding(
                         padding: const EdgeInsets.only(
