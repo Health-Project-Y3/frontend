@@ -18,7 +18,7 @@ class _VaccinationTrackerViewState extends State<VaccinationTrackerView> {
   @override
   void initState() {
     super.initState();
-    babyId = LocalService().getCurrentBabyId();
+    babyId = LocalService.getCurrentBabyId();
     babyId.then((value) {
       upcomingVaccinations = VaccinationService.getDueVaccinations(value);
       completedVaccinations =

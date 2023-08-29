@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'menu_view.dart';
-import 'package:thurula/views/pregnancy_exercise_timer_view.dart';
+import '../menu_view.dart';
+import 'package:thurula/views/pregnancy/pregnancy_exercise_timer_view.dart';
 
 class ExercisesView extends StatelessWidget {
   const ExercisesView({Key? key}) : super(key: key);

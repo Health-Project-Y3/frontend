@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:thurula/views/nap_details.dart';
+import 'package:thurula/views/childcare/nap/nap_details.dart';
 
 
 
@@ -151,7 +151,7 @@ class _AddNapState extends State<AddNap> {
                 onPressed: () {
                   // action to add nap details
                 },
-                style: ElevatedButton.styleFrom(primary:const Color.fromARGB(255, 220, 104, 145)),
+                style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 220, 104, 145)),
                 child: Text('Add Nap'),
               ),
             ),

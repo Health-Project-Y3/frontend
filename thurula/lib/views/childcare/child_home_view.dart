@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:thurula/views/childcare/exercise/ExerciseView.dart';
 import 'package:thurula/views/childcare/vision/VisionMenuView.dart';
-import 'package:thurula/views/diaper_change.dart';
-import 'package:thurula/views/nap_details.dart';
-import 'package:thurula/views/child_vaccination_tracker_view.dart';
-import 'package:thurula/views/length_chart_view.dart';
-import 'package:thurula/views/meal_tracker.dart';
+import 'package:thurula/views/childcare/diaper_change.dart';
+import 'package:thurula/views/childcare/nap/nap_details.dart';
+import 'package:thurula/views/childcare/child_vaccination_tracker_view.dart';
+import 'package:thurula/views/childcare/length_chart_view.dart';
+import 'package:thurula/views/childcare/meal_tracker.dart';
+
+import '../../providers/user_provider.dart';
 
 class ChildHomeView extends StatelessWidget {
   const ChildHomeView({super.key});
@@ -16,12 +19,12 @@ class ChildHomeView extends StatelessWidget {
       backgroundColor: const Color.fromARGB(255, 247, 247, 247),
       body: Stack(
         children: [
-          const Positioned(
+           Positioned(
             top: 20,
             left: 25,
             child: Text(
-              "Welcome Ama!",
-              style: TextStyle(
+              'Welcome, ${context.read<UserProvider>().user?.fname ?? ''}',
+              style: const TextStyle(
                 color: Color.fromARGB(255, 88, 119, 161),
                 fontFamily: 'Inter',
                 fontSize: 20,

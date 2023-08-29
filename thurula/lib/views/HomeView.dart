@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 // import 'package:thurula/views/widgets/wave_widget.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 
-import 'menu_view.dart';
-import 'Question2View.dart';
+import 'package:thurula/views/signup/Question2View.dart';
 // import 'package:provider/provider.dart';
 
 class HomeView extends StatelessWidget {
@@ -12,10 +11,6 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    final bool keyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
-    // final model = Provider.of<HomeModel>(context);
-
     return Scaffold(
         appBar: AppBar(
           title: const Row(children: [Text('Home Page')]),

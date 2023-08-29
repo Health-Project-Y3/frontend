@@ -1,7 +1,6 @@
 import 'dart:async';
-import 'package:thurula/views/nap_details.dart';
+import 'package:thurula/views/childcare/nap/nap_details.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 
 class NapTimer extends StatefulWidget {
   const NapTimer({super.key});
@@ -73,18 +72,18 @@ class _NapTimerState extends State<NapTimer> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Baby Nap Timer',
           style: TextStyle(
-            color: const Color.fromARGB(255, 220, 104, 145), // Title color
+            color: Color.fromARGB(255, 220, 104, 145), // Title color
           ),
         ),
         backgroundColor: Colors.white, // Background color of the app bar
         elevation: 0,
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
-            color: const Color.fromARGB(255, 220, 104, 145), // Back icon color
+            color: Color.fromARGB(255, 220, 104, 145), // Back icon color
           ),
           onPressed: () {
             Navigator.push(
@@ -106,25 +105,25 @@ class _NapTimerState extends State<NapTimer> {
                   time: formatTime(stopwatch.elapsedMilliseconds).substring(0, 2),
                   header: "HOURS",
                 ),
-                SizedBox(width: 10,),
+                const SizedBox(width: 10,),
                 buildTimeCard(
                   time: formatTime(stopwatch.elapsedMilliseconds).substring(3, 5),
                   header: "MINUTES",
                 ),
-                SizedBox(width: 10,),
+                const SizedBox(width: 10,),
                 buildTimeCard(
                   time: formatTime(stopwatch.elapsedMilliseconds).substring(6, 8),
                   header: "SECONDS",
                 ),
-                SizedBox(width: 10,),
+                const SizedBox(width: 10,),
               ],
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Center(
               child: Container(
                 width: 150,
                 height: 150,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
                     image: AssetImage('assets/images/sleeping_image.png'),
@@ -133,16 +132,16 @@ class _NapTimerState extends State<NapTimer> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Text(
               isSleeping ? 'Mary is sleeping' : 'Start Mary\'s sleep timer',
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
                 color: Colors.blue,
               ),
             ),
-            SizedBox(height: 40), // spacing between "Mary is sleeping" text and buttons
+            const SizedBox(height: 40), // spacing between "Mary is sleeping" text and buttons
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -154,25 +153,24 @@ class _NapTimerState extends State<NapTimer> {
                     color: Colors.white,
                   ),
                 ),
-                SizedBox(width: 50,),
+                const SizedBox(width: 50,),
                 FloatingActionButton(
                   onPressed: resetStopwatch,
                   backgroundColor: Colors.lightBlueAccent,
-                  child: Icon(
+                  child: const Icon(
                     Icons.refresh,
                     color: Colors.white,
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: saveData, // saveData function
               style: ElevatedButton.styleFrom(
-                primary: const Color.fromARGB(255, 220, 104, 145),
-                onPrimary: Colors.white,
+                foregroundColor: Colors.white, backgroundColor: const Color.fromARGB(255, 220, 104, 145),
               ),
-              child: Text('Save Data'),
+              child: const Text('Save Data'),
             ),
           ],
         ),
