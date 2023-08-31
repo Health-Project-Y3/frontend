@@ -68,12 +68,19 @@ class _AddNapState extends State<AddNap> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Baby Nap Details'),
-        // centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 220, 104, 145),
+        title: Text(
+          'Add Baby Nap Details',
+          style: TextStyle(
+            color: const Color.fromARGB(255, 220, 104, 145), // Title color
+          ),
+        ),
+        backgroundColor: Colors.white, // Background color of the app bar
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(
+            Icons.arrow_back,
+            color: const Color.fromARGB(255, 220, 104, 145), // Back icon color
+          ),
           onPressed: () {
             Navigator.push(
               context,
@@ -82,6 +89,7 @@ class _AddNapState extends State<AddNap> {
           },
         ),
       ),
+
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
         child: Column(

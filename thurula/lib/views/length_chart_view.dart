@@ -30,48 +30,47 @@ class _LengthChartViewState extends State<LengthChartView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color.fromARGB(255, 244, 200, 200),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 244, 200, 200),
+          backgroundColor: Color.fromARGB(255, 220, 104, 145),
           title: const Text(
             'Length Chart',
             style: TextStyle(
-              color: Color.fromARGB(255, 88, 119, 161),
+              color: Color.fromARGB(255, 255, 255, 255),
             ),
           ),
         ),
         //use padding to add space between the widgets
         body: Center(
             child: Column(children: <Widget>[
-          Padding(
-            //padding more on the left and right and less on the top and bottom
-            padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-            child: Container(
-              decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(10))),
-              child: SizedBox(
-                width: 400,
-                height: 650,
-                child: FutureBuilder(
-                  //TODO change the temporary id to the actual id
-                  future: loadData("male"),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.hasData) {
-                      print(snapshot.data);
-                      print(snapshot.data.runtimeType);
-                      return Container(
-                          decoration: const BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
-                          child: BabyLengthChartWidget(snapshot.data));
-                    } else {
-                      return const CircularProgressIndicator();
-                    }
-                  },
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 25, 20, 10),
+                child: Container(
+                  decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  child: SizedBox(
+                    width: 400,
+                    height: 650,
+                    child: FutureBuilder(
+                      //TODO change the temporary id to the actual id
+                      future: loadData("male"),
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        if (snapshot.hasData) {
+                          print(snapshot.data);
+                          print(snapshot.data.runtimeType);
+                          return Container(
+                              decoration: const BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20))),
+                              child: BabyLengthChartWidget(snapshot.data));
+                        } else {
+                          return const CircularProgressIndicator();
+                        }
+                      },
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
         ])));
   }
 }
