@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'MenuView.dart';
+import 'menu_view.dart';
 
 class BabyNamesView extends StatelessWidget {
   const BabyNamesView({Key? key}) : super(key: key);

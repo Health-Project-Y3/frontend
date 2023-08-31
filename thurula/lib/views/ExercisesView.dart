@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'MenuView.dart';
 import 'package:thurula/views/ExerciseTimerView.dart';
+
+import 'menu_view.dart';
 
 class ExercisesView extends StatelessWidget {
   const ExercisesView({Key? key}) : super(key: key);
