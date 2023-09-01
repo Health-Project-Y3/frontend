@@ -27,22 +27,7 @@ class ForumQuestion {
     this.answers,
   });
 
-  // Map<String, dynamic> toMap() {
-  //   return {
-  //     'question': question,
-  //     'description': description,
-  //     'authorId': authorId,
-  //     'authorFirstName': authorFirstName,
-  //     'authorLastName': authorLastName,
-  //     'date': date?.toIso8601String(),
-  //     'keywords': keywords,
-  //     'visible': visible,
-  //     'upvotes': upvotes,
-  //     'downvotes': downvotes,
-  //     'answers': answers?.map((x) => x.toMap()).toList(),
-  //   };
-  // }
-  static Map<String,dynamic> toJson(ForumQuestion question) {
+  static Map<String, dynamic> toJson(ForumQuestion question) {
     return {
       'question': question.question,
       'description': question.description,
@@ -84,8 +69,26 @@ class ForumQuestion {
       visible: jsonDecode['visible'] == 1,
       upvotes: jsonDecode['upvotes'],
       downvotes: jsonDecode['downvotes'],
-      answers: jsonDecode['answers'].map<ForumAnswer>((answer) => ForumAnswer.fromJson(answer)).toList(),
+      answers: jsonDecode['answers']
+          .map<ForumAnswer>((answer) => ForumAnswer.fromJson(answer))
+          .toList(),
     );
+  }
+
+  static String getDate(DateTime date) {
+    final now = DateTime.now();
+    final difference = now.difference(date);
+    if (difference.inMinutes < 60) {
+      return '${difference.inMinutes} minutes ago';
+    } else if (difference.inHours < 24) {
+      return '${difference.inHours} hours ago';
+    } else if (difference.inDays < 14) {
+      return '${difference.inDays} days ago';
+    } else if (difference.inDays < 365) {
+      return '${difference.inDays ~/ 30} months ago';
+    } else {
+      return '${difference.inDays ~/ 365} years ago';
+    }
   }
 
   @override
@@ -119,21 +122,7 @@ class ForumAnswer {
     this.downvotes,
   });
 
-  // Map<String, dynamic> toMap() {
-  //   return {
-  //     'questionId': questionId,
-  //     'answer': answer,
-  //     'author': author,
-  //     'authorFirstName': authorFirstName,
-  //     'authorLastName': authorLastName,
-  //     'date': date?.toIso8601String(),
-  //     'accepted': accepted,
-  //     'upvotes': upvotes,
-  //     'downvotes': downvotes,
-  //   };
-  // }
-
-  static Map<String,dynamic> toJson(ForumAnswer answer) {
+  static Map<String, dynamic> toJson(ForumAnswer answer) {
     return {
       'questionId': answer.questionId,
       'answer': answer.answer,
@@ -160,6 +149,22 @@ class ForumAnswer {
       upvotes: jsonDecode['upvotes'],
       downvotes: jsonDecode['downvotes'],
     );
+  }
+
+  static String getDate(DateTime date) {
+    final now = DateTime.now();
+    final difference = now.difference(date);
+    if (difference.inMinutes < 60) {
+      return '${difference.inMinutes} minutes ago';
+    } else if (difference.inHours < 24) {
+      return '${difference.inHours} hours ago';
+    } else if (difference.inDays < 14) {
+      return '${difference.inDays} days ago';
+    } else if (difference.inDays < 365) {
+      return '${difference.inDays ~/ 30} months ago';
+    } else {
+      return '${difference.inDays ~/ 365} years ago';
+    }
   }
 
   @override
