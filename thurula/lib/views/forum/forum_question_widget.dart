@@ -7,7 +7,9 @@ import 'forum_answers..dart';
 class ForumQuestionCard extends StatefulWidget {
   final ForumQuestion question;
 
-  ForumQuestionCard({required this.question});
+  final bool allowRedirect;
+
+  const ForumQuestionCard({super.key, required this.question, this.allowRedirect=true});
 
   @override
   _ForumQuestionCardState createState() => _ForumQuestionCardState();
@@ -56,8 +58,7 @@ class _ForumQuestionCardState extends State<ForumQuestionCard> {
                           downvotes--;
                           hasDownvoted = false;
                           hasUpvoted = true;
-                          ForumService.upvoteQuestion(widget.question.id!);
-                          ForumService.downvoteQuestion(widget.question.id!, undo: true);
+                          ForumService.switchvoteQuestion(widget.question.id!, true);
                         } else {
                           hasUpvoted = true;
                           upvotes++;
@@ -83,8 +84,7 @@ class _ForumQuestionCardState extends State<ForumQuestionCard> {
                           upvotes--;
                           hasUpvoted = false;
                           hasDownvoted = true;
-                          ForumService.upvoteQuestion(widget.question.id!, undo: true);
-                          ForumService.downvoteQuestion(widget.question.id!);
+                          ForumService.switchvoteQuestion(widget.question.id!, false);
                         } else {
                           hasDownvoted = true;
                           downvotes++;
@@ -102,6 +102,7 @@ class _ForumQuestionCardState extends State<ForumQuestionCard> {
         ),
       ),
       onTap: () {
+        if (!widget.allowRedirect) return;
         Navigator.push(
           context,
           MaterialPageRoute(

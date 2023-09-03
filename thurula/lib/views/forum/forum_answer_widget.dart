@@ -5,9 +5,9 @@ import '../../models/forum_question_model.dart';
 
 class ForumAnswerCard extends StatefulWidget {
   final ForumAnswer answer;
-  late final String questionId;
+  final String questionId;
 
-  ForumAnswerCard({required this.answer, required this.questionId});
+  const ForumAnswerCard({super.key, required this.answer, required this.questionId});
 
   @override
   _ForumAnswerCardState createState() => _ForumAnswerCardState();
@@ -54,8 +54,7 @@ class _ForumAnswerCardState extends State<ForumAnswerCard> {
                         downvotes--;
                         hasDownvoted = false;
                         hasUpvoted = true;
-                        ForumService.upvoteAnswer(widget.questionId, widget.answer.id!);
-                        ForumService.downvoteAnswer(widget.questionId, widget.answer.id!, undo: true);
+                        ForumService.switchVoteAnswer(widget.questionId, widget.answer.id!, true);
                       } else {
                         hasUpvoted = true;
                         upvotes++;
@@ -81,8 +80,7 @@ class _ForumAnswerCardState extends State<ForumAnswerCard> {
                         upvotes--;
                         hasUpvoted = false;
                         hasDownvoted = true;
-                        ForumService.upvoteAnswer(widget.questionId, widget.answer.id!, undo: true);
-                        ForumService.downvoteAnswer(widget.questionId, widget.answer.id!);
+                        ForumService.switchVoteAnswer(widget.questionId, widget.answer.id!, false);
                       } else {
                         hasDownvoted = true;
                         downvotes++;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thurula/services/forum_service.dart';
 import 'package:thurula/views/forum/forum_answer_widget.dart';
+import 'package:thurula/views/forum/forum_question_widget.dart';
 import '../../models/forum_question_model.dart';
 import 'dart:async';
 
@@ -47,36 +48,7 @@ class _ForumAnswersViewState extends State<ForumAnswersView> {
             final question = snapshot.data!;
             return ListView(
               children: [
-                Card(
-                  margin: const EdgeInsets.all(8.0),
-                  child: ListTile(
-                    title: Text(question.question ?? ''),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Posted by: ${'${question.authorFirstName} ${question.authorLastName}'}'),
-                        Text('Date Posted: ${ForumQuestion.getDate(question.date!)}'),
-                        Text(question.description ?? ''),
-                        Row(
-                          children: [
-                            const Icon(Icons.thumb_up),
-                            const SizedBox(width: 4),
-                            // Add some spacing
-                            Text('${question.upvotes}'),
-                            // Replace 'upvotes' with your property
-                            const SizedBox(width: 16),
-                            // Add spacing between the icons
-                            const Icon(Icons.thumb_down),
-                            const SizedBox(width: 4),
-                            // Add some spacing
-                            Text('${question.downvotes}'),
-                            // Replace 'downvotes' with your property
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                ForumQuestionCard(question: question, allowRedirect: false),
                 // Display answers here
                 ... question.answers?.map((answer) => ForumAnswerCard(answer: answer, questionId: question.id!)).toList() ?? [],
 

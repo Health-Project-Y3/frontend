@@ -170,6 +170,17 @@ class ForumService {
     }
   }
 
+  static Future<void> switchvoteQuestion(String questionId, bool upvote) async {
+    var response = await http.put(
+        Uri.parse(getForumRoute("questions/switchvote?questionId=$questionId&upvote=$upvote")));
+    if (response.statusCode == 200) {
+      return;
+    } else {
+      log(jsonDecode(response.body));
+      throw Exception("Failed to switch vote question");
+    }
+  }
+
   static Future<void> addAnswer(String questionId, ForumAnswer answer) async {
     var response = await http.post(
         Uri.parse(getForumRoute("answers?questionId=$questionId")),
@@ -218,6 +229,17 @@ class ForumService {
     }
   }
 
+  static Future<void> switchVoteAnswer(String questionId, String answerId, bool upvote) async {
+    var response = await http.put(Uri.parse(getForumRoute(
+        "answers/switchvote?questionId=$questionId&answerId=$answerId&upvote=$upvote")));
+    if (response.statusCode == 200) {
+      return;
+    } else {
+      log(jsonDecode(response.body));
+      throw Exception("Failed to switch vote answer");
+    }
+  }
+
   static Future<void> acceptAnswer(String questionId, String answerId) async {
     var response = await http.put(Uri.parse(getForumRoute(
         "answers/accept?questionId=$questionId&answerId=$answerId")));
@@ -229,3 +251,27 @@ class ForumService {
     }
   }
 }
+//
+// \    [HttpPut("questions/switchvote")]
+// [ProducesResponseType(StatusCodes.Status200OK)]
+// [ProducesResponseType(StatusCodes.Status400BadRequest)]
+// public ActionResult SwitchVote(string questionId, bool upvote)
+// {
+// try
+// {
+// if (upvote)
+// {
+// _forumService.UpvoteQuestion(questionId);
+// _forumService.UndoDownvoteQuestion(questionId);
+// } else
+// {
+// _forumService.DownvoteQuestion(questionId);
+// _forumService.UndoUpvoteQuestion(questionId);
+// }
+//
+// return Ok();
+// } catch (Exception e)
+// {
+// return BadRequest(e.Message);
+// }
+// }
