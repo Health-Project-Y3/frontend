@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../models/forum_question_model.dart';
+import '../../services/forum_service.dart';
 import 'forum_answers..dart';
 
 class ForumQuestionCard extends StatefulWidget {
@@ -13,8 +14,18 @@ class ForumQuestionCard extends StatefulWidget {
 }
 
 class _ForumQuestionCardState extends State<ForumQuestionCard> {
-  int upvotes = 0;
-  int downvotes = 0;
+  late int upvotes = 0;
+  late int downvotes = 0;
+  bool hasUpvoted = false; // Track if upvote button is clicked
+  bool hasDownvoted = false; // Track if downvote button is clicked
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize upvotes and downvotes with values from the ForumQuestion object
+    upvotes = widget.question.upvotes!;
+    downvotes = widget.question.downvotes!;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +44,26 @@ class _ForumQuestionCardState extends State<ForumQuestionCard> {
                 children: [
                   IconButton(
                     icon: const Icon(Icons.thumb_up),
+                    color: hasUpvoted ? Colors.green : Colors.grey,
                     onPressed: () {
                       setState(() {
-                        upvotes++;
+                        if (hasUpvoted) {
+                          hasUpvoted = false;
+                          upvotes--;
+                          ForumService.upvoteQuestion(widget.question.id!, undo: true);
+                        } else if (hasDownvoted) {
+                          upvotes++;
+                          downvotes--;
+                          hasDownvoted = false;
+                          hasUpvoted = true;
+                          ForumService.upvoteQuestion(widget.question.id!);
+                          ForumService.downvoteQuestion(widget.question.id!, undo: true);
+                        } else {
+                          hasUpvoted = true;
+                          upvotes++;
+                          ForumService.upvoteQuestion(widget.question.id!);
+                        }
                       });
-                      // Add your upvote logic here
                     },
                   ),
                   const SizedBox(width: 4),
@@ -45,11 +71,26 @@ class _ForumQuestionCardState extends State<ForumQuestionCard> {
                   const SizedBox(width: 16),
                   IconButton(
                     icon: const Icon(Icons.thumb_down),
+                    color: hasDownvoted ? Colors.red : null,
                     onPressed: () {
                       setState(() {
-                        downvotes++;
+                        if (hasDownvoted) {
+                          hasDownvoted = false;
+                          downvotes--;
+                          ForumService.downvoteQuestion(widget.question.id!, undo: true);
+                        } else if (hasUpvoted) {
+                          downvotes++;
+                          upvotes--;
+                          hasUpvoted = false;
+                          hasDownvoted = true;
+                          ForumService.upvoteQuestion(widget.question.id!, undo: true);
+                          ForumService.downvoteQuestion(widget.question.id!);
+                        } else {
+                          hasDownvoted = true;
+                          downvotes++;
+                          ForumService.downvoteQuestion(widget.question.id!);
+                        }
                       });
-                      // Add your downvote logic here
                     },
                   ),
                   const SizedBox(width: 4),

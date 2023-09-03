@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import '../constants/routes.dart';
 import '../models/forum_question_model.dart';
@@ -7,17 +8,17 @@ import 'package:http/http.dart' as http;
 class ForumService {
   static Future<List<ForumQuestion>> getQuestions() async {
     var response = await http.get(Uri.parse(getForumRoute("questions")));
-    print(getForumRoute("questions"));
+    log(getForumRoute("questions"));
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      print(data);
+      log(data);
       List<ForumQuestion> questions = [];
       for (var i = 0; i < data.length; i++) {
         questions.add(ForumQuestion.fromJson(data[i]));
       }
       return questions;
     } else {
-      print(jsonDecode(response.body));
+      log(jsonDecode(response.body));
       return [];
     }
   }
@@ -29,7 +30,7 @@ class ForumService {
       final data = jsonDecode(response.body);
       return ForumQuestion.fromJson(data);
     } else {
-      print(jsonDecode(response.body));
+      log(jsonDecode(response.body));
       return ForumQuestion();
     }
   }
@@ -46,7 +47,7 @@ class ForumService {
       }
       return questions;
     } else {
-      print(jsonDecode(response.body));
+      log(jsonDecode(response.body));
       return [];
     }
   }
@@ -63,7 +64,7 @@ class ForumService {
       }
       return questions;
     } else {
-      print(jsonDecode(response.body));
+      log(jsonDecode(response.body));
       return [];
     }
   }
@@ -80,7 +81,7 @@ class ForumService {
       }
       return questions;
     } else {
-      print(jsonDecode(response.body));
+      log(jsonDecode(response.body));
       return [];
     }
   }
@@ -97,7 +98,7 @@ class ForumService {
       }
       return questions;
     } else {
-      print(jsonDecode(response.body));
+      log(jsonDecode(response.body));
       return [];
     }
   }
@@ -114,13 +115,13 @@ class ForumService {
       }
       return questions;
     } else {
-      print(jsonDecode(response.body));
+      log(jsonDecode(response.body));
       return [];
     }
   }
 
   static Future<void> addQuestion(ForumQuestion question) async {
-    print(jsonEncode(ForumQuestion.toJson(question)));
+    log(jsonEncode(ForumQuestion.toJson(question)));
     var response = await http.post(
       Uri.parse(getForumRoute("questions")),
       body: jsonEncode(ForumQuestion.toJson(question)),
@@ -129,7 +130,7 @@ class ForumService {
     if (response.statusCode == 200) {
       return;
     } else {
-      print(jsonDecode(response.body));
+      log(jsonDecode(response.body));
       throw Exception("Failed to add question");
     }
   }
@@ -140,29 +141,31 @@ class ForumService {
     if (response.statusCode == 200) {
       return;
     } else {
-      print(jsonDecode(response.body));
+      log(jsonDecode(response.body));
       throw Exception("Failed to delete question");
     }
   }
 
-  static Future<void> upvoteQuestion(String questionId) async {
+  static Future<void> upvoteQuestion(String questionId, {bool undo = false}) async {
+    var undochar = undo ? "&undo=true" : "";
     var response = await http.put(
-        Uri.parse(getForumRoute("questions/upvote?questionId=$questionId")));
+        Uri.parse(getForumRoute("questions/upvote?questionId=$questionId$undochar")));
     if (response.statusCode == 200) {
       return;
     } else {
-      print(jsonDecode(response.body));
+      log(jsonDecode(response.body));
       throw Exception("Failed to upvote question");
     }
   }
 
-  static Future<void> downvoteQuestion(String questionId) async {
+  static Future<void> downvoteQuestion(String questionId , {bool undo = false}) async {
+    var undochar = undo ? "&undo=true" : "";
     var response = await http.put(
-        Uri.parse(getForumRoute("questions/downvote?questionId=$questionId")));
+        Uri.parse(getForumRoute("questions/downvote?questionId=$questionId$undochar")));
     if (response.statusCode == 200) {
       return;
     } else {
-      print(jsonDecode(response.body));
+      log(jsonDecode(response.body));
       throw Exception("Failed to downvote question");
     }
   }
@@ -175,7 +178,7 @@ class ForumService {
     if (response.statusCode == 200) {
       return;
     } else {
-      print(jsonDecode(response.body));
+      log(jsonDecode(response.body));
       throw Exception("Failed to add answer");
     }
   }
@@ -186,29 +189,31 @@ class ForumService {
     if (response.statusCode == 200) {
       return;
     } else {
-      print(jsonDecode(response.body));
+      log(jsonDecode(response.body));
       throw Exception("Failed to delete answer");
     }
   }
 
-  static Future<void> upvoteAnswer(String questionId, String answerId) async {
+  static Future<void> upvoteAnswer(String questionId, String answerId, {bool undo = false}) async {
+    var undochar = undo ? "&undo=true" : "";
     var response = await http.put(Uri.parse(getForumRoute(
-        "answers/upvote?questionId=$questionId&answerId=$answerId")));
+        "answers/upvote?questionId=$questionId&answerId=$answerId$undochar")));
     if (response.statusCode == 200) {
       return;
     } else {
-      print(jsonDecode(response.body));
+      log(jsonDecode(response.body));
       throw Exception("Failed to upvote answer");
     }
   }
 
-  static Future<void> downvoteAnswer(String questionId, String answerId) async {
+  static Future<void> downvoteAnswer(String questionId, String answerId, {bool undo = false}) async {
+    var undochar = undo ? "&undo=true" : "";
     var response = await http.put(Uri.parse(getForumRoute(
-        "answers/downvote?questionId=$questionId&answerId=$answerId")));
+        "answers/downvote?questionId=$questionId&answerId=$answerId$undochar")));
     if (response.statusCode == 200) {
       return;
     } else {
-      print(jsonDecode(response.body));
+      log(jsonDecode(response.body));
       throw Exception("Failed to downvote answer");
     }
   }
@@ -219,7 +224,7 @@ class ForumService {
     if (response.statusCode == 200) {
       return;
     } else {
-      print(jsonDecode(response.body));
+      log(jsonDecode(response.body));
       throw Exception("Failed to accept answer");
     }
   }

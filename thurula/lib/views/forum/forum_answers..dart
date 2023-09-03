@@ -78,8 +78,8 @@ class _ForumAnswersViewState extends State<ForumAnswersView> {
                   ),
                 ),
                 // Display answers here
+                ... question.answers?.map((answer) => ForumAnswerCard(answer: answer, questionId: question.id!)).toList() ?? [],
 
-                ... question.answers?.map((answer) => ForumAnswerCard(answer: answer)).toList() ?? [],
               ],
             );
           }

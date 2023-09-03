@@ -14,7 +14,7 @@ class ForumHomeView extends StatefulWidget {
 class _ForumHomeViewState extends State<ForumHomeView> {
   static const _pageSize = 10;
   final PagingController<int, ForumQuestion> _pagingController =
-  PagingController(firstPageKey: 1);
+  PagingController(firstPageKey: 1, invisibleItemsThreshold: (_pageSize/4).round());
 
   @override
   void initState() {
