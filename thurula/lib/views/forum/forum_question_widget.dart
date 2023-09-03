@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../models/forum_question_model.dart';
 import '../../services/forum_service.dart';
-import 'forum_answers..dart';
+import 'forum_answers.dart';
 
 class ForumQuestionCard extends StatefulWidget {
   final ForumQuestion question;
