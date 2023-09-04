@@ -120,7 +120,7 @@ class ForumService {
     }
   }
 
-  static Future<void> addQuestion(ForumQuestion question) async {
+  static Future<ForumQuestion> addQuestion(ForumQuestion question) async {
     log(jsonEncode(ForumQuestion.toJson(question)));
     var response = await http.post(
       Uri.parse(getForumRoute("questions")),
@@ -128,7 +128,7 @@ class ForumService {
       headers: {"Content-Type": "application/json"},
     );
     if (response.statusCode == 200) {
-      return;
+      return ForumQuestion.fromJson(jsonDecode(response.body));
     } else {
       log(jsonDecode(response.body));
       throw Exception("Failed to add question");
@@ -181,13 +181,13 @@ class ForumService {
     }
   }
 
-  static Future<void> addAnswer(String questionId, ForumAnswer answer) async {
+  static Future<ForumAnswer> addAnswer(String questionId, ForumAnswer answer) async {
     var response = await http.post(
         Uri.parse(getForumRoute("answers?questionId=$questionId")),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(ForumAnswer.toJson(answer)));
     if (response.statusCode == 200) {
-      return;
+      return ForumAnswer.fromJson(jsonDecode(response.body));
     } else {
       log(jsonDecode(response.body));
       throw Exception("Failed to add answer");

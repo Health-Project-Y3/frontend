@@ -34,7 +34,6 @@ class _ForumAnswersViewState extends State<ForumAnswersView> {
   void _handleAnswerSubmitted(String answerText) async {
     try {
       var newAnswer = ForumAnswer(
-        id: '1',
         questionId: widget.questionId,
         answer: answerText,
         author: context.read<UserProvider>().user?.id ?? '',
@@ -45,7 +44,7 @@ class _ForumAnswersViewState extends State<ForumAnswersView> {
         upvotes: 0,
         downvotes: 0,
       );
-      ForumService.addAnswer(widget.questionId, newAnswer);
+      newAnswer = await ForumService.addAnswer(widget.questionId, newAnswer);
 
       setState(() {
         // Update the ForumQuestion object with the new answer
@@ -110,8 +109,6 @@ class _ForumAnswersViewState extends State<ForumAnswersView> {
                 ),
                 ForumAnswerInput(
                   onAnswerSubmitted: (answerText) {
-                    // Handle answer submission logic here
-                    // You can send the answer to your API or perform other actions
                     _handleAnswerSubmitted(answerText);
                   },
                 ),
