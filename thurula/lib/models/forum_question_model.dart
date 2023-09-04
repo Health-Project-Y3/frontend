@@ -75,22 +75,6 @@ class ForumQuestion {
     );
   }
 
-  static String getDate(DateTime date) {
-    final now = DateTime.now();
-    final difference = now.difference(date);
-    if (difference.inMinutes < 60) {
-      return '${difference.inMinutes} minutes ago';
-    } else if (difference.inHours < 24) {
-      return '${difference.inHours} hours ago';
-    } else if (difference.inDays < 14) {
-      return '${difference.inDays} days ago';
-    } else if (difference.inDays < 365) {
-      return '${difference.inDays ~/ 30} months ago';
-    } else {
-      return '${difference.inDays ~/ 365} years ago';
-    }
-  }
-
   @override
   String toString() {
     return 'ForumQuestion{id: $id, question: $question, description: $description, authorId: $authorId, authorFirstName: $authorFirstName, authorLastName: $authorLastName, date: $date, keywords: $keywords, visible: $visible, upvotes: $upvotes, downvotes: $downvotes, answers: $answers}';
