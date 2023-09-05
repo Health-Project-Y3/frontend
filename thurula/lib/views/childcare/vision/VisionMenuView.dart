@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:thurula/views/child_care_menu_view.dart';
-import '../../Question2View.dart';
+import 'package:thurula/views/childcare/child_care_menu_view.dart';
+// import '../../signup/Question2View.dart';
 import './SnellenCardView.dart';
 
 
@@ -117,10 +117,11 @@ class VisionMenuView extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const Question2View()));
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => const Question2View())
+                  // );
                 },
                 child: const Text("Eye Diseases"),
               ),

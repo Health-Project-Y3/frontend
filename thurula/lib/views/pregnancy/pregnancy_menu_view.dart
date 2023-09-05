@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:thurula/views/HomeView.dart';
-import 'package:thurula/views/pregnancy_timeline_view.dart';
+import 'package:thurula/views/pregnancy/pregnancy_timeline_view.dart';
 
 // import 'package:provider/provider.dart';
 

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:thurula/views/nap_timer.dart';
-import 'package:thurula/views/add_nap.dart';
-import 'package:thurula/views/nap_records.dart';
-import 'package:thurula/views/child_home_view.dart';
+import 'package:thurula/views/childcare/nap/nap_timer.dart';
+import 'package:thurula/views/childcare/nap/add_nap.dart';
+import 'package:thurula/views/childcare/nap/nap_records.dart';
+import 'package:thurula/views/childcare/child_home_view.dart';
 
 class NapDetails extends StatelessWidget {
+  const NapDetails({super.key});
+
   Future<Map<String, double>> fetchSleepHours() async {
     // Simulating fetching sleep hour data from an API or database
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
     return {
       'Mon': 12,
       'Tue': 13,
@@ -40,23 +42,23 @@ class NapDetails extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ChildHomeView()),
+              MaterialPageRoute(builder: (context) => const ChildHomeView()),
             );
           },
         ),
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Center(
                 child: Container(
                   width: 150,
                   height: 150,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
                       image: AssetImage('assets/images/sleeping_image.png'),
@@ -84,15 +86,15 @@ class NapDetails extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => NapTimer()),
+                        MaterialPageRoute(builder: (context) => const NapTimer()),
                       );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromARGB(255, 220, 104, 145),
                     ),
-                    child: Text('Nap Timer'),
+                    child: const Text('Nap Timer'),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   ElevatedButton(
                     onPressed: () {
                       Navigator.push(
@@ -103,12 +105,12 @@ class NapDetails extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromARGB(255, 220, 104, 145),
                     ),
-                    child: Text('Add Nap'),
+                    child: const Text('Add Nap'),
                   ),
                 ],
               ),
-              SizedBox(height: 16),
-              Row(
+              const SizedBox(height: 16),
+              const Row(
                 children: [
                   Expanded(
                     child: NapStatCard(
@@ -125,11 +127,11 @@ class NapDetails extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 2),
+              const SizedBox(height: 2),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8),
+                  padding: const EdgeInsets.symmetric(vertical: 8),
                   child: TextButton(
                     onPressed: () {
                       Navigator.push(
@@ -151,8 +153,8 @@ class NapDetails extends StatelessWidget {
               ),
 
               // Bar Chart
-              SizedBox(height: 16),
-              Container(
+              const SizedBox(height: 16),
+              SizedBox(
                 height: 300,
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
@@ -186,9 +188,9 @@ List<Widget> buildBarChart() {
     bars.add(
       Container(
         width: 20,
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         height: barHeight,
-        color: Color.fromARGB(255, 88, 119, 161),
+        color: const Color.fromARGB(255, 88, 119, 161),
       ),
     );
   }
@@ -202,7 +204,7 @@ List<Widget> buildBarChart() {
     chartContent.add(
       Column(
         children: [
-          Container(
+          SizedBox(
             height: 170,
             child: Stack(
               alignment: Alignment.bottomCenter,
@@ -216,10 +218,10 @@ List<Widget> buildBarChart() {
               ],
             ),
           ),
-          SizedBox(height: 4),
+          const SizedBox(height: 4),
           Text(
             days[i],
-            style: TextStyle(fontSize: 12),
+            style: const TextStyle(fontSize: 12),
           ),
         ],
       ),
@@ -233,14 +235,14 @@ class NapStatCard extends StatelessWidget {
   final String title;
   final String value;
 
-  NapStatCard({super.key, required this.title, required this.value});
+  const NapStatCard({super.key, required this.title, required this.value});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 2,
       child: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:thurula/views/pregnancy_exercise_recommendations_view.dart';
+import 'package:thurula/views/pregnancy/pregnancy_exercise_recommendations_view.dart';
 
 class ExerciseTimerView extends StatelessWidget {
   const ExerciseTimerView({Key? key}) : super(key: key);
