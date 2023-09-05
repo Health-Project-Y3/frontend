@@ -13,22 +13,56 @@ class ForumHomeView extends StatefulWidget {
 }
 
 class _ForumHomeViewState extends State<ForumHomeView> {
+  String _searchQuery = '';
   static const _pageSize = 10;
   final PagingController<int, ForumQuestion> _pagingController =
-  PagingController(firstPageKey: 1, invisibleItemsThreshold: (_pageSize/4).round());
+      PagingController(
+          firstPageKey: 1, invisibleItemsThreshold: (_pageSize / 4).round());
 
   @override
   void initState() {
     super.initState();
     _pagingController.addPageRequestListener((pageKey) {
-      _fetchPage(pageKey);
+      if (_searchQuery.isEmpty) {
+        _fetchPage(pageKey);
+      } else {
+        _searchPage(pageKey);
+      }
+    });
+  }
+
+  Future<void> _searchPage(int pageKey) async {
+    try {
+      final searchResults = await ForumService.searchQuestions(
+        _searchQuery,
+        pageKey,
+        _pageSize,
+      );
+
+      final isLastPage = searchResults.isEmpty;
+      if (isLastPage) {
+        _pagingController.appendLastPage(searchResults);
+      } else {
+        final nextPage = pageKey + 1;
+        _pagingController.appendPage(searchResults, nextPage);
+      }
+    } catch (error) {
+      _pagingController.error = error;
+    }
+  }
+
+  // Function to update the search query and refresh the list
+  void _updateSearchQuery(String query) {
+    setState(() {
+      _searchQuery = query;
+      _pagingController.refresh();
     });
   }
 
   Future<void> _fetchPage(int pageKey) async {
     try {
       final nextPageQuestions =
-      await ForumService.getRecentQuestions(pageKey, _pageSize);
+          await ForumService.getRecentQuestions(pageKey, _pageSize);
       final isLastPage = nextPageQuestions.isEmpty;
       if (isLastPage) {
         _pagingController.appendLastPage(nextPageQuestions);
@@ -46,6 +80,18 @@ class _ForumHomeViewState extends State<ForumHomeView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Recent Forum Questions'),
+        actions: [
+          // Add a search bar in the app bar
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {
+              showSearch(
+                context: context,
+                delegate: ForumSearchDelegate(_updateSearchQuery),
+              );
+            },
+          ),
+        ],
       ),
       body: PagedListView<int, ForumQuestion>(
         pagingController: _pagingController,
@@ -54,36 +100,14 @@ class _ForumHomeViewState extends State<ForumHomeView> {
               ForumQuestionCard(question: question),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Recent',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add),
-            label: 'Post',
-          ),
-        ],
-        currentIndex: 0,
-        selectedItemColor: Colors.blue,
-        onTap: (index) {
-          switch (index) {
-            case 0:
-              break;
-            case 1:
-              // Navigator.push(context, MaterialPageRoute(builder: (context) => ForumSearchView())
-              break;
-            case 2:
-              Navigator.push (context, MaterialPageRoute(builder: (context) => const AddForumQuestionView() ));
-              break;
-          }
-        },
-      )
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const AddForumQuestionView()));
+          },
+          child: const Icon(Icons.add)),
     );
   }
 
@@ -92,4 +116,120 @@ class _ForumHomeViewState extends State<ForumHomeView> {
     _pagingController.dispose();
     super.dispose();
   }
+}
+
+class ForumSearchDelegate extends SearchDelegate<String> {
+  final Function(String) onSearchQueryChanged;
+
+  ForumSearchDelegate(this.onSearchQueryChanged);
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: const Icon(Icons.clear),
+        onPressed: () {
+          query = '';
+          onSearchQueryChanged(query);
+        },
+      ),
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: const Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, '');
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    if (query.isEmpty) {
+      return const Center(
+        child: Text('Please enter a search query.'),
+      );
+    }
+    return FutureBuilder<List<ForumQuestion>>(
+      // Replace this Future with your search function
+      future: ForumService.searchQuestions(query, 1, 100),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (snapshot.hasError) {
+          return Center(
+            child: Text('Error: ${snapshot.error}'),
+          );
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return Center(
+            child: Text('No results found for: $query'),
+          );
+        } else {
+          return ListView.builder(
+            itemCount: snapshot.data?.length,
+            itemBuilder: (context, index) {
+              final question = snapshot.data?[index];
+              return ForumQuestionCard(question: question!);
+            },
+          );
+        }
+      },
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    if (query.isEmpty) {
+      return const Center(
+        child: Text('Please enter a search query.'),
+      );
+    }
+    return FutureBuilder<List<ForumQuestion>>(
+      // Replace with your actual search function that fetches results dynamically based on the query
+      future: ForumService.searchQuestions(query,1,100),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (snapshot.hasError) {
+          return Center(
+            child: Text('Error: ${snapshot.error}'),
+          );
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return Center(
+            child: Text('No results found for: $query'),
+          );
+        } else {
+          final searchResults = snapshot.data;
+
+          return ListView.builder(
+            itemCount: searchResults?.length,
+            itemBuilder: (context, index) {
+              final question = searchResults?[index];
+              return ListTile(
+                title: Text(question!.question!), // Replace with the appropriate property of ForumQuestion
+                //show truncated question description
+                subtitle: Text(question.description != null
+                    ? (question.description!.length > 100
+                    ? '${question.description!.substring(0, 100)}...'
+                    : question.description!)
+                    : '',), // Replace with the appropriate property of ForumQuestion
+                onTap: () {
+                  query = question.question!; // Set the query to the selected suggestion
+                  showResults(context); // Show the search results
+                },
+              );
+            },
+          );
+        }
+      },
+    );
+  }
+
 }

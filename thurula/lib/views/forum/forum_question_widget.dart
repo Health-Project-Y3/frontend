@@ -99,7 +99,7 @@ class _ForumQuestionCardState extends State<ForumQuestionCard> {
                           Icons.arrow_upward,
                           size: 24,
                         ),
-                        color: hasUpvoted ? Colors.orange : Colors.grey,
+                        color: hasUpvoted ? Colors.green : Colors.grey,
                         onPressed: () {
                           setState(() {
                             if (hasUpvoted) {
@@ -137,7 +137,7 @@ class _ForumQuestionCardState extends State<ForumQuestionCard> {
                           Icons.arrow_downward,
                           size: 24,
                         ),
-                        color: hasDownvoted ? Colors.blue : Colors.grey,
+                        color: hasDownvoted ? Colors.red : Colors.grey,
                         onPressed: () {
                           setState(() {
                             if (hasDownvoted) {
