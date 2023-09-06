@@ -16,6 +16,15 @@ class AddForumQuestionView extends StatefulWidget {
 class _AddForumQuestionViewState extends State<AddForumQuestionView> {
   final _formKey = GlobalKey<FormState>();
   final ForumQuestion _question = ForumQuestion();
+  List<String> selectedKeywords = []; // List to store selected keywords
+
+  // Predefined list of keywords
+  final List<String> predefinedKeywords = [
+    'Health',
+    'Education',
+    'Nutrition',
+    'Pregnancy'
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -49,17 +58,48 @@ class _AddForumQuestionViewState extends State<AddForumQuestionView> {
                   _question.description = value;
                 },
               ),
-              TextFormField(
-                decoration: const InputDecoration(labelText: 'Keywords (comma-separated)'),
-                onSaved: (value) {
-                  _question.keywords = value?.split(',').map((e) => e.trim()).toList();
-                },
+              const SizedBox(height: 20),
+              const Text('Keywords'),
+              const SizedBox(height: 10),
+              // Display selected keywords as chips
+              Wrap(
+                children: predefinedKeywords.map((keyword) {
+                  return Container(
+                    margin: const EdgeInsets.only(right: 8.0, bottom: 8.0),
+                    child: FilterChip(
+                      label: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                        child: Text(
+                          keyword,
+                          style: TextStyle(
+                            color: selectedKeywords.contains(keyword) ? Colors.white : Colors.black,
+                          ),
+                        ),
+                      ),
+                      selected: selectedKeywords.contains(keyword),
+                      onSelected: (bool selected) {
+                        setState(() {
+                          if (selected) {
+                            selectedKeywords.add(keyword);
+                          } else {
+                            selectedKeywords.remove(keyword);
+                          }
+                        });
+                      },
+                      backgroundColor: selectedKeywords.contains(keyword) ? Colors.blue : Colors.grey,
+                      selectedColor: Colors.blue, // Change to the color you want for selected chips
+                    ),
+                  );
+
+                }).toList(),
               ),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
+                    // Add the selected keywords to the question
+                    _question.keywords = selectedKeywords;
                     var question = ForumQuestion(
                       question: _question.question,
                       description: _question.description,

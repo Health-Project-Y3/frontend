@@ -6,7 +6,6 @@ import 'package:thurula/views/forum/forum_drawer_widget.dart';
 import 'package:thurula/views/forum/forum_question_widget.dart';
 import '../../models/forum_question_model.dart';
 import '../../providers/user_provider.dart';
-import 'forum_add_question_view.dart';
 
 class ForumMyQuestionsView extends StatefulWidget {
   const ForumMyQuestionsView({Key? key}) : super(key: key);
@@ -72,17 +71,6 @@ class _ForumQuestionsOnTopicViewState extends State<ForumMyQuestionsView> {
             ),
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const AddForumQuestionView(),
-            ),
-          );
-        },
-        child: const Icon(Icons.add),
       ),
     );
   }
