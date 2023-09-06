@@ -24,6 +24,8 @@ class ForumQuestionCard extends StatefulWidget {
 }
 
 class _ForumQuestionCardState extends State<ForumQuestionCard> {
+  bool _isDeleted = false;
+  bool _isReported = false;
   static const QUESTION_LENGTH =
       100; // The number of characters to show before truncating
   static const DESCRIPTION_LENGTH =
@@ -43,6 +45,13 @@ class _ForumQuestionCardState extends State<ForumQuestionCard> {
 
   @override
   Widget build(BuildContext context) {
+    if (_isDeleted | _isReported) {
+      // If the card is deleted, return an AnimatedSize widget to smoothly animate its size change.
+      return const SizedBox(
+        height: 0,
+        width: double.infinity,
+      );
+    }
     return GestureDetector(
       child: Card(
         margin: const EdgeInsets.all(8.0),
@@ -329,7 +338,7 @@ class _ForumQuestionCardState extends State<ForumQuestionCard> {
 
   // Function to show a delete confirmation dialog
   Future<void> showDeleteConfirmationDialog(BuildContext context) async {
-    final confirmed = await showDialog<bool>(
+    showDialog<bool>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -340,8 +349,10 @@ class _ForumQuestionCardState extends State<ForumQuestionCard> {
               child: const Text('Cancel'),
             ),
             TextButton(
-              // onPressed: () => Navigator.of(context).pop(true),
               onPressed: () {
+                setState(() {
+                  _isDeleted =true;
+                });
                 Navigator.of(context).pop(true);
                 ForumService.deleteQuestion(widget.question.id!);
                 GFToast.showToast(
@@ -358,14 +369,39 @@ class _ForumQuestionCardState extends State<ForumQuestionCard> {
       },
     );
 
-    if (confirmed == true) {
-      // Call the deleteQuestion function if the user confirms
-      await ForumService.deleteQuestion(widget.question.id!);
-      // You may want to handle any further actions after deletion
-    }
   }
   //Function to show report confirmation dialog
   Future<void> showReportConfirmationDialog(BuildContext context) async {
+    showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: const Text('Are you sure you want to report this question?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  _isDeleted =true;
+                });
+                Navigator.of(context).pop(true);
+                GFToast.showToast(
+                  'Question reported',
+                  context,
+                  toastPosition: GFToastPosition.BOTTOM,
+                  backgroundColor: Colors.green,
+                );
+              },
+              child: const Text('Report'),
+            ),
+          ],
+        );
+      },
+    );
+
   }
 
 }
