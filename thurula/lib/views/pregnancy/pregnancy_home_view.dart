@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:thurula/views/forum/forum_home_view.dart';
 
 // import 'package:thurula/views/login_view.dart';
 import 'package:thurula/views/pregnancy/mother_health_tracker.dart';
@@ -45,6 +46,48 @@ class PregnancyHomeView extends StatelessWidget {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: <Widget>[
+                  //Forum
+                  Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: InkResponse(
+                      onTap: () {
+                        // Navigate to the forum screen here
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ForumHomeView(), // Replace with the actual forum view
+                          ),
+                        );
+                      },
+                      child: Container(
+                        width: 120,
+                        height: 120,
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 255, 255, 255),
+                          borderRadius: BorderRadius.circular(5.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 0.5,
+                              blurRadius: 2,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ClipRRect(
+                              child: Image.asset(
+                                'assets/images/menu-tiles/forum.png', // Replace with your forum tile image
+                                height: 80,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                   //Pregnancy Timeline
                   Padding(
                       padding: const EdgeInsets.all(5.0),
