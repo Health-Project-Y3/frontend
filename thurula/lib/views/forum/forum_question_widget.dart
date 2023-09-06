@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:thurula/providers/user_provider.dart';
+import 'package:thurula/views/widgets/toast_widget.dart';
 
 import '../../models/forum_question_model.dart';
 import '../../services/forum_service.dart';
@@ -7,12 +10,13 @@ import 'forum_answers_view.dart';
 class ForumQuestionCard extends StatefulWidget {
   final ForumQuestion question;
   final bool allowRedirect;
-
+  final bool trash;
 
   const ForumQuestionCard({
     super.key,
     required this.question,
     this.allowRedirect = true,
+    this.trash = false,
   });
 
   @override
@@ -20,8 +24,10 @@ class ForumQuestionCard extends StatefulWidget {
 }
 
 class _ForumQuestionCardState extends State<ForumQuestionCard> {
-  static const QUESTION_LENGTH = 100; // The number of characters to show before truncating
-  static const DESCRIPTION_LENGTH = 100; // The number of characters to show before truncating
+  static const QUESTION_LENGTH =
+      100; // The number of characters to show before truncating
+  static const DESCRIPTION_LENGTH =
+      100; // The number of characters to show before truncating
   late int upvotes = 0;
   late int downvotes = 0;
   bool hasUpvoted = false; // Track if upvote button is clicked
@@ -50,19 +56,32 @@ class _ForumQuestionCardState extends State<ForumQuestionCard> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   //a circle avatar with the first letter of the first and last name of the author
-                  CircleAvatar(
-                    child: Text(
-                      '${widget.question.authorFirstName?[0]}${widget.question.authorLastName?[0]}',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
+                  Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 17.0,
+                        //add a random background color
+                        backgroundColor: Colors.primaries[
+                            widget.question.authorFirstName![0].codeUnitAt(0) %
+                                Colors.primaries.length],
+                        child: Text(
+                          '${widget.question.authorFirstName?[0]}${widget.question.authorLastName?[0]}',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  Text(
-                    '${widget.question.authorFirstName} ${widget.question.authorLastName}',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          '${widget.question.authorFirstName} ${widget.question.authorLastName}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   Text(
                     getDate(widget.question),
@@ -70,6 +89,39 @@ class _ForumQuestionCardState extends State<ForumQuestionCard> {
                       color: Colors.grey,
                     ),
                   ),
+                  //three horizontal dots
+                  IconButton(
+                    icon: const Icon(Icons.more_horiz),
+                    onPressed: () {
+                      final position = getMenuPosition(context);
+
+                      showMenu(
+                        context: context,
+                        position: position,
+                        items: [
+                          if(shouldShowTrashIcon())
+                           PopupMenuItem(
+                            value: 'Delete',
+                            child: const Text('Delete'),
+                            onTap: () {
+                              showDeleteConfirmationDialog(context);
+                            },
+                          ),
+                           PopupMenuItem(
+                            value: 'Report',
+                            child: const Text('Report'),
+                            onTap: () {
+                              showReportConfirmationDialog(context);
+                            },
+                          ),
+                        ],
+                      ).then((value) {
+                        if (value != null) {
+                          // handle the selected value
+                        }
+                      });
+                    },
+                  )
                 ],
               ),
               const SizedBox(height: 8),
@@ -87,85 +139,92 @@ class _ForumQuestionCardState extends State<ForumQuestionCard> {
                   color: Colors.grey,
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 8),
               Row(
                 //left align
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
                     children: [
-                      IconButton(
-                        icon: const Icon(
-                          Icons.arrow_upward,
-                          size: 24,
-                        ),
-                        color: hasUpvoted ? Colors.green : Colors.grey,
-                        onPressed: () {
-                          setState(() {
-                            if (hasUpvoted) {
-                              hasUpvoted = false;
-                              upvotes--;
-                              ForumService.upvoteQuestion(widget.question.id!,
-                                  undo: true);
-                            } else if (hasDownvoted) {
-                              upvotes++;
-                              downvotes--;
-                              hasDownvoted = false;
-                              hasUpvoted = true;
-                              ForumService.switchvoteQuestion(
-                                  widget.question.id!, true);
-                            } else {
-                              hasUpvoted = true;
-                              upvotes++;
-                              ForumService.upvoteQuestion(widget.question.id!);
-                            }
-                          });
-                        },
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: const Icon(
+                              Icons.arrow_upward,
+                              size: 24,
+                            ),
+                            color: hasUpvoted ? Colors.green : Colors.grey,
+                            onPressed: () {
+                              setState(() {
+                                if (hasUpvoted) {
+                                  hasUpvoted = false;
+                                  upvotes--;
+                                  ForumService.upvoteQuestion(
+                                      widget.question.id!,
+                                      undo: true);
+                                } else if (hasDownvoted) {
+                                  upvotes++;
+                                  downvotes--;
+                                  hasDownvoted = false;
+                                  hasUpvoted = true;
+                                  ForumService.switchvoteQuestion(
+                                      widget.question.id!, true);
+                                } else {
+                                  hasUpvoted = true;
+                                  upvotes++;
+                                  ForumService.upvoteQuestion(
+                                      widget.question.id!);
+                                }
+                              });
+                            },
+                          ),
+                          Text(
+                            '$upvotes',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
-                      Text(
-                        '$upvotes',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      IconButton(
-                        icon: const Icon(
-                          Icons.arrow_downward,
-                          size: 24,
-                        ),
-                        color: hasDownvoted ? Colors.red : Colors.grey,
-                        onPressed: () {
-                          setState(() {
-                            if (hasDownvoted) {
-                              hasDownvoted = false;
-                              downvotes--;
-                              ForumService.downvoteQuestion(widget.question.id!,
-                                  undo: true);
-                            } else if (hasUpvoted) {
-                              downvotes++;
-                              upvotes--;
-                              hasUpvoted = false;
-                              hasDownvoted = true;
-                              ForumService.switchvoteQuestion(
-                                  widget.question.id!, false);
-                            } else {
-                              hasDownvoted = true;
-                              downvotes++;
-                              ForumService.downvoteQuestion(
-                                  widget.question.id!);
-                            }
-                          });
-                        },
-                      ),
-                      Text(
-                        '$downvotes',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: const Icon(
+                              Icons.arrow_downward,
+                              size: 24,
+                            ),
+                            color: hasDownvoted ? Colors.red : Colors.grey,
+                            onPressed: () {
+                              setState(() {
+                                if (hasDownvoted) {
+                                  hasDownvoted = false;
+                                  downvotes--;
+                                  ForumService.downvoteQuestion(
+                                      widget.question.id!,
+                                      undo: true);
+                                } else if (hasUpvoted) {
+                                  downvotes++;
+                                  upvotes--;
+                                  hasUpvoted = false;
+                                  hasDownvoted = true;
+                                  ForumService.switchvoteQuestion(
+                                      widget.question.id!, false);
+                                } else {
+                                  hasDownvoted = true;
+                                  downvotes++;
+                                  ForumService.downvoteQuestion(
+                                      widget.question.id!);
+                                }
+                              });
+                            },
+                          ),
+                          Text(
+                            '$downvotes',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -202,6 +261,21 @@ class _ForumQuestionCardState extends State<ForumQuestionCard> {
     );
   }
 
+  RelativeRect getMenuPosition(BuildContext context) {
+    final RenderBox button = context.findRenderObject() as RenderBox;
+    final RenderBox overlay =
+        Overlay.of(context).context.findRenderObject() as RenderBox;
+    return RelativeRect.fromRect(
+      Rect.fromPoints(
+        button.localToGlobal(button.size.bottomRight(const Offset(0, -190)),
+            ancestor: overlay),
+        button.localToGlobal(button.size.bottomRight(const Offset(0, -190)),
+            ancestor: overlay),
+      ),
+      Offset.zero & overlay.size,
+    );
+  }
+
   String getDate(ForumQuestion question) {
     final now = DateTime.now();
     final difference = now.difference(question.date!);
@@ -232,6 +306,7 @@ class _ForumQuestionCardState extends State<ForumQuestionCard> {
       return question.question!;
     }
   }
+
   String getDescription(ForumQuestion question) {
     //truncate the description if it is too long
     if (question.description!.length > DESCRIPTION_LENGTH) {
@@ -240,4 +315,56 @@ class _ForumQuestionCardState extends State<ForumQuestionCard> {
       return question.description!;
     }
   }
+
+  // Function to check if the trash icon should be displayed
+  bool shouldShowTrashIcon() {
+    //check if the user is the author of the question
+    if (widget.question.authorId == context.read<UserProvider>().user?.id) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // Function to show a delete confirmation dialog
+  Future<void> showDeleteConfirmationDialog(BuildContext context) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: const Text('Are you sure you want to delete this question?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              // onPressed: () => Navigator.of(context).pop(true),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+                ForumService.deleteQuestion(widget.question.id!);
+                GFToast.showToast(
+                  'Question deleted',
+                  context,
+                  toastPosition: GFToastPosition.BOTTOM,
+                  backgroundColor: Colors.green,
+                );
+              },
+              child: const Text('Delete'),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (confirmed == true) {
+      // Call the deleteQuestion function if the user confirms
+      await ForumService.deleteQuestion(widget.question.id!);
+      // You may want to handle any further actions after deletion
+    }
+  }
+  //Function to show report confirmation dialog
+  Future<void> showReportConfirmationDialog(BuildContext context) async {
+  }
+
 }
