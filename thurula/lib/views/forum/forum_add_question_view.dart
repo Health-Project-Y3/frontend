@@ -53,6 +53,12 @@ class _AddForumQuestionViewState extends State<AddForumQuestionView> {
               ),
               TextFormField(
                 decoration: const InputDecoration(labelText: 'Description'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a description';
+                  }
+                  return null;
+                },
                 maxLines: 4,
                 onSaved: (value) {
                   _question.description = value;
@@ -72,7 +78,9 @@ class _AddForumQuestionViewState extends State<AddForumQuestionView> {
                         child: Text(
                           keyword,
                           style: TextStyle(
-                            color: selectedKeywords.contains(keyword) ? Colors.white : Colors.black,
+                            color: selectedKeywords.contains(keyword)
+                                ? Colors.white
+                                : Colors.black,
                           ),
                         ),
                       ),
@@ -86,11 +94,13 @@ class _AddForumQuestionViewState extends State<AddForumQuestionView> {
                           }
                         });
                       },
-                      backgroundColor: selectedKeywords.contains(keyword) ? Colors.blue : Colors.grey,
-                      selectedColor: Colors.blue, // Change to the color you want for selected chips
+                      backgroundColor: selectedKeywords.contains(keyword)
+                          ? Colors.blue
+                          : Colors.grey,
+                      selectedColor: Colors
+                          .blue, // Change to the color you want for selected chips
                     ),
                   );
-
                 }).toList(),
               ),
               const SizedBox(height: 20),
@@ -105,8 +115,10 @@ class _AddForumQuestionViewState extends State<AddForumQuestionView> {
                       description: _question.description,
                       keywords: _question.keywords,
                       authorId: context.read<UserProvider>().user?.id ?? '',
-                      authorFirstName:  context.read<UserProvider>().user?.fname ?? '',
-                      authorLastName:  context.read<UserProvider>().user?.lname ?? '',
+                      authorFirstName:
+                          context.read<UserProvider>().user?.fname ?? '',
+                      authorLastName:
+                          context.read<UserProvider>().user?.lname ?? '',
                       date: DateTime.now(),
                       upvotes: 0,
                       downvotes: 0,
@@ -114,7 +126,6 @@ class _AddForumQuestionViewState extends State<AddForumQuestionView> {
                       answers: [],
                     );
                     ForumService.addQuestion(question);
-                    Navigator.pop(context);
                     GFToast.showToast(
                       'Question posted successfully',
                       context,
@@ -125,6 +136,7 @@ class _AddForumQuestionViewState extends State<AddForumQuestionView> {
 
                     // Reset the form
                     _formKey.currentState!.reset();
+                    Navigator.pop(context);
                   }
                 },
                 child: const Text('Post Question'),

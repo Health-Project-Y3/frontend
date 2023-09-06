@@ -17,9 +17,11 @@ class ForumHomeView extends StatefulWidget {
 class _ForumHomeViewState extends State<ForumHomeView> {
   String _searchQuery = '';
   static const _pageSize = 10;
-  final PagingController<int, ForumQuestion> _pagingController =
+  late PagingController<int, ForumQuestion> _pagingController =
       PagingController(
           firstPageKey: 1, invisibleItemsThreshold: (_pageSize / 4).round());
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+  GlobalKey<RefreshIndicatorState>();
 
   @override
   void initState() {
@@ -76,6 +78,34 @@ class _ForumHomeViewState extends State<ForumHomeView> {
       _pagingController.error = error;
     }
   }
+  // Implement the refresh logic here
+  Future<void> _refresh() async {
+    // Dispose the current paging controller
+    _pagingController.dispose();
+
+    // Create a new paging controller with the initial settings
+    final newController = PagingController<int, ForumQuestion>(
+      firstPageKey: 1,
+      invisibleItemsThreshold: (_pageSize / 4).round(),
+    );
+
+    // Add the page request listener to the new controller
+    newController.addPageRequestListener((pageKey) {
+      if (_searchQuery.isEmpty) {
+        _fetchPage(pageKey);
+      } else {
+        _searchPage(pageKey);
+      }
+    });
+
+    setState(() {
+      // Update the paging controller with the new one
+      _pagingController = newController;
+    });
+
+    // Fetch the first page of data
+    await _fetchPage(1);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,11 +126,17 @@ class _ForumHomeViewState extends State<ForumHomeView> {
         ],
       ),
       drawer: const ForumDrawer(),
-      body: PagedListView<int, ForumQuestion>(
-        pagingController: _pagingController,
-        builderDelegate: PagedChildBuilderDelegate<ForumQuestion>(
-          itemBuilder: (context, question, index) =>
-              ForumQuestionCard(question: question),
+      body: RefreshIndicator(
+        key: _refreshIndicatorKey,
+        onRefresh: ()async{
+          await _refresh();
+        },
+        child: PagedListView<int, ForumQuestion>(
+          pagingController: _pagingController,
+          builderDelegate: PagedChildBuilderDelegate<ForumQuestion>(
+            itemBuilder: (context, question, index) =>
+                ForumQuestionCard(question: question),
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
