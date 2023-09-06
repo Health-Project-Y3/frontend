@@ -89,7 +89,7 @@ class ForumService {
   static Future<List<ForumQuestion>> getQuestionsByKeywords(
       int page, int pageSize, List<String> keywords) async {
     var response = await http.get(Uri.parse(getForumRoute(
-        "questions/keywords?page=$page&pageSize=$pageSize&keywords=${keywords.join(",")}")));
+        "questions/keywords?page=$page&pageSize=$pageSize&keywords=${keywords.join("&keywords=")}")));
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
       List<ForumQuestion> questions = [];
@@ -251,27 +251,3 @@ class ForumService {
     }
   }
 }
-//
-// \    [HttpPut("questions/switchvote")]
-// [ProducesResponseType(StatusCodes.Status200OK)]
-// [ProducesResponseType(StatusCodes.Status400BadRequest)]
-// public ActionResult SwitchVote(string questionId, bool upvote)
-// {
-// try
-// {
-// if (upvote)
-// {
-// _forumService.UpvoteQuestion(questionId);
-// _forumService.UndoDownvoteQuestion(questionId);
-// } else
-// {
-// _forumService.DownvoteQuestion(questionId);
-// _forumService.UndoUpvoteQuestion(questionId);
-// }
-//
-// return Ok();
-// } catch (Exception e)
-// {
-// return BadRequest(e.Message);
-// }
-// }
