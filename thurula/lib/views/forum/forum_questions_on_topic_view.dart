@@ -4,7 +4,7 @@ import 'package:thurula/services/forum_service.dart';
 import 'package:thurula/views/forum/forum_drawer_widget.dart';
 import 'package:thurula/views/forum/forum_question_widget.dart';
 import '../../models/forum_question_model.dart';
-import 'forum_add_question_view.dart';
+import 'forum_question_add_view.dart';
 
 class ForumQuestionsOnTopicView extends StatefulWidget {
   final List<String> topic;

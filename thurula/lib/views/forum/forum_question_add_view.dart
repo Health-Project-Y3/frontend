@@ -80,7 +80,7 @@ class _AddForumQuestionViewState extends State<AddForumQuestionView> {
                           style: TextStyle(
                             color: selectedKeywords.contains(keyword)
                                 ? Colors.white
-                                : Colors.black,
+                                : Colors.white,
                           ),
                         ),
                       ),

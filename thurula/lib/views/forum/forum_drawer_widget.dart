@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:thurula/views/forum/forum_home_view.dart';
-import 'package:thurula/views/forum/forum_my_questions_view.dart';
+import 'package:thurula/views/forum/forum_questions_mine_view.dart';
 import 'package:thurula/views/forum/forum_questions_on_topic_view.dart';
 import '../../providers/user_provider.dart';
 
@@ -17,14 +17,16 @@ class _ForumDrawerState extends State<ForumDrawer> {
   final List<String> routes = [
     'Nutrition',
     'Health',
-    'Education'
+    'Education',
+    'Pregnancy'
     // Add more route names as needed
   ];
 
   final List<IconData> icons = [
     Icons.local_dining,
     Icons.local_hospital,
-    Icons.school
+    Icons.school,
+    Icons.pregnant_woman
     // Add more icons as needed
   ];
 
