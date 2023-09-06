@@ -107,6 +107,7 @@ class _ForumQuestionCardState extends State<ForumQuestionCard> {
                               showDeleteConfirmationDialog(context);
                             },
                           ),
+                          if(!shouldShowTrashIcon())
                            PopupMenuItem(
                             value: 'Report',
                             child: const Text('Report'),
