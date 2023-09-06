@@ -45,7 +45,7 @@ class _ForumQuestionCardState extends State<ForumQuestionCard> {
 
   @override
   Widget build(BuildContext context) {
-    if (_isDeleted | _isReported) {
+    if (_isDeleted || _isReported) {
       // If the card is deleted, return an AnimatedSize widget to smoothly animate its size change.
       return const SizedBox(
         height: 0,
@@ -98,40 +98,26 @@ class _ForumQuestionCardState extends State<ForumQuestionCard> {
                       color: Colors.grey,
                     ),
                   ),
-                  //three horizontal dots
-                  IconButton(
-                    icon: const Icon(Icons.more_horiz),
-                    onPressed: () {
-                      final position = getMenuPosition(context);
-
-                      showMenu(
-                        context: context,
-                        position: position,
-                        items: [
-                          if(shouldShowTrashIcon())
-                           PopupMenuItem(
-                            value: 'Delete',
-                            child: const Text('Delete'),
-                            onTap: () {
-                              showDeleteConfirmationDialog(context);
-                            },
-                          ),
-                          if(!shouldShowTrashIcon())
-                           PopupMenuItem(
-                            value: 'Report',
-                            child: const Text('Report'),
-                            onTap: () {
-                              showReportConfirmationDialog(context);
-                            },
-                          ),
-                        ],
-                      ).then((value) {
-                        if (value != null) {
-                          // handle the selected value
-                        }
-                      });
-                    },
-                  )
+                  PopupMenuButton(
+                    itemBuilder: (context) => [
+                      if (!shouldShowTrashIcon())
+                        PopupMenuItem(
+                          onTap: () {
+                            showReportConfirmationDialog(context);
+                          },
+                          value: 'report',
+                          child: const Text('Report'),
+                        ),
+                      if (shouldShowTrashIcon())
+                        PopupMenuItem(
+                          onTap: () {
+                            showDeleteConfirmationDialog(context);
+                          },
+                          value: 'delete',
+                          child: const Text('Delete'),
+                        ),
+                    ],
+                  ),
                 ],
               ),
               const SizedBox(height: 8),
@@ -271,21 +257,6 @@ class _ForumQuestionCardState extends State<ForumQuestionCard> {
     );
   }
 
-  RelativeRect getMenuPosition(BuildContext context) {
-    final RenderBox button = context.findRenderObject() as RenderBox;
-    final RenderBox overlay =
-        Overlay.of(context).context.findRenderObject() as RenderBox;
-    return RelativeRect.fromRect(
-      Rect.fromPoints(
-        button.localToGlobal(button.size.bottomRight(const Offset(0, -190)),
-            ancestor: overlay),
-        button.localToGlobal(button.size.bottomRight(const Offset(0, -190)),
-            ancestor: overlay),
-      ),
-      Offset.zero & overlay.size,
-    );
-  }
-
   String getDate(ForumQuestion question) {
     final now = DateTime.now();
     final difference = now.difference(question.date!);
@@ -351,7 +322,7 @@ class _ForumQuestionCardState extends State<ForumQuestionCard> {
             TextButton(
               onPressed: () {
                 setState(() {
-                  _isDeleted =true;
+                  _isDeleted = true;
                 });
                 Navigator.of(context).pop(true);
                 ForumService.deleteQuestion(widget.question.id!);
@@ -368,8 +339,8 @@ class _ForumQuestionCardState extends State<ForumQuestionCard> {
         );
       },
     );
-
   }
+
   //Function to show report confirmation dialog
   Future<void> showReportConfirmationDialog(BuildContext context) async {
     showDialog<bool>(
@@ -385,7 +356,7 @@ class _ForumQuestionCardState extends State<ForumQuestionCard> {
             TextButton(
               onPressed: () {
                 setState(() {
-                  _isDeleted =true;
+                  _isReported = true;
                 });
                 Navigator.of(context).pop(true);
                 GFToast.showToast(
@@ -401,7 +372,5 @@ class _ForumQuestionCardState extends State<ForumQuestionCard> {
         );
       },
     );
-
   }
-
 }
