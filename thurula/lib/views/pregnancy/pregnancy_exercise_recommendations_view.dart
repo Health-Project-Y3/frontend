@@ -2,6 +2,15 @@ import 'package:flutter/material.dart';
 import '../menu_view.dart';
 import 'package:thurula/views/pregnancy/pregnancy_exercise_timer_view.dart';
 
+
+List<String> exerciseNamesT1 = [
+  "Diaphragmatic Breath with Pelvic Floor Activation",
+  "P.sit to Stand",
+  "Standing Abs",
+  "Pelvis Articulation",
+  "Butt Press",
+];
+
 class ExercisesView extends StatelessWidget {
   const ExercisesView({Key? key}) : super(key: key);
 
@@ -54,840 +63,345 @@ class ExercisesView extends StatelessWidget {
           body: TabBarView(
             children: [
               // First Trimester
-              Column(
-                children: [
-                  // main title - month
-                  const Align(
-                    alignment: Alignment.topLeft,
-                    child: Padding(
-                      // padding: EdgeInsets.all(20.0),
-                      padding: EdgeInsets.only(
-                          left: 32.0, right: 32.0, top: 30.0, bottom: 10),
-                      child: Text(
-                        'Aug - Sep - Oct',
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Inter',
-                          color: const Color.fromARGB(255, 88, 119, 161),
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  // Exercise 1 card
-                  Container(height: 10),
-                  Padding(
-                      padding: EdgeInsets.only(
-                        left: 20.0,
-                        right: 20.0,
-                      ),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    // main title - month
+                    // const Align(
+                    //   alignment: Alignment.topLeft,
+                    //   child: Padding(
+                    //     // padding: EdgeInsets.all(20.0),
+                    //     padding: EdgeInsets.only(
+                    //         left: 32.0, right: 32.0, top: 30.0, bottom: 10),
+                    //     child: Text(
+                    //       'Aug - Sep - Oct',
+                    //       style: TextStyle(
+                    //         fontSize: 25,
+                    //         fontWeight: FontWeight.bold,
+                    //         fontFamily: 'Inter',
+                    //         color: Color.fromARGB(255, 88, 119, 161),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    // Exercise 1 card
+                    for(int x = 1; x<=5;x++)...[
+                      Container(height: 10),
+                      Padding(
+                          padding: const EdgeInsets.only(
+                            left: 20.0,
+                            right: 20.0,
+                          ),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
                                       const ExerciseTimerView()));
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          backgroundColor: Colors.white, // Color of the card
-                          elevation: 2, // Card elevation
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Align(
-                                alignment: Alignment.center,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  child: Image.asset(
-                                    'assets/images/exercises/kneepushup.jpg',
-                                    height: 100,
-                                    width: 100,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
+                            },
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
                               ),
-                              Container(width: 5),
-                              Expanded(
-                                  child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-
-                                // exercise card 1
+                              backgroundColor: Colors.white, // Color of the card
+                              elevation: 2, // Card elevation
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
-                                  Container(height: 5),
-                                  const Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 15, bottom: 5),
-                                    // exercise title/name
-                                    child: Text(
-                                      "Knee Push-Ups",
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Inter',
-                                        //   color #504E4E
-                                        color: const Color.fromARGB(
-                                            255, 80, 78, 78),
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      child: Image.asset(
+                                        'assets/images/exercises/firstm$x.png',
+                                        height: 100,
+                                        width: 100,
+                                        fit: BoxFit.cover,
                                       ),
                                     ),
                                   ),
+                                  Container(width: 5),
+                                  Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
 
-                                  Container(height: 5),
-                                  // exercise description
-                                  const Padding(
-                                    // padding: EdgeInsets.all(20.0),
-                                    padding: EdgeInsets.only(left: 15),
-                                    child: Text(
-                                      "45 seconds",
-                                      style: TextStyle(
-                                        fontSize: 17,
-                                        fontFamily: 'Inter',
-                                        color: const Color.fromARGB(
-                                            255, 131, 131, 131),
-                                      ),
-                                    ),
-                                  ),
+                                        // exercise card
+                                        children: <Widget>[
+                                          Container(height: 5),
+                                          const Padding(
+                                            padding:
+                                            EdgeInsets.only(left: 15, bottom: 5),
+                                            // exercise title/name
+                                            child: Text(
+                                              "Exercise name",
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily: 'Inter',
+                                                //   color #504E4E
+                                                color: Color.fromARGB(
+                                                    255, 80, 78, 78),
+                                              ),
+                                            ),
+                                          ),
+
+                                          Container(height: 5),
+                                          // exercise description
+                                          const Padding(
+                                            // padding: EdgeInsets.all(20.0),
+                                            padding: EdgeInsets.only(left: 15),
+                                            child: Text(
+                                              "45 seconds",
+                                              style: TextStyle(
+                                                fontSize: 17,
+                                                fontFamily: 'Inter',
+                                                color: Color.fromARGB(
+                                                    255, 131, 131, 131),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ))
                                 ],
-                              ))
-                            ],
-                          ),
-                        ),
-                      )),
-
-                  // Exercise 2 card
-                  Container(height: 10),
-                  Padding(
-                      padding: const EdgeInsets.only(
-                          left: 20.0, right: 20.0, top: 0),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ExerciseTimerView()));
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          backgroundColor: Colors.white, // Color of the card
-                          elevation: 2, // Card elevation
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Align(
-                                alignment: Alignment.center,
-                                child: Image.asset(
-                                    'assets/images/exercises/dbreath.jpg',
-                                    height: 100),
                               ),
-                              Container(width: 5),
-                              Expanded(
-                                  child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-
-                                // exercise card 1
-                                children: <Widget>[
-                                  Container(height: 5),
-                                  const Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 15, bottom: 5),
-                                    // exercise title/name
-                                    child: Text(
-                                      "Diaphragmatic Breath",
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Inter',
-                                        //   color #504E4E
-                                        color: const Color.fromARGB(
-                                            255, 80, 78, 78),
-                                      ),
-                                    ),
-                                  ),
-
-                                  Container(height: 5),
-                                  // exercise description
-                                  const Padding(
-                                    // padding: EdgeInsets.all(20.0),
-                                    padding: EdgeInsets.only(left: 15),
-                                    child: Text(
-                                      "45 seconds",
-                                      style: TextStyle(
-                                        fontSize: 17,
-                                        fontFamily: 'Inter',
-                                        color: const Color.fromARGB(
-                                            255, 131, 131, 131),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ))
-                            ],
-                          ),
-                        ),
-                      )),
-
-                  // Exercise 3 card
-                  Container(height: 10),
-                  Padding(
-                      padding: EdgeInsets.only(
-                        left: 20.0,
-                        right: 20.0,
-                      ),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ExerciseTimerView()));
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          backgroundColor: Colors.white, // Color of the card
-                          elevation: 2, // Card elevation
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              // Image.asset(
-                              //   'assets/images/exercises/exercise1.jpg',
-                              //   height: 10,
-                              // ),
-                              Align(
-                                alignment: Alignment.center,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  child: Image.asset(
-                                    'assets/images/exercises/squat.jpg',
-                                    height: 100,
-                                    width: 100,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-
-                              Container(width: 5),
-                              Expanded(
-                                  child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-
-                                // exercise card 1
-                                children: <Widget>[
-                                  Container(height: 5),
-                                  const Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 15, bottom: 5),
-                                    // exercise title/name
-                                    child: Text(
-                                      "Squat",
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Inter',
-                                        //   color #504E4E
-                                        color: const Color.fromARGB(
-                                            255, 80, 78, 78),
-                                      ),
-                                    ),
-                                  ),
-
-                                  Container(height: 5),
-                                  // exercise description
-                                  const Padding(
-                                    // padding: EdgeInsets.all(20.0),
-                                    padding: EdgeInsets.only(left: 15),
-                                    child: Text(
-                                      "45 seconds",
-                                      style: TextStyle(
-                                        fontSize: 17,
-                                        fontFamily: 'Inter',
-                                        color: const Color.fromARGB(
-                                            255, 131, 131, 131),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ))
-                            ],
-                          ),
-                        ),
-                      )),
-                ],
+                            ),
+                          )),
+                      // you can add widget here as well
+                    ],
+                  ],
+                ),
               ),
 
               // Second Trimester
-              Column(
-                children: [
-                  // main title - month
-                  const Align(
-                    alignment: Alignment.topLeft,
-                    child: Padding(
-                      // padding: EdgeInsets.all(20.0),
-                      padding: EdgeInsets.only(
-                          left: 32.0, right: 32.0, top: 30.0, bottom: 10),
-                      child: Text(
-                        'Nov - Dec - Jan',
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Inter',
-                          color: const Color.fromARGB(255, 88, 119, 161),
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  // Exercise 1 card
-                  Container(height: 10),
-                  Padding(
-                      padding: EdgeInsets.only(
-                        left: 20.0,
-                        right: 20.0,
-                      ),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    // main title - month
+                    // const Align(
+                    //   alignment: Alignment.topLeft,
+                    //   child: Padding(
+                    //     // padding: EdgeInsets.all(20.0),
+                    //     padding: EdgeInsets.only(
+                    //         left: 32.0, right: 32.0, top: 30.0, bottom: 10),
+                    //     child: Text(
+                    //       'Aug - Sep - Oct',
+                    //       style: TextStyle(
+                    //         fontSize: 25,
+                    //         fontWeight: FontWeight.bold,
+                    //         fontFamily: 'Inter',
+                    //         color: Color.fromARGB(255, 88, 119, 161),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    // Exercise 1 card
+                    for(int x = 1; x<=5;x++)...[
+                      Container(height: 10),
+                      Padding(
+                          padding: const EdgeInsets.only(
+                            left: 20.0,
+                            right: 20.0,
+                          ),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
                                       const ExerciseTimerView()));
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          backgroundColor: Colors.white, // Color of the card
-                          elevation: 2, // Card elevation
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Align(
-                                alignment: Alignment.center,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  child: Image.asset(
-                                    'assets/images/exercises/kneepushup.jpg',
-                                    height: 100,
-                                    width: 100,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
+                            },
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
                               ),
-                              Container(width: 5),
-                              Expanded(
-                                  child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-
-                                // exercise card 1
+                              backgroundColor: Colors.white, // Color of the card
+                              elevation: 2, // Card elevation
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
-                                  Container(height: 5),
-                                  const Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 15, bottom: 5),
-                                    // exercise title/name
-                                    child: Text(
-                                      "Knee Push-Ups",
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Inter',
-                                        //   color #504E4E
-                                        color: const Color.fromARGB(
-                                            255, 80, 78, 78),
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      child: Image.asset(
+                                        'assets/images/exercises/secondm$x.png',
+                                        height: 100,
+                                        width: 100,
+                                        fit: BoxFit.cover,
                                       ),
                                     ),
                                   ),
+                                  Container(width: 5),
+                                  Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
 
-                                  Container(height: 5),
-                                  // exercise description
-                                  const Padding(
-                                    // padding: EdgeInsets.all(20.0),
-                                    padding: EdgeInsets.only(left: 15),
-                                    child: Text(
-                                      "45 seconds",
-                                      style: TextStyle(
-                                        fontSize: 17,
-                                        fontFamily: 'Inter',
-                                        color: const Color.fromARGB(
-                                            255, 131, 131, 131),
-                                      ),
-                                    ),
-                                  ),
+                                        // exercise card 1
+                                        children: <Widget>[
+                                          Container(height: 5),
+                                          const Padding(
+                                            padding:
+                                            EdgeInsets.only(left: 15, bottom: 5),
+                                            // exercise title/name
+                                            child: Text(
+                                              "Knee Push-Ups",
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily: 'Inter',
+                                                //   color #504E4E
+                                                color: Color.fromARGB(
+                                                    255, 80, 78, 78),
+                                              ),
+                                            ),
+                                          ),
+
+                                          Container(height: 5),
+                                          // exercise description
+                                          const Padding(
+                                            // padding: EdgeInsets.all(20.0),
+                                            padding: EdgeInsets.only(left: 15),
+                                            child: Text(
+                                              "45 seconds",
+                                              style: TextStyle(
+                                                fontSize: 17,
+                                                fontFamily: 'Inter',
+                                                color: Color.fromARGB(
+                                                    255, 131, 131, 131),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ))
                                 ],
-                              ))
-                            ],
-                          ),
-                        ),
-                      )),
-
-                  // Exercise 2 card
-                  Container(height: 10),
-                  Padding(
-                      padding: const EdgeInsets.only(
-                          left: 20.0, right: 20.0, top: 0),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ExerciseTimerView()));
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          backgroundColor: Colors.white, // Color of the card
-                          elevation: 2, // Card elevation
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Align(
-                                alignment: Alignment.center,
-                                child: Image.asset(
-                                    'assets/images/exercises/dbreath.jpg',
-                                    height: 100),
                               ),
-                              Container(width: 5),
-                              Expanded(
-                                  child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-
-                                // exercise card 1
-                                children: <Widget>[
-                                  Container(height: 5),
-                                  const Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 15, bottom: 5),
-                                    // exercise title/name
-                                    child: Text(
-                                      "Diaphragmatic Breath",
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Inter',
-                                        //   color #504E4E
-                                        color: const Color.fromARGB(
-                                            255, 80, 78, 78),
-                                      ),
-                                    ),
-                                  ),
-
-                                  Container(height: 5),
-                                  // exercise description
-                                  const Padding(
-                                    // padding: EdgeInsets.all(20.0),
-                                    padding: EdgeInsets.only(left: 15),
-                                    child: Text(
-                                      "45 seconds",
-                                      style: TextStyle(
-                                        fontSize: 17,
-                                        fontFamily: 'Inter',
-                                        color: const Color.fromARGB(
-                                            255, 131, 131, 131),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ))
-                            ],
-                          ),
-                        ),
-                      )),
-
-                  // Exercise 3 card
-                  Container(height: 10),
-                  Padding(
-                      padding: EdgeInsets.only(
-                        left: 20.0,
-                        right: 20.0,
-                      ),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ExerciseTimerView()));
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          backgroundColor: Colors.white, // Color of the card
-                          elevation: 2, // Card elevation
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              // Image.asset(
-                              //   'assets/images/exercises/exercise1.jpg',
-                              //   height: 10,
-                              // ),
-                              Align(
-                                alignment: Alignment.center,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  child: Image.asset(
-                                    'assets/images/exercises/squat.jpg',
-                                    height: 100,
-                                    width: 100,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-
-                              Container(width: 5),
-                              Expanded(
-                                  child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-
-                                // exercise card 1
-                                children: <Widget>[
-                                  Container(height: 5),
-                                  const Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 15, bottom: 5),
-                                    // exercise title/name
-                                    child: Text(
-                                      "Squat",
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Inter',
-                                        //   color #504E4E
-                                        color: const Color.fromARGB(
-                                            255, 80, 78, 78),
-                                      ),
-                                    ),
-                                  ),
-
-                                  Container(height: 5),
-                                  // exercise description
-                                  const Padding(
-                                    // padding: EdgeInsets.all(20.0),
-                                    padding: EdgeInsets.only(left: 15),
-                                    child: Text(
-                                      "45 seconds",
-                                      style: TextStyle(
-                                        fontSize: 17,
-                                        fontFamily: 'Inter',
-                                        color: const Color.fromARGB(
-                                            255, 131, 131, 131),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ))
-                            ],
-                          ),
-                        ),
-                      )),
-                ],
+                            ),
+                          )),
+                      // you can add widget here as well
+                    ],
+                  ],
+                ),
               ),
 
               // Third Trimester
-              Column(
-                children: [
-                  // main title - month
-                  const Align(
-                    alignment: Alignment.topLeft,
-                    child: Padding(
-                      // padding: EdgeInsets.all(20.0),
-                      padding: EdgeInsets.only(
-                          left: 32.0, right: 32.0, top: 30.0, bottom: 10),
-                      child: Text(
-                        'Feb - Mar - Apr',
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Inter',
-                          color: const Color.fromARGB(255, 88, 119, 161),
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  // Exercise 1 card
-                  Container(height: 10),
-                  Padding(
-                      padding: EdgeInsets.only(
-                        left: 20.0,
-                        right: 20.0,
-                      ),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    // main title - month
+                    // const Align(
+                    //   alignment: Alignment.topLeft,
+                    //   child: Padding(
+                    //     // padding: EdgeInsets.all(20.0),
+                    //     padding: EdgeInsets.only(
+                    //         left: 32.0, right: 32.0, top: 30.0, bottom: 10),
+                    //     child: Text(
+                    //       'Aug - Sep - Oct',
+                    //       style: TextStyle(
+                    //         fontSize: 25,
+                    //         fontWeight: FontWeight.bold,
+                    //         fontFamily: 'Inter',
+                    //         color: Color.fromARGB(255, 88, 119, 161),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    // Exercise 1 card
+                    for(int x = 1; x<=5;x++)...[
+                      Container(height: 10),
+                      Padding(
+                          padding: const EdgeInsets.only(
+                            left: 20.0,
+                            right: 20.0,
+                          ),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
                                       const ExerciseTimerView()));
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          backgroundColor: Colors.white, // Color of the card
-                          elevation: 2, // Card elevation
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Align(
-                                alignment: Alignment.center,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  child: Image.asset(
-                                    'assets/images/exercises/kneepushup.jpg',
-                                    height: 100,
-                                    width: 100,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
+                            },
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
                               ),
-                              Container(width: 5),
-                              Expanded(
-                                  child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-
-                                // exercise card 1
+                              backgroundColor: Colors.white, // Color of the card
+                              elevation: 2, // Card elevation
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
-                                  Container(height: 5),
-                                  const Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 15, bottom: 5),
-                                    // exercise title/name
-                                    child: Text(
-                                      "Knee Push-Ups",
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Inter',
-                                        //   color #504E4E
-                                        color: const Color.fromARGB(
-                                            255, 80, 78, 78),
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      child: Image.asset(
+                                        'assets/images/exercises/thirdm$x.png',
+                                        height: 100,
+                                        width: 100,
+                                        fit: BoxFit.cover,
                                       ),
                                     ),
                                   ),
+                                  Container(width: 5),
+                                  Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
 
-                                  Container(height: 5),
-                                  // exercise description
-                                  const Padding(
-                                    // padding: EdgeInsets.all(20.0),
-                                    padding: EdgeInsets.only(left: 15),
-                                    child: Text(
-                                      "45 seconds",
-                                      style: TextStyle(
-                                        fontSize: 17,
-                                        fontFamily: 'Inter',
-                                        color: const Color.fromARGB(
-                                            255, 131, 131, 131),
-                                      ),
-                                    ),
-                                  ),
+                                        // exercise card 1
+                                        children: <Widget>[
+                                          Container(height: 5),
+                                          const Padding(
+                                            padding:
+                                            EdgeInsets.only(left: 15, bottom: 5),
+                                            // exercise title/name
+                                            child: Text(
+                                              "Knee Push-Ups",
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily: 'Inter',
+                                                //   color #504E4E
+                                                color: Color.fromARGB(
+                                                    255, 80, 78, 78),
+                                              ),
+                                            ),
+                                          ),
+
+                                          Container(height: 5),
+                                          // exercise description
+                                          const Padding(
+                                            // padding: EdgeInsets.all(20.0),
+                                            padding: EdgeInsets.only(left: 15),
+                                            child: Text(
+                                              "45 seconds",
+                                              style: TextStyle(
+                                                fontSize: 17,
+                                                fontFamily: 'Inter',
+                                                color: Color.fromARGB(
+                                                    255, 131, 131, 131),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ))
                                 ],
-                              ))
-                            ],
-                          ),
-                        ),
-                      )),
-
-                  // Exercise 2 card
-                  Container(height: 10),
-                  Padding(
-                      padding: const EdgeInsets.only(
-                          left: 20.0, right: 20.0, top: 0),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ExerciseTimerView()));
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          backgroundColor: Colors.white, // Color of the card
-                          elevation: 2, // Card elevation
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Align(
-                                alignment: Alignment.center,
-                                child: Image.asset(
-                                    'assets/images/exercises/dbreath.jpg',
-                                    height: 100),
                               ),
-                              Container(width: 5),
-                              Expanded(
-                                  child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-
-                                // exercise card 1
-                                children: <Widget>[
-                                  Container(height: 5),
-                                  const Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 15, bottom: 5),
-                                    // exercise title/name
-                                    child: Text(
-                                      "Diaphragmatic Breath",
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Inter',
-                                        //   color #504E4E
-                                        color: const Color.fromARGB(
-                                            255, 80, 78, 78),
-                                      ),
-                                    ),
-                                  ),
-
-                                  Container(height: 5),
-                                  // exercise description
-                                  const Padding(
-                                    // padding: EdgeInsets.all(20.0),
-                                    padding: EdgeInsets.only(left: 15),
-                                    child: Text(
-                                      "45 seconds",
-                                      style: TextStyle(
-                                        fontSize: 17,
-                                        fontFamily: 'Inter',
-                                        color: const Color.fromARGB(
-                                            255, 131, 131, 131),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ))
-                            ],
-                          ),
-                        ),
-                      )),
-
-                  // Exercise 3 card
-                  Container(height: 10),
-                  Padding(
-                      padding: EdgeInsets.only(
-                        left: 20.0,
-                        right: 20.0,
-                      ),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ExerciseTimerView()));
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          backgroundColor: Colors.white, // Color of the card
-                          elevation: 2, // Card elevation
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              // Image.asset(
-                              //   'assets/images/exercises/exercise1.jpg',
-                              //   height: 10,
-                              // ),
-                              Align(
-                                alignment: Alignment.center,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  child: Image.asset(
-                                    'assets/images/exercises/squat.jpg',
-                                    height: 100,
-                                    width: 100,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-
-                              Container(width: 5),
-                              Expanded(
-                                  child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-
-                                // exercise card 1
-                                children: <Widget>[
-                                  Container(height: 5),
-                                  const Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 15, bottom: 5),
-                                    // exercise title/name
-                                    child: Text(
-                                      "Squat",
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Inter',
-                                        //   color #504E4E
-                                        color: const Color.fromARGB(
-                                            255, 80, 78, 78),
-                                      ),
-                                    ),
-                                  ),
-
-                                  Container(height: 5),
-                                  // exercise description
-                                  const Padding(
-                                    // padding: EdgeInsets.all(20.0),
-                                    padding: EdgeInsets.only(left: 15),
-                                    child: Text(
-                                      "45 seconds",
-                                      style: TextStyle(
-                                        fontSize: 17,
-                                        fontFamily: 'Inter',
-                                        color: const Color.fromARGB(
-                                            255, 131, 131, 131),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ))
-                            ],
-                          ),
-                        ),
-                      )),
-                ],
+                            ),
+                          )),
+                      // you can add widget here as well
+                    ],
+                  ],
+                ),
               ),
             ],
           ),
