@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:thurula/views/child_care_menu_view.dart';
-import 'package:thurula/views/pregnancy_menu_view.dart';
+import 'package:thurula/views/childcare/child_home_view.dart';
+import 'package:thurula/views/pregnancy/pregnancy_home_view.dart';
+import 'package:thurula/views/login_view.dart';
 
 class MenuView extends StatelessWidget {
   const MenuView({super.key});
@@ -12,39 +13,52 @@ class MenuView extends StatelessWidget {
         length: 2,
         child: Scaffold(
           backgroundColor: const Color.fromARGB(255, 227, 227, 227),
+          // appbar
           appBar: AppBar(
-            bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(48.0), // height of  TabBar
-              child: Container(
-                color: const Color.fromARGB(255, 220, 104, 145),
-                child: const TabBar(
-                  tabs: [
-                    Tab(
-                      text: "Pregnancy",
-                    ),
-                    Tab(
-                      text: "Child Care",
-                    ),
-                  ],
+            backgroundColor: const Color.fromARGB(255, 220, 104, 145),
+            title: TabBar(
+              tabs: const [
+                Tab(
+                  text: "Pregnancy",
                 ),
+                Tab(
+                  text: "Childcare",
+                ),
+              ],
+              // text color of indicator pink
+              labelColor: const Color.fromARGB(255, 220, 104, 145),
+              // text color of non-selected tabs
+              unselectedLabelColor: Colors.white,
+              indicator: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: const Color.fromARGB(255, 250, 238, 244),
               ),
+              padding: const EdgeInsets.only(
+                  left: 10.0, right: 10.0, bottom: 5.0, top: 5.0),
             ),
-            title: const Text('Explore Thurula'),
-            actions: <Widget>[
-              Padding(
-                  padding: const EdgeInsets.only(right: 10.0),
-                  child: IconButton(
-                      icon: const Icon(Icons.menu),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const MenuView()));
-                      })),
+          //   logout button
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.logout),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LoginView(),
+                    ),
+                  );
+                },
+              ),
             ],
           ),
-          body: const TabBarView(
-            children: [PregnancyMenuView(), ChildCareMenuView()],
+          body: const Column(
+            children: [
+              Expanded(
+                child: TabBarView(
+                  children: [PregnancyHomeView(), ChildHomeView()],
+                ),
+              ),
+            ],
           ),
         ),
       ),

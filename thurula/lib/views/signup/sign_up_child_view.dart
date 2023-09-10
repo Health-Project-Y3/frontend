@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:thurula/views/menu_view.dart';
 
-class SignUpPregnancyView extends StatelessWidget {
-  const SignUpPregnancyView({Key? key}) : super(key: key);
+class SignUpChildView extends StatelessWidget {
+  const SignUpChildView({Key? key}) : super(key: key);
 
   get selectedDate => null;
 
@@ -29,7 +29,7 @@ class SignUpPregnancyView extends StatelessWidget {
                 'Final Step in creating your account!',
                 style: TextStyle(
                   color: Color.fromARGB(255, 255, 255, 255),
-                  fontFamily: 'Montserrat',
+                  fontFamily: 'Inter',
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
@@ -42,7 +42,7 @@ class SignUpPregnancyView extends StatelessWidget {
                 child: TextField(
                   style: const TextStyle(color: Colors.grey),
                   decoration: InputDecoration(
-                    hintText: "Mother's Name",
+                    hintText: "Your Baby's Name",
                     hintStyle: const TextStyle(color: Colors.grey),
                     filled: true,
                     fillColor: Colors.white,
@@ -61,6 +61,60 @@ class SignUpPregnancyView extends StatelessWidget {
                     contentPadding: const EdgeInsets.all(10.0),
                   ),
                 ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Select Baby\'s Sex',
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 255, 255, 255),
+                      fontFamily: 'Inter',
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Radio<String>(
+                        value: 'male',
+                        groupValue: null, // Add your selected value here
+                        onChanged: (value) {
+                          // Handle radio button selection
+                        },
+                      ),
+                      const Text(
+                        'Male',
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 255, 255, 255),
+                          fontFamily: 'Inter',
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(width: 20),
+                      Radio<String>(
+                        value: 'female',
+                        groupValue: null, // Add your selected value here
+                        onChanged: (value) {
+                          // Handle radio button selection
+                        },
+                      ),
+                      const Text(
+                        'Female',
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 255, 255, 255),
+                          fontFamily: 'Inter',
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
             Padding(
@@ -88,10 +142,10 @@ class SignUpPregnancyView extends StatelessWidget {
                         selectedDate != null
                             ? 'Birthdate: ${selectedDate!.toLocal()}'
                                 .split(' ')[0]
-                            : 'Expected Due Date',
+                            : 'Your Baby\'s Birthdate',
                         style: const TextStyle(
                           color: Colors.grey,
-                          fontFamily: 'Montserrat',
+                          fontFamily: 'Inter',
                           fontSize: 16,
                         ),
                       ),

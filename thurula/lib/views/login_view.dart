@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:thurula/views/child_home_view.dart';
-import 'package:thurula/views/pregnancy_home_view.dart';
+import 'package:provider/provider.dart';
+import 'package:thurula/providers/user_provider.dart';
+import 'package:thurula/services/auth/user_service.dart';
+import 'package:thurula/services/local_service.dart';
+import 'package:thurula/views/welcome_view.dart';
+import 'package:thurula/views/signup/sign_up_view.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -43,8 +47,8 @@ class _LoginViewState extends State<LoginView> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
-                          left: 30,
-                          top: 50,
+                          left: 40,
+                          top: 0,
                           right: 30,
                         ),
                         child: TextFormField(
@@ -60,11 +64,11 @@ class _LoginViewState extends State<LoginView> {
                                   width: 2,
                                   color: Color.fromRGBO(220, 104, 145, 1)),
                               borderRadius:
-                              BorderRadius.all(Radius.circular(15.0)),
+                                  BorderRadius.all(Radius.circular(15.0)),
                             ),
                             border: OutlineInputBorder(
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(15.0)),
+                                    BorderRadius.all(Radius.circular(15.0)),
                                 borderSide: BorderSide(
                                   width: 2,
                                   color: Color.fromARGB(255, 220, 104, 145),
@@ -80,8 +84,8 @@ class _LoginViewState extends State<LoginView> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
-                          left: 30,
-                          top: 20,
+                          left: 40,
+                          top: 10,
                           right: 30,
                         ),
                         child: TextFormField(
@@ -99,11 +103,11 @@ class _LoginViewState extends State<LoginView> {
                                 color: Color.fromARGB(255, 220, 104, 145),
                               ),
                               borderRadius:
-                              BorderRadius.all(Radius.circular(15.0)),
+                                  BorderRadius.all(Radius.circular(15.0)),
                             ),
                             border: OutlineInputBorder(
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(15.0)),
+                                    BorderRadius.all(Radius.circular(15.0)),
                                 borderSide: BorderSide(
                                   width: 2,
                                   color: Color.fromARGB(255, 220, 104, 145),
@@ -120,37 +124,36 @@ class _LoginViewState extends State<LoginView> {
                       Padding(
                         padding: const EdgeInsets.only(
                           left: 30,
-                          top: 30,
+                          top: 20,
                           right: 30,
-                          bottom: 20, // Add bottom padding
+                          bottom: 0, // Add bottom padding
                         ),
                         child: ElevatedButton(
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              final username = usernameController.text;
-                              final password = passwordController.text;
-
-                              if (username == "Ama" && password == "Ama@123") {
+                              final context = _formKey.currentContext;
+                              // home page
+                              if (await UserService.login(
+                                  usernameController.text,
+                                  passwordController.text)) {
+                                final userProvider = Provider.of<UserProvider>(
+                                    context!,
+                                    listen: false);
+                                final user = await UserService.getUser(
+                                    await LocalService.getCurrentUserId());
+                                if (user != null) {
+                                  userProvider.setUser(user);
+                                }
                                 Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                    const PregnancyHomeView(),
-                                  ),
-                                );
-                              } else if (username == "Nadeeka" &&
-                                  password == "Nadeeka@123") {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const ChildHomeView(),
-                                  ),
-                                );
+                                    context!,
+                                    MaterialPageRoute(
+                                        builder: (context) => WelcomeHomeView(
+                                            username:
+                                                usernameController.text)));
                               } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text('Invalid Credentials')),
-                                );
+                                ScaffoldMessenger.of(context!).showSnackBar(
+                                    const SnackBar(
+                                        content: Text('Invalid Credentials')));
                               }
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -159,9 +162,11 @@ class _LoginViewState extends State<LoginView> {
                               );
                             }
                           },
+
+                          // login button
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color.fromARGB(
-                                255, 220, 104, 145),
+                            backgroundColor:
+                                const Color.fromARGB(255, 220, 104, 145),
                             padding: const EdgeInsets.symmetric(
                                 vertical: 12, horizontal: 50),
                             shape: RoundedRectangleBorder(
@@ -174,6 +179,23 @@ class _LoginViewState extends State<LoginView> {
                               color: Colors.white,
                               fontSize: 20,
                             ),
+                          ),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SignUpView(),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          'Don\'t have an account? Register.',
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 220, 104, 145),
+                            fontSize: 14,
                           ),
                         ),
                       ),

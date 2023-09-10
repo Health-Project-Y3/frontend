@@ -1,68 +1,98 @@
 import 'package:flutter/material.dart';
-import 'package:thurula/views/sign_up_view.dart';
-import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-// import 'package:provider/provider.dart';
+import 'package:thurula/views/menu_view.dart';
 
-class WelcomeView extends StatelessWidget {
-  const WelcomeView({super.key, required this.username});
+
+class WelcomeHomeView extends StatelessWidget {
+  const WelcomeHomeView({super.key, required this.username});
 
   final String username;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('Welcome Page'),
-        ),
-        body: Column(
-          children: <Widget>[
-            ClipPath(
-              clipper: WaveClipperTwo(flip: true),
-              child: Container(
-                height: 400,
-                color: const Color.fromARGB(255, 220, 104, 145),
-                child: const Center(
+    return MaterialApp(
+      home: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+          // appbar
+          // appBar: AppBar(
+          //   backgroundColor: const Color.fromARGB(255, 220, 104, 145),
+          //   title: const Text(
+          //     'Welcome',
+          //     style: TextStyle(
+          //       fontSize: 20,
+          //       fontWeight: FontWeight.bold,
+          //     ),
+          //   ),
+          //   ),
+          body: Column(
+            children: [
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(0, 100, 0, 0),
                   child: Image(
-                      image: AssetImage('assets/images/logo3.png'),
-                      height: 150),
+                    image: AssetImage('assets/images/landing.jpg'),
+                    width: 300,
+                    height: 400,
+                  ),
                 ),
-              ),
-            ),
-            const Center(
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(40, 20, 40, 0),
-                child: Text(
-                    "We just need a few quick answers from you to personalize your experience",
+              const Center(
+                // add image
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(40, 20, 40, 0),
+                  // add 2 text fields
+                  child: Text(
+                    "New Life, Tiny Steps",
                     textAlign: TextAlign.center,
-                    style:
-                        TextStyle(color: Color.fromARGB(255, 220, 104, 145))),
-              ),
-            ),
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
-                child: ElevatedButton(
-                  style: TextButton.styleFrom(
-                    padding: const EdgeInsets.fromLTRB(100, 10, 100, 10),
-                    foregroundColor: Colors.white,
-                    backgroundColor: const Color.fromARGB(255, 88, 119, 161),
-                    textStyle:
-                        const TextStyle(fontSize: 15, color: Colors.white),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(80), // <-- Radius
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 220, 104, 145),
                     ),
                   ),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const SignUpView()));
-                  },
-                  child: const Text("Let's get started"),
                 ),
               ),
-            ),
-          ],
-        ));
+              const Center(
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(40, 10, 40, 30),
+                  child: Text(
+                      "We just need a few quick answers from you to personalize your experience",
+                      textAlign: TextAlign.center,
+                      style:
+                      TextStyle(color: Color.fromARGB(255, 135, 135, 135))),
+                ),
+              ),
+              Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const MenuView(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(
+                          255, 88, 119, 161), // Set the button color
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 12, horizontal: 120),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                    ),
+                    child: const Text(
+                      'Let\'s get started!',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                    ),
+                  )),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

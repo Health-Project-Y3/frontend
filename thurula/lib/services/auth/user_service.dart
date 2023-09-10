@@ -3,14 +3,13 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'package:sqflite/sqflite.dart';
 import 'package:thurula/constants/routes.dart';
+import 'package:thurula/services/local_service.dart';
 import '../../database/local_database.dart';
 import '../../models/user_model.dart';
-import '../../utils/shared_preferences.dart';
-
 
 class UserService {
 
-  Future<bool> login(username, password) async {
+  static Future<bool> login(username, password) async {
     // create a map of the data to be sent
     Map<String, dynamic> data = {
       'username': username,
@@ -33,7 +32,9 @@ class UserService {
         // login successful, do something with the response data
         print(response.body);
         // save the token in shared preferences
-        SharedPref.setString('JWT', response.body);
+        LocalService.setCurrentUserToken(response.body);
+        LocalService.setCurrentUserId("64aa7bcddd01ede8be01ca6c");
+        LocalService.setCurrentBabyId("64cd599fc65bbef9519bc04c");
         return true;
       } else {
         // login failed, handle the error
@@ -47,7 +48,28 @@ class UserService {
     }
   }
 
-  static Future<void> insertUser(User user) async {
+  static Future<User?> getUser(String id) async{
+    try {
+      var response = await http.get(
+        Uri.parse(getRoute("user/$id")),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      // check the status code of the response
+      if (response.statusCode == 200) {
+        return User.fromJson(jsonDecode(response.body));
+      } else {
+        throw Exception('Failed to find user');
+      }
+    } catch (e) {
+      print(e);
+    }
+    return null;
+  }
+
+
+  //Local Database
+  static Future<void> localInsertUser(User user) async {
     final db = await DatabaseHelper.instance.database;
     await db.insert(
       'users',
@@ -56,7 +78,7 @@ class UserService {
     );
   }
 
-  static Future<List<User>> users() async {
+  static Future<List<User>> localUsers() async {
     final db = await DatabaseHelper.instance.database;
     final List<Map<String, dynamic>> maps = await db.query('users');
     return List.generate(maps.length, (i) {
@@ -67,7 +89,7 @@ class UserService {
     });
   }
 
-  static Future<void> updateUser(User user) async {
+  static Future<void> localUpdateUser(User user) async {
     final db = await DatabaseHelper.instance.database;
     await db.update(
       'users',
@@ -77,7 +99,7 @@ class UserService {
     );
   }
 
-  static Future<void> deleteUser(String username) async {
+  static Future<void> localDeleteUser(String username) async {
     final db = await DatabaseHelper.instance.database;
     await db.delete(
       'users',
@@ -85,4 +107,5 @@ class UserService {
       whereArgs: [username],
     );
   }
+
 }

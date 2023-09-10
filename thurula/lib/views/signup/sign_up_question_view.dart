@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:thurula/views/sign_up_child_view.dart';
-import 'package:thurula/views/sign_up_pregnancy_view.dart';
+import 'package:thurula/views/signup/sign_up_child_view.dart';
+import 'package:thurula/views/signup/sign_up_pregnancy_view.dart';
 
 class SignUpViewQuestion extends StatelessWidget {
   const SignUpViewQuestion({Key? key}) : super(key: key);
@@ -28,7 +28,7 @@ class SignUpViewQuestion extends StatelessWidget {
                 'Few more steps to go!',
                 style: TextStyle(
                   color: Color.fromARGB(255, 255, 255, 255),
-                  fontFamily: 'Montserrat',
+                  fontFamily: 'Inter',
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
@@ -40,7 +40,7 @@ class SignUpViewQuestion extends StatelessWidget {
                 'Has your baby been born yet?',
                 style: TextStyle(
                   color: Color.fromARGB(255, 255, 255, 255),
-                  fontFamily: 'Montserrat',
+                  fontFamily: 'Inter',
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
