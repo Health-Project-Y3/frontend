@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class NotificationService {
@@ -28,6 +31,7 @@ class NotificationService {
       required String title,
       required String body,
       var payload,
+      // var ColorProperty = const Color.fromARGB(255, 220, 104, 145),
       required FlutterLocalNotificationsPlugin fln}) async {
     AndroidNotificationDetails androidPlatformChannelSpecifics =
         const AndroidNotificationDetails(
@@ -37,7 +41,8 @@ class NotificationService {
       // sound: RawResourceAndroidNotificationSound('notification'),
       importance: Importance.max,
       priority: Priority.high,
-    
+      color: Color.fromARGB(255, 220, 104, 145),
+      icon: '@drawable/tickicon',
     );
     print("test");
     var not = NotificationDetails(android: androidPlatformChannelSpecifics);
