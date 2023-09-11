@@ -12,6 +12,7 @@ class SignUpView extends StatefulWidget {
 class _SignUpViewState extends State<SignUpView> {
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController usernameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
@@ -47,13 +48,13 @@ class _SignUpViewState extends State<SignUpView> {
                   child: Image(
                     image: AssetImage('assets/images/signup.png'),
                     width: 300,
-                    height: 200,
+                    height: 180,
                   ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(
-                  top: 350, // Adjust the top padding for text fields
+                  top: 300,
                   left: 16,
                   right: 16,
                 ),
@@ -80,6 +81,13 @@ class _SignUpViewState extends State<SignUpView> {
                             ),
                           ),
                         ],
+                      ),
+                      const SizedBox(height: 16),
+                      // TextField for Username with validation
+                      TextFieldWidget(
+                        controller: usernameController,
+                        hintText: 'Username',
+                        isPassword: false,
                       ),
                       const SizedBox(height: 16),
                       // TextField for Email with validation
@@ -215,6 +223,7 @@ class _SignUpViewState extends State<SignUpView> {
   bool isNextButtonEnabled() {
     bool fieldsNotEmpty = firstNameController.text.isNotEmpty &&
         lastNameController.text.isNotEmpty &&
+        usernameController.text.isNotEmpty &&
         emailController.text.isNotEmpty &&
         passwordController.text.isNotEmpty &&
         confirmPasswordController.text.isNotEmpty;

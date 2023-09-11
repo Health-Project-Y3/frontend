@@ -53,13 +53,17 @@ class SignUpViewQuestion extends StatelessWidget {
                       ),
                       child: const Row(
                         children: [
-                          Image(
-                            image: AssetImage('assets/images/pregnant.png'),
-                            width: 300,
-                            height: 200,
+                          Expanded(
+                            flex: 3,
+                            child: Image(
+                              image: AssetImage('assets/images/pregnant.png'),
+                              width: 300,
+                              height: 200,
+                            ),
                           ),
                           SizedBox(width: 8),
                           Expanded(
+                            flex: 7,
                             child: Text(
                               "I am currently pregnant.",
                               style: TextStyle(
@@ -93,13 +97,17 @@ class SignUpViewQuestion extends StatelessWidget {
                       ),
                       child: const Row(
                         children: [
-                          Image(
-                            image: AssetImage('assets/images/child.png'),
-                            width: 300,
-                            height: 200,
+                          Expanded(
+                            flex: 3,
+                            child: Image(
+                              image: AssetImage('assets/images/child.png'),
+                              width: 300,
+                              height: 200,
+                            ),
                           ),
                           SizedBox(width: 8),
                           Expanded(
+                            flex: 7,
                             child: Text(
                               "I have a newborn baby.",
                               style: TextStyle(
