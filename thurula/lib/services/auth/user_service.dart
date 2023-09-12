@@ -6,6 +6,15 @@ import 'package:thurula/constants/routes.dart';
 import 'package:thurula/services/local_service.dart';
 import '../../database/local_database.dart';
 import '../../models/user_model.dart';
+class UsernameTakenException implements Exception {
+  final String? message;
+  UsernameTakenException({this.message = ""});
+
+  @override
+  String toString() {
+    return 'Sorry, this username is not available';
+  }
+}
 
 class UserService {
   static Future<bool> login(username, password) async {
@@ -65,6 +74,8 @@ class UserService {
     );
     if (response.statusCode == 200) {
       return User.fromJson((jsonDecode(response.body)));
+    } else if (response.statusCode == 409) {
+      throw UsernameTakenException();
     } else if (response.statusCode == 400) {
       throw (Exception(jsonDecode(response.body)));
     } else {
