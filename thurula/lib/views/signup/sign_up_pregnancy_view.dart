@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:thurula/services/auth/user_service.dart';
 import 'package:thurula/views/menu_view.dart';
 import 'package:thurula/views/signup/sign_up_question_view.dart';
+
+import '../../providers/user_provider.dart';
 
 class SignUpPregnancyView extends StatefulWidget {
   const SignUpPregnancyView({Key? key}) : super(key: key);
@@ -82,7 +86,7 @@ class _SignUpPregnancyViewState extends State<SignUpPregnancyView> {
                       context: context,
                       initialDate: DateTime.now(),
                       firstDate: DateTime(1900),
-                      lastDate: DateTime.now(),
+                      lastDate: DateTime(DateTime.now().year, DateTime.now().month + 11, DateTime.now().day),
                     ).then((value) {
                       if (value != null) {
                         setState(() {
@@ -264,6 +268,13 @@ class _SignUpPregnancyViewState extends State<SignUpPregnancyView> {
               child: ElevatedButton(
                 onPressed: isNextButtonEnabled()
                     ? () {
+                  UserService.getUser(context.read<UserProvider>().user!.id!).then(
+                    (u)=>{
+                      u?.dueDate = selectedDueDate,
+                      u?.conceptionDate = DateTime(selectedDueDate!.year, selectedDueDate!.month - 10, selectedDueDate!.day),
+                      UserService.updateUser(u!.id!, u)
+                    }
+                  );
                         Navigator.push(
                           context,
                           MaterialPageRoute(
