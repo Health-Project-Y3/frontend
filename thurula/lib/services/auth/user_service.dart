@@ -8,7 +8,6 @@ import '../../database/local_database.dart';
 import '../../models/user_model.dart';
 
 class UserService {
-
   static Future<bool> login(username, password) async {
     // create a map of the data to be sent
     Map<String, dynamic> data = {
@@ -29,8 +28,8 @@ class UserService {
 
       // check the status code of the response
       if (response.statusCode == 200) {
-        // login successful, do something with the response data
-        print(response.body);
+        // login successful
+
         // save the token in shared preferences
         LocalService.setCurrentUserToken(response.body);
         LocalService.setCurrentUserId("64aa7bcddd01ede8be01ca6c");
@@ -48,7 +47,32 @@ class UserService {
     }
   }
 
-  static Future<User?> getUser(String id) async{
+  static Future<User?> register(fname, lname, email, password, username) async {
+    // create a map of the data to be sent
+    Map<String, dynamic> data = {
+      'username': username,
+      'password': password,
+      'firstName': fname,
+      'lastName': lname,
+      'email': email
+    };
+
+    String body = json.encode(data);
+    var response = await http.post(
+      Uri.parse(getRoute("Auth/register")),
+      headers: {'Content-Type': 'application/json'},
+      body: body,
+    );
+    if (response.statusCode == 200) {
+      return User.fromJson((jsonDecode(response.body)));
+    } else if (response.statusCode == 400) {
+      throw (Exception(jsonDecode(response.body)));
+    }else{
+      throw(Exception("Unable to create User"));
+    }
+  }
+
+  static Future<User?> getUser(String id) async {
     try {
       var response = await http.get(
         Uri.parse(getRoute("user/$id")),
@@ -66,7 +90,6 @@ class UserService {
     }
     return null;
   }
-
 
   //Local Database
   static Future<void> localInsertUser(User user) async {
@@ -107,5 +130,4 @@ class UserService {
       whereArgs: [username],
     );
   }
-
 }
