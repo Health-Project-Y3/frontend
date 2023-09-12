@@ -67,8 +67,8 @@ class UserService {
       return User.fromJson((jsonDecode(response.body)));
     } else if (response.statusCode == 400) {
       throw (Exception(jsonDecode(response.body)));
-    }else{
-      throw(Exception("Unable to create User"));
+    } else {
+      throw (Exception("Unable to create User"));
     }
   }
 
@@ -89,6 +89,21 @@ class UserService {
       print(e);
     }
     return null;
+  }
+
+  static Future<bool> patchUser(String id, String key, dynamic value) async {
+    var response = await http.patch(
+      Uri.parse(getRoute('User/$id')),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode([
+        {"op": "replace", "path": "/$key", "value": value}
+      ]),
+    );
+    if (response.statusCode == 204) {
+      return true;
+    } else {
+      throw Exception('Failed to patch feeding');
+    }
   }
 
   //Local Database
