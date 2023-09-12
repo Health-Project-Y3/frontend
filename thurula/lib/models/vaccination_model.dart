@@ -2,6 +2,7 @@ class Vaccination {
   String? id;
   String? name;
   String? description;
+  //days from birth should be days from conception when considering the mothers vaccines
   int? daysFromBirth;
 
   Vaccination({this.id, this.name, this.description, this.daysFromBirth});
