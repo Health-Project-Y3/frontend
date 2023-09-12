@@ -247,7 +247,7 @@ class _SignUpChildViewState extends State<SignUpChildView> {
                                 ownerIDs: [
                                   context.read<UserProvider>().user?.id ?? ''
                                 ],
-                                gender: isMaleSelected ? "Male" : "Female"))
+                                gender: isMaleSelected ? "male" : "female"))
                             .then((baby) => {
                                   UserService.addBaby(
                                       context.read<UserProvider>().user!.id!,

@@ -44,8 +44,6 @@ class UserService {
 
         // save the token in shared preferences
         LocalService.setCurrentUserToken(response.body);
-        LocalService.setCurrentUserId("64aa7bcddd01ede8be01ca6c");
-        LocalService.setCurrentBabyId("64cd599fc65bbef9519bc04c");
         return true;
       } else {
         // login failed, handle the error
@@ -66,7 +64,8 @@ class UserService {
       'password': password,
       'firstName': fname,
       'lastName': lname,
-      'email': email
+      'email': email,
+      'gender':"female",
     };
 
     String body = json.encode(data);
@@ -121,11 +120,15 @@ class UserService {
   }
 
   static Future<void> updateUser(String id, User user) async {
-    var response = await http.put(Uri.parse(getRoute("User/$id")));
+    var response = await http.put(
+      Uri.parse(getRoute('User/$id')),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(User.toJson(user)),
+    );
     if (response.statusCode == 204) {
       return;
     } else {
-      log(jsonDecode(response.body));
+      log(response.body);
       throw Exception("Failed to update user");
     }
   }
