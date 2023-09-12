@@ -84,24 +84,6 @@ class ExercisesView extends StatelessWidget {
               SingleChildScrollView(
                 child: Column(
                   children: [
-                    // main title - month
-                    // const Align(
-                    //   alignment: Alignment.topLeft,
-                    //   child: Padding(
-                    //     // padding: EdgeInsets.all(20.0),
-                    //     padding: EdgeInsets.only(
-                    //         left: 32.0, right: 32.0, top: 30.0, bottom: 10),
-                    //     child: Text(
-                    //       'Aug - Sep - Oct',
-                    //       style: TextStyle(
-                    //         fontSize: 25,
-                    //         fontWeight: FontWeight.bold,
-                    //         fontFamily: 'Inter',
-                    //         color: Color.fromARGB(255, 88, 119, 161),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
                     // Exercise 1 card
                     for(int x = 1; x<=5; x++)...[
                       Container(height: 10),
@@ -116,7 +98,7 @@ class ExercisesView extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                      const ExerciseTimerView()));
+                                      ExerciseTimerView(exercise: '1, $x')));
                             },
                             style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
@@ -167,21 +149,6 @@ class ExercisesView extends StatelessWidget {
                                             ),
                                           ),
 
-                                          // Container(height: 5),
-                                          // // exercise description
-                                          // const Padding(
-                                          //   // padding: EdgeInsets.all(20.0),
-                                          //   padding: EdgeInsets.only(left: 15),
-                                          //   child: Text(
-                                          //     "45 seconds",
-                                          //     style: TextStyle(
-                                          //       fontSize: 17,
-                                          //       fontFamily: 'Inter',
-                                          //       color: Color.fromARGB(
-                                          //           255, 131, 131, 131),
-                                          //     ),
-                                          //   ),
-                                          // ),
                                         ],
                                       ))
                                 ],
@@ -211,24 +178,6 @@ class ExercisesView extends StatelessWidget {
               SingleChildScrollView(
                 child: Column(
                   children: [
-                    // main title - month
-                    // const Align(
-                    //   alignment: Alignment.topLeft,
-                    //   child: Padding(
-                    //     // padding: EdgeInsets.all(20.0),
-                    //     padding: EdgeInsets.only(
-                    //         left: 32.0, right: 32.0, top: 30.0, bottom: 10),
-                    //     child: Text(
-                    //       'Aug - Sep - Oct',
-                    //       style: TextStyle(
-                    //         fontSize: 25,
-                    //         fontWeight: FontWeight.bold,
-                    //         fontFamily: 'Inter',
-                    //         color: Color.fromARGB(255, 88, 119, 161),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
                     // Exercise 1 card
                     for(int x = 1; x<=5;x++)...[
                       Container(height: 10),
@@ -243,7 +192,7 @@ class ExercisesView extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                      const ExerciseTimerView()));
+                                      ExerciseTimerView(exercise: '2, $x')));
                             },
                             style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
@@ -293,22 +242,6 @@ class ExercisesView extends StatelessWidget {
                                               ),
                                             ),
                                           ),
-
-                                          // Container(height: 5),
-                                          // // exercise description
-                                          // const Padding(
-                                          //   // padding: EdgeInsets.all(20.0),
-                                          //   padding: EdgeInsets.only(left: 15),
-                                          //   child: Text(
-                                          //     "45 seconds",
-                                          //     style: TextStyle(
-                                          //       fontSize: 17,
-                                          //       fontFamily: 'Inter',
-                                          //       color: Color.fromARGB(
-                                          //           255, 131, 131, 131),
-                                          //     ),
-                                          //   ),
-                                          // ),
                                         ],
                                       ))
                                 ],
@@ -337,24 +270,6 @@ class ExercisesView extends StatelessWidget {
               SingleChildScrollView(
                 child: Column(
                   children: [
-                    // main title - month
-                    // const Align(
-                    //   alignment: Alignment.topLeft,
-                    //   child: Padding(
-                    //     // padding: EdgeInsets.all(20.0),
-                    //     padding: EdgeInsets.only(
-                    //         left: 32.0, right: 32.0, top: 30.0, bottom: 10),
-                    //     child: Text(
-                    //       'Aug - Sep - Oct',
-                    //       style: TextStyle(
-                    //         fontSize: 25,
-                    //         fontWeight: FontWeight.bold,
-                    //         fontFamily: 'Inter',
-                    //         color: Color.fromARGB(255, 88, 119, 161),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
                     // Exercise 1 card
                     for(int x = 1; x<=5;x++)...[
                       Container(height: 10),
@@ -369,7 +284,7 @@ class ExercisesView extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                      const ExerciseTimerView()));
+                                      ExerciseTimerView(exercise: '3, $x')));
                             },
                             style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
@@ -465,4 +380,3 @@ class ExercisesView extends StatelessWidget {
   }
 }
 
-// it's important to consult with your obstetric provider who may recommend modifications to your exercise routine.
