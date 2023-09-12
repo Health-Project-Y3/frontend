@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'package:sqflite/sqflite.dart';
@@ -6,8 +7,10 @@ import 'package:thurula/constants/routes.dart';
 import 'package:thurula/services/local_service.dart';
 import '../../database/local_database.dart';
 import '../../models/user_model.dart';
+
 class UsernameTakenException implements Exception {
   final String? message;
+
   UsernameTakenException({this.message = ""});
 
   @override
@@ -113,7 +116,35 @@ class UserService {
     if (response.statusCode == 204) {
       return true;
     } else {
-      throw Exception('Failed to patch feeding');
+      throw Exception('Failed to patch user');
+    }
+  }
+
+  static Future<void> updateUser(String id, User user) async {
+    var response = await http.put(Uri.parse(getRoute("User/$id")));
+    if (response.statusCode == 204) {
+      return;
+    } else {
+      log(jsonDecode(response.body));
+      throw Exception("Failed to update user");
+    }
+  }
+
+  static Future<void> addBaby(String userId, String babyId) async {
+    try {
+      // Fetch the current user data
+      User? currentUser = await getUser(userId);
+
+      // Add the new baby ID to the user's list of baby IDs
+      if (currentUser?.babyIDs == null) {
+        currentUser?.babyIDs = [babyId];
+      } else {
+        currentUser?.babyIDs!.add(babyId);
+      }
+      // Update the user with the modified data
+      await updateUser(userId, currentUser!);
+    } catch (e) {
+      throw Exception("Failed to add baby: $e");
     }
   }
 

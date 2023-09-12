@@ -27,15 +27,20 @@ class Baby {
     );
   }
 
-  static Map<String,dynamic> toJson(Baby baby){
-    return{
-      'id': baby.id,
+  static Map<String, dynamic> toJson(Baby baby) {
+    final Map<String, dynamic> data = {
       'firstName': baby.fname,
       'lastName': baby.lname,
       'gender': baby.gender,
       'birthDate': baby.birthDate?.toIso8601String(),
       'owners': baby.ownerIDs,
     };
+
+    if (baby.id != null) {
+      data['id'] = baby.id;
+    }
+
+    return data;
   }
 
 

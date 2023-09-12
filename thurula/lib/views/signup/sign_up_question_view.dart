@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:thurula/services/auth/user_service.dart';
 import 'package:thurula/views/signup/sign_up_child_view.dart';
 import 'package:thurula/views/signup/sign_up_pregnancy_view.dart';
 import 'package:thurula/views/signup/sign_up_view.dart';
+
+import '../../providers/user_provider.dart';
 
 class SignUpViewQuestion extends StatelessWidget {
   const SignUpViewQuestion({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var user = context.read<UserProvider>().user!;
     return MaterialApp(
       home: Scaffold(
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
@@ -34,6 +39,7 @@ class SignUpViewQuestion extends StatelessWidget {
                   children: [
                     ElevatedButton(
                       onPressed: () {
+                        UserService.patchUser(user.id!,"pregnant" , true);
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -78,6 +84,7 @@ class SignUpViewQuestion extends StatelessWidget {
                     const SizedBox(height: 30),
                     ElevatedButton(
                       onPressed: () {
+                        UserService.patchUser(user.id!,"pregnant" , false);
                         Navigator.push(
                           context,
                           MaterialPageRoute(

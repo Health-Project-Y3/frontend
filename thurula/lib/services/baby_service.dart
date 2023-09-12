@@ -6,7 +6,6 @@ import 'package:thurula/constants/routes.dart';
 import '../models/baby_model.dart';
 
 class BabyService {
-
   static Future<Baby?> getBaby(String id) async {
     try {
       var response = await http.get(
@@ -43,25 +42,23 @@ class BabyService {
   }
 
   static Future<Baby> createBaby(Baby baby) async {
-
-    String body = json.encode(baby);
+    String body = json.encode(Baby.toJson(baby));
     var response = await http.post(
       Uri.parse(getRoute("Baby")),
       headers: {'Content-Type': 'application/json'},
       body: body,
     );
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       return Baby.fromJson((jsonDecode(response.body)));
-    }  else if (response.statusCode == 400) {
+    } else if (response.statusCode == 400) {
       throw (Exception(jsonDecode(response.body)));
     } else {
-      throw (Exception("Unable to create User"));
+      throw (Exception("Unable to create Baby"));
     }
   }
 
-  static Future<void> deleteBaby(String id)async{
-    var response =
-    await http.delete(Uri.parse(getRoute("baby/$id")));
+  static Future<void> deleteBaby(String id) async {
+    var response = await http.delete(Uri.parse(getRoute("baby/$id")));
     if (response.statusCode == 200) {
       return;
     } else {
@@ -70,4 +67,3 @@ class BabyService {
     }
   }
 }
-
