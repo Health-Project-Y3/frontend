@@ -2,13 +2,31 @@ import 'package:flutter/material.dart';
 import '../menu_view.dart';
 import 'package:thurula/views/pregnancy/pregnancy_exercise_timer_view.dart';
 
-
+// first trimester exercises
 List<String> exerciseNamesT1 = [
   "Diaphragmatic Breath with Pelvic Floor Activation",
   "P.sit to Stand",
   "Standing Abs",
   "Pelvis Articulation",
-  "Butt Press",
+  "Butt Press"
+];
+
+// second trimester exercises
+List<String> exerciseNamesT2 = [
+  "Step Back",
+  "Stagger Row",
+  "Rotating Stagger",
+  "Internal 45 with Side Stretch",
+  "Leg Lift"
+];
+
+// third trimester exercises
+List<String> exerciseNamesT3 = [
+  "Fire Hydrant",
+  "Kneeling Hip Flexor Stretch",
+  "Intercoastal Kneeling Stretch",
+  "Hamstring Press",
+  "Bridge"
 ];
 
 class ExercisesView extends StatelessWidget {
@@ -85,7 +103,7 @@ class ExercisesView extends StatelessWidget {
                     //   ),
                     // ),
                     // Exercise 1 card
-                    for(int x = 1; x<=5;x++)...[
+                    for(int x = 1; x<=5; x++)...[
                       Container(height: 10),
                       Padding(
                           padding: const EdgeInsets.only(
@@ -115,7 +133,7 @@ class ExercisesView extends StatelessWidget {
                                   Align(
                                     alignment: Alignment.center,
                                     child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(10.0),
+                                      borderRadius: BorderRadius.circular(5.0),
                                       child: Image.asset(
                                         'assets/images/exercises/firstm$x.png',
                                         height: 100,
@@ -132,13 +150,13 @@ class ExercisesView extends StatelessWidget {
                                         // exercise card
                                         children: <Widget>[
                                           Container(height: 5),
-                                          const Padding(
+                                          Padding(
                                             padding:
-                                            EdgeInsets.only(left: 15, bottom: 5),
+                                            const EdgeInsets.only(left: 15, bottom: 5),
                                             // exercise title/name
                                             child: Text(
-                                              "Exercise name",
-                                              style: TextStyle(
+                                              exerciseNamesT1[x-1],
+                                              style: const TextStyle(
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.bold,
                                                 fontFamily: 'Inter',
@@ -149,29 +167,42 @@ class ExercisesView extends StatelessWidget {
                                             ),
                                           ),
 
-                                          Container(height: 5),
-                                          // exercise description
-                                          const Padding(
-                                            // padding: EdgeInsets.all(20.0),
-                                            padding: EdgeInsets.only(left: 15),
-                                            child: Text(
-                                              "45 seconds",
-                                              style: TextStyle(
-                                                fontSize: 17,
-                                                fontFamily: 'Inter',
-                                                color: Color.fromARGB(
-                                                    255, 131, 131, 131),
-                                              ),
-                                            ),
-                                          ),
+                                          // Container(height: 5),
+                                          // // exercise description
+                                          // const Padding(
+                                          //   // padding: EdgeInsets.all(20.0),
+                                          //   padding: EdgeInsets.only(left: 15),
+                                          //   child: Text(
+                                          //     "45 seconds",
+                                          //     style: TextStyle(
+                                          //       fontSize: 17,
+                                          //       fontFamily: 'Inter',
+                                          //       color: Color.fromARGB(
+                                          //           255, 131, 131, 131),
+                                          //     ),
+                                          //   ),
+                                          // ),
                                         ],
                                       ))
                                 ],
                               ),
                             ),
                           )),
-                      // you can add widget here as well
+
                     ],
+                      // disclaimer
+                      const Padding(
+                        padding: EdgeInsets.all(15),
+                        child: Text(
+                          "Disclaimer: it's important to consult with your obstetric provider who may recommend modifications to your exercise routine.",
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontFamily: 'Inter',
+                            color: Color.fromARGB(
+                                255, 131, 131, 131),
+                          ),
+                        ),
+                      ),
                   ],
                 ),
               ),
@@ -229,7 +260,7 @@ class ExercisesView extends StatelessWidget {
                                   Align(
                                     alignment: Alignment.center,
                                     child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(10.0),
+                                      borderRadius: BorderRadius.circular(5.0),
                                       child: Image.asset(
                                         'assets/images/exercises/secondm$x.png',
                                         height: 100,
@@ -243,16 +274,16 @@ class ExercisesView extends StatelessWidget {
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
 
-                                        // exercise card 1
+                                        // exercise card
                                         children: <Widget>[
                                           Container(height: 5),
-                                          const Padding(
+                                          Padding(
                                             padding:
-                                            EdgeInsets.only(left: 15, bottom: 5),
+                                            const EdgeInsets.only(left: 15, bottom: 5),
                                             // exercise title/name
                                             child: Text(
-                                              "Knee Push-Ups",
-                                              style: TextStyle(
+                                              exerciseNamesT2[x-1],
+                                              style: const TextStyle(
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.bold,
                                                 fontFamily: 'Inter',
@@ -263,29 +294,41 @@ class ExercisesView extends StatelessWidget {
                                             ),
                                           ),
 
-                                          Container(height: 5),
-                                          // exercise description
-                                          const Padding(
-                                            // padding: EdgeInsets.all(20.0),
-                                            padding: EdgeInsets.only(left: 15),
-                                            child: Text(
-                                              "45 seconds",
-                                              style: TextStyle(
-                                                fontSize: 17,
-                                                fontFamily: 'Inter',
-                                                color: Color.fromARGB(
-                                                    255, 131, 131, 131),
-                                              ),
-                                            ),
-                                          ),
+                                          // Container(height: 5),
+                                          // // exercise description
+                                          // const Padding(
+                                          //   // padding: EdgeInsets.all(20.0),
+                                          //   padding: EdgeInsets.only(left: 15),
+                                          //   child: Text(
+                                          //     "45 seconds",
+                                          //     style: TextStyle(
+                                          //       fontSize: 17,
+                                          //       fontFamily: 'Inter',
+                                          //       color: Color.fromARGB(
+                                          //           255, 131, 131, 131),
+                                          //     ),
+                                          //   ),
+                                          // ),
                                         ],
                                       ))
                                 ],
                               ),
                             ),
                           )),
-                      // you can add widget here as well
                     ],
+                      // disclaimer
+                      const Padding(
+                        padding: EdgeInsets.all(15),
+                        child: Text(
+                          "Disclaimer: it's important to consult with your obstetric provider who may recommend modifications to your exercise routine.",
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontFamily: 'Inter',
+                            color: Color.fromARGB(
+                                255, 131, 131, 131),
+                          ),
+                        ),
+                      ),
                   ],
                 ),
               ),
@@ -343,7 +386,7 @@ class ExercisesView extends StatelessWidget {
                                   Align(
                                     alignment: Alignment.center,
                                     child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(10.0),
+                                      borderRadius: BorderRadius.circular(5.0),
                                       child: Image.asset(
                                         'assets/images/exercises/thirdm$x.png',
                                         height: 100,
@@ -360,13 +403,13 @@ class ExercisesView extends StatelessWidget {
                                         // exercise card 1
                                         children: <Widget>[
                                           Container(height: 5),
-                                          const Padding(
+                                          Padding(
                                             padding:
-                                            EdgeInsets.only(left: 15, bottom: 5),
+                                            const EdgeInsets.only(left: 15, bottom: 5),
                                             // exercise title/name
                                             child: Text(
-                                              "Knee Push-Ups",
-                                              style: TextStyle(
+                                              exerciseNamesT3[x-1],
+                                              style: const TextStyle(
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.bold,
                                                 fontFamily: 'Inter',
@@ -377,29 +420,40 @@ class ExercisesView extends StatelessWidget {
                                             ),
                                           ),
 
-                                          Container(height: 5),
-                                          // exercise description
-                                          const Padding(
-                                            // padding: EdgeInsets.all(20.0),
-                                            padding: EdgeInsets.only(left: 15),
-                                            child: Text(
-                                              "45 seconds",
-                                              style: TextStyle(
-                                                fontSize: 17,
-                                                fontFamily: 'Inter',
-                                                color: Color.fromARGB(
-                                                    255, 131, 131, 131),
-                                              ),
-                                            ),
-                                          ),
+                                          // // exercise description
+                                          // const Padding(
+                                          //   // padding: EdgeInsets.all(20.0),
+                                          //   padding: EdgeInsets.only(left: 15),
+                                          //   child: Text(
+                                          //     "45 seconds",
+                                          //     style: TextStyle(
+                                          //       fontSize: 17,
+                                          //       fontFamily: 'Inter',
+                                          //       color: Color.fromARGB(
+                                          //           255, 131, 131, 131),
+                                          //     ),
+                                          //   ),
+                                          // ),
                                         ],
                                       ))
                                 ],
                               ),
                             ),
                           )),
-                      // you can add widget here as well
                     ],
+                    // disclaimer
+                    const Padding(
+                      padding: EdgeInsets.all(15),
+                      child: Text(
+                        "Disclaimer: it's important to consult with your obstetric provider who may recommend modifications to your exercise routine.",
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontFamily: 'Inter',
+                          color: Color.fromARGB(
+                              255, 131, 131, 131),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -410,3 +464,5 @@ class ExercisesView extends StatelessWidget {
     );
   }
 }
+
+// it's important to consult with your obstetric provider who may recommend modifications to your exercise routine.
