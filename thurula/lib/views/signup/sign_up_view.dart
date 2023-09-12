@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:thurula/services/auth/user_service.dart';
 import 'package:thurula/views/signup/sign_up_question_view.dart';
 import 'package:thurula/views/signup/sign_up_welcome_view.dart';
+import 'package:thurula/views/widgets/toast_widget.dart';
+
+import '../../providers/user_provider.dart';
 
 class SignUpView extends StatefulWidget {
   const SignUpView({Key? key}) : super(key: key);
@@ -170,7 +175,43 @@ class _SignUpViewState extends State<SignUpView> {
                           ),
                           ElevatedButton(
                             onPressed: isNextButtonEnabled()
-                                ? () {
+                                ? () async {
+                                    try {
+                                      var newuser = await UserService.register(
+                                          firstNameController.text,
+                                          lastNameController.text,
+                                          emailController.text,
+                                          passwordController.text,
+                                          usernameController.text);
+                                      final userProvider =
+                                          Provider.of<UserProvider>(context,
+                                              listen: false);
+                                      userProvider.setUser(newuser!);
+                                    } catch (e) {
+                                      if (e is UsernameTakenException) {
+                                        GFToast.showToast(
+                                          "Sorry this username already exists",
+                                          context,
+                                          toastPosition: GFToastPosition.BOTTOM,
+                                          textStyle: TextStyle(
+                                            color:Colors.black
+                                          ),
+                                          toastDuration: 3,
+                                          backgroundColor: Colors.yellow,
+                                        );
+                                        return;
+                                      } else {
+                                        print(e);
+                                        GFToast.showToast(
+                                          "Something went wrong please try again",
+                                          context,
+                                          toastPosition: GFToastPosition.BOTTOM,
+                                          toastDuration: 3,
+                                          backgroundColor: Colors.red,
+                                        );
+                                        return;
+                                      }
+                                    }
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(

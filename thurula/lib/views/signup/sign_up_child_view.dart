@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:thurula/services/auth/user_service.dart';
+import 'package:thurula/services/baby_service.dart';
 import 'package:thurula/views/menu_view.dart';
 import 'package:thurula/views/signup/sign_up_question_view.dart';
+
+import '../../models/baby_model.dart';
+import '../../providers/user_provider.dart';
 
 class SignUpChildView extends StatefulWidget {
   const SignUpChildView({Key? key}) : super(key: key);
@@ -135,7 +141,7 @@ class _SignUpChildViewState extends State<SignUpChildView> {
                       });
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: isMaleSelected
+                      backgroundColor: isMaleSelected
                           ? const Color.fromARGB(255, 220, 104, 145)
                           : Colors.grey,
                     ),
@@ -164,7 +170,7 @@ class _SignUpChildViewState extends State<SignUpChildView> {
                       });
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: isFemaleSelected
+                      backgroundColor: isFemaleSelected
                           ? const Color.fromARGB(255, 220, 104, 145)
                           : Colors.grey,
                     ),
@@ -234,6 +240,19 @@ class _SignUpChildViewState extends State<SignUpChildView> {
               child: ElevatedButton(
                 onPressed: isNextButtonEnabled()
                     ? () {
+                        BabyService.createBaby(Baby(
+                                fname: "Dummy",
+                                lname: "Da Baby",
+                                birthDate: selectedDate,
+                                ownerIDs: [
+                                  context.read<UserProvider>().user?.id ?? ''
+                                ],
+                                gender: isMaleSelected ? "Male" : "Female"))
+                            .then((baby) => {
+                                  UserService.addBaby(
+                                      context.read<UserProvider>().user!.id!,
+                                      baby.id!)
+                                });
                         Navigator.push(
                           context,
                           MaterialPageRoute(
