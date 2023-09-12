@@ -1,162 +1,302 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:thurula/views/menu_view.dart';
+import 'package:thurula/views/signup/sign_up_question_view.dart';
 
-class SignUpPregnancyView extends StatelessWidget {
+class SignUpPregnancyView extends StatefulWidget {
   const SignUpPregnancyView({Key? key}) : super(key: key);
 
-  get selectedDate => null;
+  @override
+  _SignUpPregnancyViewState createState() => _SignUpPregnancyViewState();
+}
+
+class _SignUpPregnancyViewState extends State<SignUpPregnancyView> {
+  DateTime? selectedDueDate;
+  DateTime? selectedPredictedDate;
+
+  bool isNextButtonEnabled() {
+    return selectedDueDate != null;
+  }
+
+  void calculateDueDateFromPredicted() {
+    if (selectedPredictedDate != null) {
+      final calculatedDueDate = selectedPredictedDate!
+          .add(Duration(days: 270)); // 270 days = 9 months
+      setState(() {
+        selectedDueDate = calculatedDueDate;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 220, 104, 145),
-      body: Padding(
-        padding: const EdgeInsets.all(30.0),
-        child: Column(
+    return MaterialApp(
+      home: Scaffold(
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        body: Stack(
           children: [
-            const Center(
-              child: Padding(
-                padding: EdgeInsets.all(20.0),
-                child: Image(
-                  image: AssetImage('assets/images/logo3.png'),
-                  height: 120,
-                ),
+            Positioned(
+              top: 30,
+              right: 50,
+              left: 50,
+              child: Image.asset(
+                'assets/images/logo2.png',
+                height: 120,
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Text(
-                'Final Step in creating your account!',
-                style: TextStyle(
-                  color: Color.fromARGB(255, 255, 255, 255),
-                  fontFamily: 'Inter',
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: SizedBox(
-                width: 350,
-                child: TextField(
-                  style: const TextStyle(color: Colors.grey),
-                  decoration: InputDecoration(
-                    hintText: "Mother's Name",
-                    hintStyle: const TextStyle(color: Colors.grey),
-                    filled: true,
-                    fillColor: Colors.white,
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                          color:
-                              Colors.white), // Customize outline border color
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                          color:
-                              Colors.white), // Customize focused border color
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    contentPadding: const EdgeInsets.all(10.0),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: GestureDetector(
-                onTap: () {
-                  showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(1900),
-                    lastDate: DateTime.now(),
-                  );
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.white),
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        selectedDate != null
-                            ? 'Birthdate: ${selectedDate!.toLocal()}'
-                                .split(' ')[0]
-                            : 'Expected Due Date',
-                        style: const TextStyle(
-                          color: Colors.grey,
-                          fontFamily: 'Inter',
-                          fontSize: 16,
-                        ),
-                      ),
-                      const Icon(
-                        Icons.calendar_today,
-                        color: Colors.grey,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const MenuView(),
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(
-                        255, 88, 119, 161), // Set the button color
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 12, horizontal: 120),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                  ),
-                  child: const Text(
-                    'Create Account',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                    ),
-                  ),
-                )),
-            Align(
-              alignment: Alignment.topLeft, // Align to top-left corner
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context); // Navigate back
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 12,
-                      horizontal: 25,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                  ),
-                  child: const Text(
-                    'Back',
+            const Positioned(
+              top: 150,
+              left: 16,
+              right: 16,
+              child: Column(
+                children: [
+                  Text(
+                    'Do you know your due date?',
                     style: TextStyle(
                       color: Color.fromARGB(255, 220, 104, 145),
-                      fontSize: 16,
+                      fontFamily: 'Inter',
+                      fontSize: 18,
                     ),
                   ),
+                  SizedBox(height: 8),
+                  Text(
+                    'Enter due date given by doctor',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontFamily: 'Inter',
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              top: 200,
+              left: 16,
+              right: 16,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: GestureDetector(
+                  onTap: () {
+                    showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1900),
+                      lastDate: DateTime.now(),
+                    ).then((value) {
+                      if (value != null) {
+                        setState(() {
+                          selectedDueDate = value;
+                        });
+                      }
+                    });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                          color: const Color.fromARGB(255, 220, 104, 145)),
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          selectedDueDate != null
+                              ? '${DateFormat('yyyy-MM-dd').format(selectedDueDate!)}'
+                              : 'Enter Due Date',
+                          style: const TextStyle(
+                            color: Colors.grey,
+                            fontFamily: 'Inter',
+                            fontSize: 16,
+                          ),
+                        ),
+                        const Icon(
+                          Icons.calendar_today,
+                          color: Color.fromARGB(255, 220, 104, 145),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              top: 300,
+              left: 16,
+              right: 16,
+              child: Column(
+                children: [
+                  Container(
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Color.fromARGB(255, 220, 104, 145),
+                    ),
+                    padding: const EdgeInsets.all(12.0),
+                    child: const Center(
+                      child: Text(
+                        'OR',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+                  const Text(
+                    'Calculate your due date.',
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 220, 104, 145),
+                      fontFamily: 'Inter',
+                      fontSize: 18,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'Enter the day of last menstrual period.',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontFamily: 'Inter',
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              top: 440,
+              left: 16,
+              right: 16,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: GestureDetector(
+                  onTap: () {
+                    showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1900),
+                      lastDate: DateTime.now(),
+                    ).then((value) {
+                      if (value != null) {
+                        setState(() {
+                          selectedPredictedDate = value;
+                          // Calculate and set the due date from the predicted date
+                          calculateDueDateFromPredicted();
+                        });
+                      }
+                    });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                          color: const Color.fromARGB(255, 220, 104, 145)),
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          selectedPredictedDate != null
+                              ? '${DateFormat('yyyy-MM-dd').format(selectedPredictedDate!)}'
+                              : 'Enter Date',
+                          style: const TextStyle(
+                            color: Colors.grey,
+                            fontFamily: 'Inter',
+                            fontSize: 16,
+                          ),
+                        ),
+                        const Icon(
+                          Icons.calendar_today,
+                          color: Color.fromARGB(255, 220, 104, 145),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 16,
+              bottom: 20,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SignUpViewQuestion(),
+                    ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(
+                      255, 220, 104, 145), // Pink button color
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  elevation: 2,
+                ),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
+                    ),
+                    Text(
+                      "Back",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Positioned(
+              right: 16,
+              bottom: 20,
+              child: ElevatedButton(
+                onPressed: isNextButtonEnabled()
+                    ? () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const MenuView(),
+                          ),
+                        );
+                      }
+                    : null,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(
+                      255, 220, 104, 145), // Pink button color
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  elevation: 2,
+                ),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Done",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                    ),
+                    Icon(
+                      Icons.check,
+                      color: Colors.white,
+                    ),
+                  ],
                 ),
               ),
             ),
