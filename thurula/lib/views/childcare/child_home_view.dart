@@ -22,14 +22,41 @@ class ChildHomeView extends StatelessWidget {
           Positioned(
             top: 20,
             left: 25,
-            child: Text(
-              'Welcome, ${context.read<UserProvider>().user?.fname ?? ''}',
-              style: const TextStyle(
-                color: Color.fromARGB(255, 88, 119, 161),
-                fontFamily: 'Inter',
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+            child: Row(
+              children: [
+                Text(
+                  'Welcome, ${context.read<UserProvider>().user?.fname ?? ''}',
+                  style: const TextStyle(
+                    color: Color.fromARGB(255, 88, 119, 161),
+                    fontFamily: 'Inter',
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(width: 25),
+                GestureDetector(
+                  onTap: () {
+                    showPopupMenu(context);
+                  },
+                  child: const Row(
+                    children: [
+                      Icon(
+                        Icons.supervisor_account_rounded,
+                        color: Color.fromARGB(255, 220, 104, 145),
+                      ),
+                      SizedBox(width: 5),
+                      Text(
+                        'Switch Profile',
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 220, 104, 145),
+                          fontFamily: 'Inter',
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
           Positioned(
@@ -534,4 +561,69 @@ class ChildHomeView extends StatelessWidget {
       ),
     );
   }
+}
+
+void showPopupMenu(BuildContext context) {
+  bool baby1ButtonEnabled = false; // Set to true if Baby 1 should be enabled
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Switch Baby Profile'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              children: [
+                const Expanded(
+                  flex: 3,
+                  child: Text('Baby 1'),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: ElevatedButton(
+                    onPressed: null,
+                    child: const Text('Switch'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 220, 104, 145),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                const Expanded(
+                  flex: 3,
+                  child: Text('Baby 2'),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    child: Text('Switch'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 220, 104, 145),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: const Text('Close'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 88, 119, 161),
+              ),
+            ),
+          ],
+        ),
+      );
+    },
+  );
 }
