@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:thurula/views/childcare/add_new_baby.dart';
 import 'package:thurula/views/childcare/exercise/ExerciseView.dart';
 import 'package:thurula/views/childcare/vaccination_tracker_view.dart';
 import 'package:thurula/views/childcare/vision/VisionMenuView.dart';
@@ -41,12 +42,12 @@ class ChildHomeView extends StatelessWidget {
                   child: const Row(
                     children: [
                       Icon(
-                        Icons.supervisor_account_rounded,
+                        Icons.account_circle,
                         color: Color.fromARGB(255, 220, 104, 145),
                       ),
                       SizedBox(width: 5),
                       Text(
-                        'Switch Profile',
+                        'Baby Name',
                         style: TextStyle(
                           color: Color.fromARGB(255, 220, 104, 145),
                           fontFamily: 'Inter',
@@ -422,8 +423,7 @@ class ChildHomeView extends StatelessWidget {
                       child: Column(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.all(
-                                10.0), // change this to the desired amount of padding
+                            padding: const EdgeInsets.all(10.0),
                             child: ClipRRect(
                               child: Image.asset(
                                   'assets/images/child-home/countdown.png',
@@ -564,27 +564,27 @@ class ChildHomeView extends StatelessWidget {
 }
 
 void showPopupMenu(BuildContext context) {
-  bool baby1ButtonEnabled = false; // Set to true if Baby 1 should be enabled
-
   showDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: const Text('Switch Baby Profile'),
+        title: const Text('Baby Profiles'),
+        contentPadding:
+            EdgeInsets.fromLTRB(20, 20, 20, 0), // Adjust padding as needed
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Row(
               children: [
-                const Expanded(
+                Expanded(
                   flex: 3,
-                  child: Text('Baby 1'),
+                  child: Text('Baby 1 Name'),
                 ),
                 Expanded(
                   flex: 1,
                   child: ElevatedButton(
                     onPressed: null,
-                    child: const Text('Switch'),
+                    child: Text('Switch'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromARGB(255, 220, 104, 145),
                     ),
@@ -592,12 +592,12 @@ void showPopupMenu(BuildContext context) {
                 ),
               ],
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 10), // Adjust the height as needed
             Row(
               children: [
-                const Expanded(
+                Expanded(
                   flex: 3,
-                  child: Text('Baby 2'),
+                  child: Text('Baby 2 Name'),
                 ),
                 Expanded(
                   flex: 1,
@@ -611,18 +611,45 @@ void showPopupMenu(BuildContext context) {
                 ),
               ],
             ),
-            const SizedBox(height: 20),
-            ElevatedButton(
+            SizedBox(height: 20),
+          ],
+        ),
+        actions: [
+          Align(
+            alignment: Alignment.bottomRight,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AddNewBaby(),
+                  ),
+                );
+              },
+              child: const Padding(
+                padding: EdgeInsets.all(10.0), // Add padding here
+                child: CircleAvatar(
+                  backgroundColor: Color.fromARGB(255, 220, 104, 145),
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Center(
+            child: ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
-              child: const Text('Close'),
+              child: Text('Close'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color.fromARGB(255, 88, 119, 161),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       );
     },
   );
