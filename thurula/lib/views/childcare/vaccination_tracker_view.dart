@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:thurula/services/local_service.dart';
 import 'package:thurula/services/vaccination_service.dart';
 import 'package:thurula/models/vaccination_model.dart';
-import 'package:intl/intl.dart';
 
 class VaccinationTrackerView extends StatefulWidget {
   const VaccinationTrackerView({super.key});
@@ -27,9 +26,9 @@ class _VaccinationTrackerViewState extends State<VaccinationTrackerView> {
 
   Future<void> _refreshData() async {
     final babyIdValue = await babyId;
-    upcomingVaccinations = VaccinationService.getDueVaccinations(babyIdValue);
+    upcomingVaccinations = VaccinationService.getDueBabyVaccinations(babyIdValue);
     completedVaccinations =
-        VaccinationService.getCompletedVaccinations(babyIdValue);
+        VaccinationService.getCompletedBabyVaccinations(babyIdValue);
     // Increment the refresh counter to trigger UI update
     refreshCounter.value++;
   }
@@ -135,7 +134,7 @@ class _VaccinationTrackerViewState extends State<VaccinationTrackerView> {
                           onPressed: () async {
                             final value = await babyId;
                             try {
-                              await VaccinationService.markCompletedVaccination(
+                              await VaccinationService.markCompletedBabyVaccination(
                                   value, vaccination.id);
                               _refreshData();
                             } catch (error) {
