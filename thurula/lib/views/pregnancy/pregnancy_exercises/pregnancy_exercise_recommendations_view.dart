@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../menu_view.dart';
-import 'package:thurula/views/pregnancy/pregnancy_exercise_timer_view.dart';
+import '../../menu_view.dart';
+import 'package:thurula/views/pregnancy/pregnancy_exercises/pregnancy_exercise_timer_view.dart';
 
 // first trimester exercises
 List<String> exerciseNamesT1 = [
@@ -55,6 +55,21 @@ class ExercisesView extends StatelessWidget {
               'Exercises',
             ),
 
+            // actions
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.calendar_today),
+                onPressed: () {
+                //   direct to exercise history page
+                //   Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //           builder: (context) => const ExercisesView())
+                //   );
+                },
+              ),
+            ],
+
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(48.0),
               child: Container(
@@ -84,6 +99,102 @@ class ExercisesView extends StatelessWidget {
               SingleChildScrollView(
                 child: Column(
                   children: [
+                    // padding
+                    Padding(
+                      padding: const EdgeInsets.only(right: 30, top: 20),
+                      // calories and time
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          GestureDetector(
+                            onTap: () {
+                              // show congratulations alert
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                  //   alert dialog with an image and text
+                                    return AlertDialog(
+                                      title: const Text(
+                                        // center align
+                                        textAlign: TextAlign.center,
+                                        "You have worked out for 15 minutes today... \nGood job!",
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'Inter',
+                                          color: Color.fromARGB(255, 220, 104, 145),
+                                        ),
+                                      ),
+                                      content: Image.asset(
+                                        'assets/images/icons/trophy.jpg',
+                                        width: 100,
+                                        fit: BoxFit.cover,
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text(
+                                            "OK",
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: 'Inter',
+                                              //   color #504E4E
+                                              color: Color.fromARGB(
+                                                  255, 80, 78, 78),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            },
+                            child: const Image(
+                              image: AssetImage(
+                                  'assets/images/icons/crown.png'),
+                              width: 25,
+                            ),
+                          ),
+                          Container(width: 150),
+                          Image.asset(
+                            'assets/images/icons/calories.png',
+                            height: 20,
+                            width: 20
+                          ),
+                          const Text(
+                            " 55 kcal",
+                            style: TextStyle(
+                              fontSize: 16,
+                              // fontWeight: FontWeight.bold,
+                              fontFamily: 'Inter',
+                              //   color #878787
+                              color: Color.fromARGB(255, 131, 131, 131),
+                            ),
+                          ),
+
+                        //   time
+                          Container(width: 20),
+                          Image.asset(
+                            'assets/images/icons/clock.png',
+                            height: 20,
+                            width: 20
+                          ),
+                          const Text(
+                            " 10 min",
+                            style: TextStyle(
+                              fontSize: 16,
+                              // fontWeight: FontWeight.bold,
+                              fontFamily: 'Inter',
+                              //   color #878787
+                              color: Color.fromARGB(255, 131, 131, 131),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
                     // Exercise 1 card
                     for(int x = 1; x<=5; x++)...[
                       Container(height: 10),
@@ -178,6 +289,55 @@ class ExercisesView extends StatelessWidget {
               SingleChildScrollView(
                 child: Column(
                   children: [
+                    // padding
+                    Padding(
+                      padding: const EdgeInsets.only(right: 30, top: 20),
+                      // calories and time
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          Image.asset(
+                              'assets/images/icons/crown.png',
+                              width: 25
+                          ),
+                          Container(width: 140),
+                          Image.asset(
+                              'assets/images/icons/calories.png',
+                              height: 20,
+                              width: 20
+                          ),
+                          const Text(
+                            " 55 kcal",
+                            style: TextStyle(
+                              fontSize: 16,
+                              // fontWeight: FontWeight.bold,
+                              fontFamily: 'Inter',
+                              //   color #878787
+                              color: Color.fromARGB(255, 131, 131, 131),
+                            ),
+                          ),
+
+                          //   time
+                          Container(width: 20),
+                          Image.asset(
+                              'assets/images/icons/clock.png',
+                              height: 20,
+                              width: 20
+                          ),
+                          const Text(
+                            " 10 min",
+                            style: TextStyle(
+                              fontSize: 16,
+                              // fontWeight: FontWeight.bold,
+                              fontFamily: 'Inter',
+                              //   color #878787
+                              color: Color.fromARGB(255, 131, 131, 131),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
                     // Exercise 1 card
                     for(int x = 1; x<=5;x++)...[
                       Container(height: 10),
@@ -270,6 +430,58 @@ class ExercisesView extends StatelessWidget {
               SingleChildScrollView(
                 child: Column(
                   children: [
+                    // padding
+                    Padding(
+                      padding: const EdgeInsets.only(right: 30, top: 20),
+                      // calories and time
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          Image.asset(
+                              'assets/images/icons/crown.png',
+                              width: 25
+                          ),
+                          Container(width: 140),
+                          Image.asset(
+                              'assets/images/icons/calories.png',
+                              height: 20,
+                              width: 20
+                          ),
+                          const Text(
+                            " 55 kcal",
+                            style: TextStyle(
+                              fontSize: 16,
+                              // fontWeight: FontWeight.bold,
+                              fontFamily: 'Inter',
+                              //   color #878787
+                              color: Color.fromARGB(255, 131, 131, 131),
+                            ),
+                          ),
+
+                          //   time
+                          Container(width: 20),
+                          Image.asset(
+                              'assets/images/icons/clock.png',
+                              height: 20,
+                              width: 20
+                          ),
+                          const Text(
+                            " 10 min",
+                            style: TextStyle(
+                              fontSize: 16,
+                              // fontWeight: FontWeight.bold,
+                              fontFamily: 'Inter',
+                              //   color #878787
+                              color: Color.fromARGB(255, 131, 131, 131),
+                            ),
+                          ),
+
+                        //   button to start workout
+
+                        ],
+                      ),
+                    ),
+
                     // Exercise 1 card
                     for(int x = 1; x<=5;x++)...[
                       Container(height: 10),

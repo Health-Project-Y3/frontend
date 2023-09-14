@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:thurula/views/pregnancy/pregnancy_exercise_recommendations_view.dart';
+import 'package:thurula/views/pregnancy/pregnancy_exercises/pregnancy_exercise_recommendations_view.dart';
 
 // first trimester exercises
 List<String> exerciseNamesT1 = [
@@ -77,12 +77,15 @@ class TimerPage extends StatefulWidget {
 }
 
 class _TimerPageState extends State<TimerPage> {
+
   final String exercise;
   _TimerPageState(this.exercise);
-  final Duration _initialDuration = const Duration(seconds: 45);
-  Duration _remainingDuration = const Duration(seconds: 45);
+  // final Duration _initialDuration = const Duration(seconds: 45);
+  // Duration _remainingDuration = const Duration(seconds: 45);
+  Duration _elapsedDuration = Duration.zero;
   bool _isRunning = false;
   bool _isPaused = false;
+  late Timer _timer;
 
   void toggleTimer() {
     setState(() {
@@ -103,15 +106,16 @@ class _TimerPageState extends State<TimerPage> {
         timer.cancel();
       } else if (_isPaused) {
         // Do nothing, timer is paused
-      } else if (_remainingDuration.inMilliseconds <= 0) {
-        setState(() {
-          _isRunning = false;
-          _isPaused = false;
-        });
-        timer.cancel();
+      // } else if (_remainingDuration.inMilliseconds <= 0) {
+      //   setState(() {
+      //     _isRunning = false;
+      //     _isPaused = false;
+      //   });
+      //   timer.cancel();
       } else {
         setState(() {
-          _remainingDuration -= const Duration(milliseconds: 100);
+          // _remainingDuration -= const Duration(milliseconds: 100);
+          _elapsedDuration += const Duration(milliseconds: 100);
         });
       }
     });
@@ -119,10 +123,12 @@ class _TimerPageState extends State<TimerPage> {
 
   void resetTimer() {
     setState(() {
-      _remainingDuration = _initialDuration;
+      // _remainingDuration = _initialDuration;
+      _elapsedDuration = Duration.zero;
       _isRunning = false;
       _isPaused = false;
     });
+    _timer.cancel();
   }
 
   String formatDuration(Duration duration) {
@@ -133,6 +139,12 @@ class _TimerPageState extends State<TimerPage> {
     return '$minutes:${seconds.toString().padLeft(2, '0')}.$milliseconds';
   }
 
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
   void _showInstructions() {
     showDialog(
       context: context,
@@ -140,7 +152,6 @@ class _TimerPageState extends State<TimerPage> {
         return AlertDialog(
           title: Text(
               _getExerciseName(exercise.split(',')[0], exercise.split(',')[1]),
-              // exerciseNamesT1[int.parse(exercise.split(',')[0])],
               style: const TextStyle(
                 color: Color.fromARGB(255, 220, 104, 145),
                 fontWeight: FontWeight.bold,
@@ -200,62 +211,66 @@ class _TimerPageState extends State<TimerPage> {
         ],
       ),
       backgroundColor: Colors.grey[200],
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(height: 30),
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                // title
-                Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    SizedBox(
-                      width: 300, // Adjust the width and height to change the size of the indicator
-                      height: 300,
-                      child: CircularProgressIndicator(
-                        // in milliseconds
-                        value: _remainingDuration.inMilliseconds / _initialDuration.inMilliseconds,
-                        strokeWidth: 8,
-                        backgroundColor: Colors.white,
-                        valueColor: const AlwaysStoppedAnimation<Color>(Color.fromARGB(255, 238, 198, 212),
-                        ),
-                      ),
-                    ),
-                    Text(
-                      formatDuration(_remainingDuration),
-                      style: const TextStyle(fontSize: 60),
-                    ),
-                  ],
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          // add image here
+          Image.asset(
+            _getExerciseImage(exercise.split(', ')[0], exercise.split(', ')[1]),
+            width: 500,
+            height: 450,
+          //   crop
+            fit: BoxFit.cover,
+          ),
+          const SizedBox(height: 50),
+          // timer
+          Text(
+            formatDuration(_elapsedDuration),
+            style: const TextStyle(fontSize: 50),
+          ),
+          const SizedBox(height: 15),
+          // play pause buttons in a row
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // play button
+              ElevatedButton(
+                onPressed: resetTimer,
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: const Color.fromARGB(255, 220, 104, 145), backgroundColor: Colors.white, shape: const CircleBorder(),
+                  padding: const EdgeInsets.all(15),
                 ),
-              ],
-            ),
-            const SizedBox(
-              height: 50,
-            ),
-            ElevatedButton(
-              onPressed: toggleTimer,
-              // circular button
-              style: ElevatedButton.styleFrom(
-                shape: const CircleBorder(), backgroundColor: const Color.fromARGB(255, 220, 104, 145),
-                padding: const EdgeInsets.all(24),
+                child: const Icon(Icons.replay),
               ),
-              // play icon
-              child: Icon(_isRunning && !_isPaused ? Icons.pause : Icons.play_arrow),
-            ),
-            const SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: resetTimer,
-              style: ElevatedButton.styleFrom(
-                foregroundColor: const Color.fromARGB(255, 220, 104, 145), backgroundColor: Colors.white, shape: const CircleBorder(),
-                padding: const EdgeInsets.all(24),
+              const SizedBox(width: 10),
+              ElevatedButton(
+                onPressed: toggleTimer,
+                style: ElevatedButton.styleFrom(
+                  shape: const CircleBorder(), backgroundColor: const Color.fromARGB(255, 220, 104, 145),
+                  padding: const EdgeInsets.all(25),
+                ),
+                child: Icon(_isRunning && !_isPaused ? Icons.pause : Icons.play_arrow),
               ),
-              child: const Icon(Icons.replay),
-            ),
-          ],
-        ),
+              const SizedBox(width: 10),
+            //   done button
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ExercisesView()));
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: const Color.fromARGB(255, 88, 119, 161),
+                  shape: const CircleBorder(),
+                  padding: const EdgeInsets.all(15),
+                ),
+                child: const Icon(Icons.done),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -284,6 +299,20 @@ String _getExerciseDesc(String trimester, String index) {
       return exerciseDescsT2[int.parse(index)-1];
     case '3':
       return exerciseDescsT3[int.parse(index)-1];
+    default:
+      return "Default";
+  }
+}
+
+// function to return the exercise image name
+String _getExerciseImage(String trimester, String index) {
+  switch (trimester) {
+    case '1':
+      return "assets/images/exercises/firstm$index.png";
+    case '2':
+      return "assets/images/exercises/secondm$index.png";
+    case '3':
+      return "assets/images/exercises/thirdm$index.png";
     default:
       return "Default";
   }
