@@ -574,42 +574,22 @@ void showPopupMenu(BuildContext context) {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Row(
-              children: [
-                Expanded(
-                  flex: 3,
-                  child: Text('Baby 1 Name'),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: ElevatedButton(
-                    onPressed: null,
-                    child: Text('Switch'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 220, 104, 145),
-                    ),
-                  ),
-                ),
-              ],
+            RadioListTile(
+              title: Text('Baby 1 Name'),
+              value: 1,
+              groupValue: 1,
+              onChanged: (value) {
+                // Handle radio button selection here
+              },
             ),
             SizedBox(height: 10), // Adjust the height as needed
-            Row(
-              children: [
-                Expanded(
-                  flex: 3,
-                  child: Text('Baby 2 Name'),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    child: Text('Switch'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 220, 104, 145),
-                    ),
-                  ),
-                ),
-              ],
+            RadioListTile(
+              title: Text('Baby 2 Name'),
+              value: 2,
+              groupValue: 1,
+              onChanged: (value) {
+                // Handle radio button selection here
+              },
             ),
             SizedBox(height: 20),
           ],
@@ -626,7 +606,7 @@ void showPopupMenu(BuildContext context) {
                   ),
                 );
               },
-              child: const Padding(
+              child: Padding(
                 padding: EdgeInsets.all(10.0), // Add padding here
                 child: CircleAvatar(
                   backgroundColor: Color.fromARGB(255, 220, 104, 145),
@@ -645,7 +625,7 @@ void showPopupMenu(BuildContext context) {
               },
               child: Text('Close'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 88, 119, 161),
+                backgroundColor: Color.fromARGB(255, 88, 119, 161),
               ),
             ),
           ),
