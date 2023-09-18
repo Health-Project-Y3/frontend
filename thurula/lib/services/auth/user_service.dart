@@ -41,9 +41,9 @@ class UserService {
       // check the status code of the response
       if (response.statusCode == 200) {
         // login successful
-
         // save the token in shared preferences
         LocalService.setCurrentUserToken(response.body);
+        LocalService.setCurrentUserId("64aa7bcddd01ede8be01ca6c");
         return true;
       } else {
         // login failed, handle the error
