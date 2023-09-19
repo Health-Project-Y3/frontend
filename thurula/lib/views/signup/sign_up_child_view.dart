@@ -274,8 +274,8 @@ class _SignUpChildViewState extends State<SignUpChildView> {
                 onPressed: isNextButtonEnabled()
                     ? () {
                         BabyService.createBaby(Baby(
-                                fname: "Dummy",
-                                lname: "Da Baby",
+                                fname: babyNameController.text,
+                                lname: "",
                                 birthDate: selectedDate,
                                 ownerIDs: [
                                   context.read<UserProvider>().user?.id ?? ''
