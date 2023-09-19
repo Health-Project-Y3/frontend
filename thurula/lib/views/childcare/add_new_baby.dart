@@ -1,21 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-import 'package:thurula/services/auth/user_service.dart';
-import 'package:thurula/services/baby_service.dart';
 import 'package:thurula/views/menu_view.dart';
-import 'package:thurula/views/signup/sign_up_question_view.dart';
-import '../../models/baby_model.dart';
-import '../../providers/user_provider.dart';
 
-class SignUpChildView extends StatefulWidget {
-  const SignUpChildView({Key? key}) : super(key: key);
+class AddNewBaby extends StatefulWidget {
+  const AddNewBaby({Key? key}) : super(key: key);
 
   @override
-  _SignUpChildViewState createState() => _SignUpChildViewState();
+  _AddNewBaby createState() => _AddNewBaby();
 }
 
-class _SignUpChildViewState extends State<SignUpChildView> {
+class _AddNewBaby extends State<AddNewBaby> {
   DateTime? selectedDate;
   bool isMaleSelected = true;
   bool isFemaleSelected = false;
@@ -235,7 +229,7 @@ class _SignUpChildViewState extends State<SignUpChildView> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const SignUpViewQuestion(),
+                      builder: (context) => const MenuView(),
                     ),
                   );
                 },
@@ -273,25 +267,7 @@ class _SignUpChildViewState extends State<SignUpChildView> {
               child: ElevatedButton(
                 onPressed: isNextButtonEnabled()
                     ? () {
-                        BabyService.createBaby(Baby(
-                                fname: "Dummy",
-                                lname: "Da Baby",
-                                birthDate: selectedDate,
-                                ownerIDs: [
-                                  context.read<UserProvider>().user?.id ?? ''
-                                ],
-                                gender: isMaleSelected ? "male" : "female"))
-                            .then((baby) => {
-                                  UserService.addBaby(
-                                      context.read<UserProvider>().user!.id!,
-                                      baby.id!)
-                                });
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const MenuView(),
-                          ),
-                        );
+                        //create baby for user
                       }
                     : null,
                 style: ElevatedButton.styleFrom(
