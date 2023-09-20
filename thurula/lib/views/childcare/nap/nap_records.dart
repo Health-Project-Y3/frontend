@@ -1,121 +1,234 @@
 import 'package:flutter/material.dart';
+import 'package:thurula/services/naps_service.dart';
+import 'package:thurula/models/naptimes_model.dart';
 
-class NapRecords extends StatelessWidget {
+class NapRecords extends StatefulWidget {
+  @override
+  _NapRecordsState createState() => _NapRecordsState();
+}
+
+class _NapRecordsState extends State<NapRecords> {
+  Future<List<NapTimes>>? _napRecordsFuture;
+  List<NapTimes> napRecords = []; // List to hold nap records
+
+  @override
+  void initState() {
+    super.initState();
+    _napRecordsFuture = NapService.getBabyNaps('64b01605b55b765169e1c9b6');
+  }
+
   @override
   Widget build(BuildContext context) {
-
-    List<NapDataRecord> napRecords = [
-      NapDataRecord('1'),
-      NapDataRecord('2'),
-      NapDataRecord('3'),
-
-    ];
-
     return Scaffold(
       appBar: AppBar(
         title: Text('All Nap Details'),
         backgroundColor: const Color.fromARGB(255, 220, 104, 145),
       ),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: DataTable(
-          columns: [
-            DataColumn(label: Text('Record')),
-            DataColumn(label: Text('Date')),
-            DataColumn(label: Text('Nap Duration')),
-            DataColumn(label: Text('Nap Time')),
-            DataColumn(label: Text('Edit')),
-            DataColumn(label: Text('Delete')),
-          ],
-          rows: napRecords.map((record) {
-            return DataRow(cells: [
-              DataCell(Text(record.title)),
-              DataCell(Text('11-04-2022')),
-              DataCell(Text('04:30')),
-              DataCell(Text('05:00 - 08:00')),
-              DataCell(IconButton(
-                icon: Icon(Icons.edit),
-                onPressed: () {
+      body: FutureBuilder<List<NapTimes>>(
+        future: _napRecordsFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return Center(child: Text('No nap records found.'));
+          } else {
+            // Data has been loaded successfully.
+            napRecords = snapshot.data!;
 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => EditNapRecordPage(record: record),
+            // Create a ListView to display nap records in a vertical timeline format
+            return ListView.builder(
+              itemCount: napRecords.length,
+              itemBuilder: (context, index) {
+                NapTimes record = napRecords[index];
+                // Calculate the duration in minutes
+                int durationSeconds = (record.endTime!.difference(record.startTime!)).inSeconds;
+                return Card(
+                  elevation: 3,
+                  margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Start: ${record.startTime?.toString() ?? ''}'),
+                        SizedBox(height: 8),
+                        Text('End: ${record.endTime?.toString() ?? ''}'),
+                        SizedBox(height: 8),
+                        Text('Duration: $durationSeconds seconds'), // Display the calculated duration
+                        SizedBox(height: 8),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.edit),
+                              onPressed: () {
+                                // Implement edit functionality here
+                              },
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.delete),
+                              onPressed: () {
+                                // Implement delete functionality here
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                  );
-                },
-              )),
-              DataCell(IconButton(
-                icon: Icon(Icons.delete),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DeleteNapRecordPage(record: record),
-                    ),
-                  );
-                },
-              )),
-            ]);
-          }).toList(),
-        ),
+                  ),
+                );
+              },
+            );
+          }
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _showAddNapDialog(context);
+        },
+        child: Icon(Icons.add),
+        backgroundColor: const Color.fromARGB(255, 220, 104, 145),
       ),
     );
   }
-}
 
-class NapDataRecord {
-  final String title;
+  Future<void> _showAddNapDialog(BuildContext context) async {
+    NapTimes newNap = NapTimes(); // Create a new empty NapTimes object
+    DateTime selectedStartTime = DateTime.now();
+    DateTime selectedEndTime = DateTime.now();
+    String? message;
 
-  NapDataRecord(this.title);
-}
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: Text('Add Nap Record'),
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Row(
+                      children: [
+                        Text('Start Time: '),
+                        Text(selectedStartTime.toLocal().toString()),
+                        SizedBox(width: 10),
+                      ],
+                    ),
+                    ElevatedButton(
+                      onPressed: () async {
+                        DateTime? pickedStartTime = await showDatePicker(
+                          context: context,
+                          initialDate: selectedStartTime,
+                          firstDate: DateTime(2000),
+                          lastDate: DateTime(2101),
+                        );
+                        if (pickedStartTime != null) {
+                          TimeOfDay? pickedStartTimeOfDay = await showTimePicker(
+                            context: context,
+                            initialTime: TimeOfDay.fromDateTime(selectedStartTime),
+                          );
+                          if (pickedStartTimeOfDay != null) {
+                            setState(() {
+                              selectedStartTime = DateTime(
+                                pickedStartTime.year,
+                                pickedStartTime.month,
+                                pickedStartTime.day,
+                                pickedStartTimeOfDay.hour,
+                                pickedStartTimeOfDay.minute,
+                              );
+                              newNap.startTime = selectedStartTime;
+                            });
+                          }
+                        }
+                      },
+                      child: Text('Select Start Time'),
+                    ),
+                    Row(
+                      children: [
+                        Text('End Time: '),
+                        Text(selectedEndTime.toLocal().toString()),
+                        SizedBox(width: 10),
+                      ],
+                    ),
+                    ElevatedButton(
+                      onPressed: () async {
+                        DateTime? pickedEndTime = await showDatePicker(
+                          context: context,
+                          initialDate: selectedEndTime,
+                          firstDate: DateTime(2000),
+                          lastDate: DateTime(2101),
+                        );
+                        if (pickedEndTime != null) {
+                          TimeOfDay? pickedEndTimeOfDay = await showTimePicker(
+                            context: context,
+                            initialTime: TimeOfDay.fromDateTime(selectedEndTime),
+                          );
+                          if (pickedEndTimeOfDay != null) {
+                            setState(() {
+                              selectedEndTime = DateTime(
+                                pickedEndTime.year,
+                                pickedEndTime.month,
+                                pickedEndTime.day,
+                                pickedEndTimeOfDay.hour,
+                                pickedEndTimeOfDay.minute,
+                              );
+                              newNap.endTime = selectedEndTime;
+                            });
+                          }
+                        }
+                      },
+                      child: Text('Select End Time'),
+                    ),
+                    Text(message ?? '', style: TextStyle(color: message == 'Error' ? Colors.red : Colors.green)), // Display success or error message
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: Text('Cancel'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                TextButton(
+                  child: Text('Save'),
+                  onPressed: () async {
+                    // Validate and save the new nap record
+                    if (newNap.startTime != null && newNap.endTime != null) {
+                      try {
+                        // Create the nap record and get the response
+                        NapTimes addedNap = await NapService.createNap(newNap);
 
-class EditNapRecordPage extends StatelessWidget {
-  final NapDataRecord record;
+                        // Add the newly created record to the existing list
+                        setState(() {
+                          napRecords.add(addedNap);
+                        });
 
-  EditNapRecordPage({required this.record});
+                        // Display a success message
+                        message = 'Nap record added successfully!';
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Edit Nap Record'),
-        backgroundColor: const Color.fromARGB(255, 220, 104, 145),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Editing: ${record.title}'),
-            // Add editing fields and save
-          ],
-        ),
-      ),
-    );
-  }
-}
+                        // Close the dialog
+                        Navigator.of(context).pop();
 
-class DeleteNapRecordPage extends StatelessWidget {
-  final NapDataRecord record;
+                      } catch (e) {
+                        message = 'Error'; // Display the error message
+                      }
+                    } else {
+                      message = 'Please select valid start and end times.';
+                    }
 
-  DeleteNapRecordPage({required this.record});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Delete Nap Record'),
-        backgroundColor: const Color.fromARGB(255, 220, 104, 145),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Deleting: ${record.title}'),
-            // Add delete functionality
-          ],
-        ),
-      ),
+                    setState(() {}); // Refresh the dialog to show the message
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      },
     );
   }
 }
