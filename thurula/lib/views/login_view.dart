@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:thurula/providers/user_provider.dart';
 import 'package:thurula/services/auth/user_service.dart';
-import 'package:thurula/services/local_service.dart';
 import 'package:thurula/views/signup/sign_up_welcome_view.dart';
 import 'package:thurula/views/welcome_view.dart';
 
@@ -139,8 +138,7 @@ class _LoginViewState extends State<LoginView> {
                                 final userProvider = Provider.of<UserProvider>(
                                     context!,
                                     listen: false);
-                                final user = await UserService.getUser(
-                                    await LocalService.getCurrentUserId());
+                                final user = await UserService.getByUsername(usernameController.text);
                                 if (user != null) {
                                   userProvider.setUser(user);
                                 }
