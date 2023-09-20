@@ -43,7 +43,9 @@ class UserService {
         // login successful
         // save the token in shared preferences
         LocalService.setCurrentUserToken(response.body);
-        LocalService.setCurrentUserId("64aa7bcddd01ede8be01ca6c");
+        getByUsername(username).then((value) {
+          LocalService.setCurrentUserId(value!.id!);
+        });
         return true;
       } else {
         // login failed, handle the error
@@ -65,7 +67,7 @@ class UserService {
       'firstName': fname,
       'lastName': lname,
       'email': email,
-      'gender':"female",
+      'gender': "female",
     };
 
     String body = json.encode(data);
@@ -89,6 +91,25 @@ class UserService {
     try {
       var response = await http.get(
         Uri.parse(getRoute("user/$id")),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      // check the status code of the response
+      if (response.statusCode == 200) {
+        return User.fromJson(jsonDecode(response.body));
+      } else {
+        throw Exception('Failed to find user');
+      }
+    } catch (e) {
+      print(e);
+    }
+    return null;
+  }
+
+  static Future<User?> getByUsername(String username) async {
+    try {
+      var response = await http.get(
+        Uri.parse(getRoute("Auth/username/$username")),
         headers: {'Content-Type': 'application/json'},
       );
 
