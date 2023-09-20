@@ -64,9 +64,10 @@ class _NapRecordsState extends State<NapRecords> {
                             IconButton(
                               icon: const Icon(Icons.edit),
                               onPressed: () {
-                                // Implement edit functionality here
+                                _showEditNapDialog(context, record);
                               },
                             ),
+
                             IconButton(
                               icon: Icon(Icons.delete),
                               onPressed: () {
@@ -232,3 +233,132 @@ class _NapRecordsState extends State<NapRecords> {
     );
   }
 }
+
+Future<void> _showEditNapDialog(BuildContext context, NapTimes existingNap) async {
+  DateTime selectedStartTime = existingNap.startTime ?? DateTime.now();
+  DateTime selectedEndTime = existingNap.endTime ?? DateTime.now();
+  String? message;
+
+  await showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return StatefulBuilder(
+        builder: (context, setState) {
+          return AlertDialog(
+            title: Text('Edit Nap Record'),
+            content: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Row(
+                    children: [
+                      Text('Start Time: '),
+                      Text(selectedStartTime.toLocal().toString()),
+                      SizedBox(width: 10),
+                    ],
+                  ),
+                  ElevatedButton(
+                    onPressed: () async {
+                      DateTime? pickedStartTime = await showDatePicker(
+                        context: context,
+                        initialDate: selectedStartTime,
+                        firstDate: DateTime(2000),
+                        lastDate: DateTime(2101),
+                      );
+                      if (pickedStartTime != null) {
+                        TimeOfDay? pickedStartTimeOfDay = await showTimePicker(
+                          context: context,
+                          initialTime: TimeOfDay.fromDateTime(selectedStartTime),
+                        );
+                        if (pickedStartTimeOfDay != null) {
+                          setState(() {
+                            selectedStartTime = DateTime(
+                              pickedStartTime.year,
+                              pickedStartTime.month,
+                              pickedStartTime.day,
+                              pickedStartTimeOfDay.hour,
+                              pickedStartTimeOfDay.minute,
+                            );
+                          });
+                        }
+                      }
+                    },
+                    child: Text('Select Start Time'),
+                  ),
+                  Row(
+                    children: [
+                      Text('End Time: '),
+                      Text(selectedEndTime.toLocal().toString()),
+                      SizedBox(width: 10),
+                    ],
+                  ),
+                  ElevatedButton(
+                    onPressed: () async {
+                      DateTime? pickedEndTime = await showDatePicker(
+                        context: context,
+                        initialDate: selectedEndTime,
+                        firstDate: DateTime(2000),
+                        lastDate: DateTime(2101),
+                      );
+                      if (pickedEndTime != null) {
+                        TimeOfDay? pickedEndTimeOfDay = await showTimePicker(
+                          context: context,
+                          initialTime: TimeOfDay.fromDateTime(selectedEndTime),
+                        );
+                        if (pickedEndTimeOfDay != null) {
+                          setState(() {
+                            selectedEndTime = DateTime(
+                              pickedEndTime.year,
+                              pickedEndTime.month,
+                              pickedEndTime.day,
+                              pickedEndTimeOfDay.hour,
+                              pickedEndTimeOfDay.minute,
+                            );
+                          });
+                        }
+                      }
+                    },
+                    child: Text('Select End Time'),
+                  ),
+                  Text(message ?? '', style: TextStyle(color: message == 'Error' ? Colors.red : Colors.green)),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: Text('Save'),
+                onPressed: () async {
+                  if (selectedStartTime != null && selectedEndTime != null) {
+                    try {
+                      // Update the nap record and get the response
+                      existingNap.startTime = selectedStartTime;
+                      existingNap.endTime = selectedEndTime;
+                      await NapService.updateNap(existingNap);
+
+                      message = 'Nap record updated successfully!';
+                      Navigator.of(context).pop(); // Close the dialog
+
+                    } catch (e) {
+                      message = 'Error';
+                    }
+                  } else {
+                    message = 'Please select valid start and end times.';
+                  }
+
+                  setState(() {});
+                },
+              ),
+            ],
+          );
+        },
+      );
+    },
+  );
+}
+
