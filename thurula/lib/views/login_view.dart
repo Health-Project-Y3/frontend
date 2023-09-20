@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:thurula/providers/user_provider.dart';
 import 'package:thurula/services/auth/user_service.dart';
-import 'package:thurula/services/local_service.dart';
+import 'package:thurula/views/signup/sign_up_welcome_view.dart';
 import 'package:thurula/views/welcome_view.dart';
-import 'package:thurula/views/signup/sign_up_view.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -126,7 +125,7 @@ class _LoginViewState extends State<LoginView> {
                           left: 30,
                           top: 20,
                           right: 30,
-                          bottom: 0, // Add bottom padding
+                          bottom: 5,
                         ),
                         child: ElevatedButton(
                           onPressed: () async {
@@ -139,8 +138,7 @@ class _LoginViewState extends State<LoginView> {
                                 final userProvider = Provider.of<UserProvider>(
                                     context!,
                                     listen: false);
-                                final user = await UserService.getUser(
-                                    await LocalService.getCurrentUserId());
+                                final user = await UserService.getByUsername(usernameController.text);
                                 if (user != null) {
                                   userProvider.setUser(user);
                                 }
@@ -187,18 +185,31 @@ class _LoginViewState extends State<LoginView> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const SignUpView(),
+                              builder: (context) => const RegisterWelcome(),
                             ),
                           );
                         },
-                        child: const Text(
-                          'Don\'t have an account? Register.',
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 220, 104, 145),
-                            fontSize: 14,
+                        child: const Text.rich(
+                          TextSpan(
+                            children: [
+                              TextSpan(
+                                text: "Don't have an account? ",
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              TextSpan(
+                                text: 'Register.',
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 220, 104, 145),
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ),
+                      )
                     ],
                   ),
                 ),
