@@ -1,18 +1,19 @@
 import 'dart:async';
 import 'package:thurula/views/childcare/nap/nap_details.dart';
 import 'package:flutter/material.dart';
+import 'package:thurula/services/naps_service.dart';
+import 'package:thurula/models/naptimes_model.dart';
 
 class NapTimer extends StatefulWidget {
-  const NapTimer({super.key});
-
   @override
   State<NapTimer> createState() => _NapTimerState();
 }
-bool isSleeping = false;
-
 
 class _NapTimerState extends State<NapTimer> {
-  
+  late Stopwatch stopwatch;
+  late Timer timer;
+  bool isSleeping = false;
+
   String formatTime(int milliSeconds) {
     var secs = milliSeconds ~/ 1000;
     var hours = (secs ~/ 3600).toString().padLeft(2, '0');
@@ -21,51 +22,83 @@ class _NapTimerState extends State<NapTimer> {
     return "$hours:$minutes:$seconds";
   }
 
-  late Stopwatch stopwatch;
-  late Timer timer;
-
   @override
   void initState() {
     super.initState();
     stopwatch = Stopwatch();
-    timer = new Timer.periodic(new Duration(milliseconds: 30), (timer) {
-      setState(() {
-
-      });
+    timer = Timer.periodic(Duration(milliseconds: 30), (timer) {
+      setState(() {});
     });
   }
 
-@override
+  @override
   void dispose() {
-   timer.cancel();
-   super.dispose();
+    timer.cancel();
+    stopwatch.stop(); // Stop the stopwatch when the widget is disposed
+    super.dispose();
   }
 
   void handleStopwatchStartStop() {
     if (stopwatch.isRunning) {
       stopwatch.stop();
-      isSleeping = false; // Timer is stopped, so Mary is not sleeping.
+      isSleeping = false;
     } else {
       stopwatch.start();
-      isSleeping = true; // Timer is started, so Mary's sleep timer is running.
+      isSleeping = true;
     }
     setState(() {});
   }
 
-
-
-  void resetStopwatch(){
+  void resetStopwatch() {
     stopwatch.reset();
-    setState(() {
-
-    });
+    setState(() {});
   }
 
-  void saveData(){
+  Future<void> saveData() async {
+    print('Save Data button pressed');
+    print(stopwatch.isRunning);
+    if (stopwatch.isRunning) {
+      stopwatch.stop();
+      isSleeping = false;
 
+      DateTime startTime = DateTime.now().subtract(Duration(milliseconds: stopwatch.elapsedMilliseconds));
+      DateTime endTime = DateTime.now();
+
+      NapTimes newNap = NapTimes(
+        babyId: '64b01605b55b765169e1c9b6', // Replace with your baby's ID
+        startTime: startTime,
+        endTime: endTime,
+      );
+
+      try {
+        NapTimes createdNap = await NapService.createNap(newNap);
+        print('Created Nap ID: ${createdNap.id}');
+        resetStopwatch();
+      } catch (e) {
+        print('Error creating nap record: $e');
+      }
+    }
+    else{
+      DateTime startTime = DateTime.now().subtract(Duration(milliseconds: stopwatch.elapsedMilliseconds));
+      DateTime endTime = DateTime.now();
+
+      NapTimes newNap = NapTimes(
+        babyId: '64b01605b55b765169e1c9b6', // Replace with your baby's ID
+        startTime: startTime,
+        endTime: endTime,
+      );
+
+      try {
+        NapTimes createdNap = await NapService.createNap(newNap);
+        print('Created Nap ID: ${createdNap.id}');
+        resetStopwatch();
+      } catch (e) {
+        print('Error creating nap record: $e');
+      }
+
+
+    }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -198,7 +231,10 @@ Widget buildTimeCard({required String time, required String header}) {
       Text(header, style: TextStyle(color: Colors.blue),)
     ],
   );
+
+
 }
+
 
 
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thurula/services/naps_service.dart';
 import 'package:thurula/models/naptimes_model.dart';
+import 'package:thurula/views/childcare/nap/nap_timer.dart';
 
 class NapRecords extends StatefulWidget {
   @override
@@ -43,8 +44,7 @@ class _NapRecordsState extends State<NapRecords> {
               itemBuilder: (context, index) {
                 NapTimes record = napRecords[index];
                 // Calculate the duration in minutes
-                int durationSeconds = (record.endTime!.difference(
-                    record.startTime!)).inSeconds;
+                int durationSeconds = (record.endTime!.difference(record.startTime!)).inSeconds;
                 return Card(
                   elevation: 3,
                   margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
@@ -57,8 +57,7 @@ class _NapRecordsState extends State<NapRecords> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Start: ${record.startTime?.toString() ??
-                                  ''}'),
+                              Text('Start: ${record.startTime?.toString() ?? ''}'),
                               SizedBox(height: 8),
                               Text('End: ${record.endTime?.toString() ?? ''}'),
                               SizedBox(height: 8),
@@ -88,17 +87,38 @@ class _NapRecordsState extends State<NapRecords> {
           }
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _showAddNapDialog(context);
-        },
-        child: Icon(Icons.add),
-        backgroundColor: const Color.fromARGB(255, 220, 104, 145),
+
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+
+          FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NapTimer(),
+                ),
+              );
+            },
+            child: Icon(Icons.timer), // Change the icon to stopwatch or timer
+            backgroundColor: const Color.fromARGB(255, 220, 104, 145),
+          ),
+          SizedBox(height: 16), // Add some spacing between the FloatingActionButton
+          FloatingActionButton(
+            onPressed: () {
+              showAddNapDialog(context);
+            },
+            child: Icon(Icons.add),
+            backgroundColor: const Color.fromARGB(255, 220, 104, 145),
+          ),
+        ],
       ),
     );
   }
 
-  Future<void> _showAddNapDialog(BuildContext context) async {
+
+  Future<void> showAddNapDialog(BuildContext context) async {
     NapTimes newNap = NapTimes(); // Create a new empty NapTimes object
     DateTime selectedStartTime = DateTime.now();
     DateTime selectedEndTime = DateTime.now();
@@ -235,8 +255,6 @@ class _NapRecordsState extends State<NapRecords> {
       },
     );
   }
-
-
 
 
   Future<void> _showEditNapDialog(BuildContext context, NapTimes existingNap) async {
