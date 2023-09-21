@@ -57,18 +57,19 @@ class _NapDetailsState extends State<NapDetails> {
             return Center(child: Text('No nap records found.'));
           } else {
             napRecords = snapshot.data!;
+            final sleepDurationByDay = _calculateSleepDurationByDay(napRecords);
+            final List<DataPoint> dataPoints = sleepDurationByDay.entries
+                .map((entry) => DataPoint(
+              x: entry.key, // Use the DateTime representing the day
+              y: entry.value,
+            ))
+                .toList();
+
             int totalNapsToday = _calculateTotalNapsToday(napRecords);
             double totalSleepDurationMinutes =
             _calculateTotalSleepDurationToday(napRecords);
             String totalSleepDurationFormatted =
             _formatDuration(totalSleepDurationMinutes);
-
-            final List<DataPoint> dataPoints = napRecords
-                .map((record) => DataPoint(
-              x: record.startTime!,
-              y: NapTimes.getNapDuration(record).toDouble(),
-            ))
-                .toList();
 
             return SingleChildScrollView(
               child: Padding(
@@ -77,31 +78,16 @@ class _NapDetailsState extends State<NapDetails> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const SizedBox(height: 16),
-                    // Center(
-                    //   child: Container(
-                    //     width: 150,
-                    //     height: 150,
-                    //     decoration: const BoxDecoration(
-                    //       shape: BoxShape.circle,
-                    //       image: DecorationImage(
-                    //         image: AssetImage('assets/images/sleeping_image.png'),
-                    //         fit: BoxFit.cover,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                    const SizedBox(height: 2),
                     Text(
-                        "Mary's Nap Details",
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Color.fromARGB(255, 88, 119, 161),
-                          fontWeight: FontWeight.bold,
-                        ),
+                      "Mary's Nap Details",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Color.fromARGB(255, 88, 119, 161),
+                        fontWeight: FontWeight.bold,
                       ),
-
+                    ),
                     const SizedBox(height: 2),
-                Column(
+                    Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         NapStatCard(
@@ -110,15 +96,12 @@ class _NapDetailsState extends State<NapDetails> {
                         ),
                         SizedBox(height: 5),
                         NapStatCard(
-
                           title: 'Total Sleep Duration Today',
-
                           value: totalSleepDurationFormatted,
                         ),
                       ],
-                ),
+                    ),
                     const SizedBox(height: 16),
-
                     Center(
                       child: ElevatedButton(
                         onPressed: () {
@@ -129,14 +112,13 @@ class _NapDetailsState extends State<NapDetails> {
                             ),
                           );
                         },
-                        child: const Text('All Nap Details',),
-
+                        child: const Text('All Nap Details'),
                       ),
                     ),
                     Card(
                       elevation: 10,
                       child: Padding(
-                        padding: const EdgeInsets.all(16.0), // Add padding around the chart
+                        padding: const EdgeInsets.all(16.0),
                         child: Container(
                           width: double.infinity,
                           height: 240,
@@ -145,32 +127,35 @@ class _NapDetailsState extends State<NapDetails> {
                             child: Row(
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.all(20.0), // Add padding for the y-axis labels
+                                  padding: const EdgeInsets.all(20.0),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      // Add your y-axis labels here
-                                    ],
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    children: [],
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 10.0 ,vertical: 50.0), // Add horizontal padding around the chart
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 10.0,
+                                    vertical: 50.0,
+                                  ),
                                   child: Container(
-                                    width: dataPoints.length * 80, // Adjust the width as needed
+                                    width: dataPoints.length * 80,
                                     height: 200,
                                     child: CustomPaint(
-                                      size: Size(dataPoints.length * 80, 200), // Adjust the size accordingly
+                                      size: Size(
+                                          dataPoints.length * 80, 200),
                                       painter: ChartPainter(dataPoints),
                                     ),
                                   ),
                                 ),
-                                const SizedBox(width: 20), // Add space between the y-axis labels and the chart
+                                const SizedBox(width: 20),
                               ],
                             ),
                           ),
                         ),
                       ),
-                    ), // Add space after the chart
+                    ),
                   ],
                 ),
               ),
@@ -207,9 +192,27 @@ class _NapDetailsState extends State<NapDetails> {
   String _formatDuration(double minutes) {
     int hours = (minutes / 60).floor();
     int remainingMinutes = (minutes % 60).round();
-    return '$hours hours '
-        'and $remainingMinutes minutes';
-  }}
+    return '$hours hours ' 'and $remainingMinutes minutes';
+  }
+
+  Map<DateTime, double> _calculateSleepDurationByDay(List<NapTimes> records) {
+    final Map<DateTime, double> sleepDurationByDay = {};
+    records.forEach((record) {
+      final day = DateTime(
+        record.startTime!.year,
+        record.startTime!.month,
+        record.startTime!.day,
+      );
+      final duration = record.endTime!.difference(record.startTime!).inMinutes;
+      sleepDurationByDay.update(
+        day,
+            (value) => value + duration.toDouble(),
+        ifAbsent: () => duration.toDouble(),
+      );
+    });
+    return sleepDurationByDay;
+  }
+}
 
 class NapStatCard extends StatelessWidget {
   final String title;
@@ -288,7 +291,7 @@ class ChartPainter extends CustomPainter {
     yLabelPainter.layout();
     yLabelPainter.paint(canvas, yLabelOffset);
 
-    final xLabelOffset = Offset(0,10);
+    final xLabelOffset = Offset(0, 10);
     final xLabelStyle = TextStyle(
       color: Colors.black,
       fontSize: 12,
@@ -309,20 +312,20 @@ class ChartPainter extends CustomPainter {
     }
 
     // Add y-axis labels
-    final yLabelStep = maxY / 5; // Adjust the number of y-axis labels as needed
+    final yLabelStep = maxY / 5;
     for (var i = 0; i <= 5; i++) {
       final y = size.height - (size.height * (i / 5));
       final labelText = _formatDurationForChart(yLabelStep * i);
       final yLabelPainter = TextPainter(
         text: TextSpan(
           text: labelText,
-          style: yLabelStyle, // Reuse the original yLabelStyle here
+          style: yLabelStyle,
         ),
         textAlign: TextAlign.center,
         textDirection: TextDirection.ltr,
       );
       yLabelPainter.layout();
-      yLabelPainter.paint(canvas, Offset(-40, y - 6)); // Adjust the label position
+      yLabelPainter.paint(canvas, Offset(-40, y - 6));
     }
 
     // Add label to bottom right corner
@@ -330,7 +333,6 @@ class ChartPainter extends CustomPainter {
       size.width - 500,
       size.height - yLabelStyle.fontSize! * -3,
     );
-// Adjust the position
     final dayLabelStyle = TextStyle(
       color: Colors.black,
       fontSize: 12,
@@ -360,9 +362,13 @@ class ChartPainter extends CustomPainter {
   }
 
   String _formatDurationForChart(double minutes) {
+    if (minutes == 0) {
+      return '0 Hr';
+    }
     int hours = (minutes / 60).floor();
     return '$hours Hr';
   }
+
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
@@ -370,22 +376,9 @@ class ChartPainter extends CustomPainter {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 class DataPoint {
   final DateTime x;
   final double y;
 
   DataPoint({required this.x, required this.y});
 }
-
