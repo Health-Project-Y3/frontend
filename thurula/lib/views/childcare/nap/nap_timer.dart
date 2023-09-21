@@ -105,18 +105,19 @@ class _NapTimerState extends State<NapTimer> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor:Color.fromARGB(255, 220, 104, 145),
         title: const Text(
           'Baby Nap Timer',
           style: TextStyle(
-            color: Color.fromARGB(255, 220, 104, 145), // Title color
+            color:  Colors.white, // Title color
           ),
         ),
-        backgroundColor: Colors.white, // Background color of the app bar
+         // Background color of the app bar
         elevation: 0,
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
-            color: Color.fromARGB(255, 220, 104, 145), // Back icon color
+            color:  Colors.white, // Back icon color
           ),
           onPressed: () {
             Navigator.push(
