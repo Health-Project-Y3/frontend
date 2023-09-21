@@ -154,7 +154,7 @@ class _NapDetailsState extends State<NapDetails> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 10.0 ,vertical: 30.0), // Add horizontal padding around the chart
+                                  padding: const EdgeInsets.symmetric(horizontal: 10.0 ,vertical: 50.0), // Add horizontal padding around the chart
                                   child: Container(
                                     width: dataPoints.length * 80, // Adjust the width as needed
                                     height: 200,
@@ -272,7 +272,7 @@ class ChartPainter extends CustomPainter {
     canvas.drawLine(xAxisStart, xAxisEnd, paint);
     canvas.drawLine(yAxisStart, yAxisEnd, paint);
 
-    final yLabelOffset = Offset(-40, 0);
+    final yLabelOffset = Offset(-40, -40);
     final yLabelStyle = TextStyle(
       color: Colors.black,
       fontSize: 12,
@@ -288,7 +288,7 @@ class ChartPainter extends CustomPainter {
     yLabelPainter.layout();
     yLabelPainter.paint(canvas, yLabelOffset);
 
-    final xLabelOffset = Offset(0, 10);
+    final xLabelOffset = Offset(0,10);
     final xLabelStyle = TextStyle(
       color: Colors.black,
       fontSize: 12,
@@ -326,7 +326,11 @@ class ChartPainter extends CustomPainter {
     }
 
     // Add label to bottom right corner
-    final dayLabelOffset = Offset(size.width - 70, size.height + 10); // Adjust the position
+    final dayLabelOffset = Offset(
+      size.width - 500,
+      size.height - yLabelStyle.fontSize! * -3,
+    );
+// Adjust the position
     final dayLabelStyle = TextStyle(
       color: Colors.black,
       fontSize: 12,
