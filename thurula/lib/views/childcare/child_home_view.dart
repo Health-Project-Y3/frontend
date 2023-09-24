@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:thurula/views/childcare/add_new_baby.dart';
 import 'package:thurula/views/childcare/exercise/ExerciseView.dart';
 import 'package:thurula/views/childcare/vaccination_tracker_view.dart';
 import 'package:thurula/views/childcare/vision/VisionMenuView.dart';
@@ -22,14 +23,41 @@ class ChildHomeView extends StatelessWidget {
           Positioned(
             top: 20,
             left: 25,
-            child: Text(
-              'Welcome, ${context.read<UserProvider>().user?.fname ?? ''}',
-              style: const TextStyle(
-                color: Color.fromARGB(255, 88, 119, 161),
-                fontFamily: 'Inter',
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+            child: Row(
+              children: [
+                Text(
+                  'Welcome, ${context.read<UserProvider>().user?.fname ?? ''}',
+                  style: const TextStyle(
+                    color: Color.fromARGB(255, 88, 119, 161),
+                    fontFamily: 'Inter',
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(width: 25),
+                GestureDetector(
+                  onTap: () {
+                    showPopupMenu(context);
+                  },
+                  child: const Row(
+                    children: [
+                      Icon(
+                        Icons.account_circle,
+                        color: Color.fromARGB(255, 220, 104, 145),
+                      ),
+                      SizedBox(width: 5),
+                      Text(
+                        'Baby Name',
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 220, 104, 145),
+                          fontFamily: 'Inter',
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
           Positioned(
@@ -395,8 +423,7 @@ class ChildHomeView extends StatelessWidget {
                       child: Column(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.all(
-                                10.0), // change this to the desired amount of padding
+                            padding: const EdgeInsets.all(10.0),
                             child: ClipRRect(
                               child: Image.asset(
                                   'assets/images/child-home/countdown.png',
@@ -534,4 +561,76 @@ class ChildHomeView extends StatelessWidget {
       ),
     );
   }
+}
+
+void showPopupMenu(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Baby Profiles'),
+        contentPadding:
+            EdgeInsets.fromLTRB(20, 20, 20, 0), // Adjust padding as needed
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            RadioListTile(
+              title: Text('Baby 1 Name'),
+              value: 1,
+              groupValue: 1,
+              onChanged: (value) {
+                // Handle radio button selection here
+              },
+            ),
+            SizedBox(height: 10), // Adjust the height as needed
+            RadioListTile(
+              title: Text('Baby 2 Name'),
+              value: 2,
+              groupValue: 1,
+              onChanged: (value) {
+                // Handle radio button selection here
+              },
+            ),
+            SizedBox(height: 20),
+          ],
+        ),
+        actions: [
+          Align(
+            alignment: Alignment.bottomRight,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AddNewBaby(),
+                  ),
+                );
+              },
+              child: Padding(
+                padding: EdgeInsets.all(10.0), // Add padding here
+                child: CircleAvatar(
+                  backgroundColor: Color.fromARGB(255, 220, 104, 145),
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text('Close'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color.fromARGB(255, 88, 119, 161),
+              ),
+            ),
+          ),
+        ],
+      );
+    },
+  );
 }
