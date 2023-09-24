@@ -16,7 +16,14 @@
   "login_page_InvalidCredentials": "Invalid Credentials",
   "login_page_EmptyInputPrompt": "Please fill input",
 
+  "@_WELCOME_PAGE": {
+    },
 
+   "welcome_page_Caption1": "New Life, Tiny Steps",
+   "welcome_page_Caption2": "We just need a few quick answers from you to personalize your experience",
+   "welcome_page_GetStartedButton": "Get Started",
+   "welcome_page_AlreadyHaveAccount": "Already have an account?",
+   "welcome_page_SignIn": "Sign In",
 
   "homePage": "Home Page",
   "profile": "Profile",

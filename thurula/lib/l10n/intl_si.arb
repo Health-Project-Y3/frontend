@@ -16,6 +16,14 @@
   "login_page_InvalidCredentials": "වලංගු නොවන සහතික",
   "login_page_EmptyInputPrompt": "කරුණාකර පූරණය කරන්න",
 
+  "@_WELCOME_PAGE": {
+      },
+
+  "welcome_page_Caption1": "නව ජීවිතය, කුඩා පියවර",
+  "welcome_page_Caption2": "ඔබේ අත්දැකීම් පුද්ගලීකරණය කිරීම සඳහා අපට ඔබෙන් ඉක්මන් පිළිතුරු කිහිපයක් අවශ්යි",
+  "welcome_page_GetStartedButton": "පටන් ගන්න",
+  "welcome_page_AlreadyHaveAccount": "දැනටමත් ගිණුමක් තියෙනවද?",
+  "welcome_page_SignIn": "ලොග් වන්න",
 
   "homePage": "ප්‍රධාන පිටුව",
   "profile": "පැතිකඩ",
