@@ -3,6 +3,14 @@
 
   "appTitle": "තුරුල",
 
+  "@_COMMON": {
+    },
+
+    "back": "ආපසු යන්න",
+    "next": "ඊළඟ",
+    "save": "සුරකින්න",
+    "cancel": "අවලංගු කරන්න",
+
     "@_LOGIN_PAGE": {
       },
 
@@ -32,12 +40,34 @@
     "register_page_LastName": "වාසගම",
     "register_page_Email": "ඊමේල් ලිපිනය",
     "register_page_PasswordConfirm": "මුරපදය තහවුරු කරන්න",
-    "register_page_NextButton": "ඊළඟට",
-    "register_page_Back_Button": "පස්සට",
 
     "register_page_UsernameTakenError": "කණගාටුයි, මෙම පරිශීලක නාමය දැනටමත් ලබාගෙන ඇත",
     "register_page_InvalidError": "අවලංගුයි",
     "register_page_ToastError": "මොකක් හරි වැරදුනා, කරුණාකර නැවත උත්සාහ කරන්න",
+
+    "@_REGISTER_PAGE_2": {
+         },
+    "register_page2_Q1": "මම දැන් ගැබිනියක්",
+    "register_page2_Q2": "මම අලුත් මවක්",
+
+    "@_REGISTER_PAGE_3": {
+         },
+    "register_page3_Q1": "ඔබේ දරුවා ඉපදුණේ කවදාද?",
+    "register_page3_Q2": "ඔබේ දරුවාගේ ලිංගය කුමක්ද?",
+    "register_page3_Q1placeholder": "දරුවාගේ උපන් දිනය",
+    "register_page3_Q2placeholder": "දරුවාගේ නම ",
+    "register_page3_Male": "පිරිමි",
+    "register_page3_Female": "ගැහැනු",
+
+    "@REGISTER_PAGE_4": {
+         },
+    "register_page4_C1": "ඔබේ දරුවාගේ නියමිත දිනය දන්නවාද?",
+    "register_page4_C2": "වෛද්‍යවරයා විසින් දෙන ලද නියමිත දිනය",
+    "register_page4_Q1": "නියමිත දිනය ඇතුළත් කරන්න",
+    "register_page4_OR": "හෝ",
+    "register_page4_C3": "ඔබේ නියමිත දිනය ගණනය කරන්න",
+    "register_page4_C4": "ඔබේ අවසාන ඔසප් වීමේ දිනය ඇතුළත් කරන්න",
+    "register_page4_Q2": "අවසාන ඔසප් වීමේ දිනය",
 
 
   "homePage": "ප්‍රධාන පිටුව",

@@ -3,6 +3,14 @@
 
   "appTitle": "Thurula",
 
+ "@_COMMON": {
+    },
+
+    "back": "Back",
+    "next": "Next",
+    "save": "Save",
+    "cancel": "Cancel",
+
   "@_LOGIN_PAGE": {
     },
 
@@ -16,7 +24,7 @@
   "login_page_InvalidCredentials": "Invalid Credentials",
   "login_page_EmptyInputPrompt": "Please fill input",
 
-  "@_WELCOME_PAGE": {
+   "@_WELCOME_PAGE": {
     },
 
    "welcome_page_Caption1": "New Life, Tiny Steps",
@@ -32,12 +40,35 @@
     "register_page_LastName": "Last Name",
     "register_page_Email": "Email",
     "register_page_PasswordConfirm": "Confirm Password",
-    "register_page_NextButton": "Next",
-    "register_page_Back_Button": "Back",
 
     "register_page_UsernameTakenError": "Sorry, this username is already taken",
     "register_page_InvalidError": "Invalid",
     "register_page_ToastError": "Something went wrong, please try again",
+
+    "@_REGISTER_PAGE_2": {
+         },
+    "register_page2_Q1": "I am currently pregnant",
+    "register_page2_Q2": "I am a new parent",
+
+    "@_REGISTER_PAGE_3": {
+         },
+    "register_page3_Q1": "When was your baby born?",
+    "register_page3_Q2": "What is the gender of your baby?",
+    "register_page3_Q1placeholder": "Enter Baby's Birthday",
+    "register_page3_Q2placeholder": "Enter your baby's name",
+    "register_page3_Male": "Male",
+    "register_page3_Female": "Female",
+
+    "@REGISTER_PAGE_4": {
+         },
+    "register_page4_C1": "Do you know your baby's due date?",
+    "register_page4_C2": "Enter due date given by doctor",
+    "register_page4_Q1": "Enter Due Date",
+    "register_page4_OR": "OR",
+    "register_page4_C3": "Calculate your due date",
+    "register_page4_C4": "Enter the day of your last period",
+    "register_page4_Q2": "Enter Last Period Date",
+
 
 
   "homePage": "Home Page",

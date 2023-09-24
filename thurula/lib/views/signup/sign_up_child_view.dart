@@ -7,6 +7,7 @@ import 'package:thurula/views/menu_view.dart';
 import 'package:thurula/views/signup/sign_up_question_view.dart';
 import '../../models/baby_model.dart';
 import '../../providers/user_provider.dart';
+import 'package:thurula/extensions/buildcontext/loc.dart';
 
 class SignUpChildView extends StatefulWidget {
   const SignUpChildView({Key? key}) : super(key: key);
@@ -44,15 +45,15 @@ class _SignUpChildViewState extends State<SignUpChildView> {
                 height: 120,
               ),
             ),
-            const Positioned(
+            Positioned(
               top: 170,
               left: 16,
               right: 16,
               child: Column(
                 children: [
                   Text(
-                    'When was your baby born?',
-                    style: TextStyle(
+                    context.loc.register_page3_Q1,
+                    style: const TextStyle(
                       color: Color.fromARGB(255, 220, 104, 145),
                       fontFamily: 'Inter',
                       fontSize: 18,
@@ -94,8 +95,8 @@ class _SignUpChildViewState extends State<SignUpChildView> {
                       children: [
                         Text(
                           selectedDate != null
-                              ? '${DateFormat('yyyy-MM-dd').format(selectedDate!)}'
-                              : 'Enter Baby\'s Birthday',
+                              ? DateFormat('yyyy-MM-dd').format(selectedDate!)
+                              : context.loc.register_page3_Q1placeholder,
                           style: const TextStyle(
                             color: Colors.grey,
                             fontFamily: 'Inter',
@@ -134,7 +135,7 @@ class _SignUpChildViewState extends State<SignUpChildView> {
                       ),
                       borderRadius: BorderRadius.circular(15.0),
                     ),
-                    labelText: 'Enter Baby\'s Name',
+                    labelText: context.loc.register_page3_Q2placeholder,
                     labelStyle: const TextStyle(
                       color: Colors.grey,
                     ),
@@ -142,15 +143,15 @@ class _SignUpChildViewState extends State<SignUpChildView> {
                 ),
               ),
             ),
-            const Positioned(
+            Positioned(
               top: 380,
               left: 16,
               right: 16,
               child: Column(
                 children: [
                   Text(
-                    'What is the gender of your baby?',
-                    style: TextStyle(
+                    context.loc.register_page3_Q2,
+                    style: const TextStyle(
                       color: Color.fromARGB(255, 220, 104, 145),
                       fontFamily: 'Inter',
                       fontSize: 18,
@@ -178,16 +179,16 @@ class _SignUpChildViewState extends State<SignUpChildView> {
                           ? const Color.fromARGB(255, 220, 104, 145)
                           : Colors.grey,
                     ),
-                    child: const Row(
+                    child:  Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.male,
                           color: Colors.white,
                         ),
-                        SizedBox(width: 8),
+                        const SizedBox(width: 8),
                         Text(
-                          "Male",
-                          style: TextStyle(
+                          context.loc.register_page3_Male,
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 16,
                           ),
@@ -207,16 +208,16 @@ class _SignUpChildViewState extends State<SignUpChildView> {
                           ? const Color.fromARGB(255, 220, 104, 145)
                           : Colors.grey,
                     ),
-                    child: const Row(
+                    child: Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.female,
                           color: Colors.white,
                         ),
-                        SizedBox(width: 8),
+                        const SizedBox(width: 8),
                         Text(
-                          "Female",
-                          style: TextStyle(
+                          context.loc.register_page3_Female,
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 16,
                           ),
@@ -249,16 +250,16 @@ class _SignUpChildViewState extends State<SignUpChildView> {
                   ),
                   elevation: 2,
                 ),
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.arrow_back,
                       color: Colors.white,
                     ),
                     Text(
-                      "Back",
-                      style: TextStyle(
+                      context.loc.next,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 16,
                       ),
@@ -304,17 +305,17 @@ class _SignUpChildViewState extends State<SignUpChildView> {
                   ),
                   elevation: 2,
                 ),
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Done",
-                      style: TextStyle(
+                      context.loc.save,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 16,
                       ),
                     ),
-                    Icon(
+                    const Icon(
                       Icons.check,
                       color: Colors.white,
                     ),

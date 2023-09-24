@@ -164,7 +164,7 @@ class _SignUpViewState extends State<SignUpView> {
                                   color: Colors.white,
                                 ),
                                 Text(
-                                  context.loc.register_page_Back_Button,
+                                  context.loc.back,
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,
@@ -235,7 +235,7 @@ class _SignUpViewState extends State<SignUpView> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  context.loc.register_page_NextButton,
+                                  context.loc.next,
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,
