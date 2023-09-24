@@ -1,0 +1,31 @@
+{
+  "@@locale": "si",
+
+  "appTitle": "තුරුල",
+
+    "@_LOGIN_PAGE": {
+      },
+
+  "login_page_username": "පරිශීලක නාමය",
+  "login_page_password": "මුරපදය",
+  "login_page_login_button": "ඇතුල් වන්න",
+  "login_page_register": "ලියාපදිංචි වන්න",
+  "login_page_noAccountQuestion": "ගිණුමක් නැතිනම්?",
+  "login_page_usernamePrompt": "ඔබේ පරිශීලක නාමය ඇතුළත් කරන්න",
+  "login_page_passwordPrompt": "ඔබේ මුරපදය ඇතුළත් කරන්න",
+  "login_page_InvalidCredentials": "වලංගු නොවන සහතික",
+  "login_page_EmptyInputPrompt": "කරුණාකර පූරණය කරන්න",
+
+
+  "homePage": "ප්‍රධාන පිටුව",
+  "profile": "පැතිකඩ",
+  "settings": "සැකසුම්",
+  "notifications": "දැනුම් දීම",
+  "childCareTips": "ලාමා පිරිසිදු කිරීම සඳහා ඉඟි",
+  "@childCareTips": {
+    "description": "Child care tips",
+    "type": "text",
+    "placeholders": {}
+  },
+  "@@last_modified": "2023-09-24T05:32:18.123Z"
+}

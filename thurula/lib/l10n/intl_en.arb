@@ -1,0 +1,32 @@
+{
+  "@@locale": "en",
+
+  "appTitle": "Thurula",
+
+  "@_LOGIN_PAGE": {
+    },
+
+  "login_page_username": "Username",
+  "login_page_password": "Password",
+  "login_page_login_button": "Login",
+  "login_page_register": "Register",
+  "login_page_noAccountQuestion": "Don't have an account?",
+  "login_page_usernamePrompt": "Please enter your username",
+  "login_page_passwordPrompt": "Please enter your password",
+  "login_page_InvalidCredentials": "Invalid Credentials",
+  "login_page_EmptyInputPrompt": "Please fill input",
+
+
+
+  "homePage": "Home Page",
+  "profile": "Profile",
+  "settings": "Settings",
+  "notifications": "Notifications",
+  "childCareTips": "Child Care Tips",
+  "@childCareTips": {
+    "description": "Child care tips",
+    "type": "text",
+    "placeholders": {}
+  },
+  "@@last_modified": "2023-09-24T05:32:18.123Z"
+}
