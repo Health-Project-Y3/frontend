@@ -1,6 +1,8 @@
 import 'dart:ui';
-
+import 'package:timezone/timezone.dart' as tz;
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:flutter/widgets.dart';
+import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class NotificationService {
@@ -22,6 +24,13 @@ class NotificationService {
         InitializationSettings(
       android: initializationSettingsAndroid,
     );
+
+    // tz.initializeTimeZones();
+    // tz.setLocalLocation(
+    //   tz.getLocation(
+    //     await FlutterNativeTimezone.getLocalTimezone(),
+    //   ),
+    // );
 
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
@@ -48,6 +57,55 @@ class NotificationService {
     var not = NotificationDetails(android: androidPlatformChannelSpecifics);
     await fln.show(0, title, body, not);
   }
+
+  static Future showOverdueNotification(
+      {required FlutterLocalNotificationsPlugin fln}) async {
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails(
+      'notification',
+      'channel_name',
+      // playSound: true,
+      importance: Importance.max,
+      priority: Priority.high,
+      // color: Color.fromARGB(255, 220, 104, 145),
+      // icon: '@drawable/tickicon',
+    );
+    const NotificationDetails platformChannelSpecifics =
+        NotificationDetails(android: androidPlatformChannelSpecifics);
+
+    await fln.show(
+      0,
+      'Overdue Task',
+      'This task is overdue!',
+      platformChannelSpecifics,
+    );
+  }
+
+//   Future<void> showScheduledLocalNotification({
+//   required int id,
+//   required String title,
+//   required String body,
+//   required String payload,
+//   required tz.TZDateTime scheduledDateTime,
+//   required FlutterLocalNotificationsPlugin fln
+// }) async {
+//    AndroidNotificationDetails androidPlatformChannelSpecifics = const AndroidNotificationDetails(
+//      "notification",
+//     "channel_name",
+//       // when: tz.TZDateTime.now(tz.local).add(Duration(seconds: seconds)),
+//    );
+//    await fln.zonedSchedule(
+//     id,
+//     title,
+//     body,
+//     scheduledDateTime,
+//     NotificationDetails(android: androidPlatformChannelSpecifics),
+//     androidAllowWhileIdle: true,
+//     payload: payload,
+//     uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+//   );
+
+// }
 }
 
 // void init() {
