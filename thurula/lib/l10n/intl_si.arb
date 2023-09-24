@@ -25,6 +25,21 @@
   "welcome_page_AlreadyHaveAccount": "දැනටමත් ගිණුමක් තියෙනවද?",
   "welcome_page_SignIn": "ලොග් වන්න",
 
+    "@_REGISTER_PAGE": {
+         },
+
+    "register_page_FirstName": "මුල් නම",
+    "register_page_LastName": "වාසගම",
+    "register_page_Email": "ඊමේල් ලිපිනය",
+    "register_page_PasswordConfirm": "මුරපදය තහවුරු කරන්න",
+    "register_page_NextButton": "ඊළඟට",
+    "register_page_Back_Button": "පස්සට",
+
+    "register_page_UsernameTakenError": "කණගාටුයි, මෙම පරිශීලක නාමය දැනටමත් ලබාගෙන ඇත",
+    "register_page_InvalidError": "අවලංගුයි",
+    "register_page_ToastError": "මොකක් හරි වැරදුනා, කරුණාකර නැවත උත්සාහ කරන්න",
+
+
   "homePage": "ප්‍රධාන පිටුව",
   "profile": "පැතිකඩ",
   "settings": "සැකසුම්",

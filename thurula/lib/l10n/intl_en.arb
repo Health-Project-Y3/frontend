@@ -25,6 +25,21 @@
    "welcome_page_AlreadyHaveAccount": "Already have an account?",
    "welcome_page_SignIn": "Sign In",
 
+    "@_REGISTER_PAGE": {
+     },
+
+    "register_page_FirstName": "First Name",
+    "register_page_LastName": "Last Name",
+    "register_page_Email": "Email",
+    "register_page_PasswordConfirm": "Confirm Password",
+    "register_page_NextButton": "Next",
+    "register_page_Back_Button": "Back",
+
+    "register_page_UsernameTakenError": "Sorry, this username is already taken",
+    "register_page_InvalidError": "Invalid",
+    "register_page_ToastError": "Something went wrong, please try again",
+
+
   "homePage": "Home Page",
   "profile": "Profile",
   "settings": "Settings",
