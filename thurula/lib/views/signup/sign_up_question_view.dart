@@ -6,6 +6,7 @@ import 'package:thurula/views/signup/sign_up_pregnancy_view.dart';
 import 'package:thurula/views/signup/sign_up_view.dart';
 
 import '../../providers/user_provider.dart';
+import 'package:thurula/extensions/buildcontext/loc.dart';
 
 class SignUpViewQuestion extends StatelessWidget {
   const SignUpViewQuestion({Key? key}) : super(key: key);
@@ -57,9 +58,9 @@ class SignUpViewQuestion extends StatelessWidget {
                           borderRadius: BorderRadius.circular(5.0),
                         ),
                       ),
-                      child: const Row(
+                      child:  Row(
                         children: [
-                          Expanded(
+                          const Expanded(
                             flex: 3,
                             child: Image(
                               image: AssetImage('assets/images/pregnant.png'),
@@ -67,12 +68,12 @@ class SignUpViewQuestion extends StatelessWidget {
                               height: 200,
                             ),
                           ),
-                          SizedBox(width: 8),
+                          const SizedBox(width: 8),
                           Expanded(
                             flex: 7,
                             child: Text(
-                              "I am currently pregnant.",
-                              style: TextStyle(
+                              context.loc.register_page2_Q1,
+                              style: const TextStyle(
                                 color: Colors.grey,
                                 fontSize: 16,
                               ),
@@ -102,9 +103,9 @@ class SignUpViewQuestion extends StatelessWidget {
                           borderRadius: BorderRadius.circular(5.0),
                         ),
                       ),
-                      child: const Row(
+                      child: Row(
                         children: [
-                          Expanded(
+                          const Expanded(
                             flex: 3,
                             child: Image(
                               image: AssetImage('assets/images/child.png'),
@@ -112,12 +113,12 @@ class SignUpViewQuestion extends StatelessWidget {
                               height: 200,
                             ),
                           ),
-                          SizedBox(width: 8),
+                          const SizedBox(width: 8),
                           Expanded(
                             flex: 7,
                             child: Text(
-                              "I have a newborn baby.",
-                              style: TextStyle(
+                              context.loc.register_page2_Q2,
+                              style: const TextStyle(
                                 color: Colors.grey,
                                 fontSize: 16,
                               ),
@@ -152,16 +153,16 @@ class SignUpViewQuestion extends StatelessWidget {
                   ),
                   elevation: 2,
                 ),
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.arrow_back,
                       color: Colors.white,
                     ),
                     Text(
-                      "Back",
-                      style: TextStyle(
+                      context.loc.back,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 16,
                       ),

@@ -1,36 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-import 'package:thurula/services/auth/user_service.dart';
 import 'package:thurula/views/menu_view.dart';
-import 'package:thurula/views/signup/sign_up_question_view.dart';
 
-import '../../providers/user_provider.dart';
-import 'package:thurula/extensions/buildcontext/loc.dart';
-
-class SignUpPregnancyView extends StatefulWidget {
-  const SignUpPregnancyView({Key? key}) : super(key: key);
+class AddNewBaby extends StatefulWidget {
+  const AddNewBaby({Key? key}) : super(key: key);
 
   @override
-  _SignUpPregnancyViewState createState() => _SignUpPregnancyViewState();
+  _AddNewBaby createState() => _AddNewBaby();
 }
 
-class _SignUpPregnancyViewState extends State<SignUpPregnancyView> {
-  DateTime? selectedDueDate;
-  DateTime? selectedPredictedDate;
+class _AddNewBaby extends State<AddNewBaby> {
+  DateTime? selectedDate;
+  bool isMaleSelected = true;
+  bool isFemaleSelected = false;
+
+  final TextEditingController babyNameController = TextEditingController();
 
   bool isNextButtonEnabled() {
-    return selectedDueDate != null;
-  }
-
-  void calculateDueDateFromPredicted() {
-    if (selectedPredictedDate != null) {
-      final calculatedDueDate = selectedPredictedDate!
-          .add(Duration(days: 270)); // 270 days = 9 months
-      setState(() {
-        selectedDueDate = calculatedDueDate;
-      });
-    }
+    return selectedDate != null &&
+        (isMaleSelected || isFemaleSelected) &&
+        babyNameController.text.isNotEmpty;
   }
 
   @override
@@ -49,27 +38,18 @@ class _SignUpPregnancyViewState extends State<SignUpPregnancyView> {
                 height: 120,
               ),
             ),
-             Positioned(
-              top: 150,
+            const Positioned(
+              top: 170,
               left: 16,
               right: 16,
               child: Column(
                 children: [
                   Text(
-                    context.loc.register_page4_C1,
-                    style: const TextStyle(
+                    'When was your baby born?',
+                    style: TextStyle(
                       color: Color.fromARGB(255, 220, 104, 145),
                       fontFamily: 'Inter',
                       fontSize: 18,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    context.loc.register_page4_C2,
-                    style: const TextStyle(
-                      color: Colors.grey,
-                      fontFamily: 'Inter',
-                      fontSize: 14,
                     ),
                   ),
                 ],
@@ -87,11 +67,11 @@ class _SignUpPregnancyViewState extends State<SignUpPregnancyView> {
                       context: context,
                       initialDate: DateTime.now(),
                       firstDate: DateTime(1900),
-                      lastDate: DateTime(DateTime.now().year, DateTime.now().month + 11, DateTime.now().day),
+                      lastDate: DateTime.now(),
                     ).then((value) {
                       if (value != null) {
                         setState(() {
-                          selectedDueDate = value;
+                          selectedDate = value;
                         });
                       }
                     });
@@ -107,9 +87,9 @@ class _SignUpPregnancyViewState extends State<SignUpPregnancyView> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          selectedDueDate != null
-                              ? DateFormat('yyyy-MM-dd').format(selectedDueDate!)
-                              : context.loc.register_page4_Q1,
+                          selectedDate != null
+                              ? '${DateFormat('yyyy-MM-dd').format(selectedDate!)}'
+                              : 'Enter Baby\'s Birthday',
                           style: const TextStyle(
                             color: Colors.grey,
                             fontFamily: 'Inter',
@@ -127,100 +107,118 @@ class _SignUpPregnancyViewState extends State<SignUpPregnancyView> {
               ),
             ),
             Positioned(
-              top: 300,
+              top: 280,
+              left: 16,
+              right: 16,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: TextField(
+                  controller: babyNameController,
+                  decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: Color.fromARGB(255, 220, 104, 145),
+                      ),
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: Color.fromARGB(255, 220, 104, 145),
+                      ),
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    labelText: 'Enter Baby\'s Name',
+                    labelStyle: const TextStyle(
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const Positioned(
+              top: 380,
               left: 16,
               right: 16,
               child: Column(
                 children: [
-                  Container(
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color.fromARGB(255, 220, 104, 145),
-                    ),
-                    padding: const EdgeInsets.all(12.0),
-                    child: Center(
-                      child: Text(
-                        context.loc.register_page4_OR,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 40),
                   Text(
-                    context.loc.register_page4_C3,
-                    style: const TextStyle(
+                    'What is the gender of your baby?',
+                    style: TextStyle(
                       color: Color.fromARGB(255, 220, 104, 145),
                       fontFamily: 'Inter',
                       fontSize: 18,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    context.loc.register_page4_C4,
-                    style: const TextStyle(
-                      color: Colors.grey,
-                      fontFamily: 'Inter',
-                      fontSize: 14,
                     ),
                   ),
                 ],
               ),
             ),
             Positioned(
-              top: 440,
+              top: 430,
               left: 16,
               right: 16,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: GestureDetector(
-                  onTap: () {
-                    showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(1900),
-                      lastDate: DateTime.now(),
-                    ).then((value) {
-                      if (value != null) {
-                        setState(() {
-                          selectedPredictedDate = value;
-                          // Calculate and set the due date from the predicted date
-                          calculateDueDateFromPredicted();
-                        });
-                      }
-                    });
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          color: const Color.fromARGB(255, 220, 104, 145)),
-                      borderRadius: BorderRadius.circular(15.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        isMaleSelected = true;
+                        isFemaleSelected = false;
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: isMaleSelected
+                          ? const Color.fromARGB(255, 220, 104, 145)
+                          : Colors.grey,
                     ),
-                    padding: const EdgeInsets.all(10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: const Row(
                       children: [
+                        Icon(
+                          Icons.male,
+                          color: Colors.white,
+                        ),
+                        SizedBox(width: 8),
                         Text(
-                          selectedPredictedDate != null
-                              ? DateFormat('yyyy-MM-dd').format(selectedPredictedDate!)
-                              : context.loc.register_page4_Q2,
-                          style: const TextStyle(
-                            color: Colors.grey,
-                            fontFamily: 'Inter',
+                          "Male",
+                          style: TextStyle(
+                            color: Colors.white,
                             fontSize: 16,
                           ),
-                        ),
-                        const Icon(
-                          Icons.calendar_today,
-                          color: Color.fromARGB(255, 220, 104, 145),
                         ),
                       ],
                     ),
                   ),
-                ),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        isMaleSelected = false;
+                        isFemaleSelected = true;
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: isFemaleSelected
+                          ? const Color.fromARGB(255, 220, 104, 145)
+                          : Colors.grey,
+                    ),
+                    child: const Row(
+                      children: [
+                        Icon(
+                          Icons.female,
+                          color: Colors.white,
+                        ),
+                        SizedBox(width: 8),
+                        Text(
+                          "Female",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
             Positioned(
@@ -231,7 +229,7 @@ class _SignUpPregnancyViewState extends State<SignUpPregnancyView> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const SignUpViewQuestion(),
+                      builder: (context) => const MenuView(),
                     ),
                   );
                 },
@@ -245,16 +243,16 @@ class _SignUpPregnancyViewState extends State<SignUpPregnancyView> {
                   ),
                   elevation: 2,
                 ),
-                child:  Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.arrow_back,
                       color: Colors.white,
                     ),
                     Text(
-                      context.loc.back,
-                      style: const TextStyle(
+                      "Back",
+                      style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
                       ),
@@ -269,19 +267,7 @@ class _SignUpPregnancyViewState extends State<SignUpPregnancyView> {
               child: ElevatedButton(
                 onPressed: isNextButtonEnabled()
                     ? () {
-                  UserService.getUser(context.read<UserProvider>().user!.id!).then(
-                    (u)=>{
-                      u?.dueDate = selectedDueDate,
-                      u?.conceptionDate = DateTime(selectedDueDate!.year, selectedDueDate!.month - 10, selectedDueDate!.day),
-                      UserService.updateUser(u!.id!, u)
-                    }
-                  );
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const MenuView(),
-                          ),
-                        );
+                        //create baby for user
                       }
                     : null,
                 style: ElevatedButton.styleFrom(
@@ -294,17 +280,17 @@ class _SignUpPregnancyViewState extends State<SignUpPregnancyView> {
                   ),
                   elevation: 2,
                 ),
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      context.loc.save,
-                      style: const TextStyle(
+                      "Done",
+                      style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
                       ),
                     ),
-                    const Icon(
+                    Icon(
                       Icons.check,
                       color: Colors.white,
                     ),
