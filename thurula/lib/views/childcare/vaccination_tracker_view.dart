@@ -33,28 +33,34 @@ class _VaccinationTrackerViewState extends State<VaccinationTrackerView> {
     _refreshData();
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
     NotificationService.initialize(flutterLocalNotificationsPlugin);
-    notificationTimer = Timer.periodic(const Duration(seconds: 5), (timer) {
-      checkOverdueCondition();
-    });
+    // notificationTimer = Timer.periodic(const Duration(seconds: 5), (timer) {
+    //   checkOverdueCondition();
+    // });
     // checkOverdueCondition();
   }
 
-  void checkOverdueCondition() {
-    // Replace this with your logic to calculate the difference
-    int difference = calculateDifference();
-
-    if (difference < 0 && daysToNotify > 0) {
+  void checkOverdueCondition(int? daysFromBirth, String? vaccineName) {
+    if (daysFromBirth == null) {
+      return;
+    }
+    // int difference = calculateDifference(daysFromBirth);
+    // final difference = daysFromBirth;
+    if (daysFromBirth < 0 && daysToNotify > 0) {
       NotificationService.showOverdueNotification(
+          overdueDays: daysFromBirth,
+          vaccineName: vaccineName,
           fln: flutterLocalNotificationsPlugin);
       daysToNotify--;
     }
   }
 
-  int calculateDifference() {
-    // Calculate the difference here (e.g., compare with today's date)
-    // Return the difference in days
-    return -1;
-  }
+  // int calculateDifference(int? daysFromBirth) {
+  //   // Calculate the difference here (e.g., compare with today's date)
+  //   // Return the difference in days
+  //   // final currentDate = DateTime.now();
+
+  //   return -1;
+  // }
 
   Future<void> _refreshData() async {
     final babyIdValue = "650fe71a1953bf17d815fac4";
@@ -133,10 +139,17 @@ class _VaccinationTrackerViewState extends State<VaccinationTrackerView> {
               );
             } else {
               List<Vaccination> vaccinations = snapshot.data!;
+
+              for (var vaccination in vaccinations) {
+                checkOverdueCondition(
+                    vaccination.daysFromBirth, vaccination.name);
+              }
+
               return Column(
                 children: [
                   const SizedBox(height: 25.0),
                   for (var vaccination in vaccinations)
+                    // checkOverdueCondition(vaccination.name ?? '', 3,'jnedkcjn' ),
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: ListTile(

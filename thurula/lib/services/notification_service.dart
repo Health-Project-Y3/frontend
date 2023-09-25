@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:timezone/timezone.dart' as tz;
-import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+// import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:flutter/widgets.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -59,24 +59,27 @@ class NotificationService {
   }
 
   static Future showOverdueNotification(
-      {required FlutterLocalNotificationsPlugin fln}) async {
+      {var overdueDays,
+      var vaccineName,
+      required FlutterLocalNotificationsPlugin fln}) async {
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
         AndroidNotificationDetails(
       'notification',
       'channel_name',
-      // playSound: true,
+      playSound: true,
       importance: Importance.max,
       priority: Priority.high,
-      // color: Color.fromARGB(255, 220, 104, 145),
-      // icon: '@drawable/tickicon',
+      color: Color.fromARGB(255, 220, 104, 145),
+      icon: '@drawable/tickicon',
+      styleInformation: BigTextStyleInformation(''),
     );
     const NotificationDetails platformChannelSpecifics =
         NotificationDetails(android: androidPlatformChannelSpecifics);
-
+    int daysOverdued = overdueDays * -1;
     await fln.show(
       0,
-      'Overdue Task',
-      'This task is overdue!',
+      'You have missed your baby\'s $vaccineName.',
+      'It is important to get your baby vaccinated to protect from preventable diseases. Vaccination is overdue by $daysOverdued days.',
       platformChannelSpecifics,
     );
   }
