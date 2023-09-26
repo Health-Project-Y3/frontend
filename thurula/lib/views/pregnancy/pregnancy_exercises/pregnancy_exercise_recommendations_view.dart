@@ -245,7 +245,6 @@ class ExercisesView extends StatelessWidget {
                                   Expanded(
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
-
                                         // exercise card
                                         children: <Widget>[
                                           Container(height: 5),
@@ -260,8 +259,7 @@ class ExercisesView extends StatelessWidget {
                                                 fontWeight: FontWeight.bold,
                                                 fontFamily: 'Inter',
                                                 //   color #504E4E
-                                                color: Color.fromARGB(
-                                                    255, 80, 78, 78),
+                                                color: Color.fromARGB(255, 80, 78, 78),
                                               ),
                                             ),
                                           ),

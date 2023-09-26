@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:thurula/views/pregnancy/pregnancy_exercises/pregnancy_exercise_recommendations_view.dart';
+import 'package:intl/intl.dart';
 
 class ExercisesHistoryView extends StatelessWidget {
   const ExercisesHistoryView({Key? key}) : super(key: key);
@@ -38,9 +39,6 @@ class ExercisesHistoryView extends StatelessWidget {
                       Tab(
                         text: "Last 7 Days",
                       ),
-                      // Tab(
-                      //   text: "Last Month",
-                      // ),
                       Tab(
                         text: "All Time",
                       )
@@ -49,145 +47,12 @@ class ExercisesHistoryView extends StatelessWidget {
             ),
           ),
 
-          // add title to page
-          // body: TabBarView(
-          //   children: [
-          //     // First Trimester
-          //     SingleChildScrollView(
-          //       child: Column(
-          //         children: [
-          //           // padding
-          //           Padding(
-          //             padding: const EdgeInsets.only(right: 30, top: 20),
-          //             // calories and time
-          //             child: Row(
-          //               mainAxisAlignment: MainAxisAlignment.end,
-          //               children: <Widget>[
-          //                 // calories
-          //                 Image.asset(
-          //                     'assets/images/icons/calories.png',
-          //                     height: 20,
-          //                     width: 20
-          //                 ),
-          //                 const Text(
-          //                   " 55 kcal",
-          //                   style: TextStyle(
-          //                     fontSize: 16,
-          //                     // fontWeight: FontWeight.bold,
-          //                     fontFamily: 'Inter',
-          //                     //   color #878787
-          //                     color: Color.fromARGB(255, 131, 131, 131),
-          //                   ),
-          //                 ),
-          //
-          //                 // time
-          //                 Container(width: 20),
-          //                 Image.asset(
-          //                     'assets/images/icons/clock.png',
-          //                     height: 20,
-          //                     width: 20
-          //                 ),
-          //                 const Text(
-          //                   " 10 min",
-          //                   style: TextStyle(
-          //                     fontSize: 16,
-          //                     // fontWeight: FontWeight.bold,
-          //                     fontFamily: 'Inter',
-          //                     //   color #878787
-          //                     color: Color.fromARGB(255, 131, 131, 131),
-          //                   ),
-          //                 ),
-          //
-          //                 Container(width: 150),
-          //
-          //                 // achievement
-          //                 GestureDetector(
-          //                   onTap: () {
-          //                     // show congratulations alert
-          //                     showDialog(
-          //                         context: context,
-          //                         builder: (BuildContext context) {
-          //                           //   alert dialog with an image and text
-          //                           return AlertDialog(
-          //                             title: const Text(
-          //                               // center align
-          //                               textAlign: TextAlign.center,
-          //                               "Congratulations! You have worked out for 15 minutes today...",
-          //                               style: TextStyle(
-          //                                 fontSize: 20,
-          //                                 fontWeight: FontWeight.bold,
-          //                                 fontFamily: 'Inter',
-          //                                 color: Color.fromARGB(255, 220, 104, 145),
-          //                               ),
-          //                             ),
-          //                             content: Image.asset(
-          //                               'assets/images/icons/trophy.jpg',
-          //                               width: 100,
-          //                               fit: BoxFit.cover,
-          //                             ),
-          //                             actions: <Widget>[
-          //                               TextButton(
-          //                                 onPressed: () {
-          //                                   Navigator.of(context).pop();
-          //                                 },
-          //                                 child: const Text(
-          //                                   "OK",
-          //                                   style: TextStyle(
-          //                                     fontSize: 20,
-          //                                     fontWeight: FontWeight.bold,
-          //                                     fontFamily: 'Inter',
-          //                                     //   color #504E4E
-          //                                     color: Color.fromARGB(
-          //                                         255, 80, 78, 78),
-          //                                   ),
-          //                                 ),
-          //                               ),
-          //                             ],
-          //                           );
-          //                         });
-          //                   },
-          //                   child: const Image(
-          //                     image: AssetImage(
-          //                         'assets/images/icons/crown.png'),
-          //                     width: 25,
-          //                   ),
-          //                 ),
-          //
-          //               ],
-          //             ),
-          //           ),
-          //
-          //           // Exercise cards
-          //           for(int x = 1; x<=5; x++)...[
-          //             Container(height: 10),
-          //             Padding(
-          //                 padding: const EdgeInsets.only(
-          //                   left: 20.0,
-          //                   right: 20.0,
-          //                 ),
-          //                 child: Text(
-          //                   "TBD"
-          //                 )
-          //             ),
-          //
-          //           ],
-          //
-          //
-          //
-          //         ],
-          //       ),
-          //     ),
-          //   ],
-          // ),
-
-          body: TabBarView(
+          body: const TabBarView(
             children: [
               ExerciseRecordsTab(title: 'Last 7 Days'),
-              // ExerciseRecordsTab(title: 'Last Month'),
               ExerciseRecordsAllTab(title: 'All Time'),
             ],
           ),
-
         ),
       ),
     );
@@ -197,51 +62,88 @@ class ExercisesHistoryView extends StatelessWidget {
 class ExerciseRecordsTab extends StatelessWidget {
   final String title;
 
-  ExerciseRecordsTab({required this.title});
+  const ExerciseRecordsTab({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
     // Mock data for demonstration
     final List<ExerciseRecord> exerciseRecords = [
       ExerciseRecord(date: '2023-09-25', duration: 30),
+      ExerciseRecord(date: '2023-09-24', duration: 45),
+      ExerciseRecord(date: '2023-09-23', duration: 0),
+      ExerciseRecord(date: '2023-09-22', duration: 45),
+      ExerciseRecord(date: '2023-09-21', duration: 0),
       ExerciseRecord(date: '2023-09-20', duration: 45),
-      // Add more exercise records here
+      ExerciseRecord(date: '2023-09-19', duration: 45),
     ];
 
     return SingleChildScrollView(
-      padding: EdgeInsets.all(20.0),
+      padding: const EdgeInsets.all(20.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Text(
-          //   title,
-          //   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          // ),
-          // SizedBox(height: 10),
-          DataTable(
-            columns: [
-              DataColumn(label: Text('Date')),
-              DataColumn(label: Text('Duration (minutes)')),
-            ],
-            rows: exerciseRecords
-                .map(
-                  (record) => DataRow(
-                cells: [
-                  DataCell(Text(record.date)),
-                  DataCell(Text(record.duration.toString())),
-                ],
-              ),
-            )
-                .toList(),
-          ),
-          SizedBox(height: 20),
-          Text(
-            'Total Exercise Duration:',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          Text(
-            '${calculateTotalDuration(exerciseRecords)} minutes',
-            style: TextStyle(fontSize: 18),
+          Card(
+            elevation: 4.0,
+            margin: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  DataTable(
+                    columns: const [
+                      DataColumn(
+                          label: Text(
+                        'Date',
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 88, 119, 161)),
+                      )),
+                      DataColumn(
+                          label: Text(
+                        'Duration (mins)',
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 88, 119, 161)),
+                      )),
+                    ],
+                    rows: exerciseRecords
+                        .map(
+                          (record) => DataRow(
+                            cells: [
+                              DataCell(Text(
+                                record.date,
+                                style: const TextStyle(
+                                    color: Color.fromARGB(255, 80, 78, 78)),
+                              )),
+                              DataCell(Text(
+                                record.duration.toString(),
+                                style: const TextStyle(
+                                    color: Color.fromARGB(255, 80, 78, 78)),
+                              )),
+                            ],
+                          ),
+                        )
+                        .toList(),
+                  ),
+                const SizedBox(height: 20),
+                // row inside card
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+                  const Text(
+                    'Total Exercise Duration:',
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 220, 104, 145)),
+                  ),
+                  Text(
+                    '  ${calculateTotalDuration(exerciseRecords)} mins',
+                    style: const TextStyle(fontSize: 18),
+                  ),
+                ]),
+                ])),
           ),
         ],
       ),
@@ -256,33 +158,39 @@ class ExerciseRecordsTab extends StatelessWidget {
 class ExerciseRecord {
   final String date;
   final int duration;
+  final int? week;
 
-  ExerciseRecord({required this.date, required this.duration});
+  ExerciseRecord({required this.date, required this.duration, this.week});
 }
-
 
 class ExerciseRecordsAllTab extends StatelessWidget {
   final String title;
 
-  ExerciseRecordsAllTab({required this.title});
+  const ExerciseRecordsAllTab({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
-    // Mock data for demonstration
+    // Mock data
     final List<ExerciseRecord> exerciseRecords = [
-      ExerciseRecord(date: '2023-09-25', duration: 30),
-      ExerciseRecord(date: '2023-09-20', duration: 45),
-      ExerciseRecord(date: '2023-08-15', duration: 60),
-      ExerciseRecord(date: '2023-08-10', duration: 40),
-      ExerciseRecord(date: '2023-07-28', duration: 55),
-      // Add more exercise records here
+      ExerciseRecord(date: '2023-09-22', week:4, duration: 30),
+      ExerciseRecord(date: '2023-09-15', week:3, duration: 45),
+      ExerciseRecord(date: '2023-09-08', week:2, duration: 45),
+      ExerciseRecord(date: '2023-09-01', week:1, duration: 45),
+      ExerciseRecord(date: '2023-08-22', week:4, duration: 30),
+      ExerciseRecord(date: '2023-08-15', week:3, duration: 45),
+      ExerciseRecord(date: '2023-08-08', week:2, duration: 45),
+      ExerciseRecord(date: '2023-08-01', week:1, duration: 45),
+      ExerciseRecord(date: '2023-07-22', week:4, duration: 30),
+      ExerciseRecord(date: '2023-07-15', week:3, duration: 45),
+      ExerciseRecord(date: '2023-07-08', week:2, duration: 45),
+      ExerciseRecord(date: '2023-07-01', week:1, duration: 45),
     ];
 
     // Group exercise records by month
     final Map<String, List<ExerciseRecord>> recordsByMonth = {};
 
     for (var record in exerciseRecords) {
-      final yearMonth = record.date.substring(0, 7);
+      final yearMonth = record.date.substring(5, 7);
       if (!recordsByMonth.containsKey(yearMonth)) {
         recordsByMonth[yearMonth] = [];
       }
@@ -290,70 +198,86 @@ class ExerciseRecordsAllTab extends StatelessWidget {
     }
 
     return SingleChildScrollView(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Text(
-          //   title,
-          //   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          // ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           // Display records grouped by month in cards
           ...recordsByMonth.entries.map((entry) {
             final month = entry.key;
+            int monthInt = int.parse(month);
+            DateTime dateTime = DateTime(2023, monthInt, 1);
+            String monthName = DateFormat('MMMM').format(dateTime);
+
             final records = entry.value;
+
             return Card(
               elevation: 4.0,
-              margin: EdgeInsets.symmetric(vertical: 8.0),
+              margin: const EdgeInsets.symmetric(vertical: 8.0),
               child: Padding(
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      month,
-                      style:
-                      TextStyle(fontSize: 20,
+                      monthName,
+                      style: const TextStyle(
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: const Color.fromARGB(255, 88, 119, 161)
-
-                      ),
+                          color: Color.fromARGB(255, 88, 119, 161)),
                     ),
-                    SizedBox(height: 8.0),
+                    const SizedBox(height: 8.0),
                     DataTable(
-                      columns: [
-                        DataColumn(label: Text('Week')),
-                        DataColumn(label: Text('Duration (minutes)')),
+                      columns: const [
+                        DataColumn(
+                            label: Text(
+                          'Week',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 88, 119, 161)),
+                        )),
+                        DataColumn(
+                            label: Text(
+                          'Duration (mins)',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 88, 119, 161)),
+                        )),
                       ],
                       rows: records
                           .map(
                             (record) => DataRow(
-                          cells: [
-                            DataCell(Text(record.date)),
-                            DataCell(Text(record.duration.toString())),
-                          ],
-                        ),
-                      )
+                              cells: [
+                                DataCell(Text(
+                                  "Week ${record.week}",
+                                  style: const TextStyle(
+                                      color: Color.fromARGB(255, 80, 78, 78)),
+                                )),
+                                DataCell(Text(
+                                    record.duration.toString()
+                                )),
+                              ],
+                            ),
+                          )
                           .toList(),
                     ),
-                    SizedBox(height: 8.0),
+                    const SizedBox(height: 8.0),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        Text(
-                          'Total Duration:',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          const Text(
+                            'Total Duration:',
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromARGB(255, 220, 104, 145)),
                           ),
-                        ),
-                        Text(
-                          '  ${calculateTotalDuration(records)} minutes',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ]
-                    )
+                          Text(
+                            '  ${calculateTotalDuration(records)} mins',
+                            style: const TextStyle(
+                                fontSize: 18,
+                                color: Color.fromARGB(255, 220, 104, 145)),
+                          ),
+                        ])
                   ],
                 ),
               ),
