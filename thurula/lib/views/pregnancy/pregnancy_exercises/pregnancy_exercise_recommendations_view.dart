@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../menu_view.dart';
 import 'package:thurula/views/pregnancy/pregnancy_exercises/pregnancy_exercise_timer_view.dart';
+import 'package:thurula/views/pregnancy/pregnancy_exercises/pregnancy_exercise_history_view.dart';
 
 // first trimester exercises
 List<String> exerciseNamesT1 = [
@@ -61,11 +62,11 @@ class ExercisesView extends StatelessWidget {
                 icon: const Icon(Icons.calendar_today),
                 onPressed: () {
                 //   direct to exercise history page
-                //   Navigator.push(
-                //       context,
-                //       MaterialPageRoute(
-                //           builder: (context) => const ExercisesView())
-                //   );
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ExercisesHistoryView())
+                  );
                 },
               ),
             ],
