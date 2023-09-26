@@ -416,9 +416,9 @@ class _TimerPageState extends State<TimerPage> {
                   shape: const CircleBorder(),
                   padding: const EdgeInsets.all(15),
                 ),
-                child:
+                child: const Icon(Icons.done)
               //     forward of index is less than 5, done if index is 4
-                Icon(int.parse(index) < 5 ? Icons.arrow_forward : Icons.done),
+              //   Icon(int.parse(index) < 5 ? Icons.arrow_forward : Icons.done),
               ),
             ],
           ),

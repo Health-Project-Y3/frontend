@@ -327,7 +327,7 @@ class ExercisesView extends StatelessWidget {
                               width: 20
                           ),
                           const Text(
-                            " 10 min",
+                            " 15 min",
                             style: TextStyle(
                               fontSize: 16,
                               // fontWeight: FontWeight.bold,
@@ -339,9 +339,57 @@ class ExercisesView extends StatelessWidget {
 
                           Container(width: 140),
 
-                          Image.asset(
-                              'assets/images/icons/crown.png',
-                              width: 25
+                          // achievement
+                          GestureDetector(
+                            onTap: () {
+                              // show congratulations alert
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    //   alert dialog with an image and text
+                                    return AlertDialog(
+                                      title: const Text(
+                                        // center align
+                                        textAlign: TextAlign.center,
+                                        "Congratulations! You have worked out for 15 minutes today...",
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'Inter',
+                                          color: Color.fromARGB(255, 220, 104, 145),
+                                        ),
+                                      ),
+                                      content: Image.asset(
+                                        'assets/images/icons/trophy.jpg',
+                                        width: 100,
+                                        fit: BoxFit.cover,
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text(
+                                            "OK",
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: 'Inter',
+                                              //   color #504E4E
+                                              color: Color.fromARGB(
+                                                  255, 80, 78, 78),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            },
+                            child: const Image(
+                              image: AssetImage(
+                                  'assets/images/icons/crown.png'),
+                              width: 25,
+                            ),
                           ),
 
 
@@ -473,7 +521,7 @@ class ExercisesView extends StatelessWidget {
                               width: 20
                           ),
                           const Text(
-                            " 10 min",
+                            " 20 min",
                             style: TextStyle(
                               fontSize: 16,
                               // fontWeight: FontWeight.bold,
@@ -483,9 +531,58 @@ class ExercisesView extends StatelessWidget {
                             ),
                           ),
                           Container(width: 140),
-                          Image.asset(
-                              'assets/images/icons/crown.png',
-                              width: 25
+
+                          // achievement
+                          GestureDetector(
+                            onTap: () {
+                              // show congratulations alert
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    //   alert dialog with an image and text
+                                    return AlertDialog(
+                                      title: const Text(
+                                        // center align
+                                        textAlign: TextAlign.center,
+                                        "Congratulations! You have worked out for 15 minutes today...",
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'Inter',
+                                          color: Color.fromARGB(255, 220, 104, 145),
+                                        ),
+                                      ),
+                                      content: Image.asset(
+                                        'assets/images/icons/trophy.jpg',
+                                        width: 100,
+                                        fit: BoxFit.cover,
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text(
+                                            "OK",
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: 'Inter',
+                                              //   color #504E4E
+                                              color: Color.fromARGB(
+                                                  255, 80, 78, 78),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            },
+                            child: const Image(
+                              image: AssetImage(
+                                  'assets/images/icons/crown.png'),
+                              width: 25,
+                            ),
                           ),
                         ],
                       ),
