@@ -46,6 +46,8 @@ class DiaperService {
     }
   }
 
+
+
   static Future<void> deleteDiaper(String id) async {
     var response = await http.delete(
       Uri.parse(getRoute('diapers/$id')),
