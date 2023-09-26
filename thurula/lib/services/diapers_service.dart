@@ -40,9 +40,17 @@ class DiaperService {
       body: jsonEncode(DiaperTimes.toJson(diaper)),
     );
     if (response.statusCode == 201) {
+      print('Response from server: ${response.body}');
+
       return DiaperTimes.fromJson(jsonDecode(response.body));
+
+
     } else {
+      print('Response from server: ${response.body}');
+
       throw Exception('Failed to create diaper');
+
+
     }
   }
 

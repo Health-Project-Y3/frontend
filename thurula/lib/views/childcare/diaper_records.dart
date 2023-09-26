@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thurula/services/diapers_service.dart';
 import 'package:thurula/models/diapertimes_model.dart';
+import 'dart:convert';
 
 class DiaperRecords extends StatefulWidget {
   @override
@@ -8,7 +9,8 @@ class DiaperRecords extends StatefulWidget {
 }
 
 class _DiaperRecordsState extends State<DiaperRecords> {
-  Future<List<DiaperTimes>> _diaperRecordsFuture = Future<List<DiaperTimes>>.value([]);
+  Future<List<DiaperTimes>> _diaperRecordsFuture =
+  Future<List<DiaperTimes>>.value([]);
   List<DiaperTimes> diaperRecords = [];
 
   @override
@@ -16,7 +18,6 @@ class _DiaperRecordsState extends State<DiaperRecords> {
     super.initState();
     _loadDiaperRecords();
   }
-
 
   // Function to load diaper change records
   Future<void> _loadDiaperRecords() async {
@@ -119,6 +120,24 @@ class _DiaperRecordsState extends State<DiaperRecords> {
 
     selectedTime = await _selectTime(context, selectedTime ?? DateTime.now());
 
+    // Create an instance of DiaperTimes and populate it with data
+    print('Selected Time: $selectedTime');
+    print('Diaper Notes: ${diaperNotesController.text}');
+    print('Diaper Type: ${diaperTypeController.text}');
+    print('Logged By: ${loggedByController.text}');
+
+    final newDiaper = DiaperTimes(
+      time: selectedTime,
+      diaperNotes: diaperNotesController.text,
+      diaperType: diaperTypeController.text,
+      loggedBy: loggedByController.text,
+      babyId: '64b01605b55b765169e1c9b6',
+    );
+
+    // Print the JSON representation of newDiaper for debugging
+    print(jsonEncode(DiaperTimes.toJson(newDiaper)));
+
+
 
     showDialog(
       context: context,
@@ -132,7 +151,8 @@ class _DiaperRecordsState extends State<DiaperRecords> {
                 Row(
                   children: [
                     Text('Time: '),
-                    Text(selectedTime?.toLocal().toString() ?? 'No time selected'),
+                    Text(
+                        selectedTime?.toLocal().toString() ?? 'No time selected'),
                     SizedBox(width: 10),
                   ],
                 ),
@@ -174,13 +194,17 @@ class _DiaperRecordsState extends State<DiaperRecords> {
             TextButton(
               child: Text('Save'),
               onPressed: () async {
+
+
                 // Read values from the controllers here
                 String diaperNotes = diaperNotesController.text;
                 String diaperType = diaperTypeController.text;
                 String loggedBy = loggedByController.text;
 
                 // Validate the fields
-                if (diaperNotes.isNotEmpty && diaperType.isNotEmpty && loggedBy.isNotEmpty) {
+                if (diaperNotes.isNotEmpty &&
+                    diaperType.isNotEmpty &&
+                    loggedBy.isNotEmpty) {
                   final newDiaper = DiaperTimes(
                     time: selectedTime,
                     diaperNotes: diaperNotes,
@@ -189,6 +213,10 @@ class _DiaperRecordsState extends State<DiaperRecords> {
                     babyId: '64b01605b55b765169e1c9b6',
                   );
 
+                  // Print the JSON representation of newDiaper for debugging
+
+
+                  print(jsonEncode(DiaperTimes.toJson(newDiaper)));
 
 
                   try {
@@ -213,8 +241,6 @@ class _DiaperRecordsState extends State<DiaperRecords> {
     );
   }
 
-
-
   Future<String?> _validateTextField(
       BuildContext context,
       String fieldName,
@@ -234,8 +260,8 @@ class _DiaperRecordsState extends State<DiaperRecords> {
     return value;
   }
 
-
-  Future<DateTime?> _selectTime(BuildContext context, DateTime? initialTime) async {
+  Future<DateTime?> _selectTime(
+      BuildContext context, DateTime? initialTime) async {
     DateTime? selectedTime = initialTime;
 
     await showDatePicker(
@@ -265,7 +291,8 @@ class _DiaperRecordsState extends State<DiaperRecords> {
     return selectedTime;
   }
 
-  Future<void> _showEditDiaperDialog(BuildContext context, DiaperTimes existingDiaper) async {
+  Future<void> _showEditDiaperDialog(
+      BuildContext context, DiaperTimes existingDiaper) async {
     DateTime selectedTime = existingDiaper.time ?? DateTime.now();
     String? message;
 
