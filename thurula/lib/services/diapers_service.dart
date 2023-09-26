@@ -40,21 +40,11 @@ class DiaperService {
       body: jsonEncode(DiaperTimes.toJson(diaper)),
     );
     if (response.statusCode == 201) {
-
-
       return DiaperTimes.fromJson(jsonDecode(response.body));
-
-
     } else {
-
-
       throw Exception('Failed to create diaper');
-
-
     }
   }
-
-
 
   static Future<void> deleteDiaper(String id) async {
     var response = await http.delete(
@@ -68,7 +58,7 @@ class DiaperService {
     }
   }
 
-  static Future<DiaperTimes> updateDiaper(String id,DiaperTimes diaper) async {
+  static Future<DiaperTimes> updateDiaper(String id, DiaperTimes diaper) async {
     var response = await http.put(
       Uri.parse(getRoute('diapers/$id')),
       headers: {'Content-Type': 'application/json'},
@@ -81,7 +71,8 @@ class DiaperService {
     }
   }
 
-  static Future<DiaperTimes> patchDiaper(String id, String key, dynamic value) async {
+  static Future<DiaperTimes> patchDiaper(
+      String id, String key, dynamic value) async {
     var response = await http.patch(
       Uri.parse(getRoute('diapers/$id')),
       headers: {'Content-Type': 'application/json'},
@@ -96,4 +87,3 @@ class DiaperService {
     }
   }
 }
-
