@@ -106,6 +106,44 @@ class ExercisesView extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
+                          // calories
+                          Image.asset(
+                            'assets/images/icons/calories.png',
+                            height: 20,
+                            width: 20
+                          ),
+                          const Text(
+                            " 55 kcal",
+                            style: TextStyle(
+                              fontSize: 16,
+                              // fontWeight: FontWeight.bold,
+                              fontFamily: 'Inter',
+                              //   color #878787
+                              color: Color.fromARGB(255, 131, 131, 131),
+                            ),
+                          ),
+
+                          // time
+                          Container(width: 20),
+                          Image.asset(
+                            'assets/images/icons/clock.png',
+                            height: 20,
+                            width: 20
+                          ),
+                          const Text(
+                            " 10 min",
+                            style: TextStyle(
+                              fontSize: 16,
+                              // fontWeight: FontWeight.bold,
+                              fontFamily: 'Inter',
+                              //   color #878787
+                              color: Color.fromARGB(255, 131, 131, 131),
+                            ),
+                          ),
+
+                          Container(width: 150),
+
+                          // achievement
                           GestureDetector(
                             onTap: () {
                               // show congratulations alert
@@ -117,9 +155,9 @@ class ExercisesView extends StatelessWidget {
                                       title: const Text(
                                         // center align
                                         textAlign: TextAlign.center,
-                                        "You have worked out for 15 minutes today... \nGood job!",
+                                        "Congratulations! You have worked out for 15 minutes today...",
                                         style: TextStyle(
-                                          fontSize: 15,
+                                          fontSize: 20,
                                           fontWeight: FontWeight.bold,
                                           fontFamily: 'Inter',
                                           color: Color.fromARGB(255, 220, 104, 145),
@@ -157,45 +195,12 @@ class ExercisesView extends StatelessWidget {
                               width: 25,
                             ),
                           ),
-                          Container(width: 150),
-                          Image.asset(
-                            'assets/images/icons/calories.png',
-                            height: 20,
-                            width: 20
-                          ),
-                          const Text(
-                            " 55 kcal",
-                            style: TextStyle(
-                              fontSize: 16,
-                              // fontWeight: FontWeight.bold,
-                              fontFamily: 'Inter',
-                              //   color #878787
-                              color: Color.fromARGB(255, 131, 131, 131),
-                            ),
-                          ),
 
-                        //   time
-                          Container(width: 20),
-                          Image.asset(
-                            'assets/images/icons/clock.png',
-                            height: 20,
-                            width: 20
-                          ),
-                          const Text(
-                            " 10 min",
-                            style: TextStyle(
-                              fontSize: 16,
-                              // fontWeight: FontWeight.bold,
-                              fontFamily: 'Inter',
-                              //   color #878787
-                              color: Color.fromARGB(255, 131, 131, 131),
-                            ),
-                          ),
                         ],
                       ),
                     ),
 
-                    // Exercise 1 card
+                    // Exercise cards
                     for(int x = 1; x<=5; x++)...[
                       Container(height: 10),
                       Padding(
@@ -268,8 +273,9 @@ class ExercisesView extends StatelessWidget {
                           )),
 
                     ],
-                      // disclaimer
-                      const Padding(
+
+                    // disclaimer
+                    const Padding(
                         padding: EdgeInsets.all(15),
                         child: Text(
                           "Disclaimer: it's important to consult with your obstetric provider who may recommend modifications to your exercise routine.",
@@ -296,11 +302,7 @@ class ExercisesView extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
-                          Image.asset(
-                              'assets/images/icons/crown.png',
-                              width: 25
-                          ),
-                          Container(width: 140),
+                          // calories
                           Image.asset(
                               'assets/images/icons/calories.png',
                               height: 20,
@@ -334,6 +336,15 @@ class ExercisesView extends StatelessWidget {
                               color: Color.fromARGB(255, 131, 131, 131),
                             ),
                           ),
+
+                          Container(width: 140),
+
+                          Image.asset(
+                              'assets/images/icons/crown.png',
+                              width: 25
+                          ),
+
+
                         ],
                       ),
                     ),
@@ -437,11 +448,7 @@ class ExercisesView extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
-                          Image.asset(
-                              'assets/images/icons/crown.png',
-                              width: 25
-                          ),
-                          Container(width: 140),
+                          // calories
                           Image.asset(
                               'assets/images/icons/calories.png',
                               height: 20,
@@ -475,9 +482,11 @@ class ExercisesView extends StatelessWidget {
                               color: Color.fromARGB(255, 131, 131, 131),
                             ),
                           ),
-
-                        //   button to start workout
-
+                          Container(width: 140),
+                          Image.asset(
+                              'assets/images/icons/crown.png',
+                              width: 25
+                          ),
                         ],
                       ),
                     ),
