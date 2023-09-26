@@ -9,6 +9,7 @@ class User {
   String? phone;
   bool? pregnant;
   DateTime? dueDate;
+  DateTime? conceptionDate;
   List<String>? babyIDs;
 
   User({
@@ -22,6 +23,7 @@ class User {
     this.phone,
     this.pregnant,
     this.dueDate,
+    this.conceptionDate,
     this.babyIDs,
   });
 
@@ -44,6 +46,7 @@ class User {
       phone: jsonDecode['phone'],
       pregnant: jsonDecode['pregnant'],
       dueDate: DateTime.parse(jsonDecode['dueDate']),
+      conceptionDate:DateTime.parse(jsonDecode['conceptionDate'])
     );
   }
 
@@ -58,6 +61,7 @@ class User {
       'phone': user.phone,
       'pregnant': user.pregnant,
       'dueDate': user.dueDate?.toIso8601String(),
+      'conceptionDate': user.conceptionDate?.toIso8601String(),
       'babies': user.babyIDs,
     };
   }
