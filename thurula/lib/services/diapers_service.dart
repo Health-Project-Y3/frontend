@@ -46,7 +46,7 @@ class DiaperService {
 
 
     } else {
-    
+
 
       throw Exception('Failed to create diaper');
 
