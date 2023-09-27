@@ -7,6 +7,9 @@ import 'package:thurula/services/local_service.dart';
 import 'package:thurula/services/user_exercise_service.dart';
 import 'package:thurula/models/user_exercise_model.dart';
 
+DateTime now = DateTime.now();
+DateTime sevenDaysAgo = now.subtract(Duration(days: 7));
+
 class ExercisesHistoryView extends StatefulWidget {
   const ExercisesHistoryView({Key? key}) : super(key: key);
 
@@ -17,7 +20,8 @@ class ExercisesHistoryView extends StatefulWidget {
 class _ExerciseHistorysViewState extends State<ExercisesHistoryView> {
   late ValueNotifier<int> refreshCounter;
   late Future<String> userId;
-  late Future<UserExercise?> exerciseRecords;
+  // list of userexercise
+  late Future<List<UserExercise>> exerciseRecords;
 
   @override
   void initState() {
@@ -28,12 +32,10 @@ class _ExerciseHistorysViewState extends State<ExercisesHistoryView> {
 
   Future<void> _refreshData() async {
     userId = LocalService.getCurrentUserId();
-    exerciseRecords = UserExerciseService.getUserExercise(await userId);
+    exerciseRecords = UserExerciseService.getUserExercises(await userId, null, null);
     // Increment the refresh counter to trigger UI update
     refreshCounter.value++;
   }
-
-  // const ExercisesHistoryView({Key? key}) : super(key: key);
 
   @override
   void dispose() {
@@ -98,7 +100,7 @@ class _ExerciseHistorysViewState extends State<ExercisesHistoryView> {
     return ValueListenableBuilder(
         valueListenable: refreshCounter,
         builder: (context, _, __) {
-          return FutureBuilder<UserExercise?>(
+          return FutureBuilder<List<UserExercise>>(
             future: exerciseRecords,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -142,23 +144,25 @@ class _ExerciseHistorysViewState extends State<ExercisesHistoryView> {
                                             color: Color.fromARGB(255, 88, 119, 161)),
                                       )),
                                 ],
-                                rows: snapshot.data is Iterable
-                  ? (snapshot.data as Iterable<ExerciseRecord>).map(
+                                rows: snapshot.data!
+                                    .map(
                                       (record) => DataRow(
                                     cells: [
                                       DataCell(Text(
-                                        record.date,
+                                        // remove time and get only date
+                                        record.date.toString().substring(0, 10),
                                         style: const TextStyle(
                                             color: Color.fromARGB(255, 80, 78, 78)),
                                       )),
                                       DataCell(Text(
-                                        record.duration.toString(),
+                                        record.minutesExercised.toString(),
                                         style: const TextStyle(
                                             color: Color.fromARGB(255, 80, 78, 78)),
                                       )),
                                     ],
                                   ),
-                                ).toList(): [],
+                                )
+                                    .toList(),
                               ),
                               const SizedBox(height: 20),
                               // row inside card

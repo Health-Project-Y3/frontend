@@ -26,6 +26,33 @@ class UserExerciseService {
     return null;
   }
 
+  // method to get exercise/user/ giving id, start date and end date, start date and end date can be null
+  static Future<List<UserExercise>> getUserExercises(
+      String id, DateTime? startDate, DateTime? endDate) async {
+    try {
+      var response = await http.get(
+        Uri.parse(getRoute("exercise/user/$id")),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      // check the status code of the response
+      if (response.statusCode == 200) {
+        List<UserExercise> exercises = [];
+        var body = jsonDecode(response.body);
+        for (var exercise in body) {
+          exercises.add(UserExercise.fromJson(exercise));
+        }
+        return exercises;
+      } else {
+        log(jsonDecode(response.body));
+        throw Exception('Failed to find the record');
+      }
+    } catch (e) {
+      log(e as String);
+    }
+    return [];
+  }
+
   static Future<bool> patchUserExercise(
       String id, String key, dynamic value) async {
     var response = await http.patch(
