@@ -121,7 +121,7 @@ class _HealthTrackerState extends State<MotherHealthTracker> {
                             width: 180,
                             height: 180,
                             child: Image.asset(
-                              'assets/images/health_tracker/weigh.png',
+                              'assets/images/health_tracker/Weight.png',
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -200,7 +200,7 @@ class _HealthTrackerState extends State<MotherHealthTracker> {
                             width: 180,
                             height: 180,
                             child: Image.asset(
-                              'assets/images/health_tracker/pressure.png',
+                              'assets/images/health_tracker/Blood.png',
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -296,7 +296,7 @@ class ModalContent extends StatelessWidget {
       child: Container(
         height: 500.0, // Increase the height as needed
         child: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(30.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -304,11 +304,11 @@ class ModalContent extends StatelessWidget {
               Text(
                 "Your Pre-Pregnancy Details",
                 style: TextStyle(
-                  fontSize: 24.0,
+                  fontSize: 28.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 16.0),
+              SizedBox(height: 25.0),
               RichText(
                 text: TextSpan(
                   style: DefaultTextStyle.of(context).style,
