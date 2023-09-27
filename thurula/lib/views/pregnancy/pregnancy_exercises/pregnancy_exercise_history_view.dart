@@ -1,15 +1,51 @@
 import 'package:flutter/material.dart';
-import 'package:thurula/views/pregnancy/pregnancy_exercises/pregnancy_exercise_recommendations_view.dart';
+// import 'package:thurula/views/pregnancy/pregnancy_exercises/pregnancy_exercise_recommendations_view.dart';
 import 'package:intl/intl.dart';
+import 'package:thurula/views/pregnancy/pregnancy_exercises/pregnancy_exercise_recommendations_view.dart';
 
-class ExercisesHistoryView extends StatelessWidget {
+import 'package:thurula/services/local_service.dart';
+import 'package:thurula/services/user_exercise_service.dart';
+import 'package:thurula/models/user_exercise_model.dart';
+
+class ExercisesHistoryView extends StatefulWidget {
   const ExercisesHistoryView({Key? key}) : super(key: key);
+
+  @override
+  _ExerciseHistorysViewState createState() => _ExerciseHistorysViewState();
+}
+
+class _ExerciseHistorysViewState extends State<ExercisesHistoryView> {
+  late ValueNotifier<int> refreshCounter;
+  late Future<String> userId;
+  late Future<UserExercise?> exerciseRecords;
+
+  @override
+  void initState() {
+    super.initState();
+    refreshCounter = ValueNotifier<int>(0); // Initialize the ValueNotifier
+    _refreshData();
+  }
+
+  Future<void> _refreshData() async {
+    userId = LocalService.getCurrentUserId();
+    exerciseRecords = UserExerciseService.getUserExercise(await userId);
+    // Increment the refresh counter to trigger UI update
+    refreshCounter.value++;
+  }
+
+  // const ExercisesHistoryView({Key? key}) : super(key: key);
+
+  @override
+  void dispose() {
+    refreshCounter.dispose(); // Dispose the ValueNotifier
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: DefaultTabController(
-        length: 3,
+        length: 2,
         child: Scaffold(
           appBar: AppBar(
             leading: IconButton(
@@ -47,113 +83,209 @@ class ExercisesHistoryView extends StatelessWidget {
             ),
           ),
 
-          body: const TabBarView(
+          body: TabBarView(
             children: [
-              ExerciseRecordsTab(title: 'Last 7 Days'),
-              ExerciseRecordsAllTab(title: 'All Time'),
+              ExerciseRecordTab(),
+              const ExerciseRecordsAllTab(title: 'All Time'),
             ],
           ),
         ),
       ),
     );
   }
-}
 
-class ExerciseRecordsTab extends StatelessWidget {
-  final String title;
-
-  const ExerciseRecordsTab({super.key, required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    // Mock data for demonstration
-    final List<ExerciseRecord> exerciseRecords = [
-      ExerciseRecord(date: '2023-09-25', duration: 30),
-      ExerciseRecord(date: '2023-09-24', duration: 45),
-      ExerciseRecord(date: '2023-09-23', duration: 0),
-      ExerciseRecord(date: '2023-09-22', duration: 45),
-      ExerciseRecord(date: '2023-09-21', duration: 0),
-      ExerciseRecord(date: '2023-09-20', duration: 45),
-      ExerciseRecord(date: '2023-09-19', duration: 45),
-    ];
-
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Card(
-            elevation: 4.0,
-            margin: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  DataTable(
-                    columns: const [
-                      DataColumn(
-                          label: Text(
-                        'Date',
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 88, 119, 161)),
-                      )),
-                      DataColumn(
-                          label: Text(
-                        'Duration (mins)',
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 88, 119, 161)),
-                      )),
-                    ],
-                    rows: exerciseRecords
-                        .map(
-                          (record) => DataRow(
-                            cells: [
-                              DataCell(Text(
-                                record.date,
-                                style: const TextStyle(
-                                    color: Color.fromARGB(255, 80, 78, 78)),
-                              )),
-                              DataCell(Text(
-                                record.duration.toString(),
-                                style: const TextStyle(
-                                    color: Color.fromARGB(255, 80, 78, 78)),
-                              )),
+  Widget ExerciseRecordTab() {
+    return ValueListenableBuilder(
+        valueListenable: refreshCounter,
+        builder: (context, _, __) {
+          return FutureBuilder<UserExercise?>(
+            future: exerciseRecords,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              } else if (!snapshot.hasData) {
+                return const Center(
+                  child: Text('No records to show'),
+                );
+              } else {
+                return SingleChildScrollView(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Card(
+                        elevation: 4.0,
+                        margin: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              DataTable(
+                                columns: const [
+                                  DataColumn(
+                                      label: Text(
+                                        'Date',
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color.fromARGB(255, 88, 119, 161)),
+                                      )),
+                                  DataColumn(
+                                      label: Text(
+                                        'Duration (mins)',
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color.fromARGB(255, 88, 119, 161)),
+                                      )),
+                                ],
+                                rows: snapshot.data is Iterable
+                  ? (snapshot.data as Iterable<ExerciseRecord>).map(
+                                      (record) => DataRow(
+                                    cells: [
+                                      DataCell(Text(
+                                        record.date,
+                                        style: const TextStyle(
+                                            color: Color.fromARGB(255, 80, 78, 78)),
+                                      )),
+                                      DataCell(Text(
+                                        record.duration.toString(),
+                                        style: const TextStyle(
+                                            color: Color.fromARGB(255, 80, 78, 78)),
+                                      )),
+                                    ],
+                                  ),
+                                ).toList(): [],
+                              ),
+                              const SizedBox(height: 20),
+                              // row inside card
+                              Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+                                const Text(
+                                  'Total Exercise Duration:',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromARGB(255, 220, 104, 145)),
+                                ),
+                                Text(
+                                  // '  ${calculateTotalDuration(snapshot.data!)} mins',
+                                  '  calculateTotalDuration mins',
+                                  style: const TextStyle(fontSize: 18),
+                                ),
+                              ]),
                             ],
                           ),
-                        )
-                        .toList(),
+                        ),
+                      ),
+                    ],
                   ),
-                const SizedBox(height: 20),
-                // row inside card
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-                  const Text(
-                    'Total Exercise Duration:',
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 220, 104, 145)),
-                  ),
-                  Text(
-                    '  ${calculateTotalDuration(exerciseRecords)} mins',
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                ]),
-                ])),
-          ),
-        ],
-      ),
+                );
+              }
+            },
+          );
+        }
     );
   }
-
-  int calculateTotalDuration(List<ExerciseRecord> records) {
-    return records.map((record) => record.duration).fold(0, (a, b) => a + b);
-  }
 }
+
+// class ExerciseRecordsTab extends StatelessWidget {
+//   final String title;
+//
+//   const ExerciseRecordsTab({super.key, required this.title});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     // Mock data for demonstration
+//     final List<ExerciseRecord> exerciseRecords = [
+//       ExerciseRecord(date: '2023-09-25', duration: 30),
+//       ExerciseRecord(date: '2023-09-24', duration: 45),
+//       ExerciseRecord(date: '2023-09-23', duration: 0),
+//       ExerciseRecord(date: '2023-09-22', duration: 45),
+//       ExerciseRecord(date: '2023-09-21', duration: 0),
+//       ExerciseRecord(date: '2023-09-20', duration: 45),
+//       ExerciseRecord(date: '2023-09-19', duration: 45),
+//     ];
+//
+//     return SingleChildScrollView(
+//       padding: const EdgeInsets.all(20.0),
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           Card(
+//             elevation: 4.0,
+//             margin: const EdgeInsets.symmetric(vertical: 8.0),
+//             child: Padding(
+//               padding: const EdgeInsets.all(16.0),
+//               child: Column(
+//                 crossAxisAlignment: CrossAxisAlignment.start,
+//                 children: [
+//                   DataTable(
+//                     columns: const [
+//                       DataColumn(
+//                           label: Text(
+//                         'Date',
+//                         style: TextStyle(
+//                             fontSize: 20,
+//                             fontWeight: FontWeight.bold,
+//                             color: Color.fromARGB(255, 88, 119, 161)),
+//                       )),
+//                       DataColumn(
+//                           label: Text(
+//                         'Duration (mins)',
+//                         style: TextStyle(
+//                             fontSize: 20,
+//                             fontWeight: FontWeight.bold,
+//                             color: Color.fromARGB(255, 88, 119, 161)),
+//                       )),
+//                     ],
+//                     rows: exerciseRecords
+//                         .map(
+//                           (record) => DataRow(
+//                             cells: [
+//                               DataCell(Text(
+//                                 record.date,
+//                                 style: const TextStyle(
+//                                     color: Color.fromARGB(255, 80, 78, 78)),
+//                               )),
+//                               DataCell(Text(
+//                                 record.duration.toString(),
+//                                 style: const TextStyle(
+//                                     color: Color.fromARGB(255, 80, 78, 78)),
+//                               )),
+//                             ],
+//                           ),
+//                         )
+//                         .toList(),
+//                   ),
+//                 const SizedBox(height: 20),
+//                 // row inside card
+//                 Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+//                   const Text(
+//                     'Total Exercise Duration:',
+//                     style: TextStyle(
+//                         fontSize: 18,
+//                         fontWeight: FontWeight.bold,
+//                         color: Color.fromARGB(255, 220, 104, 145)),
+//                   ),
+//                   Text(
+//                     '  ${calculateTotalDuration(exerciseRecords)} mins',
+//                     style: const TextStyle(fontSize: 18),
+//                   ),
+//                 ]),
+//                 ])),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+//
+//   int calculateTotalDuration(List<ExerciseRecord> records) {
+//     return records.map((record) => record.duration).fold(0, (a, b) => a + b);
+//   }
+// }
 
 class ExerciseRecord {
   final String date;
@@ -292,3 +424,5 @@ class ExerciseRecordsAllTab extends StatelessWidget {
     return records.map((record) => record.duration).fold(0, (a, b) => a + b);
   }
 }
+
+
