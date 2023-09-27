@@ -1,320 +1,383 @@
 import 'package:flutter/material.dart';
 
-class MotherHealthTracker extends StatelessWidget {
-  const MotherHealthTracker({super.key});
+void main() {
+  runApp(MaterialApp(
+    home: MotherHealthTracker(),
+  ));
+}
+
+class MotherHealthTracker extends StatefulWidget {
+  const MotherHealthTracker({Key? key}) : super(key: key);
+
+  @override
+  _HealthTrackerState createState() => _HealthTrackerState();
+}
+
+class _HealthTrackerState extends State<MotherHealthTracker> {
+  bool isModalOpen = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _openModal();
+  }
+
+  void _openModal() {
+    Future.delayed(Duration.zero, () {
+      showModalBottomSheet(
+        context: context,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        builder: (BuildContext context) {
+          return ModalContent(
+            closeModal: () {
+              setState(() {
+                isModalOpen = false;
+              });
+              Navigator.pop(context);
+            },
+          );
+        },
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 220, 104, 145), // Background color of the app bar
-        title: const Text(
-          "Mother Health Tracker",
-          style: TextStyle(
-            color: Color.fromARGB(255, 255, 255, 255), // Title color
-          ),
-        ),
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Color.fromARGB(255, 255, 255, 255), // Back icon color
-          ),
-          onPressed: () {
-            // Handle back button press here
-            Navigator.pop(context); // Navigate back
-          },
-        ),
+        title: Text('Health Tracker'),
+        backgroundColor: Color.fromARGB(255, 220, 104, 145),
       ),
+      backgroundColor: const Color.fromARGB(255, 247, 247, 247),
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                // Box 1
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      width: 400,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 0.5,
+                            blurRadius: 3,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Text(
+                                    'I weigh',
+                                    style: TextStyle(
+                                      color: Color.fromARGB(255, 88, 119, 161),
+                                      fontSize: 16.0,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Text(
+                                    '65kg',
+                                    style: TextStyle(
+                                      color: Color.fromARGB(255, 88, 119, 161),
+                                      fontSize: 36.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Text(
+                                    'Week on Week Gain - 1.5kg',
+                                    style: TextStyle(
+                                      color: Color.fromARGB(255, 88, 119, 161),
+                                      fontSize: 12.0,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          // Container for the image with specified width and height
+                          Container(
+                            width: 180,
+                            height: 180,
+                            child: Image.asset(
+                              'assets/images/health_tracker/weigh.png',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                // Box 3 (Weight Growth Chart)
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: WeightChartBox(),
+                ),
+                // Box 2
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      width: 400,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 0.5,
+                            blurRadius: 3,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Text(
+                                    'My Pressure Level',
+                                    style: TextStyle(
+                                      color: Color.fromARGB(255, 88, 119, 161),
+                                      fontSize: 16.0,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Text(
+                                    '0/0',
+                                    style: TextStyle(
+                                      color: Color.fromARGB(255, 88, 119, 161),
+                                      fontSize: 36.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Text(
+                                    'Week on Week Gain - 1.5kg',
+                                    style: TextStyle(
+                                      color: Color.fromARGB(255, 88, 119, 161),
+                                      fontSize: 12.0,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          // Container for the image with specified width and height
+                          Container(
+                            width: 180,
+                            height: 180,
+                            child: Image.asset(
+                              'assets/images/health_tracker/pressure.png',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                // Box 4 (Copy the above code with different content)
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Container(
+                    width: 400,
+                    height: 200,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 0.5,
+                          blurRadius: 3,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    // Add content for Box 4 here
+                  ),
+                ),
+              ],
+            ),
+          ),
+          if (isModalOpen)
+            Container(
+              color: Color.fromRGBO(0, 0, 0, 0.4), // Overlay color
+            ),
+        ],
+      ),
+    );
+  }
+}
 
-      backgroundColor: Color(0xFFFFFFFF),
-      body: Center(
-        // single child scroll view
-        child: SingleChildScrollView(
+class WeightChartBox extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 400,
+      height: 200,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 0.5,
+            blurRadius: 3,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: WeightChartView(),
+    );
+  }
+}
+
+class WeightChartView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 380,
+      height: 300,
+      margin: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10.0),
+        border: Border.all(color: Colors.grey),
+      ),
+      // Add your weight growth chart content here
+      // For example, you can use a LineChart or any other chart library.
+      // You'll need to import the necessary chart library and implement the chart logic.
+    );
+  }
+}
+
+class ModalContent extends StatelessWidget {
+  final Function closeModal;
+
+  ModalContent({required this.closeModal});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        height: 500.0, // Increase the height as needed
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: 120,
-                height: 120,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.grey,
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/mom.png'),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 16),
-              const Text(
-                "Ama Gamage",
+              Text(
+                "Your Pre-Pregnancy Details",
                 style: TextStyle(
-                  fontSize: 24,
+                  fontSize: 24.0,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF5877A1),
                 ),
               ),
-              const SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  DashboardCard(
-                    label: "Height",
-                    value: "184cm",
-                    isBold: true,
-                    fontSize: 20,
+              SizedBox(height: 16.0),
+              RichText(
+                text: TextSpan(
+                  style: DefaultTextStyle.of(context).style,
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: "Before we embark on this incredible journey together, ",
+                      style: TextStyle(fontWeight: FontWeight.normal),
+                    ),
+                    TextSpan(
+                      text: "Please add your ",
+                      style: TextStyle(fontWeight: FontWeight.normal),
+                    ),
+                    TextSpan(
+                      text: "pre-pregnancy height and weight",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.0,
+                        color: Color.fromARGB(255, 220, 104, 145),
+                      ),
+                    ),
+                    TextSpan(
+                      text: " details to ensure your well-being and a healthy pregnancy.",
+                      style: TextStyle(fontWeight: FontWeight.normal),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 16.0),
+              Text("Maintaining a healthy weight and understanding your body's baseline is essential for a successful and comfortable pregnancy."),
+              SizedBox(height: 16.0),
+              SizedBox(height: 12.0),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: 'Height (cm/inch)',
+                ),
+              ),
+              SizedBox(height: 10.0),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: 'Weight (kg/lbs)',
+                ),
+              ),
+              SizedBox(height: 12.0),
+              SizedBox(height: 16.0),
+              Align(
+                alignment: Alignment.center,
+                child: SizedBox(
+                  width: double.infinity, // Make the button full width
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Handle submit button logic here
+                      // For example, you can get the values from the input fields
+                      // and perform some action.
+                      closeModal(); // Close the modal using the provided function
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: Color.fromARGB(255, 220, 104, 145), // Pink color
+                    ),
+                    child: Text(
+                      'Submit',
+                      style: TextStyle(color: Colors.white), // White text color
+                    ),
                   ),
-                  SizedBox(width: 16),
-                  DashboardCard(
-                    label: "Weight",
-                    value: "63Kg",
-                    isBold: true,
-                    fontSize: 20,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              Center(
-                child: Container(
-                  width: 200,
-                  child: FullWidthCard(
-                    label: "Blood Pressure",
-                    value: "88mmHg",
-                    isBold: true,
-                    fontSize: 20,
-                  ),
                 ),
-              ),
-              const SizedBox(height: 45),
-              // padding
-              Padding(
-                // left and right padding
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: FullWidthCard(
-                  label: "Doctor recommendations",
-                  value: "You are in good health conditions mummy",
-                  isBold: true,
-                  fontSize: 18,
-                ),
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => RecordEntryDialog(),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFDC6891),
-                  textStyle: const TextStyle(color: Colors.white),
-                ),
-                child: const Text('Add Record'),
               ),
             ],
           ),
         ),
       ),
-    );
-  }
-}
-
-class DashboardCard extends StatelessWidget {
-  final String label;
-  final String value;
-  final bool isBold;
-  final double fontSize;
-
-  const DashboardCard({super.key, required this.label, required this.value, this.isBold = false, this.fontSize = 14});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 160,
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: Color(0xFFDC6891)),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: TextStyle(
-              color: const Color(0xFF5877A1),
-              fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-              fontSize: fontSize,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            value,
-            style: const TextStyle(
-              color: Color(0xFF5877A1),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class FullWidthCard extends StatelessWidget {
-  final String label;
-  final String value;
-  final bool isBold;
-  final double fontSize;
-
-  FullWidthCard({required this.label, required this.value, this.isBold = false, this.fontSize = 14});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: Color(0xFFDC6891)),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: TextStyle(
-              color: const Color(0xFF5877A1),
-              fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-              fontSize: fontSize,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            value,
-            style: const TextStyle(
-              color: Color(0xFF58CF99),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class RecordEntryDialog extends StatefulWidget {
-  const RecordEntryDialog({super.key});
-
-  @override
-  _RecordEntryDialogState createState() => _RecordEntryDialogState();
-}
-
-class _RecordEntryDialogState extends State<RecordEntryDialog> {
-  final TextEditingController systolicController = TextEditingController();
-  final TextEditingController diastolicController = TextEditingController();
-  final TextEditingController bloodSugarController = TextEditingController();
-  final TextEditingController heightController = TextEditingController();
-  final TextEditingController weightController = TextEditingController();
-  final TextEditingController dateController = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: const Text('Add Health Record'),
-      content: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const SizedBox(height: 8),
-            const Text("Blood Pressure", style: TextStyle(fontSize: 16)),
-            Row(
-              children: [
-                Flexible(
-                  child: TextField(
-                    controller: systolicController,
-                    decoration: const InputDecoration(
-                      labelText: 'Systolic Reading',
-                      hintText: 'e.g. 120',
-                    ),
-                    keyboardType: TextInputType.number,
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Flexible(
-                  child: TextField(
-                    controller: diastolicController,
-                    decoration: const InputDecoration(
-                      labelText: 'Diastolic Reading',
-                      hintText: 'e.g. 80',
-                    ),
-                    keyboardType: TextInputType.number,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            const Text("Blood Sugar Level", style: TextStyle(fontSize: 16)),
-            TextField(
-              controller: bloodSugarController,
-              decoration: const InputDecoration(
-                labelText: 'Blood Sugar Level',
-                hintText: 'e.g. 120 mg/dL',
-              ),
-            ),
-            const SizedBox(height: 16),
-            const Text("Height and Weight", style: TextStyle(fontSize: 16)),
-            Row(
-              children: [
-                Flexible(
-                  child: TextField(
-                    controller: heightController,
-                    decoration: const InputDecoration(
-                      labelText: 'Height',
-                      hintText: 'e.g. 160 cm',
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Flexible(
-                  child: TextField(
-                    controller: weightController,
-                    decoration: const InputDecoration(
-                      labelText: 'Weight',
-                      hintText: 'e.g. 65 Kg',
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            const Text("Date", style: TextStyle(fontSize: 16)),
-            TextField(
-              controller: dateController,
-              decoration: const InputDecoration(
-                labelText: 'Date (yyyy-mm-dd)',
-                hintText: 'e.g. 2023-08-15',
-              ),
-            ),
-          ],
-        ),
-      ),
-      actions: [
-        TextButton(
-          onPressed: () {
-            // Add record logic
-            Navigator.pop(context);
-          },
-          child: const Text('Add'),
-        ),
-        TextButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text('Cancel'),
-        ),
-      ],
     );
   }
 }
