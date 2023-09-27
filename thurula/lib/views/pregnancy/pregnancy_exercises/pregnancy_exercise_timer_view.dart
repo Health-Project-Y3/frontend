@@ -61,7 +61,6 @@ List<String> exerciseNamesT2 = [
   "Leg Lift"
 ];
 
-
 // second trimester exercise descriptions
 List<List<String>> exerciseStepsT2 = [
   // Step Back
@@ -144,6 +143,7 @@ List<List<String>> exerciseStepsT3 = [
 
 class ExerciseTimerView extends StatelessWidget {
   final String exercise;
+
   const ExerciseTimerView({super.key, required this.exercise});
 
   @override
@@ -156,6 +156,7 @@ class ExerciseTimerView extends StatelessWidget {
 
 class TimerPage extends StatefulWidget {
   final String exercise;
+
   const TimerPage({super.key, required this.exercise});
 
   @override
@@ -163,9 +164,10 @@ class TimerPage extends StatefulWidget {
 }
 
 class _TimerPageState extends State<TimerPage> {
-
   final String exercise;
+
   _TimerPageState(this.exercise);
+
   // final Duration _initialDuration = const Duration(seconds: 45);
   // Duration _remainingDuration = const Duration(seconds: 45);
   Duration _elapsedDuration = Duration.zero;
@@ -192,12 +194,12 @@ class _TimerPageState extends State<TimerPage> {
         timer.cancel();
       } else if (_isPaused) {
         // Do nothing, timer is paused
-      // } else if (_remainingDuration.inMilliseconds <= 0) {
-      //   setState(() {
-      //     _isRunning = false;
-      //     _isPaused = false;
-      //   });
-      //   timer.cancel();
+        // } else if (_remainingDuration.inMilliseconds <= 0) {
+        //   setState(() {
+        //     _isRunning = false;
+        //     _isPaused = false;
+        //   });
+        //   timer.cancel();
       } else {
         setState(() {
           // _remainingDuration -= const Duration(milliseconds: 100);
@@ -242,15 +244,20 @@ class _TimerPageState extends State<TimerPage> {
                 color: Color.fromARGB(255, 220, 104, 145),
                 fontWeight: FontWeight.bold,
               )
-          //     padding: const EdgeInsets.only(bottom: 10),
-          ),
+              //     padding: const EdgeInsets.only(bottom: 10),
+              ),
           content: SingleChildScrollView(
             child: Column(
               children: [
                 // sized box
                 const SizedBox(height: 15),
                 // get exercise steps
-                for (var i = 0; i < _getExerciseDesc(exercise.split(',')[0], exercise.split(',')[1]).length; i++)
+                for (var i = 0;
+                    i <
+                        _getExerciseDesc(
+                                exercise.split(',')[0], exercise.split(',')[1])
+                            .length;
+                    i++)
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10),
                     child: Row(
@@ -265,7 +272,7 @@ class _TimerPageState extends State<TimerPage> {
                           ),
                           child: Center(
                             child: Text(
-                              (i+1).toString(),
+                              (i + 1).toString(),
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -277,7 +284,8 @@ class _TimerPageState extends State<TimerPage> {
                         // text
                         Expanded(
                           child: Text(
-                            _getExerciseDesc(exercise.split(',')[0], exercise.split(',')[1])[i],
+                            _getExerciseDesc(exercise.split(',')[0],
+                                exercise.split(',')[1])[i],
                             style: const TextStyle(
                               color: Color.fromARGB(255, 80, 78, 78),
                               // fontWeight: FontWeight.bold,
@@ -320,13 +328,12 @@ class _TimerPageState extends State<TimerPage> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const ExercisesView()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const ExercisesView()));
           },
         ),
-        title: Text(_getExerciseName(exercise.split(',')[0], exercise.split(',')[1])),
+        title: Text(
+            _getExerciseName(exercise.split(',')[0], exercise.split(',')[1])),
         actions: [
           IconButton(
             icon: const Icon(Icons.info),
@@ -334,7 +341,7 @@ class _TimerPageState extends State<TimerPage> {
           ),
         ],
       ),
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.white,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -343,7 +350,7 @@ class _TimerPageState extends State<TimerPage> {
             _getExerciseImage(trimester, index),
             width: 500,
             height: 450,
-          //   crop
+            //   crop
             fit: BoxFit.cover,
           ),
           const SizedBox(height: 50),
@@ -361,7 +368,9 @@ class _TimerPageState extends State<TimerPage> {
               ElevatedButton(
                 onPressed: resetTimer,
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: const Color.fromARGB(255, 220, 104, 145), backgroundColor: Colors.white, shape: const CircleBorder(),
+                  foregroundColor: const Color.fromARGB(255, 220, 104, 145),
+                  backgroundColor: Colors.white,
+                  shape: const CircleBorder(),
                   padding: const EdgeInsets.all(15),
                 ),
                 child: const Icon(Icons.replay),
@@ -370,56 +379,39 @@ class _TimerPageState extends State<TimerPage> {
               ElevatedButton(
                 onPressed: toggleTimer,
                 style: ElevatedButton.styleFrom(
-                  shape: const CircleBorder(), backgroundColor: const Color.fromARGB(255, 220, 104, 145),
+                  shape: const CircleBorder(),
+                  backgroundColor: const Color.fromARGB(255, 220, 104, 145),
                   padding: const EdgeInsets.all(25),
                 ),
-                child: Icon(_isRunning && !_isPaused ? Icons.pause : Icons.play_arrow),
+                child: Icon(
+                    _isRunning && !_isPaused ? Icons.pause : Icons.play_arrow),
               ),
               const SizedBox(width: 10),
-            // if index is 4
-            // //   done button
-            //   ElevatedButton(
-            //     onPressed: () {
-            //       Navigator.push(
-            //           context,
-            //           MaterialPageRoute(
-            //               builder: (context) => const ExercisesView()));
-            //     },
-            //     style: ElevatedButton.styleFrom(
-            //       foregroundColor: Colors.white,
-            //       backgroundColor: const Color.fromARGB(255, 88, 119, 161),
-            //       shape: const CircleBorder(),
-            //       padding: const EdgeInsets.all(15),
-            //     ),
-            //     child: const Icon(Icons.done),
-            //   ),
-            //   next button
+              //   next button
               ElevatedButton(
-                onPressed: () {
-                  // if index is < 5, go to next exercise
-                  if (int.parse(index) < 5) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ExerciseTimerView(exercise: '$trimester, ${int.parse(index)+1}')));
-                  }
-                  else {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const ExercisesView()));
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: const Color.fromARGB(255, 88, 119, 161),
-                  shape: const CircleBorder(),
-                  padding: const EdgeInsets.all(15),
-                ),
-                child: const Icon(Icons.done)
-              //     forward of index is less than 5, done if index is 4
-              //   Icon(int.parse(index) < 5 ? Icons.arrow_forward : Icons.done),
-              ),
+                  onPressed: () {
+                    // if index is < 5, go to next exercise
+                    if (int.parse(index) < 5) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ExerciseTimerView(
+                                  exercise:
+                                      '$trimester, ${int.parse(index) + 1}')));
+                    } else {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ExercisesView()));
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: const Color.fromARGB(255, 88, 119, 161),
+                    shape: const CircleBorder(),
+                    padding: const EdgeInsets.all(15),
+                  ),
+                  child: const Icon(Icons.done)),
             ],
           ),
         ],
@@ -432,11 +424,11 @@ class _TimerPageState extends State<TimerPage> {
 String _getExerciseName(String trimester, String index) {
   switch (trimester) {
     case '1':
-      return exerciseNamesT1[int.parse(index)-1];
+      return exerciseNamesT1[int.parse(index) - 1];
     case '2':
-      return exerciseNamesT2[int.parse(index)-1];
+      return exerciseNamesT2[int.parse(index) - 1];
     case '3':
-      return exerciseNamesT3[int.parse(index)-1];
+      return exerciseNamesT3[int.parse(index) - 1];
     default:
       return "Default";
   }
@@ -446,11 +438,11 @@ String _getExerciseName(String trimester, String index) {
 List<String> _getExerciseDesc(String trimester, String index) {
   switch (trimester) {
     case '1':
-      return exerciseStepsT1[int.parse(index)-1];
+      return exerciseStepsT1[int.parse(index) - 1];
     case '2':
-      return exerciseStepsT2[int.parse(index)-1];
+      return exerciseStepsT2[int.parse(index) - 1];
     case '3':
-      return exerciseStepsT3[int.parse(index)-1];
+      return exerciseStepsT3[int.parse(index) - 1];
     default:
       return ["Default"];
   }
