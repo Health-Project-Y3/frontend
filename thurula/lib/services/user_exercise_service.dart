@@ -30,10 +30,20 @@ class UserExerciseService {
   static Future<List<UserExercise>> getUserExercises(
       String id, DateTime? startDate, DateTime? endDate) async {
     try {
-      var response = await http.get(
-        Uri.parse(getRoute("exercise/user/$id")),
-        headers: {'Content-Type': 'application/json'},
-      );
+      // response if theres start and end date if not null and without start and end date
+      http.Response response;
+      if (startDate != null && endDate != null) {
+        response = await http.get(
+          Uri.parse(
+              getRoute("exercise/user/$id?startDate=$startDate&endDate=$endDate")),
+          headers: {'Content-Type': 'application/json'},
+        );
+      } else {
+        response = await http.get(
+          Uri.parse(getRoute("exercise/user/$id")),
+          headers: {'Content-Type': 'application/json'},
+        );
+      }
 
       // check the status code of the response
       if (response.statusCode == 200) {
