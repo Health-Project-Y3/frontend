@@ -2,39 +2,23 @@ import 'package:flutter/material.dart';
 
 void main() {
   runApp(MaterialApp(
-    home: AddPressurePage(),
+    home:WaterMonitorPage(),
   ));
 }
 
-class AddPressurePage extends StatefulWidget {
+class WaterMonitorPage extends StatefulWidget {
   @override
-  _AddPressurePageState createState() => _AddPressurePageState();
+  _WaterMonitorPageState createState() => _WaterMonitorPageState();
 }
 
-class _AddPressurePageState extends State<AddPressurePage> {
-  DateTime? _selectedDate;
-
-  void _showDatePicker() async {
-    final pickedDate = await showDatePicker(
-      context: context,
-      initialDate: _selectedDate ?? DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-    );
-
-    if (pickedDate != null && pickedDate != _selectedDate) {
-      setState(() {
-        _selectedDate = pickedDate;
-      });
-    }
-  }
-
+class _WaterMonitorPageState extends State<WaterMonitorPage> {
+  String? _selectedOption; // To store the selected dropdown option
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Blood Pressure Monitor'),
+        title: Text('Daily Water Intake'),
         backgroundColor: Color.fromARGB(255, 220, 104, 145),
       ),
       body: SingleChildScrollView(
@@ -48,7 +32,7 @@ class _AddPressurePageState extends State<AddPressurePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "What's your reading ?",
+              "How Much Water Do You Need?",
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -57,62 +41,83 @@ class _AddPressurePageState extends State<AddPressurePage> {
                   ),
                   SizedBox(height: 14),
                   Text(
-                    "Check your BP regulary at home and ask your healthcare provider what to do if your BP is high.Eat healthy foods and avoid foods that contain high levels of slat, like soup and canned foods which could raise your BP.Staying active for 30 mins a day can help manage your weight, reduce stress and prevent problems like preeclampsia",
+                    "During pregnancy, your body has increased demands, and one crucial aspect is staying well-hydrated. Just like your growing baby needs extra calories, it also requires extra fluids to support its development. While every pregnancy is unique, here's a general guideline to help you maintain optimal hydration",
                     style: TextStyle(
                       fontSize: 14,
                     ),
                   ),
                   SizedBox(height: 28),
                   Text(
-                    "0/0 ",
+                    "5 Glasses",
                     style: TextStyle(
                       fontSize: 58,
                       fontWeight: FontWeight.bold,
                       color: Color.fromARGB(255, 88, 119, 161),
                     ),
                   ),
-
+                  SizedBox(height: 28),
+                  Text(
+                    "Gained in the last week 5kg",
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
                 ],
               ),
             ),
+
+
             // Box 2 (Input field to enter weight)
             Container(
               height: MediaQuery.of(context).size.height * 0.2, // Adjust the height here
               color: Colors.white,
-              padding: const EdgeInsets.fromLTRB(24.0, 18.0, 24.0, 6.0),
+              padding: EdgeInsets.all(24),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: [SizedBox(height: 8),
 
-                  SizedBox(height: 8),
-                  TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Blood Pressure (mmHg)',
-                      labelStyle: TextStyle(color: Colors.black),
-
-                    ),
+              DropdownButtonFormField<String>(
+                value: _selectedOption,
+                onChanged: (newValue) {
+                  setState(() {
+                    _selectedOption = newValue;
+                  });
+                },
+                decoration: InputDecoration(
+                  labelText: 'Select Option',
+                ),
+                items: [
+                  DropdownMenuItem<String>(
+                    value: '1 Glass (240ml)',
+                    child: Text('1 Glass (240ml)'),
                   ),
-
-
-
-                  TextFormField(
-                    readOnly: true,
-                    onTap: _showDatePicker,
-                    decoration: InputDecoration(
-                      labelText: 'Date',
-
-                      labelStyle: TextStyle(color: Colors.black),
-                      suffixIcon: Icon(Icons.calendar_today, color: Colors.black),
-                    ),
-                    controller: TextEditingController(
-                      text: _selectedDate != null
-                          ? "${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}"
-                          : "",
-                    ),
+                  DropdownMenuItem<String>(
+                    value: '2 Glass (480ml)',
+                    child: Text('2 Glass (480ml)'),
+                  ),
+                  DropdownMenuItem<String>(
+                    value: '3 Glass (720ml)',
+                    child: Text('3 Glass (720ml)'),
+                  ),
+                  DropdownMenuItem<String>(
+                    value: '1 Liter (1000ml)',
+                    child: Text('1 Liter (1000ml)'),
+                  ),
+                  DropdownMenuItem<String>(
+                    value: '2 Liters (2000ml)',
+                    child: Text('2 Liters (2000ml)'),
+                  ),
+                  DropdownMenuItem<String>(
+                    value: '3 Liters (3000ml)',
+                    child: Text('3 Liters (3000ml)'),
                   ),
                 ],
               ),
+                ],
+              ),
             ),
+
+
 
 // Button
             Container(

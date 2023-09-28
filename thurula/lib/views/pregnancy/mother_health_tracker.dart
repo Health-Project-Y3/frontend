@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:thurula/views/pregnancy/add_weight.dart';
 import 'package:thurula/views/pregnancy/add_pressure.dart';
+import 'package:thurula/views/pregnancy/add_water.dart';
 void main() {
   runApp(MaterialApp(
     home: MotherHealthTracker(),
@@ -69,7 +70,7 @@ class _HealthTrackerState extends State<MotherHealthTracker> {
                     );
                   },
                   child: Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.fromLTRB(18.0, 18.0, 18.0,2.0),
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
@@ -94,7 +95,7 @@ class _HealthTrackerState extends State<MotherHealthTracker> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.all(16.0),
+                                    padding: const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 4.0),
                                     child: Text(
                                       'I weigh',
                                       style: TextStyle(
@@ -104,7 +105,8 @@ class _HealthTrackerState extends State<MotherHealthTracker> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.all(16.0),
+                                    padding: const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 6.0),
+
                                     child: Text(
                                       '65kg',
                                       style: TextStyle(
@@ -115,7 +117,7 @@ class _HealthTrackerState extends State<MotherHealthTracker> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.all(16.0),
+                                    padding: const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 2.0),
                                     child: Text(
                                       'Week on Week Gain - 1.5kg',
                                       style: TextStyle(
@@ -144,13 +146,17 @@ class _HealthTrackerState extends State<MotherHealthTracker> {
                 ),
 
 
-
-
                 // Box 2 (Weight Growth Chart)
                 Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: WeightChartBox(),
-                         ),
+                  padding: const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 2.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+
+                      WeightChartBox(),
+                    ],
+                  ),
+                ),
                 // Box 3
                 GestureDetector(
                   onTap: () {
@@ -162,7 +168,7 @@ class _HealthTrackerState extends State<MotherHealthTracker> {
                     );
                   },
                   child: Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.fromLTRB(18.0, 18.0, 18.0,2.0),
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
@@ -187,7 +193,7 @@ class _HealthTrackerState extends State<MotherHealthTracker> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.all(16.0),
+                                    padding: const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 4.0),
                                     child: Text(
                                       'My Pressure Level',
                                       style: TextStyle(
@@ -197,7 +203,7 @@ class _HealthTrackerState extends State<MotherHealthTracker> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.all(16.0),
+                                    padding: const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 6.0),
                                     child: Text(
                                       '0/0',
                                       style: TextStyle(
@@ -208,9 +214,9 @@ class _HealthTrackerState extends State<MotherHealthTracker> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.all(16.0),
+                                    padding: const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 2.0),
                                     child: Text(
-                                      'Week on Week Gain - 1.5kg',
+                                      'Week on Week Gain - 10',
                                       style: TextStyle(
                                         color: Color.fromARGB(255, 88, 119, 161),
                                         fontSize: 12.0,
@@ -235,29 +241,108 @@ class _HealthTrackerState extends State<MotherHealthTracker> {
                     ),
                   ),
                 ),
-
-
-                // Box 4 (Copy the above code with different content)
                 Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Container(
-                    width: 400,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 0.5,
-                          blurRadius: 3,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    // Add content for Box 4 here
+                  padding: const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 2.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+
+                      PressureChartBox(),
+                    ],
                   ),
                 ),
+
+                // Box 4 (Copy the above code with different content)
+                GestureDetector(
+                  onTap: () {
+                    // Navigate to the new page when the box is tapped
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => WaterMonitorPage(),
+                      ),
+                    );
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                        width: 400,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 0.5,
+                              blurRadius: 3,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+
+                          children: [
+                            Expanded(
+                              child: Column(
+
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 6.0),
+                                    child: Text(
+                                      'I Drank',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 88, 119, 161),
+                                        fontSize: 16.0,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 4.0),
+                                    child: Text(
+                                      '5 Glasses',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 88, 119, 161),
+                                        fontSize: 36.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 2.0),
+                                    child: Text(
+                                      'I need to Drink - 400ml/day',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 88, 119, 161),
+                                        fontSize: 12.0,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            // Container for the image with specified width and height
+                            Container(
+                              width: 180,
+                              height: 180,
+                              child: Image.asset(
+                                'assets/images/health_tracker/Water.png',
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
+
+
+
+
               ],
             ),
           ),
@@ -284,8 +369,8 @@ class WeightChartBox extends StatelessWidget {
           return Text('Error: ${snapshot.error}');
         } else {
           return Container(
-            width: 400,
-            height: 200,
+            width: 600,
+            height: 300,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(10.0),
@@ -298,12 +383,35 @@ class WeightChartBox extends StatelessWidget {
                 ),
               ],
             ),
-            child: WeightChartView(data: snapshot.data),
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 16.0), // Adjust padding as needed
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Your Weight Chart',
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: Color.fromARGB(255, 88, 119, 161),
+
+                      fontWeight: FontWeight.normal,
+                    ),
+                    textAlign: TextAlign.left, // Align the text to the left
+                  ),
+                  SizedBox(height: 16.0), // Adjust spacing
+
+                ],
+              ),
+            ),
           );
+
+
         }
       },
     );
   }
+
 
   Future<List<BarChartGroupData>> fetchData() async {
     // Simulate fetching data from an API or database
@@ -325,9 +433,9 @@ class WeightChartView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 380,
-      height: 300,
-      margin: EdgeInsets.all(10),
+      width: 200,
+      height: 200,
+      margin: EdgeInsets.all(4),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10.0),
@@ -342,12 +450,121 @@ class WeightChartView extends StatelessWidget {
           barGroups: data,
           barTouchData: BarTouchData(enabled: false),
           //axisTitleData: FlAxisTitleData(show: false),
-          groupsSpace: 12,
+          groupsSpace: 2,
         ),
       ),
     );
   }
 }
+
+class PressureChartBox extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<BarChartGroupData>>(
+      future: fetchData(), // Replace with your data-fetching function
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator(); // Loading indicator
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          return Container(
+            width: 600,
+            height: 300,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 0.5,
+                  blurRadius: 3,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 16.0), // Adjust padding as needed
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Your Blood Pressure Chart',
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: Color.fromARGB(255, 88, 119, 161),
+
+                      fontWeight: FontWeight.normal,
+                    ),
+                    textAlign: TextAlign.left, // Align the text to the left
+                  ),
+                  SizedBox(height: 16.0), // Adjust spacing
+
+                ],
+              ),
+            ),
+          );
+
+
+        }
+      },
+    );
+  }
+
+
+  Future<List<BarChartGroupData>> fetchData() async {
+    // Simulate fetching data from an API or database
+    await Future.delayed(Duration(seconds: 2)); // Simulate a 2-second delay
+    // Replace this with your actual data-fetching logic
+    return [
+      //BarChartGroupData(x: 1, barRods: [BarChartRodData(y: 150, color: Colors.blue)]),
+      //BarChartGroupData(x: 2, barRods: [BarChartRodData(y: 152, color: Colors.blue)]),
+      // ... add more data here
+    ];
+  }
+}
+
+class PressureChartView extends StatelessWidget {
+  final List<BarChartGroupData>? data;
+
+  PressureChartView({this.data});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 200,
+      height: 200,
+      margin: EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10.0),
+        border: Border.all(color: Colors.white),
+      ),
+      child: BarChart(
+
+        BarChartData(
+          gridData: FlGridData(show: false),
+          titlesData: FlTitlesData(show: false),
+          borderData: FlBorderData(show: false),
+          barGroups: data,
+          barTouchData: BarTouchData(enabled: false),
+          //axisTitleData: FlAxisTitleData(show: false),
+          groupsSpace: 2,
+        ),
+      ),
+    );
+  }
+}
+
+
+
+
+
+
+
+
+
 
 class ModalContent extends StatelessWidget {
   final Function closeModal;

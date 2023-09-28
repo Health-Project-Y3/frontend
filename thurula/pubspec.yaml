@@ -89,6 +89,7 @@ flutter:
     - assets/images/mom.png
     - assets/images/health_tracker/Weight.png
     - assets/images/health_tracker/Blood.png
+    - assets/images/health_tracker/Water.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

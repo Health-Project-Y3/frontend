@@ -1,12 +1,33 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MaterialApp(
-    home: WeightMonitorPage(),
-  ));
+
+
+class WeightMonitorPage extends StatefulWidget {
+  @override
+  _WeightMonitorPageState createState() => _WeightMonitorPageState();
 }
 
-class WeightMonitorPage extends StatelessWidget {
+class _WeightMonitorPageState extends State<WeightMonitorPage> {
+  DateTime? _selectedDate;
+
+  void _showDatePicker() async {
+    final pickedDate = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate ?? DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+
+    if (pickedDate != null && pickedDate != _selectedDate) {
+      setState(() {
+        _selectedDate = pickedDate;
+      });
+    }
+  }
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +69,7 @@ class WeightMonitorPage extends StatelessWidget {
                       color: Color.fromARGB(255, 88, 119, 161),
                     ),
                   ),
-                  SizedBox(height: 28),
+                  SizedBox(height: 24),
                   Text(
                     "Gained in the last week 5kg",
                     style: TextStyle(
@@ -62,20 +83,35 @@ class WeightMonitorPage extends StatelessWidget {
             Container(
               height: MediaQuery.of(context).size.height * 0.2, // Adjust the height here
               color: Colors.white,
-              padding: EdgeInsets.all(24),
+              padding: const EdgeInsets.fromLTRB(24.0, 18.0, 24.0, 6.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Enter Your Weight",
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
+
                   SizedBox(height: 8),
                   TextField(
                     decoration: InputDecoration(
                       labelText: 'Weight (kg/lbs)',
+                      labelStyle: TextStyle(color: Colors.black),
+
+                    ),
+                  ),
+
+
+
+                  TextFormField(
+                    readOnly: true,
+                    onTap: _showDatePicker,
+                    decoration: InputDecoration(
+                      labelText: 'Date',
+
+                      labelStyle: TextStyle(color: Colors.black),
+                      suffixIcon: Icon(Icons.calendar_today, color: Colors.black),
+                    ),
+                    controller: TextEditingController(
+                      text: _selectedDate != null
+                          ? "${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}"
+                          : "",
                     ),
                   ),
                 ],
