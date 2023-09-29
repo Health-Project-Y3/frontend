@@ -216,7 +216,7 @@ class PregnancyHomeView extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const ExercisesView(),
+                              builder: (context) => ExercisesView(),
                             ),
                           );
                         },
