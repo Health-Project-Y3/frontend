@@ -1,6 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:thurula/services/local_service.dart';
+import 'package:thurula/services/user_exercise_service.dart';
 import 'package:thurula/views/pregnancy/pregnancy_exercises/pregnancy_exercise_recommendations_view.dart';
+
+import '../../../models/user_exercise_model.dart';
 
 // first trimester exercises
 List<String> exerciseNamesT1 = [
@@ -140,6 +144,41 @@ List<List<String>> exerciseStepsT3 = [
     'Lift your top leg and flex your foot and then extend the leg straight back behind you, working into the back of the leg and glute.',
   ]
 ];
+
+
+DateTime today = DateTime.now();
+// change today to 11 59 pm
+DateTime todayEnd = DateTime(today.year, today.month, today.day, 23, 59, 59);
+DateTime todayStart = DateTime(today.year, today.month, today.day-1, 23, 59, 59);
+
+late Future<String> userId;
+late Future<List<UserExercise>> userExercises;
+
+// get ID of user exercise for that day
+Future<String?> getUserExerciseID() async {
+  // get user
+  userId = LocalService.getCurrentUserId();
+  // get user exercises
+  userExercises = UserExerciseService.getUserExercises(await userId, todayStart, todayEnd);
+
+  // if userExercises is empty
+  if (userExercises == null) {
+    // print ("userExercises is null");
+    // create new user exercise
+    UserExercise newUserExercise = UserExercise(
+      userId: await userId,
+      minutesExercised: 0,
+      date: today,
+    );
+    // add user exercise
+    UserExerciseService.createUserExercise(newUserExercise);
+    // get user exercises
+    userExercises = UserExerciseService.getUserExercises(await userId, todayStart, todayEnd);
+  }
+  // return first exercise ID
+  return userExercises.then((value) => value[0].id);
+}
+
 
 class ExerciseTimerView extends StatelessWidget {
   final String exercise;
@@ -387,9 +426,22 @@ class _TimerPageState extends State<TimerPage> {
                     _isRunning && !_isPaused ? Icons.pause : Icons.play_arrow),
               ),
               const SizedBox(width: 10),
-              //   next button
+              // next button
               ElevatedButton(
                   onPressed: () {
+                    // get time from timer
+                    String time = formatDuration(_elapsedDuration);
+                    // get currentDuration
+                    Future<int> currentDuration = LocalService.getDailyExerciseDuration();
+                    // if currentDuration is not set
+                    if (currentDuration == null) {
+                      // set currentDuration to 0
+                      LocalService.setDailyExerciseDuration(0);
+                      // set currentDuration to 0
+                      currentDuration = LocalService.getDailyExerciseDuration();
+                    }
+                    currentDuration.then((value) => LocalService.setDailyExerciseDuration(value + int.parse(time.split(':')[0])));
+
                     // if index is < 5, go to next exercise
                     if (int.parse(index) < 5) {
                       Navigator.push(
@@ -399,6 +451,9 @@ class _TimerPageState extends State<TimerPage> {
                                   exercise:
                                       '$trimester, ${int.parse(index) + 1}')));
                     } else {
+                      // getUserExerciseID
+                      currentDuration.then((value) => LocalService.setDailyExerciseDuration(value + int.parse(time.split(':')[0])));
+                      getUserExerciseID().then((value) => UserExerciseService.patchUserExercise(value!, "minutesExercised", LocalService.getDailyExerciseDuration()));
                       Navigator.push(
                           context,
                           MaterialPageRoute(
