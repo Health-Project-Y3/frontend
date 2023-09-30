@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:thurula/extensions/buildcontext/loc.dart';
 import 'package:thurula/providers/user_provider.dart';
 import 'package:thurula/services/auth/user_service.dart';
-import 'package:thurula/services/local_service.dart';
+import 'package:thurula/views/signup/sign_up_welcome_view.dart';
 import 'package:thurula/views/welcome_view.dart';
-import 'package:thurula/views/signup/sign_up_view.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -54,19 +54,19 @@ class _LoginViewState extends State<LoginView> {
                         child: TextFormField(
                           style: const TextStyle(color: Colors.grey),
                           controller: usernameController,
-                          decoration: const InputDecoration(
-                            hintText: 'Username',
-                            hintStyle: TextStyle(color: Colors.grey),
+                          decoration:  InputDecoration(
+                            hintText: context.loc.login_page_username,
+                            hintStyle: const TextStyle(color: Colors.grey),
                             filled: true,
                             fillColor: Colors.white,
-                            enabledBorder: OutlineInputBorder(
+                            enabledBorder: const OutlineInputBorder(
                               borderSide: BorderSide(
                                   width: 2,
                                   color: Color.fromRGBO(220, 104, 145, 1)),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(15.0)),
                             ),
-                            border: OutlineInputBorder(
+                            border: const OutlineInputBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15.0)),
                                 borderSide: BorderSide(
@@ -76,7 +76,7 @@ class _LoginViewState extends State<LoginView> {
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your username';
+                              return context.loc.login_page_usernamePrompt;
                             }
                             return null;
                           },
@@ -92,12 +92,12 @@ class _LoginViewState extends State<LoginView> {
                           style: const TextStyle(color: Colors.grey),
                           controller: passwordController,
                           obscureText: true,
-                          decoration: const InputDecoration(
-                            hintText: 'Password',
-                            hintStyle: TextStyle(color: Colors.grey),
+                          decoration:  InputDecoration(
+                            hintText: context.loc.login_page_password,
+                            hintStyle: const TextStyle(color: Colors.grey),
                             filled: true,
                             fillColor: Colors.white,
-                            enabledBorder: OutlineInputBorder(
+                            enabledBorder: const OutlineInputBorder(
                               borderSide: BorderSide(
                                 width: 2,
                                 color: Color.fromARGB(255, 220, 104, 145),
@@ -105,7 +105,7 @@ class _LoginViewState extends State<LoginView> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(15.0)),
                             ),
-                            border: OutlineInputBorder(
+                            border: const OutlineInputBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15.0)),
                                 borderSide: BorderSide(
@@ -115,7 +115,7 @@ class _LoginViewState extends State<LoginView> {
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your password';
+                              return context.loc.login_page_passwordPrompt;
                             }
                             return null;
                           },
@@ -126,7 +126,7 @@ class _LoginViewState extends State<LoginView> {
                           left: 30,
                           top: 20,
                           right: 30,
-                          bottom: 0, // Add bottom padding
+                          bottom: 5,
                         ),
                         child: ElevatedButton(
                           onPressed: () async {
@@ -139,8 +139,7 @@ class _LoginViewState extends State<LoginView> {
                                 final userProvider = Provider.of<UserProvider>(
                                     context!,
                                     listen: false);
-                                final user = await UserService.getUser(
-                                    await LocalService.getCurrentUserId());
+                                final user = await UserService.getByUsername(usernameController.text);
                                 if (user != null) {
                                   userProvider.setUser(user);
                                 }
@@ -152,13 +151,13 @@ class _LoginViewState extends State<LoginView> {
                                                 usernameController.text)));
                               } else {
                                 ScaffoldMessenger.of(context!).showSnackBar(
-                                    const SnackBar(
-                                        content: Text('Invalid Credentials')));
+                                     SnackBar(
+                                        content:Text(context.loc.login_page_InvalidCredentials)));
                               }
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('Please fill input')),
+                                 SnackBar(
+                                    content: Text(context.loc.login_page_EmptyInputPrompt)),
                               );
                             }
                           },
@@ -173,9 +172,9 @@ class _LoginViewState extends State<LoginView> {
                               borderRadius: BorderRadius.circular(15.0),
                             ),
                           ),
-                          child: const Text(
-                            'Login',
-                            style: TextStyle(
+                          child: Text(
+                            context.loc.login_page_login_button,
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 20,
                             ),
@@ -187,18 +186,31 @@ class _LoginViewState extends State<LoginView> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const SignUpView(),
+                              builder: (context) => const RegisterWelcome(),
                             ),
                           );
                         },
-                        child: const Text(
-                          'Don\'t have an account? Register.',
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 220, 104, 145),
-                            fontSize: 14,
+                        child:  Text.rich(
+                          TextSpan(
+                            children: [
+                              TextSpan(
+                                text: context.loc.login_page_noAccountQuestion,
+                                style: const TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              TextSpan(
+                                text:  context.loc.login_page_register,
+                                style: const TextStyle(
+                                  color: Color.fromARGB(255, 220, 104, 145),
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ),
+                      )
                     ],
                   ),
                 ),
