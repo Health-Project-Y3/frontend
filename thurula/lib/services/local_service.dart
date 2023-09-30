@@ -19,4 +19,10 @@ class LocalService{
   static Future<String> getCurrentUserToken() async{
     return SharedPref.getString('currentUserToken');
   }
+  static void setDailyExerciseDuration(int duration){
+    SharedPref.setInt('dailyExerciseDuration', duration);
+  }
+  static Future<int> getDailyExerciseDuration() async{
+    return SharedPref.getInt('dailyExerciseDuration');
+  }
 }
