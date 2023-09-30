@@ -1,0 +1,85 @@
+{
+  "@@locale": "en",
+
+  "appTitle": "Thurula",
+
+ "@_COMMON": {
+    },
+
+    "back": "Back",
+    "next": "Next",
+    "save": "Save",
+    "cancel": "Cancel",
+
+  "@_LOGIN_PAGE": {
+    },
+
+  "login_page_username": "Username",
+  "login_page_password": "Password",
+  "login_page_login_button": "Login",
+  "login_page_register": "Register",
+  "login_page_noAccountQuestion": "Don't have an account?",
+  "login_page_usernamePrompt": "Please enter your username",
+  "login_page_passwordPrompt": "Please enter your password",
+  "login_page_InvalidCredentials": "Invalid Credentials",
+  "login_page_EmptyInputPrompt": "Please fill input",
+
+   "@_WELCOME_PAGE": {
+    },
+
+   "welcome_page_Caption1": "New Life, Tiny Steps",
+   "welcome_page_Caption2": "We just need a few quick answers from you to personalize your experience",
+   "welcome_page_GetStartedButton": "Get Started",
+   "welcome_page_AlreadyHaveAccount": "Already have an account?",
+   "welcome_page_SignIn": "Sign In",
+
+    "@_REGISTER_PAGE": {
+     },
+
+    "register_page_FirstName": "First Name",
+    "register_page_LastName": "Last Name",
+    "register_page_Email": "Email",
+    "register_page_PasswordConfirm": "Confirm Password",
+
+    "register_page_UsernameTakenError": "Sorry, this username is already taken",
+    "register_page_InvalidError": "Invalid",
+    "register_page_ToastError": "Something went wrong, please try again",
+
+    "@_REGISTER_PAGE_2": {
+         },
+    "register_page2_Q1": "I am currently pregnant",
+    "register_page2_Q2": "I am a new parent",
+
+    "@_REGISTER_PAGE_3": {
+         },
+    "register_page3_Q1": "When was your baby born?",
+    "register_page3_Q2": "What is the gender of your baby?",
+    "register_page3_Q1placeholder": "Enter Baby's Birthday",
+    "register_page3_Q2placeholder": "Enter your baby's name",
+    "register_page3_Male": "Male",
+    "register_page3_Female": "Female",
+
+    "@REGISTER_PAGE_4": {
+         },
+    "register_page4_C1": "Do you know your baby's due date?",
+    "register_page4_C2": "Enter due date given by doctor",
+    "register_page4_Q1": "Enter Due Date",
+    "register_page4_OR": "OR",
+    "register_page4_C3": "Calculate your due date",
+    "register_page4_C4": "Enter the day of your last period",
+    "register_page4_Q2": "Enter Last Period Date",
+
+
+
+  "homePage": "Home Page",
+  "profile": "Profile",
+  "settings": "Settings",
+  "notifications": "Notifications",
+  "childCareTips": "Child Care Tips",
+  "@childCareTips": {
+    "description": "Child care tips",
+    "type": "text",
+    "placeholders": {}
+  },
+  "@@last_modified": "2023-09-24T05:32:18.123Z"
+}

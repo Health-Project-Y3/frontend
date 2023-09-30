@@ -1,0 +1,84 @@
+{
+  "@@locale": "si",
+
+  "appTitle": "තුරුල",
+
+  "@_COMMON": {
+    },
+
+    "back": "ආපසු යන්න",
+    "next": "ඊළඟ",
+    "save": "සුරකින්න",
+    "cancel": "අවලංගු කරන්න",
+
+    "@_LOGIN_PAGE": {
+      },
+
+  "login_page_username": "පරිශීලක නාමය",
+  "login_page_password": "මුරපදය",
+  "login_page_login_button": "ඇතුල් වන්න",
+  "login_page_register": "ලියාපදිංචි වන්න",
+  "login_page_noAccountQuestion": "ගිණුමක් නැතිනම්?",
+  "login_page_usernamePrompt": "ඔබේ පරිශීලක නාමය ඇතුළත් කරන්න",
+  "login_page_passwordPrompt": "ඔබේ මුරපදය ඇතුළත් කරන්න",
+  "login_page_InvalidCredentials": "වලංගු නොවන සහතික",
+  "login_page_EmptyInputPrompt": "කරුණාකර පූරණය කරන්න",
+
+  "@_WELCOME_PAGE": {
+      },
+
+  "welcome_page_Caption1": "නව ජීවිතය, කුඩා පියවර",
+  "welcome_page_Caption2": "ඔබේ අත්දැකීම් පුද්ගලීකරණය කිරීම සඳහා අපට ඔබෙන් ඉක්මන් පිළිතුරු කිහිපයක් අවශ්යි",
+  "welcome_page_GetStartedButton": "පටන් ගන්න",
+  "welcome_page_AlreadyHaveAccount": "දැනටමත් ගිණුමක් තියෙනවද?",
+  "welcome_page_SignIn": "ලොග් වන්න",
+
+    "@_REGISTER_PAGE": {
+         },
+
+    "register_page_FirstName": "මුල් නම",
+    "register_page_LastName": "වාසගම",
+    "register_page_Email": "ඊමේල් ලිපිනය",
+    "register_page_PasswordConfirm": "මුරපදය තහවුරු කරන්න",
+
+    "register_page_UsernameTakenError": "කණගාටුයි, මෙම පරිශීලක නාමය දැනටමත් ලබාගෙන ඇත",
+    "register_page_InvalidError": "අවලංගුයි",
+    "register_page_ToastError": "මොකක් හරි වැරදුනා, කරුණාකර නැවත උත්සාහ කරන්න",
+
+    "@_REGISTER_PAGE_2": {
+         },
+    "register_page2_Q1": "මම දැන් ගැබිනියක්",
+    "register_page2_Q2": "මම අලුත් මවක්",
+
+    "@_REGISTER_PAGE_3": {
+         },
+    "register_page3_Q1": "ඔබේ දරුවා ඉපදුණේ කවදාද?",
+    "register_page3_Q2": "ඔබේ දරුවාගේ ලිංගය කුමක්ද?",
+    "register_page3_Q1placeholder": "දරුවාගේ උපන් දිනය",
+    "register_page3_Q2placeholder": "දරුවාගේ නම ",
+    "register_page3_Male": "පිරිමි",
+    "register_page3_Female": "ගැහැනු",
+
+    "@REGISTER_PAGE_4": {
+         },
+    "register_page4_C1": "ඔබේ දරුවාගේ නියමිත දිනය දන්නවාද?",
+    "register_page4_C2": "වෛද්‍යවරයා විසින් දෙන ලද නියමිත දිනය",
+    "register_page4_Q1": "නියමිත දිනය ඇතුළත් කරන්න",
+    "register_page4_OR": "හෝ",
+    "register_page4_C3": "ඔබේ නියමිත දිනය ගණනය කරන්න",
+    "register_page4_C4": "ඔබේ අවසාන ඔසප් වීමේ දිනය ඇතුළත් කරන්න",
+    "register_page4_Q2": "අවසාන ඔසප් වීමේ දිනය",
+
+
+  "homePage": "ප්‍රධාන පිටුව",
+  "profile": "පැතිකඩ",
+  "settings": "සැකසුම්",
+  "notifications": "දැනුම් දීම",
+  "childCareTips": "ලාමා පිරිසිදු කිරීම සඳහා ඉඟි",
+  "@childCareTips": {
+    "description": "Child care tips",
+    "type": "text",
+    "placeholders": {}
+  },
+  "@@last_modified": "2023-09-24T05:32:18.123Z"
+}

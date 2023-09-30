@@ -1,21 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// import 'package:thurula/views/widgets/wave_widget.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 
-import 'HomeView.dart';
-import 'Question2View.dart';
-// import 'package:provider/provider.dart';
+import '../HomeView.dart';
 
 class Question1View extends StatelessWidget {
   const Question1View({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    final bool keyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
-    // final model = Provider.of<HomeModel>(context);
-
     return Scaffold(
         appBar: AppBar(
           title: const Text('Welcome Page'),
