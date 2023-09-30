@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:thurula/views/childcare/add_new_baby.dart';
 import 'package:thurula/views/childcare/exercise/ExerciseView.dart';
+import 'package:thurula/views/childcare/growth_chart_view.dart';
 import 'package:thurula/views/childcare/vaccination_tracker_view.dart';
 import 'package:thurula/views/childcare/vision/VisionMenuView.dart';
 import 'package:thurula/views/childcare/diaper_change.dart';
 import 'package:thurula/views/childcare/nap/nap_details.dart';
-import 'package:thurula/views/childcare/length_chart_view.dart';
 import 'package:thurula/views/childcare/meal_tracker.dart';
 
 import '../../providers/user_provider.dart';
@@ -79,7 +79,7 @@ class ChildHomeView extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const LengthChartView(),
+                              builder: (context) => const GrowthChartView(),
                             ),
                           );
                         },
@@ -606,7 +606,7 @@ void showPopupMenu(BuildContext context) {
                   ),
                 );
               },
-              child: Padding(
+              child: const Padding(
                 padding: EdgeInsets.all(10.0), // Add padding here
                 child: CircleAvatar(
                   backgroundColor: Color.fromARGB(255, 220, 104, 145),

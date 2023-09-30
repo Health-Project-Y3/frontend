@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:thurula/views/menu_view.dart';
+
+import '../../models/baby_model.dart';
+import '../../providers/user_provider.dart';
+import '../../services/auth/user_service.dart';
+import '../../services/baby_service.dart';
 
 class AddNewBaby extends StatefulWidget {
   const AddNewBaby({Key? key}) : super(key: key);
@@ -268,6 +274,25 @@ class _AddNewBaby extends State<AddNewBaby> {
                 onPressed: isNextButtonEnabled()
                     ? () {
                         //create baby for user
+                  BabyService.createBaby(Baby(
+                      fname: babyNameController.text,
+                      lname: "",
+                      birthDate: selectedDate,
+                      ownerIDs: [
+                        context.read<UserProvider>().user?.id ?? ''
+                      ],
+                      gender: isMaleSelected ? "male" : "female"))
+                      .then((baby) => {
+                    UserService.addBaby(
+                        context.read<UserProvider>().user!.id!,
+                        baby.id!)
+                  });
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MenuView(),
+                    ),
+                  );
                       }
                     : null,
                 style: ElevatedButton.styleFrom(
