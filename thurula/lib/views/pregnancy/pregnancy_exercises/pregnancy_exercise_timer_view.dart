@@ -7,12 +7,11 @@ import 'package:thurula/views/pregnancy/pregnancy_exercises/pregnancy_exercise_r
 import '../../../constants/exercises.dart';
 import '../../../models/user_exercise_model.dart';
 
-
 DateTime today = DateTime.now();
 // change today to 11 59 pm
 DateTime todayEnd = DateTime(today.year, today.month, today.day, 23, 59, 59);
-DateTime todayStart = DateTime(
-    today.year, today.month, today.day - 1, 23, 59, 59);
+DateTime todayStart =
+    DateTime(today.year, today.month, today.day - 1, 23, 59, 59);
 
 late Future<String> userId;
 late List<UserExercise> userExercises;
@@ -36,12 +35,11 @@ Future<String?> getUserExerciseID() async {
     // add user exercise
     var nux = await UserExerciseService.createUserExercise(newUserExercise);
     return nux.id;
-  }else{
+  } else {
     // return first exercise ID
     return userExercises[0].id;
   }
 }
-
 
 class ExerciseTimerView extends StatelessWidget {
   final String exercise;
@@ -138,8 +136,8 @@ class _TimerPageState extends State<TimerPage> {
                 color: Color.fromARGB(255, 220, 104, 145),
                 fontWeight: FontWeight.bold,
               )
-            //     padding: const EdgeInsets.only(bottom: 10),
-          ),
+              //     padding: const EdgeInsets.only(bottom: 10),
+              ),
           content: SingleChildScrollView(
             child: Column(
               children: [
@@ -147,11 +145,11 @@ class _TimerPageState extends State<TimerPage> {
                 const SizedBox(height: 15),
                 // get exercise steps
                 for (var i = 0;
-                i <
-                    _getExerciseDesc(
-                        exercise.split(',')[0], exercise.split(',')[1])
-                        .length;
-                i++)
+                    i <
+                        _getExerciseDesc(
+                                exercise.split(',')[0], exercise.split(',')[1])
+                            .length;
+                    i++)
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10),
                     child: Row(
@@ -288,25 +286,24 @@ class _TimerPageState extends State<TimerPage> {
                     String time = formatDuration(_elapsedDuration);
 
                     // get currentDuration
-                    int currentDuration = await LocalService.getDailyExerciseDuration();
-                    if (currentDuration == 0) {
-                      currentDuration += int.parse(time.split(':')[0]);
-                    }
+                    int currentDuration =
+                        await LocalService.getDailyExerciseDuration();
+                    currentDuration += int.parse(time.split(':')[0]);
 
                     LocalService.setDailyExerciseDuration(currentDuration);
                     if (int.parse(index) < 5) {
                       Navigator.push(
-                          context!,
+                          context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  ExerciseTimerView(
-                                      exercise:
+                              builder: (context) => ExerciseTimerView(
+                                  exercise:
                                       '$trimester, ${int.parse(index) + 1}')));
                     } else {
                       // getUserExerciseID
                       getUserExerciseID().then((value) async =>
                           UserExerciseService.patchUserExercise(
-                              value!, "minutesExercised",
+                              value!,
+                              "minutesExercised",
                               await LocalService.getDailyExerciseDuration()));
                       Navigator.push(
                           context,
