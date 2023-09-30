@@ -3,6 +3,8 @@ import 'package:thurula/views/childcare/child_home_view.dart';
 import 'package:thurula/views/pregnancy/pregnancy_home_view.dart';
 import 'package:thurula/views/login_view.dart';
 
+import '../utils/shared_preferences.dart';
+
 class MenuView extends StatelessWidget {
   const MenuView({super.key});
 
@@ -41,6 +43,7 @@ class MenuView extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.logout),
                 onPressed: () {
+                  SharedPref.clearSharedPref();
                   Navigator.push(
                     context,
                     MaterialPageRoute(
