@@ -172,7 +172,7 @@ class ChildHomeView extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => NapDetails(),
+                              builder: (context) => const NapDetails(),
                             ),
                           );
                         },
@@ -218,7 +218,7 @@ class ChildHomeView extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => DiaperChange(),
+                              builder: (context) => const DiaperChange(),
                             ),
                           );
                         },
@@ -264,7 +264,7 @@ class ChildHomeView extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => MealTracker(),
+                              builder: (context) => const MealTracker(),
                             ),
                           );
                         },
@@ -310,7 +310,7 @@ class ChildHomeView extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ExerciseView(),
+                              builder: (context) => const ExerciseView(),
                             ),
                           );
                         },
@@ -570,28 +570,28 @@ void showPopupMenu(BuildContext context) {
       return AlertDialog(
         title: const Text('Baby Profiles'),
         contentPadding:
-            EdgeInsets.fromLTRB(20, 20, 20, 0), // Adjust padding as needed
+            const EdgeInsets.fromLTRB(20, 20, 20, 0), // Adjust padding as needed
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             RadioListTile(
-              title: Text('Baby 1 Name'),
+              title: const Text('Baby 1 Name'),
               value: 1,
               groupValue: 1,
               onChanged: (value) {
                 // Handle radio button selection here
               },
             ),
-            SizedBox(height: 10), // Adjust the height as needed
+            const SizedBox(height: 10), // Adjust the height as needed
             RadioListTile(
-              title: Text('Baby 2 Name'),
+              title: const Text('Baby 2 Name'),
               value: 2,
               groupValue: 1,
               onChanged: (value) {
                 // Handle radio button selection here
               },
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
           ],
         ),
         actions: [
@@ -623,10 +623,10 @@ void showPopupMenu(BuildContext context) {
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
-              child: Text('Close'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color.fromARGB(255, 88, 119, 161),
+                backgroundColor: const Color.fromARGB(255, 88, 119, 161),
               ),
+              child: const Text('Close'),
             ),
           ),
         ],

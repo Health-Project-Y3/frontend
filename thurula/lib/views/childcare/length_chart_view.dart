@@ -215,6 +215,8 @@ class _LengthChartViewState extends State<LengthChartView> {
 
 // Add Reading
 class AddReadingDialog extends StatefulWidget {
+  const AddReadingDialog({super.key});
+
   @override
   _AddReadingDialogState createState() => _AddReadingDialogState();
 }
@@ -306,13 +308,15 @@ void showAdd(BuildContext context) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      return AddReadingDialog(); // Use the Stateful dialog
+      return const AddReadingDialog(); // Use the Stateful dialog
     },
   );
 }
 
 // Update Reading
 class UpdateReadingDialog extends StatefulWidget {
+  const UpdateReadingDialog({super.key});
+
   @override
   _UpdateReadingDialogState createState() => _UpdateReadingDialogState();
 }
@@ -403,7 +407,7 @@ void showUpdate(BuildContext context) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      return UpdateReadingDialog(); // Use the Stateful dialog
+      return const UpdateReadingDialog(); // Use the Stateful dialog
     },
   );
 }
@@ -414,6 +418,8 @@ bool _validateLength(double? length) {
 
 // Delete latest reading
 class DeleteReadingDialog extends StatefulWidget {
+  const DeleteReadingDialog({super.key});
+
   @override
   _DeleteReadingDialogState createState() => _DeleteReadingDialogState();
 }
@@ -467,7 +473,7 @@ void showDelete(BuildContext context) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      return DeleteReadingDialog(); // Use the Stateful dialog
+      return const DeleteReadingDialog(); // Use the Stateful dialog
     },
   );
 }

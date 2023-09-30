@@ -17,7 +17,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key});
+  // const MyApp({super.key, Key? key});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,15 +31,16 @@ class MyApp extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Container(
-              color: Colors.white, // Set the background color to match your app's theme
+              color: Colors
+                  .white, // Set the background color to match your app's theme
               child: const Center(
                 child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.blue), // Customize the color of the indicator
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                      Colors.blue), // Customize the color of the indicator
                 ),
               ),
             );
-          }
-          else if (snapshot.hasError) {
+          } else if (snapshot.hasError) {
             // Handle error
             return Text('Error: ${snapshot.error}');
           } else {

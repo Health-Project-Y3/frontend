@@ -94,7 +94,7 @@ class _AddNewBaby extends State<AddNewBaby> {
                       children: [
                         Text(
                           selectedDate != null
-                              ? '${DateFormat('yyyy-MM-dd').format(selectedDate!)}'
+                              ? DateFormat('yyyy-MM-dd').format(selectedDate!)
                               : 'Enter Baby\'s Birthday',
                           style: const TextStyle(
                             color: Colors.grey,
