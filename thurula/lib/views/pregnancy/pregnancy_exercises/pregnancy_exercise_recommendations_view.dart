@@ -1,37 +1,12 @@
 import 'package:flutter/material.dart';
+import '../../../constants/exercises.dart';
 import '../../../models/user_exercise_model.dart';
 import '../../menu_view.dart';
-import 'package:thurula/services/local_service.dart';
 import 'package:thurula/views/pregnancy/pregnancy_exercises/pregnancy_exercise_timer_view.dart';
 import 'package:thurula/views/pregnancy/pregnancy_exercises/pregnancy_exercise_history_view.dart';
-import 'package:thurula/services/user_exercise_service.dart';
 
-// first trimester exercises
-List<String> exerciseNamesT1 = [
-  "Diaphragmatic Breath with Pelvic Floor Activation",
-  "P.sit to Stand",
-  "Standing Abs",
-  "Pelvis Articulation",
-  "Butt Press"
-];
 
-// second trimester exercises
-List<String> exerciseNamesT2 = [
-  "Step Back",
-  "Stagger Row",
-  "Rotating Stagger",
-  "Internal 45 with Side Stretch",
-  "Leg Lift"
-];
 
-// third trimester exercises
-List<String> exerciseNamesT3 = [
-  "Fire Hydrant",
-  "Kneeling Hip Flexor Stretch",
-  "Intercoastal Kneeling Stretch",
-  "Hamstring Press",
-  "Bridge"
-];
 
 // DateTime today = DateTime.now();
 // get 00:00:00 of today
