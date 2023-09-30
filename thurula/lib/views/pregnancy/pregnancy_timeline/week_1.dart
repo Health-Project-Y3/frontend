@@ -53,7 +53,7 @@ class Week1View extends StatelessWidget {
                             Icon(
                               Icons.rectangle_rounded,
                               size: 20,
-                              color: Color.fromARGB(255, 220, 104, 145),
+                              color: Color.fromARGB(255, 88, 119, 161),
                             ),
                             SizedBox(width: 10),
                             Text(
@@ -124,7 +124,7 @@ class Week1View extends StatelessWidget {
                           Icon(
                             Icons.rectangle_rounded,
                             size: 20,
-                            color: Color.fromARGB(255, 220, 104, 145),
+                            color: Color.fromARGB(255, 88, 119, 161),
                           ),
                           SizedBox(width: 10),
                           Text(
