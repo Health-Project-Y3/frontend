@@ -32,10 +32,12 @@ class UserExerciseService {
     try {
       // response if theres start and end date if not null and without start and end date
       http.Response response;
+      var startDatestr = startDate?.toIso8601String();
+      var endDatestr = endDate?.toIso8601String();
       if (startDate != null && endDate != null) {
         response = await http.get(
           Uri.parse(
-              getRoute("exercise/user/$id?startDate=$startDate&endDate=$endDate")),
+              getRoute("exercise/user/$id?startDate=$startDatestr&endDate=$endDatestr")),
           headers: {'Content-Type': 'application/json'},
         );
       } else {
@@ -58,7 +60,7 @@ class UserExerciseService {
         throw Exception('Failed to find the record');
       }
     } catch (e) {
-      log(e as String);
+      print(e);
     }
     return [];
   }

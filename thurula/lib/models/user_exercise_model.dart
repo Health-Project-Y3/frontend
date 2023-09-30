@@ -22,7 +22,7 @@ class UserExercise {
 
   static Map<String,dynamic> toJson(UserExercise ex){
     return{
-      'id': ex.id,
+      if(ex.id != null) 'id': ex.id,
       'userId': ex.userId,
       'minutesExercised': ex.minutesExercised,
       'date': ex.date?.toIso8601String(),

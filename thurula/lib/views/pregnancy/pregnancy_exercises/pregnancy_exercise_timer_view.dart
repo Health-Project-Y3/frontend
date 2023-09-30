@@ -8,38 +8,38 @@ import '../../../constants/exercises.dart';
 import '../../../models/user_exercise_model.dart';
 
 
-
 DateTime today = DateTime.now();
 // change today to 11 59 pm
 DateTime todayEnd = DateTime(today.year, today.month, today.day, 23, 59, 59);
-DateTime todayStart = DateTime(today.year, today.month, today.day-1, 23, 59, 59);
+DateTime todayStart = DateTime(
+    today.year, today.month, today.day - 1, 23, 59, 59);
 
 late Future<String> userId;
-late Future<List<UserExercise>> userExercises;
+late List<UserExercise> userExercises;
 
 // get ID of user exercise for that day
 Future<String?> getUserExerciseID() async {
   // get user
-  userId = LocalService.getCurrentUserId();
+  String userId = await LocalService.getCurrentUserId();
   // get user exercises
-  userExercises = UserExerciseService.getUserExercises(await userId, todayStart, todayEnd);
+  userExercises =
+      await UserExerciseService.getUserExercises(userId, todayStart, todayEnd);
 
   // if userExercises is empty
-  if (userExercises == null) {
-    // print ("userExercises is null");
+  if (userExercises.isEmpty) {
     // create new user exercise
     UserExercise newUserExercise = UserExercise(
-      userId: await userId,
-      minutesExercised: 0,
+      userId: userId,
+      minutesExercised: 1,
       date: today,
     );
     // add user exercise
-    UserExerciseService.createUserExercise(newUserExercise);
-    // get user exercises
-    userExercises = UserExerciseService.getUserExercises(await userId, todayStart, todayEnd);
+    var nux = await UserExerciseService.createUserExercise(newUserExercise);
+    return nux.id;
+  }else{
+    // return first exercise ID
+    return userExercises[0].id;
   }
-  // return first exercise ID
-  return userExercises.then((value) => value[0].id);
 }
 
 
@@ -138,8 +138,8 @@ class _TimerPageState extends State<TimerPage> {
                 color: Color.fromARGB(255, 220, 104, 145),
                 fontWeight: FontWeight.bold,
               )
-              //     padding: const EdgeInsets.only(bottom: 10),
-              ),
+            //     padding: const EdgeInsets.only(bottom: 10),
+          ),
           content: SingleChildScrollView(
             child: Column(
               children: [
@@ -147,11 +147,11 @@ class _TimerPageState extends State<TimerPage> {
                 const SizedBox(height: 15),
                 // get exercise steps
                 for (var i = 0;
-                    i <
-                        _getExerciseDesc(
-                                exercise.split(',')[0], exercise.split(',')[1])
-                            .length;
-                    i++)
+                i <
+                    _getExerciseDesc(
+                        exercise.split(',')[0], exercise.split(',')[1])
+                        .length;
+                i++)
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10),
                     child: Row(
@@ -283,32 +283,31 @@ class _TimerPageState extends State<TimerPage> {
               const SizedBox(width: 10),
               // next button
               ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     // get time from timer
                     String time = formatDuration(_elapsedDuration);
-                    // get currentDuration
-                    Future<int> currentDuration = LocalService.getDailyExerciseDuration();
-                    // if currentDuration is not set
-                    if (currentDuration == null) {
-                      // set currentDuration to 0
-                      LocalService.setDailyExerciseDuration(0);
-                      // set currentDuration to 0
-                      currentDuration = LocalService.getDailyExerciseDuration();
-                    }
-                    currentDuration.then((value) => LocalService.setDailyExerciseDuration(value + int.parse(time.split(':')[0])));
 
-                    // if index is < 5, go to next exercise
+                    // get currentDuration
+                    int currentDuration = await LocalService.getDailyExerciseDuration();
+                    if (currentDuration == 0) {
+                      currentDuration += int.parse(time.split(':')[0]);
+                    }
+
+                    LocalService.setDailyExerciseDuration(currentDuration);
                     if (int.parse(index) < 5) {
                       Navigator.push(
-                          context,
+                          context!,
                           MaterialPageRoute(
-                              builder: (context) => ExerciseTimerView(
-                                  exercise:
+                              builder: (context) =>
+                                  ExerciseTimerView(
+                                      exercise:
                                       '$trimester, ${int.parse(index) + 1}')));
                     } else {
                       // getUserExerciseID
-                      currentDuration.then((value) => LocalService.setDailyExerciseDuration(value + int.parse(time.split(':')[0])));
-                      getUserExerciseID().then((value) => UserExerciseService.patchUserExercise(value!, "minutesExercised", LocalService.getDailyExerciseDuration()));
+                      getUserExerciseID().then((value) async =>
+                          UserExerciseService.patchUserExercise(
+                              value!, "minutesExercised",
+                              await LocalService.getDailyExerciseDuration()));
                       Navigator.push(
                           context,
                           MaterialPageRoute(
