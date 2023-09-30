@@ -22,7 +22,7 @@ class UserBp {
 
   static Map<String,dynamic> toJson(UserBp bpr){
     return{
-      'id': bpr.id,
+      if(bpr.id != null) 'id': bpr.id,
       'userId': bpr.userId,
       'bloodPressure': bpr.bloodPressure,
       'date': bpr.date?.toIso8601String(),

@@ -22,7 +22,7 @@ class UserWeight {
 
   static Map<String,dynamic> toJson(UserWeight uwr){
     return{
-      'id': uwr.id,
+      if(uwr.id != null) 'id': uwr.id,
       'userId': uwr.userId,
       'weight': uwr.weight,
       'date': uwr.date?.toIso8601String(),

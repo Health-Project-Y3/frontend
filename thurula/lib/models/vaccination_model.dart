@@ -17,7 +17,7 @@ class Vaccination {
 
   static Map<String, dynamic> toJson(Vaccination vaccination) {
     return {
-      'id': vaccination.id,
+      if (vaccination.id != null) 'id': vaccination.id,
       'name': vaccination.name,
       'description': vaccination.description,
       'daysfrombirth': vaccination.daysFromBirth,

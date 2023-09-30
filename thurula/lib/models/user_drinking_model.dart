@@ -22,7 +22,7 @@ class UserDrinking {
 
   static Map<String,dynamic> toJson(UserDrinking udr){
     return{
-      'id': udr.id,
+      if(udr.id != null) 'id': udr.id,
       'userId': udr.userId,
       'glassesDrunk': udr.glassesDrunk,
       'date': udr.date?.toIso8601String(),
