@@ -35,8 +35,12 @@ class _ExerciseHistorysViewState extends State<ExercisesHistoryView> {
     userId = LocalService.getCurrentUserId();
     exerciseRecords =
         UserExerciseService.getUserExercises(await userId, null, null);
+    // sort exerciseRecords by date
+    exerciseRecords.then((value) => value.sort((a, b) => b.date!.compareTo(a.date!)));
     last7DaysRecords =
         UserExerciseService.getUserExercises(await userId, sevenDaysAgo, now);
+    // sort last7DaysRecords by date
+    last7DaysRecords.then((value) => value.sort((a, b) => b.date!.compareTo(a.date!)));
     // Increment the refresh counter to trigger UI update
     refreshCounter.value++;
   }

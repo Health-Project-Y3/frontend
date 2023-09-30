@@ -111,7 +111,7 @@ class ExercisesView extends StatelessWidget {
                           Image.asset('assets/images/icons/clock.png',
                               height: 20, width: 20),
                           const Text(
-                            " 10 min",
+                            " 20 min",
                             style: TextStyle(
                               fontSize: 16,
                               // fontWeight: FontWeight.bold,
@@ -228,7 +228,7 @@ class ExercisesView extends StatelessWidget {
                           Image.asset('assets/images/icons/calories.png',
                               height: 20, width: 20),
                           const Text(
-                            " 55 kcal",
+                            " 50 kcal",
                             style: TextStyle(
                               fontSize: 16,
                               // fontWeight: FontWeight.bold,
@@ -360,7 +360,7 @@ class ExercisesView extends StatelessWidget {
                           Image.asset('assets/images/icons/calories.png',
                               height: 20, width: 20),
                           const Text(
-                            " 55 kcal",
+                            " 40 kcal",
                             style: TextStyle(
                               fontSize: 16,
                               // fontWeight: FontWeight.bold,
@@ -375,7 +375,7 @@ class ExercisesView extends StatelessWidget {
                           Image.asset('assets/images/icons/clock.png',
                               height: 20, width: 20),
                           const Text(
-                            " 20 min",
+                            " 10 min",
                             style: TextStyle(
                               fontSize: 16,
                               // fontWeight: FontWeight.bold,
