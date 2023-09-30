@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:thurula/views/childcare/child_care_menu_view.dart';
+import 'package:thurula/views/childcare/vision/eye_disease_list.dart';
 // import '../../signup/Question2View.dart';
 import './SnellenCardView.dart';
-
 
 class VisionMenuView extends StatelessWidget {
   const VisionMenuView({super.key});
@@ -17,7 +16,7 @@ class VisionMenuView extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: const Row(children: [Text('Vision Test')]),
-          backgroundColor: Color.fromARGB(255, 220, 104, 145),
+          backgroundColor: const Color.fromARGB(255, 220, 104, 145),
           actions: <Widget>[
             Padding(
                 padding: const EdgeInsets.only(right: 10.0),
@@ -99,7 +98,7 @@ class VisionMenuView extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => SnellenCardView()));
+                            builder: (context) => const SnellenCardView()));
                   },
                   child: const Text("Visual Activity"),
                 ),
@@ -117,11 +116,10 @@ class VisionMenuView extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (context) => const Question2View())
-                  // );
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const EyeDiseaseList()));
                 },
                 child: const Text("Eye Diseases"),
               ),

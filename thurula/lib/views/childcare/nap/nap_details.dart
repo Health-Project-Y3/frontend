@@ -99,7 +99,7 @@ class NapDetails extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => AddNap()),
+                        MaterialPageRoute(builder: (context) => const AddNap()),
                       );
                     },
                     style: ElevatedButton.styleFrom(
@@ -138,7 +138,7 @@ class NapDetails extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                NapRecords()), // Replace with your actual widget name
+                                const NapRecords()), // Replace with your actual widget name
                       );
                     },
                     child: const Text(
