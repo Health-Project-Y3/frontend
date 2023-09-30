@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thurula/views/login_view.dart';
 import 'package:thurula/views/signup/sign_up_view.dart';
+import 'package:thurula/extensions/buildcontext/loc.dart';
 
 class RegisterWelcome extends StatelessWidget {
   const RegisterWelcome({super.key});
@@ -37,32 +38,32 @@ class RegisterWelcome extends StatelessWidget {
                         height: 400,
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(
+                     Padding(
+                      padding: const EdgeInsets.only(
                         top: 0,
                         right: 25,
                         left: 25,
                       ),
                       child: Text(
-                        "New Life, Tiny Steps",
+                        context.loc.welcome_page_Caption1,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
                           color: Color.fromARGB(255, 220, 104, 145),
                         ),
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(
+                     Padding(
+                      padding: const EdgeInsets.only(
                         top: 5,
                         right: 25,
                         left: 25,
                       ),
                       child: Text(
-                        "We just need a few quick answers from you to personalize your experience",
+                        context.loc.welcome_page_Caption2,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 12,
                           color: Colors.grey,
                         ),
@@ -89,17 +90,17 @@ class RegisterWelcome extends StatelessWidget {
                           ),
                           elevation: 2, // Add elevation to the button
                         ),
-                        child: const Row(
+                        child:  Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "Get Started",
-                              style: TextStyle(
+                              context.loc.welcome_page_GetStartedButton,
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
                               ),
                             ),
-                            Icon(
+                            const Icon(
                               Icons.arrow_forward,
                               color: Colors.white,
                             ),
@@ -116,19 +117,19 @@ class RegisterWelcome extends StatelessWidget {
                           ),
                         );
                       },
-                      child: const Text.rich(
+                      child:  Text.rich(
                         TextSpan(
                           children: [
                             TextSpan(
-                              text: "Already have an account? ",
-                              style: TextStyle(
+                              text: context.loc.welcome_page_AlreadyHaveAccount,
+                              style: const TextStyle(
                                 color: Colors.grey,
                                 fontSize: 12,
                               ),
                             ),
                             TextSpan(
-                              text: 'Sign In.',
-                              style: TextStyle(
+                              text: context.loc.welcome_page_SignIn,
+                              style: const TextStyle(
                                 color: Color.fromARGB(255, 220, 104, 145),
                                 fontSize: 12,
                               ),
