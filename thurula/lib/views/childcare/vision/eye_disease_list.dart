@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:thurula/views/childcare/child_care_menu_view.dart';
 import 'package:thurula/views/childcare/vision/crossed_eye.dart';
 import 'package:thurula/views/childcare/vision/droopy_eye.dart';
+import 'package:thurula/views/childcare/vision/eye_cataract.dart';
 import 'package:thurula/views/childcare/vision/lazy_eye.dart';
+import 'package:thurula/views/childcare/vision/pink_eye.dart';
 // import '../../signup/Question2View.dart';
 import './SnellenCardView.dart';
 import '../../../constants/eye_disease.dart';
@@ -64,12 +66,12 @@ class EyeDiseaseList extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const LazyEye()));
+                                builder: (context) => const CataractEye()));
                       } else if (x == 5) {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const LazyEye()));
+                                builder: (context) => const PinkEye()));
                       } else if (x == 6) {
                         Navigator.push(
                             context,
