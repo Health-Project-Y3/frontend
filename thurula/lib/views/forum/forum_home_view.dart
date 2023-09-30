@@ -111,6 +111,7 @@ class _ForumHomeViewState extends State<ForumHomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 220, 104, 145),
         title: const Text('Recent Forum Questions'),
         actions: [
           // Add a search bar in the app bar
@@ -140,6 +141,7 @@ class _ForumHomeViewState extends State<ForumHomeView> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+          backgroundColor: const Color.fromARGB(255, 220, 104, 145),
           onPressed: () {
             Navigator.push(
                 context,

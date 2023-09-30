@@ -54,7 +54,7 @@ class _ForumQuestionsOnTopicViewState extends State<ForumMyQuestionsView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // title: Text('Forum Questions on ${widget.topic[0]}'), // Display the topic in the title
+        backgroundColor: const Color.fromARGB(255, 220, 104, 145),
         title: const Text('My Questions'),
       ),
       drawer: const ForumDrawer(),

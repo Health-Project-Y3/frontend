@@ -55,7 +55,7 @@ class _ForumQuestionsOnTopicViewState extends State<ForumQuestionsOnTopicView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // title: Text('Forum Questions on ${widget.topic[0]}'), // Display the topic in the title
+        backgroundColor: const Color.fromARGB(255, 220, 104, 145),
         title: const Text('Forum Questions'),
       ),
       drawer: const ForumDrawer(),
@@ -64,17 +64,17 @@ class _ForumQuestionsOnTopicViewState extends State<ForumQuestionsOnTopicView> {
           // Add a container or card for the topic at the top
           Container(
             padding: const EdgeInsets.all(16.0),
-            color: Colors.blue, // Customize the background color
+            color: const Color.fromARGB(255, 88, 119, 161), // Customize the background color
             child: Row(
               children: [
-                const Icon(
-                  Icons.topic, // You can use an appropriate icon
-                  size: 24,
-                  color: Colors.white, // Customize the icon color
-                ),
-                const SizedBox(width: 8),
+                // const Icon(
+                //   Icons.topic, // You can use an appropriate icon
+                //   size: 24,
+                //   color: Colors.white, // Customize the icon color
+                // ),
+                const SizedBox(width: 15),
                 Text(
-                  'Topic: ${widget.topic[0]}', // Display the topic name
+                  'Topic:   ${widget.topic[0]}', // Display the topic name
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -96,6 +96,7 @@ class _ForumQuestionsOnTopicViewState extends State<ForumQuestionsOnTopicView> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color.fromARGB(255, 220, 104, 145),
         onPressed: () {
           Navigator.push(
             context,

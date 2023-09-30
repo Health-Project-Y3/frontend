@@ -38,15 +38,19 @@ class _ForumDrawerState extends State<ForumDrawer> {
         children: [
           // Drawer header with a CircleAvatar and name
           UserAccountsDrawerHeader(
+            decoration: const BoxDecoration(
+              color: Color.fromARGB(255, 220, 104, 145),
+            ),
             accountName: Text(
                 '${context.read<UserProvider>().user?.fname} ${context.read<UserProvider>().user!.lname}'),
             accountEmail: Text(context.read<UserProvider>().user?.email ?? ''),
             currentAccountPicture: CircleAvatar(
               // Add your profile picture here
               // backgroundImage: AssetImage('assets/profile_picture.png'),
-              backgroundColor: Colors.primaries[
-              context.read<UserProvider>().user!.fname![0].codeUnitAt(0) %
-                  Colors.primaries.length],
+              // backgroundColor: Colors.primaries[
+              // context.read<UserProvider>().user!.fname![0].codeUnitAt(0) %
+              //     Colors.primaries.length],
+              backgroundColor: const Color.fromARGB(255, 88, 119, 161),
               child: Text(
                 '${context.read<UserProvider>().user!.fname?[0]}${context.read<UserProvider>().user?.lname?[0]}',
                 style: const TextStyle(
@@ -54,7 +58,6 @@ class _ForumDrawerState extends State<ForumDrawer> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-
             ),
           ),
           // Generate "My Questions" ListTile

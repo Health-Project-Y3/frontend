@@ -30,6 +30,7 @@ class _AddForumQuestionViewState extends State<AddForumQuestionView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 220, 104, 145),
         title: const Text('Post a New Question'),
       ),
       body: Padding(
@@ -95,16 +96,18 @@ class _AddForumQuestionViewState extends State<AddForumQuestionView> {
                         });
                       },
                       backgroundColor: selectedKeywords.contains(keyword)
-                          ? Colors.blue
+                          ? const Color.fromARGB(255, 88, 119, 161)
                           : Colors.grey,
-                      selectedColor: Colors
-                          .blue, // Change to the color you want for selected chips
+                      selectedColor: const Color.fromARGB(255, 88, 119, 161), // Change to the color you want for selected chips
                     ),
                   );
                 }).toList(),
               ),
               const SizedBox(height: 20),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 220, 104, 145),
+                ),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
