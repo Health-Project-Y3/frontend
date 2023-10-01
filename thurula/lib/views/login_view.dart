@@ -144,7 +144,7 @@ class _LoginViewState extends State<LoginView> {
                                   userProvider.setUser(user);
                                 }
                                 Navigator.push(
-                                    context!,
+                                    context,
                                     MaterialPageRoute(
                                         builder: (context) => WelcomeHomeView(
                                             username:

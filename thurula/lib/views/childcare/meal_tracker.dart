@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class MealTracker extends StatefulWidget {
+  const MealTracker({super.key});
+
   @override
   _MealTrackerState createState() => _MealTrackerState();
 }
@@ -21,7 +23,7 @@ class _MealTrackerState extends State<MealTracker> {
         ),
         backgroundColor: const Color.fromARGB(255, 220, 104, 145), // Background color of the app bar
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.white, // Back icon color
           ),
@@ -38,7 +40,7 @@ class _MealTrackerState extends State<MealTracker> {
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
-            child: Container(
+            child: SizedBox(
               height: 100,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -64,19 +66,19 @@ class _MealTrackerState extends State<MealTracker> {
               itemCount: 10,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text('Milk'),
-                  subtitle: Text('5.30pm 24-05-2023'),
+                  title: const Text('Milk'),
+                  subtitle: const Text('5.30pm 24-05-2023'),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       IconButton(
-                        icon: Icon(Icons.edit, color: Color.fromARGB(255, 220, 104, 145)), // Custom edit icon color
+                        icon: const Icon(Icons.edit, color: Color.fromARGB(255, 220, 104, 145)), // Custom edit icon color
                         onPressed: () {
                           // Handle edit action
                         },
                       ),
                       IconButton(
-                        icon: Icon(Icons.delete, color: Colors.red), // Change to your custom color
+                        icon: const Icon(Icons.delete, color: Colors.red), // Change to your custom color
                         onPressed: () {
                           // Handle delete action
                         },
@@ -87,8 +89,8 @@ class _MealTrackerState extends State<MealTracker> {
               },
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
+          const Padding(
+            padding: EdgeInsets.all(16.0),
             child: Text('Statistics and Summary'),
           ),
         ],
@@ -101,7 +103,7 @@ class _MealTrackerState extends State<MealTracker> {
     showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
+        return const AlertDialog(
           title: Text('Add Feeding Entry'),
           content: FeedingEntryForm(),
         );
@@ -111,6 +113,8 @@ class _MealTrackerState extends State<MealTracker> {
 }
 
 class FeedingEntryForm extends StatefulWidget {
+  const FeedingEntryForm({super.key});
+
   @override
   _FeedingEntryFormState createState() => _FeedingEntryFormState();
 }
@@ -157,11 +161,11 @@ class _FeedingEntryFormState extends State<FeedingEntryForm> {
               });
             }
           },
-          child: Text(
+          child: const Text(
               'Select Date',
           ),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         ElevatedButton(
           onPressed: () async {
             final pickedTime = await showTimePicker(
@@ -181,26 +185,26 @@ class _FeedingEntryFormState extends State<FeedingEntryForm> {
               });
             }
           },
-          child: Text('Select Time'),
+          child: const Text('Select Time'),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         TextFormField(
           onChanged: (value) {
             setState(() {
               specialNote = value;
             });
           },
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             hintText: 'Add a special note',
           ),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         ElevatedButton(
           onPressed: () {
             // Handle form submission and update UI
             Navigator.of(context).pop(); // Close the dialog
           },
-          child: Text('Add Entry'),
+          child: const Text('Add Entry'),
         ),
       ],
     );
@@ -224,14 +228,14 @@ class _FeedingTypeCircle extends StatelessWidget {
               Container(
                 width: 60,
                 height: 60,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
-                  color: const Color.fromARGB(255, 220, 104, 145),
+                  color: Color.fromARGB(255, 220, 104, 145),
                 ),
                 child: Center(
                   child: Text(
                     feedingType[0],
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -239,7 +243,7 @@ class _FeedingTypeCircle extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text(feedingType),
             ],
           ),
@@ -290,7 +294,7 @@ class _AddFeedingCircle extends StatelessWidget {
                 shape: BoxShape.circle,
                 color: Color.fromARGB(255, 88, 119, 161),
               ),
-              child: Center(
+              child: const Center(
                 child: Icon(
                   Icons.add,
                   color: Colors.white,
@@ -299,8 +303,8 @@ class _AddFeedingCircle extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 8),
-          Text('Add Meal Type'),
+          const SizedBox(height: 8),
+          const Text('Add Meal Type'),
         ],
       ),
     );

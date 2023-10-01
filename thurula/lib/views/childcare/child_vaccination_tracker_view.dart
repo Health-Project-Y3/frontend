@@ -9,7 +9,7 @@ class VaccinationDetails {
 }
 
 class ChildVaccinationTrackerView extends StatefulWidget {
-  ChildVaccinationTrackerView({super.key});
+  const ChildVaccinationTrackerView({super.key});
 
   @override
   _ChildVaccinationTrackerView createState() => _ChildVaccinationTrackerView();

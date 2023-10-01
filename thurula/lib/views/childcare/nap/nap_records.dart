@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class NapRecords extends StatelessWidget {
+  const NapRecords({super.key});
+
   @override
   Widget build(BuildContext context) {
 
@@ -13,13 +15,13 @@ class NapRecords extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('All Nap Details'),
+        title: const Text('All Nap Details'),
         backgroundColor: const Color.fromARGB(255, 220, 104, 145),
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: DataTable(
-          columns: [
+          columns: const [
             DataColumn(label: Text('Record')),
             DataColumn(label: Text('Date')),
             DataColumn(label: Text('Nap Duration')),
@@ -30,11 +32,11 @@ class NapRecords extends StatelessWidget {
           rows: napRecords.map((record) {
             return DataRow(cells: [
               DataCell(Text(record.title)),
-              DataCell(Text('11-04-2022')),
-              DataCell(Text('04:30')),
-              DataCell(Text('05:00 - 08:00')),
+              const DataCell(Text('11-04-2022')),
+              const DataCell(Text('04:30')),
+              const DataCell(Text('05:00 - 08:00')),
               DataCell(IconButton(
-                icon: Icon(Icons.edit),
+                icon: const Icon(Icons.edit),
                 onPressed: () {
 
                   Navigator.push(
@@ -46,7 +48,7 @@ class NapRecords extends StatelessWidget {
                 },
               )),
               DataCell(IconButton(
-                icon: Icon(Icons.delete),
+                icon: const Icon(Icons.delete),
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -73,13 +75,13 @@ class NapDataRecord {
 class EditNapRecordPage extends StatelessWidget {
   final NapDataRecord record;
 
-  EditNapRecordPage({required this.record});
+  const EditNapRecordPage({super.key, required this.record});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Nap Record'),
+        title: const Text('Edit Nap Record'),
         backgroundColor: const Color.fromARGB(255, 220, 104, 145),
       ),
       body: Center(
@@ -98,13 +100,13 @@ class EditNapRecordPage extends StatelessWidget {
 class DeleteNapRecordPage extends StatelessWidget {
   final NapDataRecord record;
 
-  DeleteNapRecordPage({required this.record});
+  const DeleteNapRecordPage({super.key, required this.record});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Delete Nap Record'),
+        title: const Text('Delete Nap Record'),
         backgroundColor: const Color.fromARGB(255, 220, 104, 145),
       ),
       body: Center(
