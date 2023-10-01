@@ -4,6 +4,8 @@ import 'package:thurula/views/childcare/nap/nap_details.dart';
 
 
 class AddNap extends StatefulWidget {
+  const AddNap({super.key});
+
   @override
   _AddNapState createState() => _AddNapState();
 }
@@ -68,39 +70,39 @@ class _AddNapState extends State<AddNap> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Add Baby Nap Details',
           style: TextStyle(
-            color: const Color.fromARGB(255, 220, 104, 145), // Title color
+            color: Color.fromARGB(255, 220, 104, 145), // Title color
           ),
         ),
         backgroundColor: Colors.white, // Background color of the app bar
         elevation: 0,
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
-            color: const Color.fromARGB(255, 220, 104, 145), // Back icon color
+            color: Color.fromARGB(255, 220, 104, 145), // Back icon color
           ),
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => NapDetails()),
+              MaterialPageRoute(builder: (context) => const NapDetails()),
             );
           },
         ),
       ),
 
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             // Calendar component
             TextFormField(
               readOnly: true,
               onTap: _showDatePicker,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Date',
                 labelStyle: TextStyle(color: Colors.black),
                 suffixIcon: Icon(Icons.calendar_today, color: Colors.black),
@@ -112,7 +114,7 @@ class _AddNapState extends State<AddNap> {
               ),
             ),
 
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             // Time selection for starting nap
             TimeSelectionClock(
               label: 'Start Time',
@@ -120,7 +122,7 @@ class _AddNapState extends State<AddNap> {
               onTap: () => _showTimePicker('start'),
             ),
 
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             // Time selection for ending nap
             TimeSelectionClock(
               label: 'End Time',
@@ -128,11 +130,11 @@ class _AddNapState extends State<AddNap> {
               onTap: () => _showTimePicker('end'),
             ),
 
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             // Display number of hours baby slept
             TextFormField(
               readOnly: true,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Number of Hours Slept',
                 labelStyle: TextStyle(color: Colors.black),
                 suffixIcon: Icon(Icons.access_time, color: Colors.black),
@@ -144,7 +146,7 @@ class _AddNapState extends State<AddNap> {
               ),
             ),
 
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             // Button,add nap details
             Center(
               child: ElevatedButton(
@@ -152,7 +154,7 @@ class _AddNapState extends State<AddNap> {
                   // action to add nap details
                 },
                 style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 220, 104, 145)),
-                child: Text('Add Nap'),
+                child: const Text('Add Nap'),
               ),
             ),
           ],
@@ -167,7 +169,7 @@ class TimeSelectionClock extends StatelessWidget {
   final TimeOfDay? selectedTime;
   final VoidCallback onTap;
 
-  TimeSelectionClock({
+  const TimeSelectionClock({super.key, 
     required this.label,
     required this.selectedTime,
     required this.onTap,
@@ -183,8 +185,8 @@ class TimeSelectionClock extends StatelessWidget {
           onTap: onTap,
           decoration: InputDecoration(
             labelText: label,
-            labelStyle: TextStyle(color: Colors.black),
-            suffixIcon: Icon(Icons.access_time, color: Colors.black),
+            labelStyle: const TextStyle(color: Colors.black),
+            suffixIcon: const Icon(Icons.access_time, color: Colors.black),
           ),
           controller: TextEditingController(
             text: selectedTime != null

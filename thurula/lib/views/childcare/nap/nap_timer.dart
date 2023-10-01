@@ -28,7 +28,7 @@ class _NapTimerState extends State<NapTimer> {
   void initState() {
     super.initState();
     stopwatch = Stopwatch();
-    timer = new Timer.periodic(new Duration(milliseconds: 30), (timer) {
+    timer = Timer.periodic(const Duration(milliseconds: 30), (timer) {
       setState(() {
 
       });
@@ -88,7 +88,7 @@ class _NapTimerState extends State<NapTimer> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => NapDetails()),
+              MaterialPageRoute(builder: (context) => const NapDetails()),
             );
           },
         ),
@@ -191,11 +191,11 @@ Widget buildTimeCard({required String time, required String header}) {
           color:const Color.fromARGB(255, 220, 104, 145),
           borderRadius: BorderRadius.circular(20)
         ),
-        child: Padding(padding: EdgeInsets.all(8.0),
-        child: Text(time,style: TextStyle(fontWeight: FontWeight.bold, fontSize: 60, color: Colors.black54 ),),),
+        child: Padding(padding: const EdgeInsets.all(8.0),
+        child: Text(time,style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 60, color: Colors.black54 ),),),
       ),
-      SizedBox(height: 10,),
-      Text(header, style: TextStyle(color: Colors.blue),)
+      const SizedBox(height: 10,),
+      Text(header, style: const TextStyle(color: Colors.blue),)
     ],
   );
 }
