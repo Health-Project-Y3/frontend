@@ -6,6 +6,10 @@ import 'package:thurula/services/auth/user_service.dart';
 import 'package:thurula/views/signup/sign_up_welcome_view.dart';
 import 'package:thurula/views/welcome_view.dart';
 
+import '../providers/baby_provider.dart';
+import '../services/baby_service.dart';
+import '../services/local_service.dart';
+
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
 
@@ -54,7 +58,7 @@ class _LoginViewState extends State<LoginView> {
                         child: TextFormField(
                           style: const TextStyle(color: Colors.grey),
                           controller: usernameController,
-                          decoration:  InputDecoration(
+                          decoration: InputDecoration(
                             hintText: context.loc.login_page_username,
                             hintStyle: const TextStyle(color: Colors.grey),
                             filled: true,
@@ -92,7 +96,7 @@ class _LoginViewState extends State<LoginView> {
                           style: const TextStyle(color: Colors.grey),
                           controller: passwordController,
                           obscureText: true,
-                          decoration:  InputDecoration(
+                          decoration: InputDecoration(
                             hintText: context.loc.login_page_password,
                             hintStyle: const TextStyle(color: Colors.grey),
                             filled: true,
@@ -139,9 +143,19 @@ class _LoginViewState extends State<LoginView> {
                                 final userProvider = Provider.of<UserProvider>(
                                     context!,
                                     listen: false);
-                                final user = await UserService.getByUsername(usernameController.text);
+                                final user = await UserService.getByUsername(
+                                    usernameController.text);
                                 if (user != null) {
                                   userProvider.setUser(user);
+                                  final baby = await BabyService.getBaby(
+                                      user.babyIDs![0]);
+                                  if (baby != null) {
+                                    final babyProvider =
+                                        Provider.of<BabyProvider>(context,
+                                            listen: false);
+                                    LocalService.setCurrentBabyId(baby.id!);
+                                    babyProvider.setBaby(baby);
+                                  }
                                 }
                                 Navigator.push(
                                     context,
@@ -151,13 +165,15 @@ class _LoginViewState extends State<LoginView> {
                                                 usernameController.text)));
                               } else {
                                 ScaffoldMessenger.of(context!).showSnackBar(
-                                     SnackBar(
-                                        content:Text(context.loc.login_page_InvalidCredentials)));
+                                    SnackBar(
+                                        content: Text(context.loc
+                                            .login_page_InvalidCredentials)));
                               }
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                 SnackBar(
-                                    content: Text(context.loc.login_page_EmptyInputPrompt)),
+                                SnackBar(
+                                    content: Text(context
+                                        .loc.login_page_EmptyInputPrompt)),
                               );
                             }
                           },
@@ -190,7 +206,7 @@ class _LoginViewState extends State<LoginView> {
                             ),
                           );
                         },
-                        child:  Text.rich(
+                        child: Text.rich(
                           TextSpan(
                             children: [
                               TextSpan(
@@ -201,7 +217,7 @@ class _LoginViewState extends State<LoginView> {
                                 ),
                               ),
                               TextSpan(
-                                text:  context.loc.login_page_register,
+                                text: context.loc.login_page_register,
                                 style: const TextStyle(
                                   color: Color.fromARGB(255, 220, 104, 145),
                                   fontSize: 14,

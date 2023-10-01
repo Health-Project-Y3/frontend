@@ -11,6 +11,7 @@ import 'package:thurula/views/childcare/diaper_change.dart';
 import 'package:thurula/views/childcare/nap/nap_details.dart';
 import 'package:thurula/views/childcare/meal_tracker.dart';
 
+import '../../providers/baby_provider.dart';
 import '../../providers/user_provider.dart';
 
 class ChildHomeView extends StatefulWidget {
@@ -633,7 +634,7 @@ class _ChildHomeViewState extends State<ChildHomeView> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Baby Profiles'),
-          contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+          contentPadding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -643,11 +644,13 @@ class _ChildHomeViewState extends State<ChildHomeView> {
                   value: baby,
                   groupValue: selectedBabyNotifier.value,
                   onChanged: (value) {
-                    selectedBabyNotifier.value = value as Baby?;
+                    final babyProvider = Provider.of<BabyProvider>(context,listen: false);
+                    babyProvider.setBaby(value!);
+                    selectedBabyNotifier.value = value;
                     Navigator.of(context).pop(); // Close the dialog
                   },
                 ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
             ],
           ),
           actions: [
@@ -679,10 +682,10 @@ class _ChildHomeViewState extends State<ChildHomeView> {
                 onPressed: () {
                   Navigator.of(context).pop(); // Close the dialog
                 },
-                child: Text('Close'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromARGB(255, 88, 119, 161),
+                  backgroundColor: const Color.fromARGB(255, 88, 119, 161),
                 ),
+                child: const Text('Close'),
               ),
             ),
           ],
