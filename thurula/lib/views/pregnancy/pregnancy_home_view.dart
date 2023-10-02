@@ -10,6 +10,7 @@ import 'package:thurula/views/pregnancy/pregnancy_exercises/pregnancy_exercise_r
 import 'package:thurula/views/pregnancy/pregnancy_baby_names_view.dart';
 
 import '../../providers/user_provider.dart';
+import '../widgets/expandable_fab_widget.dart';
 
 class PregnancyHomeView extends StatelessWidget {
   const PregnancyHomeView({super.key});
@@ -17,6 +18,7 @@ class PregnancyHomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: const CreatePregnancyExpandableFab(),
       backgroundColor: const Color.fromARGB(255, 247, 247, 247),
       body: Stack(
         children: [

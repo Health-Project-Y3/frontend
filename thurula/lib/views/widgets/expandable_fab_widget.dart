@@ -197,7 +197,7 @@ class _ExpandableFabState extends State<ExpandableFab>
           duration: const Duration(milliseconds: 250),
           child: FloatingActionButton(
             onPressed: _toggle,
-            child: const Icon(Icons.more_horiz),
+            child: const Icon(Icons.apps),
           ),
         ),
       ),
