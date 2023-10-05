@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:thurula/models/baby_model.dart';
 import 'package:thurula/services/baby_service.dart';
+import 'package:thurula/services/local_service.dart';
 import 'package:thurula/views/childcare/add_new_baby.dart';
 import 'package:thurula/views/childcare/exercise/ExerciseView.dart';
 import 'package:thurula/views/childcare/growth_chart_view.dart';
@@ -646,6 +647,7 @@ class _ChildHomeViewState extends State<ChildHomeView> {
                   onChanged: (value) {
                     final babyProvider = Provider.of<BabyProvider>(context,listen: false);
                     babyProvider.setBaby(value!);
+                    LocalService.setCurrentBabyId(value.id!);
                     selectedBabyNotifier.value = value;
                     Navigator.of(context).pop(); // Close the dialog
                   },
