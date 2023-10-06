@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:thurula/views/menu_view.dart';
 import 'package:thurula/views/forum/forum_home_view.dart';
-import 'package:thurula/views/all_services_view.dart';
+import 'package:thurula/views/all_services_menu_view.dart';
 
 // create bottom navigation bar for pregnancy
 class CreateBottomNavigationBar extends StatelessWidget {

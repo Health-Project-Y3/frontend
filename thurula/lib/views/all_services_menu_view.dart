@@ -131,6 +131,7 @@ class TilePage extends StatelessWidget {
         if (index < imageNamesPregnancy.length) {
           if (index % 3 == 0 ) {
           return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               buildPregnancyTile(index, context: context),
               buildPregnancyTile(index + 1, context: context),
@@ -145,6 +146,7 @@ class TilePage extends StatelessWidget {
           if (index % 3 == 0) {
             // Create a new row for every 3 tiles
             return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 buildChildcareTile(index - imageNamesPregnancy.length, context: context),
                 buildChildcareTile(index - imageNamesPregnancy.length + 1, context: context),
