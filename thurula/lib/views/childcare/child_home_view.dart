@@ -8,8 +8,11 @@ import 'package:thurula/views/childcare/vision/VisionMenuView.dart';
 import 'package:thurula/views/childcare/diaper_change.dart';
 import 'package:thurula/views/childcare/nap/nap_details.dart';
 import 'package:thurula/views/childcare/meal_tracker.dart';
+import 'package:thurula/views/widgets/expandable_fab_widget.dart';
 
 import '../../providers/user_provider.dart';
+import '../widgets/pregnancy_navbar_widget.dart';
+
 
 class ChildHomeView extends StatelessWidget {
   const ChildHomeView({super.key});
@@ -17,6 +20,7 @@ class ChildHomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: const CreateChildcareExpandableFab(),
       backgroundColor: const Color.fromARGB(255, 247, 247, 247),
       body: Stack(
         children: [
@@ -558,6 +562,9 @@ class ChildHomeView extends StatelessWidget {
                 ),
               )),
         ],
+      ),
+      bottomNavigationBar: const CreateChildcareBottomNavigationBar(
+        pageIndex: 4,
       ),
     );
   }

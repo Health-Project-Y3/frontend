@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:thurula/views/pregnancy/pregnancy_exercises/pregnancy_exercise_recommendations_view.dart';
-import 'package:thurula/views/pregnancy/pregnancy_timeline_view.dart';
-import 'package:thurula/views/pregnancy/pregnancy_vaccination_tracker_view.dart';
+import 'package:thurula/views/childcare/diaper_change.dart';
+import 'package:thurula/views/childcare/meal_tracker.dart';
+import 'package:thurula/views/childcare/nap/nap_timer.dart';
 import 'dart:math' as math;
 
-import '../menu_view.dart';
 
-// return expandable fab
-class CreatePregnancyExpandableFab extends StatelessWidget {
-  // static const _actionTitles = ['Create Post', 'Upload Photo', 'Upload Video'];
-
-  const CreatePregnancyExpandableFab({super.key});
+class CreateChildcareExpandableFab extends StatelessWidget {
+  const CreateChildcareExpandableFab({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,44 +18,33 @@ class CreatePregnancyExpandableFab extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const MenuView(),
+                builder: (context) => const NapTimer(),
               ),
             );
           },
-          icon: const Icon(Icons.home),
+          icon: const Icon(Icons.bedtime),
         ),
         ActionButton(
           onPressed: () {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const PregnancyTimelineView(),
+                builder: (context) => const DiaperChange(),
               ),
             );
           },
-          icon: const Icon(Icons.timeline),
+          icon: const Icon(Icons.baby_changing_station),
         ),
         ActionButton(
           onPressed: () {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => PregnancyVaccinationTrackerView(),
+                builder: (context) => MealTracker(),
               ),
             );
           },
-          icon: const Icon(Icons.vaccines),
-        ),
-        ActionButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ExercisesView(),
-              ),
-            );
-          },
-          icon: const Icon(Icons.fitness_center),
+          icon: const Icon(Icons.restaurant),
         ),
       ],
     );
@@ -147,11 +132,11 @@ class _ExpandableFabState extends State<ExpandableFab>
           elevation: 4,
           child: InkWell(
             onTap: _toggle,
-            child: Padding(
-              padding: const EdgeInsets.all(8),
+            child: const Padding(
+              padding: EdgeInsets.all(8),
               child: Icon(
                 Icons.close,
-                color: Theme.of(context).primaryColor,
+                color: Color.fromARGB(255, 220, 104, 145),
               ),
             ),
           ),
@@ -196,8 +181,9 @@ class _ExpandableFabState extends State<ExpandableFab>
           curve: const Interval(0.25, 1.0, curve: Curves.easeInOut),
           duration: const Duration(milliseconds: 250),
           child: FloatingActionButton(
+            backgroundColor: const Color.fromARGB(255, 220, 104, 145),
             onPressed: _toggle,
-            child: const Icon(Icons.apps),
+            child: const Icon(Icons.add),
           ),
         ),
       ),
@@ -258,38 +244,15 @@ class ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Material(
       shape: const CircleBorder(),
       clipBehavior: Clip.antiAlias,
-      color: theme.colorScheme.secondary,
+      color: const Color.fromARGB(255, 220, 104, 145),
       elevation: 4,
       child: IconButton(
         onPressed: onPressed,
         icon: icon,
-        color: theme.colorScheme.onSecondary,
-      ),
-    );
-  }
-}
-
-@immutable
-class FakeItem extends StatelessWidget {
-  const FakeItem({
-    super.key,
-    required this.isBig,
-  });
-
-  final bool isBig;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
-      height: isBig ? 128 : 36,
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(8)),
-        color: Colors.grey.shade300,
+        color: Colors.white,
       ),
     );
   }
