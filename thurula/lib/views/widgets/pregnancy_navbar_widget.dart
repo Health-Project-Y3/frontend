@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:thurula/views/childcare/child_home_view.dart';
+import 'package:thurula/views/menu_view.dart';
+
+// pregnancy pages
 import 'package:thurula/views/pregnancy/pregnancy_exercises/pregnancy_exercise_recommendations_view.dart';
 import 'package:thurula/views/pregnancy/pregnancy_timeline_view.dart';
 import 'package:thurula/views/pregnancy/pregnancy_vaccination_tracker_view.dart';
 import 'package:thurula/views/pregnancy/mother_health_tracker.dart';
-import 'package:thurula/views/pregnancy/pregnancy_home_view.dart';
 import 'package:thurula/views/pregnancy/pregnancy_baby_names_view.dart';
 import 'package:thurula/views/forum/forum_home_view.dart';
 
@@ -30,7 +31,7 @@ class CreatePregnancyBottomNavigationBar extends StatelessWidget {
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       selectedItemColor: const Color.fromARGB(255, 88, 119, 161),
       unselectedItemColor: const Color.fromARGB(255, 220, 104, 145),
-      selectedIconTheme: const IconThemeData(size: 35),
+      selectedIconTheme: const IconThemeData(size: 30),
       selectedLabelStyle: const TextStyle(height: 0),
       type: BottomNavigationBarType.fixed,
 
@@ -82,7 +83,7 @@ class CreatePregnancyBottomNavigationBar extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const PregnancyHomeView(),
+                builder: (context) => const MenuView(),
               ),
             );
             break;
@@ -90,7 +91,7 @@ class CreatePregnancyBottomNavigationBar extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => PregnancyVaccinationTrackerView(),
+                builder: (context) => const PregnancyVaccinationTrackerView(),
               ),
             );
             break;
@@ -128,7 +129,7 @@ class CreateChildcareBottomNavigationBar extends StatelessWidget {
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       selectedItemColor: const Color.fromARGB(255, 88, 119, 161),
       unselectedItemColor: const Color.fromARGB(255, 220, 104, 145),
-      selectedIconTheme: const IconThemeData(size: 35),
+      selectedIconTheme: const IconThemeData(size: 30),
       selectedLabelStyle: const TextStyle(height: 0),
       type: BottomNavigationBarType.fixed,
 
@@ -196,7 +197,7 @@ class CreateChildcareBottomNavigationBar extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const ChildHomeView(),
+                builder: (context) => const MenuView(),
               ),
             );
             break;
@@ -212,7 +213,7 @@ class CreateChildcareBottomNavigationBar extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => MealTracker(),
+                builder: (context) => const MealTracker(),
               ),
             );
             break;
@@ -220,7 +221,7 @@ class CreateChildcareBottomNavigationBar extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ExerciseView(),
+                builder: (context) => const ExerciseView(),
               ),
             );
             break;
@@ -236,7 +237,7 @@ class CreateChildcareBottomNavigationBar extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const ChildHomeView(),
+                builder: (context) => const MenuView(),
               ),
             );
         }
