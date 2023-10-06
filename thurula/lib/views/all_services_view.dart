@@ -1,5 +1,22 @@
 import 'package:flutter/material.dart';
-import 'widgets/pregnancy_navbar_widget.dart';
+import 'forum/forum_home_view.dart';
+import 'widgets/navbar_widget.dart';
+
+// pregnancy services
+import 'package:thurula/views/pregnancy/mother_health_tracker.dart';
+import 'package:thurula/views/pregnancy/pregnancy_timeline_view.dart';
+import 'package:thurula/views/pregnancy/pregnancy_vaccination_tracker_view.dart';
+import 'package:thurula/views/pregnancy/pregnancy_exercises/pregnancy_exercise_recommendations_view.dart';
+import 'package:thurula/views/pregnancy/pregnancy_baby_names_view.dart';
+
+// childcare services
+import 'package:thurula/views/childcare/exercise/ExerciseView.dart';
+import 'package:thurula/views/childcare/growth_chart_view.dart';
+import 'package:thurula/views/childcare/vaccination_tracker_view.dart';
+import 'package:thurula/views/childcare/vision/VisionMenuView.dart';
+import 'package:thurula/views/childcare/diaper_change.dart';
+import 'package:thurula/views/childcare/nap/nap_details.dart';
+import 'package:thurula/views/childcare/meal_tracker.dart';
 
 void main() {
   runApp(AllServices());
@@ -24,6 +41,15 @@ class AllServices extends StatelessWidget {
     'Baby Names'
   ];
 
+  final List<Widget Function()> pregnancyViews = [
+    () => const ForumHomeView(),
+    () => const PregnancyTimelineView(),
+    () => const MotherHealthTracker(),
+    () => const PregnancyVaccinationTrackerView(),
+    () => PregnancyExercisesView(),
+    () => const BabyNames(),
+  ];
+
   final List<String> imageNamesChildcare = [
     'growth.png',
     'vaccine.png',
@@ -44,6 +70,16 @@ class AllServices extends StatelessWidget {
     'Vision Tests'
   ];
 
+  final List<Widget Function()> childcareViews = [
+    () => const GrowthChartView(),
+    () => const VaccinationTrackerView(),
+    () => const NapDetails(),
+    () => const DiaperChange(),
+    () => const MealTracker(),
+    () => const ExerciseView(),
+    () => const VisionMenuView(),
+  ];
+
   AllServices({super.key});
 
   @override
@@ -53,10 +89,17 @@ class AllServices extends StatelessWidget {
         backgroundColor: const Color.fromARGB(255, 247, 247, 247),
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 220, 104, 145),
-          title: const Text('All Services'),
+          title: const Text('Menu'),
         ),
-        body: TilePage(imageNamesPregnancy: imageNamesPregnancy, titlesPregnancy: titlesPregnancy, imageNamesChildcare: imageNamesChildcare, titlesChildcare: titlesChildcare),
-        bottomNavigationBar: const CreatePregnancyBottomNavigationBar(pageIndex: 2),
+        body: TilePage(
+            imageNamesPregnancy: imageNamesPregnancy,
+            titlesPregnancy: titlesPregnancy,
+            pregnancyViews: pregnancyViews,
+            imageNamesChildcare: imageNamesChildcare,
+            titlesChildcare: titlesChildcare,
+            childcareViews: childcareViews
+        ),
+        bottomNavigationBar: const CreateBottomNavigationBar(pageIndex: 2),
       ),
     );
   }
@@ -65,10 +108,20 @@ class AllServices extends StatelessWidget {
 class TilePage extends StatelessWidget {
   final List<String> imageNamesPregnancy;
   final List<String> titlesPregnancy;
+  final List<Widget Function()> pregnancyViews;
   final List<String> imageNamesChildcare;
   final List<String> titlesChildcare;
+  final List<Widget Function()> childcareViews;
 
-  const TilePage({super.key, required this.imageNamesPregnancy, required this.titlesPregnancy, required this.imageNamesChildcare, required this.titlesChildcare});
+  const TilePage({
+    super.key,
+    required this.imageNamesPregnancy,
+    required this.titlesPregnancy,
+    required this.pregnancyViews,
+    required this.imageNamesChildcare,
+    required this.titlesChildcare,
+    required this.childcareViews
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -79,9 +132,9 @@ class TilePage extends StatelessWidget {
           if (index % 3 == 0 ) {
           return Row(
             children: [
-              buildPregnancyTile(index),
-              buildPregnancyTile(index + 1),
-              buildPregnancyTile(index + 2),
+              buildPregnancyTile(index, context: context),
+              buildPregnancyTile(index + 1, context: context),
+              buildPregnancyTile(index + 2, context: context),
             ],
           );
           } else {
@@ -93,9 +146,9 @@ class TilePage extends StatelessWidget {
             // Create a new row for every 3 tiles
             return Row(
               children: [
-                buildChildcareTile(index - imageNamesPregnancy.length),
-                buildChildcareTile(index - imageNamesPregnancy.length + 1),
-                buildChildcareTile(index - imageNamesPregnancy.length + 2),
+                buildChildcareTile(index - imageNamesPregnancy.length, context: context),
+                buildChildcareTile(index - imageNamesPregnancy.length + 1, context: context),
+                buildChildcareTile(index - imageNamesPregnancy.length + 2, context: context),
               ],
             );
         } else {
@@ -106,7 +159,7 @@ class TilePage extends StatelessWidget {
     );
   }
 
-  Widget buildPregnancyTile(int index) {
+  Widget buildPregnancyTile(int index, {required BuildContext context}) {
     if (index >= imageNamesPregnancy.length) {
       // Check if the index is out of bounds
       return const SizedBox();
@@ -114,7 +167,12 @@ class TilePage extends StatelessWidget {
 
     return InkResponse(
       onTap: () {
-        // Navigate to the forum screen here
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => pregnancyViews[index](),
+          ),
+        );
       },
       child: Container(
         alignment: Alignment.center,
@@ -160,15 +218,20 @@ class TilePage extends StatelessWidget {
     );
   }
 
-  Widget buildChildcareTile(int index) {
+  Widget buildChildcareTile(int index, {required BuildContext context}) {
     if (index >= imageNamesChildcare.length) {
-      // Check if the index is out of bounds
       return const SizedBox();
     }
 
     return InkResponse(
       onTap: () {
-        // Navigate to the forum screen here
+        // Navigate to the forum screen
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => childcareViews[index](),
+          ),
+        );
       },
       child: Container(
         alignment: Alignment.center,

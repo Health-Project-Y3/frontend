@@ -10,7 +10,7 @@ import 'package:thurula/views/pregnancy/pregnancy_exercises/pregnancy_exercise_r
 import 'package:thurula/views/pregnancy/pregnancy_baby_names_view.dart';
 
 import '../../providers/user_provider.dart';
-import '../widgets/pregnancy_navbar_widget.dart';
+import '../widgets/navbar_widget.dart';
 
 class PregnancyHomeView extends StatelessWidget {
   const PregnancyHomeView({super.key});
@@ -257,7 +257,7 @@ class PregnancyHomeView extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ExercisesView(),
+                              builder: (context) => PregnancyExercisesView(),
                             ),
                           );
                         },
@@ -563,7 +563,7 @@ class PregnancyHomeView extends StatelessWidget {
               )),
         ],
       ),
-    bottomNavigationBar: const CreatePregnancyBottomNavigationBar(pageIndex: 1),
+    bottomNavigationBar: const CreateBottomNavigationBar(pageIndex: 1),
     );
   }
 }

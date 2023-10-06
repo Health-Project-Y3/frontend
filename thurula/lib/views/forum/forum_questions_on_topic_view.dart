@@ -3,7 +3,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:thurula/services/forum_service.dart';
 import 'package:thurula/views/forum/forum_drawer_widget.dart';
 import 'package:thurula/views/forum/forum_question_widget.dart';
-import 'package:thurula/views/widgets/pregnancy_navbar_widget.dart';
+import 'package:thurula/views/widgets/navbar_widget.dart';
 import '../../models/forum_question_model.dart';
 import 'forum_question_add_view.dart';
 
@@ -61,7 +61,7 @@ class _ForumQuestionsOnTopicViewState extends State<ForumQuestionsOnTopicView> {
         backgroundColor: const Color.fromARGB(255, 220, 104, 145),
         title: const Text('Forum Questions'),
       ),
-      bottomNavigationBar: CreatePregnancyBottomNavigationBar(pageIndex: 0),
+      bottomNavigationBar: CreateBottomNavigationBar(pageIndex: 0),
       drawer: const ForumDrawer(),
       body: Column(
         children: [

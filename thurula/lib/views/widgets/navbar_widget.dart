@@ -5,8 +5,8 @@ import 'package:thurula/views/forum/forum_home_view.dart';
 import 'package:thurula/views/all_services_view.dart';
 
 // create bottom navigation bar for pregnancy
-class CreatePregnancyBottomNavigationBar extends StatelessWidget {
-  const CreatePregnancyBottomNavigationBar({super.key, required this.pageIndex});
+class CreateBottomNavigationBar extends StatelessWidget {
+  const CreateBottomNavigationBar({super.key, required this.pageIndex});
 
   final int pageIndex;
 

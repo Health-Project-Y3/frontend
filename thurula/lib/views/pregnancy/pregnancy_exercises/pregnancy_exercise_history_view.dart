@@ -64,7 +64,7 @@ class _ExerciseHistorysViewState extends State<ExercisesHistoryView> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => ExercisesView()));
+                        builder: (context) => PregnancyExercisesView()));
               },
             ),
             backgroundColor: const Color.fromARGB(255, 220, 104, 145),

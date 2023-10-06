@@ -15,7 +15,7 @@ import 'package:thurula/views/widgets/expandable_fab_widget.dart';
 
 import '../../providers/baby_provider.dart';
 import '../../providers/user_provider.dart';
-import '../widgets/pregnancy_navbar_widget.dart';
+import '../widgets/navbar_widget.dart';
 
 
 class ChildHomeView extends StatefulWidget {
@@ -630,7 +630,7 @@ class _ChildHomeViewState extends State<ChildHomeView> {
           );
         },
       ),
-      bottomNavigationBar: const CreatePregnancyBottomNavigationBar(
+      bottomNavigationBar: const CreateBottomNavigationBar(
         pageIndex: 1,
       ),
     );
