@@ -47,7 +47,7 @@ class _DiaperChange extends State<DiaperChange> {
                     'assets/images/menu-icons/diaper.png'), // Replace with your circular image asset
               ),
             ),
-            Card(
+            const Card(
               elevation: 4,
               margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Padding(
@@ -55,8 +55,8 @@ class _DiaperChange extends State<DiaperChange> {
                 child: DiaperChangeEntryForm(),
               ),
             ),
-            SizedBox(height: 16),
-            Card(
+            const SizedBox(height: 16),
+            const Card(
               elevation: 4,
               margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Padding(
@@ -72,6 +72,8 @@ class _DiaperChange extends State<DiaperChange> {
 }
 
 class DiaperChangeEntryForm extends StatefulWidget {
+  const DiaperChangeEntryForm({super.key});
+
   @override
   _DiaperChangeEntryFormState createState() => _DiaperChangeEntryFormState();
 }
@@ -93,14 +95,14 @@ class _DiaperChangeEntryFormState extends State<DiaperChangeEntryForm> {
       children: [
         TextField(
           controller: _dateController,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             labelText: 'Date (yyyy-mm-dd)',
             labelStyle: TextStyle(color: Colors.grey), // Adjust the color
           ),
         ),
         TextField(
           controller: _timeController,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             labelText: 'Time (hh:mm)',
             labelStyle: TextStyle(color: Colors.grey), // Adjust the color
           ),
@@ -112,7 +114,7 @@ class _DiaperChangeEntryFormState extends State<DiaperChangeEntryForm> {
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color.fromARGB(255, 220, 104, 145),
           ),
-          child: Text('Add Diaper Change'),
+          child: const Text('Add Diaper Change'),
         ),
       ],
     );
@@ -126,6 +128,8 @@ class DiaperChangeEntry {
 }
 
 class DiaperChangeDetails extends StatelessWidget {
+  const DiaperChangeDetails({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -202,8 +206,8 @@ class DiaperChangeDetails extends StatelessWidget {
                 ),
               ]),
               DataRow(cells: [
-                DataCell(Text('13:30')),
-                DataCell(Text('2023-08-10')),
+                const DataCell(Text('13:30')),
+                const DataCell(Text('2023-08-10')),
                 DataCell(
                 SizedBox(
                       width: 30, // Adjust the width as needed

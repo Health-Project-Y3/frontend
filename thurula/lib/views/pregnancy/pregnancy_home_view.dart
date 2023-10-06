@@ -137,7 +137,7 @@ class PregnancyHomeView extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => MotherHealthTracker(),
+                              builder: (context) => const MotherHealthTracker(),
                             ),
                           );
                         },
@@ -177,7 +177,7 @@ class PregnancyHomeView extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  PregnancyVaccinationTrackerView(),
+                                  const PregnancyVaccinationTrackerView(),
                             ),
                           );
                         },
@@ -409,7 +409,7 @@ class PregnancyHomeView extends StatelessWidget {
                           height: 1.5,
                         ),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -442,7 +442,7 @@ class PregnancyHomeView extends StatelessWidget {
                 width: 380,
                 height: 80,
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 255, 255, 255),
+                  color: const Color.fromARGB(255, 255, 255, 255),
                   borderRadius: BorderRadius.circular(10.0),
                   boxShadow: [
                     BoxShadow(
