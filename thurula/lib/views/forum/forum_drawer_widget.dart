@@ -116,6 +116,7 @@ class _ForumDrawerState extends State<ForumDrawer> {
                   MaterialPageRoute(
                     builder: (context) => ForumQuestionsOnTopicView(
                       topic: [routes[i]],
+                      pageIndex: i + 2,
                     ),
                   ),
                 );

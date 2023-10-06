@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:thurula/services/forum_service.dart';
 import 'package:thurula/views/forum/forum_drawer_widget.dart';
 import 'package:thurula/views/forum/forum_question_widget.dart';
+import 'package:thurula/views/widgets/forum_navbar_widget.dart';
 import '../../models/forum_question_model.dart';
 import '../../providers/user_provider.dart';
 
@@ -53,6 +54,7 @@ class _ForumQuestionsOnTopicViewState extends State<ForumMyQuestionsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: const CreateForumBottomNavigationBar(pageIndex: 1),
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 220, 104, 145),
         title: const Text('My Questions'),
