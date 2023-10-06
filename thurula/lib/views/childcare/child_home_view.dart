@@ -630,8 +630,8 @@ class _ChildHomeViewState extends State<ChildHomeView> {
           );
         },
       ),
-      bottomNavigationBar: const CreateChildcareBottomNavigationBar(
-        pageIndex: 4,
+      bottomNavigationBar: const CreatePregnancyBottomNavigationBar(
+        pageIndex: 1,
       ),
     );
   }

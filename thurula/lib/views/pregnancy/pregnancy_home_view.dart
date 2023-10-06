@@ -80,10 +80,20 @@ class PregnancyHomeView extends StatelessWidget {
                           children: [
                             ClipRRect(
                               child: Image.asset(
-                                'assets/images/menu-tiles/forum.png', // Replace with your forum tile image
+                                'assets/images/menu-tiles/forum2.png', // Replace with your forum tile image
                                 height: 80,
                               ),
                             ),
+                            SizedBox(height: 7),
+                            const Text(
+                              'Forum',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 88, 119, 161),
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )
                           ],
                         ),
                       ),
@@ -123,8 +133,18 @@ class PregnancyHomeView extends StatelessWidget {
                               ClipRRect(
                                 child: Image.asset(
                                     'assets/images/menu-tiles/timeline2.png',
-                                    height: 100),
+                                    height: 80),
                               ),
+                              const SizedBox(height: 7),
+                              const Text(
+                                'Timeline',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 88, 119, 161),
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )
                             ],
                           ),
                         ),
@@ -162,8 +182,18 @@ class PregnancyHomeView extends StatelessWidget {
                               ClipRRect(
                                 child: Image.asset(
                                     'assets/images/menu-tiles/monitor2.png',
-                                    height: 100),
+                                    height: 80),
                               ),
+                              const SizedBox(height: 7),
+                              const Text(
+                                'Health',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 88, 119, 161),
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )
                             ],
                           ),
                         ),
@@ -202,8 +232,18 @@ class PregnancyHomeView extends StatelessWidget {
                               ClipRRect(
                                 child: Image.asset(
                                     'assets/images/menu-tiles/vaccine2.png',
-                                    height: 100),
+                                    height: 80),
                               ),
+                              const SizedBox(height: 7),
+                              const Text(
+                                'Vaccines',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 88, 119, 161),
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )
                             ],
                           ),
                         ),
@@ -242,8 +282,18 @@ class PregnancyHomeView extends StatelessWidget {
                               ClipRRect(
                                 child: Image.asset(
                                     'assets/images/menu-tiles/exercise2.png',
-                                    height: 100),
+                                    height: 80),
                               ),
+                              const SizedBox(height: 7),
+                              const Text(
+                                'Exercises',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 88, 119, 161),
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )
                             ],
                           ),
                         ),
@@ -282,8 +332,18 @@ class PregnancyHomeView extends StatelessWidget {
                               ClipRRect(
                                 child: Image.asset(
                                     'assets/images/menu-tiles/names2.png',
-                                    height: 100),
+                                    height: 80),
                               ),
+                              const SizedBox(height: 7),
+                              const Text(
+                                'Baby Names',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 88, 119, 161),
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )
                             ],
                           ),
                         ),
@@ -503,7 +563,7 @@ class PregnancyHomeView extends StatelessWidget {
               )),
         ],
       ),
-    bottomNavigationBar: const CreatePregnancyBottomNavigationBar(pageIndex: 3),
+    bottomNavigationBar: const CreatePregnancyBottomNavigationBar(pageIndex: 1),
     );
   }
 }
