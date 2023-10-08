@@ -295,9 +295,11 @@ class _DiaperRecordsState extends State<DiaperRecords> {
     return selectedTime;
   }
 
-
   Future<void> _showEditDiaperDialog(BuildContext context, DiaperTimes existingDiaper) async {
     DateTime selectedTime = existingDiaper.time ?? DateTime.now();
+    String? diaperNotes = existingDiaper.diaperNotes;
+    String? diaperType = existingDiaper.diaperType;
+    String? loggedBy = existingDiaper.loggedBy;
     String? message;
 
     await showDialog(
@@ -349,6 +351,27 @@ class _DiaperRecordsState extends State<DiaperRecords> {
                       },
                       child: Text('Select Time'),
                     ),
+                    TextFormField(
+                      initialValue: diaperNotes,
+                      onChanged: (value) {
+                        diaperNotes = value;
+                      },
+                      decoration: InputDecoration(labelText: 'Diaper Notes'),
+                    ),
+                    TextFormField(
+                      initialValue: diaperType,
+                      onChanged: (value) {
+                        diaperType = value;
+                      },
+                      decoration: InputDecoration(labelText: 'Diaper Type'),
+                    ),
+                    TextFormField(
+                      initialValue: loggedBy,
+                      onChanged: (value) {
+                        loggedBy = value;
+                      },
+                      decoration: InputDecoration(labelText: 'Logged By'),
+                    ),
                     Text(message ?? '',
                         style: TextStyle(
                             color:
@@ -369,6 +392,10 @@ class _DiaperRecordsState extends State<DiaperRecords> {
                     if (selectedTime != null) {
                       try {
                         existingDiaper.time = selectedTime;
+                        existingDiaper.diaperNotes = diaperNotes;
+                        existingDiaper.diaperType = diaperType;
+                        existingDiaper.loggedBy = loggedBy;
+
                         await DiaperService.updateDiaper(
                             existingDiaper.id ?? '', existingDiaper);
 
@@ -392,6 +419,7 @@ class _DiaperRecordsState extends State<DiaperRecords> {
       },
     );
   }
+
 
 
   Future<void> _deleteDiaperRecord(String id) async {
