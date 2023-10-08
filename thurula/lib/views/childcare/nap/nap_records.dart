@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:thurula/services/naps_service.dart';
 import 'package:thurula/models/naptimes_model.dart';
 import 'package:thurula/views/childcare/nap/nap_timer.dart';
+import 'package:intl/intl.dart';
 
 class NapRecords extends StatefulWidget {
   @override
@@ -17,6 +18,14 @@ class _NapRecordsState extends State<NapRecords> {
     super.initState();
     _napRecordsFuture = NapService.getBabyNaps('64b01605b55b765169e1c9b6');
   }
+
+  String _formatDuration(int durationInSeconds) {
+    final int hours = durationInSeconds ~/ 3600;
+    final int minutes = (durationInSeconds % 3600) ~/ 60;
+    final int seconds = durationInSeconds % 60;
+    return '$hours hrs $minutes mins $seconds s';
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +52,10 @@ class _NapRecordsState extends State<NapRecords> {
               itemCount: napRecords.length,
               itemBuilder: (context, index) {
                 NapTimes record = napRecords[index];
-                // Calculate the duration in minutes
-                int durationSeconds = (record.endTime!.difference(record.startTime!)).inSeconds;
+                // Calculate the duration in seconds
+                int durationSeconds = record.endTime!.difference(record.startTime!).inSeconds;
+                // Format the duration in hours, minutes, and seconds
+                String formattedDuration = _formatDuration(durationSeconds);
                 return Card(
                   elevation: 3,
                   margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
@@ -57,12 +68,14 @@ class _NapRecordsState extends State<NapRecords> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Start: ${record.startTime?.toString() ?? ''}'),
+                              Text('Date: ${DateFormat('yyyy-MM-dd').format(record.startTime!)}'),
                               SizedBox(height: 8),
-                              Text('End: ${record.endTime?.toString() ?? ''}'),
+                              Text('Start Time: ${DateFormat('HH:mm:ss').format(record.startTime!)}'),
                               SizedBox(height: 8),
-                              Text('Duration: $durationSeconds seconds'),
-                              // Display the calculated duration
+                              Text('End Time: ${DateFormat('HH:mm:ss').format(record.endTime!)}'),
+                              SizedBox(height: 8),
+                              Text('Duration: $formattedDuration'),
+                              // Display the formatted duration
                             ],
                           ),
                         ),
@@ -91,7 +104,6 @@ class _NapRecordsState extends State<NapRecords> {
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-
           FloatingActionButton(
             onPressed: () {
               Navigator.push(
@@ -118,6 +130,9 @@ class _NapRecordsState extends State<NapRecords> {
   }
 
 
+
+
+
   Future<void> showAddNapDialog(BuildContext context) async {
     NapTimes newNap = NapTimes(); // Create a new empty NapTimes object
     DateTime selectedStartTime = DateTime.now();
@@ -138,7 +153,7 @@ class _NapRecordsState extends State<NapRecords> {
                     Row(
                       children: [
                         Text('Start Time: '),
-                        Text(selectedStartTime.toLocal().toString()),
+                        Text(DateFormat('HH:mm:ss').format(selectedStartTime.toLocal())),
                         SizedBox(width: 10),
                       ],
                     ),
@@ -173,7 +188,7 @@ class _NapRecordsState extends State<NapRecords> {
                     Row(
                       children: [
                         Text('End Time: '),
-                        Text(selectedEndTime.toLocal().toString()),
+                        Text(DateFormat('HH:mm:ss').format(selectedEndTime.toLocal())),
                         SizedBox(width: 10),
                       ],
                     ),
@@ -205,6 +220,7 @@ class _NapRecordsState extends State<NapRecords> {
                       },
                       child: Text('Select End Time'),
                     ),
+
                     Text(message ?? '', style: TextStyle(
                         color: message == 'Error' ? Colors.red : Colors.green)),
                   ],
@@ -256,7 +272,6 @@ class _NapRecordsState extends State<NapRecords> {
     );
   }
 
-
   Future<void> _showEditNapDialog(BuildContext context, NapTimes existingNap) async {
     DateTime selectedStartTime = existingNap.startTime ?? DateTime.now();
     DateTime selectedEndTime = existingNap.endTime ?? DateTime.now();
@@ -276,7 +291,7 @@ class _NapRecordsState extends State<NapRecords> {
                     Row(
                       children: [
                         Text('Start Time: '),
-                        Text(selectedStartTime.toLocal().toString()),
+                        Text(DateFormat('HH:mm:ss').format(selectedStartTime.toLocal())),
                         SizedBox(width: 10),
                       ],
                     ),
@@ -291,8 +306,7 @@ class _NapRecordsState extends State<NapRecords> {
                         if (pickedStartTime != null) {
                           TimeOfDay? pickedStartTimeOfDay = await showTimePicker(
                             context: context,
-                            initialTime: TimeOfDay.fromDateTime(
-                                selectedStartTime),
+                            initialTime: TimeOfDay.fromDateTime(selectedStartTime),
                           );
                           if (pickedStartTimeOfDay != null) {
                             setState(() {
@@ -312,7 +326,7 @@ class _NapRecordsState extends State<NapRecords> {
                     Row(
                       children: [
                         Text('End Time: '),
-                        Text(selectedEndTime.toLocal().toString()),
+                        Text(DateFormat('HH:mm:ss').format(selectedEndTime.toLocal())),
                         SizedBox(width: 10),
                       ],
                     ),
@@ -327,8 +341,7 @@ class _NapRecordsState extends State<NapRecords> {
                         if (pickedEndTime != null) {
                           TimeOfDay? pickedEndTimeOfDay = await showTimePicker(
                             context: context,
-                            initialTime: TimeOfDay.fromDateTime(
-                                selectedEndTime),
+                            initialTime: TimeOfDay.fromDateTime(selectedEndTime),
                           );
                           if (pickedEndTimeOfDay != null) {
                             setState(() {
