@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:thurula/views/HomeView.dart';
+import 'package:thurula/views/childcare/growth_chart_view.dart';
 import 'package:thurula/views/childcare/vaccination_tracker_view.dart';
-import 'package:thurula/views/childcare/length_chart_view.dart';
 import 'package:thurula/views/childcare/vision/VisionMenuView.dart';
 import 'package:thurula/views/childcare/exercise/ExerciseView.dart';
 
@@ -28,7 +27,7 @@ class ChildCareMenuView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const LengthChartView(),
+                      builder: (context) => const GrowthChartView(),
                     ),
                   );
                 },
@@ -292,7 +291,7 @@ class ChildCareMenuView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ExerciseView(),
+                      builder: (context) => const ExerciseView(),
                     ),
                   );
                 },

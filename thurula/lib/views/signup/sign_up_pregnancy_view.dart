@@ -6,6 +6,7 @@ import 'package:thurula/views/menu_view.dart';
 import 'package:thurula/views/signup/sign_up_question_view.dart';
 
 import '../../providers/user_provider.dart';
+import 'package:thurula/extensions/buildcontext/loc.dart';
 
 class SignUpPregnancyView extends StatefulWidget {
   const SignUpPregnancyView({Key? key}) : super(key: key);
@@ -25,7 +26,7 @@ class _SignUpPregnancyViewState extends State<SignUpPregnancyView> {
   void calculateDueDateFromPredicted() {
     if (selectedPredictedDate != null) {
       final calculatedDueDate = selectedPredictedDate!
-          .add(Duration(days: 270)); // 270 days = 9 months
+          .add(const Duration(days: 270)); // 270 days = 9 months
       setState(() {
         selectedDueDate = calculatedDueDate;
       });
@@ -48,24 +49,24 @@ class _SignUpPregnancyViewState extends State<SignUpPregnancyView> {
                 height: 120,
               ),
             ),
-            const Positioned(
+             Positioned(
               top: 150,
               left: 16,
               right: 16,
               child: Column(
                 children: [
                   Text(
-                    'Do you know your due date?',
-                    style: TextStyle(
+                    context.loc.register_page4_C1,
+                    style: const TextStyle(
                       color: Color.fromARGB(255, 220, 104, 145),
                       fontFamily: 'Inter',
                       fontSize: 18,
                     ),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Text(
-                    'Enter due date given by doctor',
-                    style: TextStyle(
+                    context.loc.register_page4_C2,
+                    style: const TextStyle(
                       color: Colors.grey,
                       fontFamily: 'Inter',
                       fontSize: 14,
@@ -107,8 +108,8 @@ class _SignUpPregnancyViewState extends State<SignUpPregnancyView> {
                       children: [
                         Text(
                           selectedDueDate != null
-                              ? '${DateFormat('yyyy-MM-dd').format(selectedDueDate!)}'
-                              : 'Enter Due Date',
+                              ? DateFormat('yyyy-MM-dd').format(selectedDueDate!)
+                              : context.loc.register_page4_Q1,
                           style: const TextStyle(
                             color: Colors.grey,
                             fontFamily: 'Inter',
@@ -137,10 +138,10 @@ class _SignUpPregnancyViewState extends State<SignUpPregnancyView> {
                       color: Color.fromARGB(255, 220, 104, 145),
                     ),
                     padding: const EdgeInsets.all(12.0),
-                    child: const Center(
+                    child: Center(
                       child: Text(
-                        'OR',
-                        style: TextStyle(
+                        context.loc.register_page4_OR,
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -149,18 +150,18 @@ class _SignUpPregnancyViewState extends State<SignUpPregnancyView> {
                     ),
                   ),
                   const SizedBox(height: 40),
-                  const Text(
-                    'Calculate your due date.',
-                    style: TextStyle(
+                  Text(
+                    context.loc.register_page4_C3,
+                    style: const TextStyle(
                       color: Color.fromARGB(255, 220, 104, 145),
                       fontFamily: 'Inter',
                       fontSize: 18,
                     ),
                   ),
                   const SizedBox(height: 8),
-                  const Text(
-                    'Enter the day of last menstrual period.',
-                    style: TextStyle(
+                  Text(
+                    context.loc.register_page4_C4,
+                    style: const TextStyle(
                       color: Colors.grey,
                       fontFamily: 'Inter',
                       fontSize: 14,
@@ -204,8 +205,8 @@ class _SignUpPregnancyViewState extends State<SignUpPregnancyView> {
                       children: [
                         Text(
                           selectedPredictedDate != null
-                              ? '${DateFormat('yyyy-MM-dd').format(selectedPredictedDate!)}'
-                              : 'Enter Date',
+                              ? DateFormat('yyyy-MM-dd').format(selectedPredictedDate!)
+                              : context.loc.register_page4_Q2,
                           style: const TextStyle(
                             color: Colors.grey,
                             fontFamily: 'Inter',
@@ -244,16 +245,16 @@ class _SignUpPregnancyViewState extends State<SignUpPregnancyView> {
                   ),
                   elevation: 2,
                 ),
-                child: const Row(
+                child:  Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.arrow_back,
                       color: Colors.white,
                     ),
                     Text(
-                      "Back",
-                      style: TextStyle(
+                      context.loc.back,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 16,
                       ),
@@ -293,17 +294,17 @@ class _SignUpPregnancyViewState extends State<SignUpPregnancyView> {
                   ),
                   elevation: 2,
                 ),
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Done",
-                      style: TextStyle(
+                      context.loc.save,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 16,
                       ),
                     ),
-                    Icon(
+                    const Icon(
                       Icons.check,
                       color: Colors.white,
                     ),

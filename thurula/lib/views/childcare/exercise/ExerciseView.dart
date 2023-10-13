@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../../models/checklist_model.dart';
 import '../../../services/checklist_service.dart';
@@ -8,21 +6,21 @@ final GlobalKey<NavigatorState> _navKey = GlobalKey<NavigatorState>();
 
 // import 'package:provider/provider.dart';
 class ExerciseView extends StatefulWidget {
-  ExerciseView({Key? key}) : super(key: key);
+  const ExerciseView({Key? key}) : super(key: key);
 
   @override
   _ExerciseViewState createState() => _ExerciseViewState();
 }
 
 class Newborn extends StatefulWidget {
-  Newborn({Key? key}) : super(key: key);
+  const Newborn({Key? key}) : super(key: key);
 
   @override
   _NewbornState createState() => _NewbornState();
 }
 
 class Week2 extends StatefulWidget {
-  Week2({Key? key}) : super(key: key);
+  const Week2({Key? key}) : super(key: key);
 
   @override
   _Week2State createState() => _Week2State();
@@ -73,7 +71,7 @@ class _ExerciseViewState extends State<ExerciseView>
         child: Scaffold(
           appBar: AppBar(
             title: const Row(children: [Text('Check list')]),
-            backgroundColor: Color.fromARGB(255, 220, 104, 145),
+            backgroundColor: const Color.fromARGB(255, 220, 104, 145),
             // actions: <Widget>[
             //   Padding(
             //       padding: const EdgeInsets.only(right: 10.0),
@@ -101,7 +99,7 @@ class _ExerciseViewState extends State<ExerciseView>
             onGenerateRoute: (_) => MaterialPageRoute(
               builder: (_) => TabBarView(
                 controller: _tabController,
-                children: [
+                children: const [
                   Newborn(),
                   Week2(),
                   Week3(),
@@ -141,6 +139,7 @@ class _NewbornState extends State<Newborn> {
   late Future<List<Checklists>> checklist1;
   late Future<List<Checklists>> _newborns;
 
+  @override
   void initState() {
     super.initState();
     checklist1 = ChecklistService.getChecklist('64cbb52cf2083327515c7058');
@@ -224,6 +223,7 @@ class _NewbornState extends State<Newborn> {
 class _Week2State extends State<Week2> {
   late Future<List<Checklists>> _week2;
 
+  @override
   void initState() {
     super.initState();
 
@@ -317,7 +317,7 @@ class _Week2State extends State<Week2> {
 }
 
 class Week3 extends StatelessWidget {
-  Week3({Key? key}) : super(key: key);
+  const Week3({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -329,7 +329,7 @@ class Week3 extends StatelessWidget {
 }
 
 class Month1 extends StatelessWidget {
-  Month1({Key? key}) : super(key: key);
+  const Month1({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -341,7 +341,7 @@ class Month1 extends StatelessWidget {
 }
 
 class Week5 extends StatelessWidget {
-  Week5({Key? key}) : super(key: key);
+  const Week5({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -353,7 +353,7 @@ class Week5 extends StatelessWidget {
 }
 
 class Week6 extends StatelessWidget {
-  Week6({Key? key}) : super(key: key);
+  const Week6({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -365,7 +365,7 @@ class Week6 extends StatelessWidget {
 }
 
 class Week7 extends StatelessWidget {
-  Week7({Key? key}) : super(key: key);
+  const Week7({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -377,7 +377,7 @@ class Week7 extends StatelessWidget {
 }
 
 class Month2 extends StatelessWidget {
-  Month2({Key? key}) : super(key: key);
+  const Month2({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -389,7 +389,7 @@ class Month2 extends StatelessWidget {
 }
 
 class Week9 extends StatelessWidget {
-  Week9({Key? key}) : super(key: key);
+  const Week9({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -401,7 +401,7 @@ class Week9 extends StatelessWidget {
 }
 
 class Week10 extends StatelessWidget {
-  Week10({Key? key}) : super(key: key);
+  const Week10({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -413,7 +413,7 @@ class Week10 extends StatelessWidget {
 }
 
 class Week11 extends StatelessWidget {
-  Week11({Key? key}) : super(key: key);
+  const Week11({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -425,7 +425,7 @@ class Week11 extends StatelessWidget {
 }
 
 class Month3 extends StatelessWidget {
-  Month3({Key? key}) : super(key: key);
+  const Month3({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -437,7 +437,7 @@ class Month3 extends StatelessWidget {
 }
 
 class Month4 extends StatelessWidget {
-  Month4({Key? key}) : super(key: key);
+  const Month4({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -449,7 +449,7 @@ class Month4 extends StatelessWidget {
 }
 
 class Month5 extends StatelessWidget {
-  Month5({Key? key}) : super(key: key);
+  const Month5({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -461,7 +461,7 @@ class Month5 extends StatelessWidget {
 }
 
 class Month6 extends StatelessWidget {
-  Month6({Key? key}) : super(key: key);
+  const Month6({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -473,7 +473,7 @@ class Month6 extends StatelessWidget {
 }
 
 class Month7 extends StatelessWidget {
-  Month7({Key? key}) : super(key: key);
+  const Month7({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -485,7 +485,7 @@ class Month7 extends StatelessWidget {
 }
 
 class Month8 extends StatelessWidget {
-  Month8({Key? key}) : super(key: key);
+  const Month8({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -497,7 +497,7 @@ class Month8 extends StatelessWidget {
 }
 
 class Month9 extends StatelessWidget {
-  Month9({Key? key}) : super(key: key);
+  const Month9({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -509,7 +509,7 @@ class Month9 extends StatelessWidget {
 }
 
 class Month10 extends StatelessWidget {
-  Month10({Key? key}) : super(key: key);
+  const Month10({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -521,7 +521,7 @@ class Month10 extends StatelessWidget {
 }
 
 class Month11 extends StatelessWidget {
-  Month11({Key? key}) : super(key: key);
+  const Month11({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -533,7 +533,7 @@ class Month11 extends StatelessWidget {
 }
 
 class Year1 extends StatelessWidget {
-  Year1({Key? key}) : super(key: key);
+  const Year1({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

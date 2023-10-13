@@ -6,7 +6,7 @@ import 'package:thurula/views/signup/sign_up_welcome_view.dart';
 import 'package:thurula/views/widgets/toast_widget.dart';
 
 import '../../providers/user_provider.dart';
-
+import 'package:thurula/extensions/buildcontext/loc.dart';
 class SignUpView extends StatefulWidget {
   const SignUpView({Key? key}) : super(key: key);
 
@@ -73,7 +73,7 @@ class _SignUpViewState extends State<SignUpView> {
                           Expanded(
                             child: TextFieldWidget(
                               controller: firstNameController,
-                              hintText: 'First Name',
+                              hintText: context.loc.register_page_FirstName,
                               isPassword: false,
                             ),
                           ),
@@ -91,13 +91,13 @@ class _SignUpViewState extends State<SignUpView> {
                       // TextField for Username with validation
                       TextFieldWidget(
                         controller: usernameController,
-                        hintText: 'Username',
+                        hintText: context.loc.login_page_username,
                         isPassword: false,
                       ),
                       const SizedBox(height: 16),
                       // TextField for Email with validation
                       TextFieldWidget(
-                        hintText: 'Email',
+                        hintText: context.loc.register_page_Email,
                         isPassword: false,
                         icon: Icons.email,
                         controller: emailController,
@@ -112,7 +112,7 @@ class _SignUpViewState extends State<SignUpView> {
                       const SizedBox(height: 16),
                       // TextField for Password
                       TextFieldWidget(
-                        hintText: 'Password',
+                        hintText: context.loc.login_page_password,
                         isPassword: true,
                         icon: Icons.visibility,
                         controller: passwordController,
@@ -121,7 +121,7 @@ class _SignUpViewState extends State<SignUpView> {
 
                       // TextField for Confirm Password
                       TextFieldWidget(
-                        hintText: 'Confirm Password',
+                        hintText: context.loc.register_page_PasswordConfirm,
                         isPassword: true,
                         icon: Icons.visibility,
                         controller: confirmPasswordController,
@@ -156,16 +156,16 @@ class _SignUpViewState extends State<SignUpView> {
                               ),
                               elevation: 2,
                             ),
-                            child: const Row(
+                            child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(
+                                const Icon(
                                   Icons.arrow_back,
                                   color: Colors.white,
                                 ),
                                 Text(
-                                  "Back",
-                                  style: TextStyle(
+                                  context.loc.back,
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,
                                   ),
@@ -190,10 +190,10 @@ class _SignUpViewState extends State<SignUpView> {
                                     } catch (e) {
                                       if (e is UsernameTakenException) {
                                         GFToast.showToast(
-                                          "Sorry this username already exists",
+                                          context.loc.register_page_UsernameTakenError,
                                           context,
                                           toastPosition: GFToastPosition.BOTTOM,
-                                          textStyle: TextStyle(
+                                          textStyle: const TextStyle(
                                             color:Colors.black
                                           ),
                                           toastDuration: 3,
@@ -203,7 +203,7 @@ class _SignUpViewState extends State<SignUpView> {
                                       } else {
                                         print(e);
                                         GFToast.showToast(
-                                          "Something went wrong please try again",
+                                          context.loc.register_page_ToastError,
                                           context,
                                           toastPosition: GFToastPosition.BOTTOM,
                                           toastDuration: 3,
@@ -231,17 +231,17 @@ class _SignUpViewState extends State<SignUpView> {
                               ),
                               elevation: 2,
                             ),
-                            child: const Row(
+                            child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "Next",
-                                  style: TextStyle(
+                                  context.loc.next,
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,
                                   ),
                                 ),
-                                Icon(
+                                const Icon(
                                   Icons.arrow_forward,
                                   color: Colors.white,
                                 ),

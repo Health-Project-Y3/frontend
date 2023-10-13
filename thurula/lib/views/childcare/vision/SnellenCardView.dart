@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -9,7 +8,7 @@ final GlobalKey<NavigatorState> _navKey = GlobalKey<NavigatorState>();
 
 // import 'package:provider/provider.dart';
 class SnellenCardView extends StatefulWidget {
-  SnellenCardView({Key? key}) : super(key: key);
+  const SnellenCardView({Key? key}) : super(key: key);
 
   @override
   _SnellenCardViewState createState() => _SnellenCardViewState();
@@ -42,7 +41,7 @@ class _SnellenCardViewState extends State<SnellenCardView>
         child: Scaffold(
           appBar: AppBar(
             title: const Row(children: [Text('Snellen Card Test')]),
-            backgroundColor: Color.fromARGB(255, 220, 104, 145),
+            backgroundColor: const Color.fromARGB(255, 220, 104, 145),
             bottom: TabBar(
               controller: _tabController,
               isScrollable: true,
@@ -130,10 +129,10 @@ class FirstPage extends StatelessWidget {
                   try {
                     await Dio().download(
                         "https://en.wikipedia.org/wiki/Snellen_chart#/media/File:Snellen_chart.svg",
-                        _localPath + "/" + "filename.jpg");
+                        "$_localPath/filename.jpg");
                     print("Download Completed.");
                   } catch (e) {
-                    print("Download Failed.\n\n" + e.toString());
+                    print("Download Failed.\n\n$e");
                   }
                 }
               },
@@ -141,8 +140,8 @@ class FirstPage extends StatelessWidget {
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.grey.withOpacity(0.5)),
-                padding: EdgeInsets.all(8),
-                child: Icon(Icons.download, color: Colors.black),
+                padding: const EdgeInsets.all(8),
+                child: const Icon(Icons.download, color: Colors.black),
               )),
         ),
         Padding(
@@ -240,10 +239,10 @@ class SecondPage extends StatelessWidget {
                   try {
                     await Dio().download(
                         "https://en.wikipedia.org/wiki/Snellen_chart#/media/File:Snellen_chart.svg",
-                        _localPath + "/" + "filename.jpg");
+                        "$_localPath/filename.jpg");
                     print("Download Completed.");
                   } catch (e) {
-                    print("Download Failed.\n\n" + e.toString());
+                    print("Download Failed.\n\n$e");
                   }
                 }
               },
@@ -251,8 +250,8 @@ class SecondPage extends StatelessWidget {
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.grey.withOpacity(0.5)),
-                padding: EdgeInsets.all(8),
-                child: Icon(Icons.download, color: Colors.black),
+                padding: const EdgeInsets.all(8),
+                child: const Icon(Icons.download, color: Colors.black),
               )),
         ),
         Padding(
@@ -349,10 +348,10 @@ class ThirdPage extends StatelessWidget {
                   try {
                     await Dio().download(
                         "https://en.wikipedia.org/wiki/Snellen_chart#/media/File:Snellen_chart.svg",
-                        _localPath + "/" + "filename.jpg");
+                        "$_localPath/filename.jpg");
                     print("Download Completed.");
                   } catch (e) {
-                    print("Download Failed.\n\n" + e.toString());
+                    print("Download Failed.\n\n$e");
                   }
                 }
               },
@@ -360,8 +359,8 @@ class ThirdPage extends StatelessWidget {
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.grey.withOpacity(0.5)),
-                padding: EdgeInsets.all(8),
-                child: Icon(Icons.download, color: Colors.black),
+                padding: const EdgeInsets.all(8),
+                child: const Icon(Icons.download, color: Colors.black),
               )),
         ),
         Padding(
