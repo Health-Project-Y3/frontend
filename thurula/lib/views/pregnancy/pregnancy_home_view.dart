@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:thurula/views/forum/forum_home_view.dart';
-
-// import 'package:thurula/views/login_view.dart';
 import 'package:thurula/views/pregnancy/mother_health_tracker.dart';
+import 'package:thurula/views/pregnancy/prepregnancy_details.dart';
 import 'package:thurula/views/pregnancy/pregnancy_timeline_view.dart';
 import 'package:thurula/views/pregnancy/pregnancy_vaccination_tracker_view.dart';
 import 'package:thurula/views/pregnancy/pregnancy_exercise_recommendations_view.dart';
 import 'package:thurula/views/pregnancy/pregnancy_baby_names_view.dart';
+import 'package:thurula/services/auth/user_service.dart';
+import 'package:thurula/models/user_model.dart';
 
 import '../../providers/user_provider.dart';
 
@@ -130,43 +131,58 @@ class PregnancyHomeView extends StatelessWidget {
                       )),
                   //Health Monitoring
                   Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: InkResponse(
-                        onTap: () {
+                    padding: const EdgeInsets.all(5.0),
+                    child: InkResponse(
+                      onTap: () async {
+                        final user = await UserService.getUser('652a5d43935d40f339c12d8b');
+                        if (user != null && user.preWeight == 0) {
+                          // User data is available, and preweight is not null
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => MotherHealthTracker(),
+                              builder: (context) => const prepregnancyDetails(),
                             ),
                           );
-                        },
-                        child: Container(
-                          width: 120,
-                          height: 120,
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 255, 255, 255),
-                            borderRadius: BorderRadius.circular(5.0),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 0.5,
-                                blurRadius: 2,
-                                offset: const Offset(0, 2),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              ClipRRect(
-                                child: Image.asset(
-                                    'assets/images/menu-tiles/monitor2.png',
-                                    height: 100),
-                              ),
-                            ],
-                          ),
+                        } else {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const MotherHealthTracker1(),
+                            ),
+                          );
+                        }
+                      },
+                      child: Container(
+                        width: 120,
+                        height: 120,
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 255, 255, 255),
+                          borderRadius: BorderRadius.circular(5.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 0.5,
+                              blurRadius: 2,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
                         ),
-                      )),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ClipRRect(
+                              child: Image.asset(
+                                'assets/images/menu-tiles/monitor2.png',
+                                height: 100,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+
+
                   //Vaccination Tracking
                   Padding(
                       padding: const EdgeInsets.all(5.0),

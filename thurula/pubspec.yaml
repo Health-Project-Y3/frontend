@@ -90,6 +90,7 @@ flutter:
     - assets/images/health_tracker/Weight.png
     - assets/images/health_tracker/Blood.png
     - assets/images/health_tracker/Water.png
+    - assets/images/health_tracker/initial_ht.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

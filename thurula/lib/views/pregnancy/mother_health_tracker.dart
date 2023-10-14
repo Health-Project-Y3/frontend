@@ -1,28 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:thurula/views/pregnancy/prepregnancy_details.dart';
 import 'package:thurula/views/pregnancy/add_weight.dart';
 import 'package:thurula/views/pregnancy/add_pressure.dart';
 import 'package:thurula/views/pregnancy/add_water.dart';
-void main() {
-  runApp(MaterialApp(
-    home: MotherHealthTracker(),
-  ));
-}
+import 'package:thurula/services/auth/user_service.dart';
+import 'package:thurula/models/user_model.dart';
+import 'package:thurula/services/auth/user_service.dart';
 
-class MotherHealthTracker extends StatefulWidget {
-  const MotherHealthTracker({Key? key}) : super(key: key);
+
+
+class MotherHealthTracker1 extends StatefulWidget {
+  const MotherHealthTracker1({Key? key}) : super(key: key);
 
   @override
   _HealthTrackerState createState() => _HealthTrackerState();
 }
 
-class _HealthTrackerState extends State<MotherHealthTracker> {
+class _HealthTrackerState extends State<MotherHealthTracker1> {
   bool isModalOpen = false;
 
   @override
   void initState() {
     super.initState();
-    _openModal();
+
   }
 
   void _openModal() {
@@ -70,7 +71,7 @@ class _HealthTrackerState extends State<MotherHealthTracker> {
                     );
                   },
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(18.0, 18.0, 18.0,2.0),
+                    padding: const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 2.0),
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
@@ -94,41 +95,62 @@ class _HealthTrackerState extends State<MotherHealthTracker> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 4.0),
-                                    child: Text(
-                                      'I weigh',
-                                      style: TextStyle(
-                                        color: Color.fromARGB(255, 88, 119, 161),
-                                        fontSize: 16.0,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 6.0),
-
-                                    child: Text(
-                                      '65kg',
-                                      style: TextStyle(
-                                        color: Color.fromARGB(255, 88, 119, 161),
-                                        fontSize: 36.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 2.0),
-                                    child: Text(
-                                      'Week on Week Gain - 1.5kg',
-                                      style: TextStyle(
-                                        color: Color.fromARGB(255, 88, 119, 161),
-                                        fontSize: 12.0,
-                                      ),
-                                    ),
-                                  ),
+                                  // Box 1
+                                  FutureBuilder<User?>(
+                                    future: UserService.getUser('652a5d43935d40f339c12d8b'), // Replace with the actual user ID
+                                    builder: (context, snapshot) {
+                                      if (snapshot.connectionState == ConnectionState.waiting) {
+                                        return CircularProgressIndicator(); // Display loading indicator while fetching data
+                                      } else if (snapshot.hasError) {
+                                        return Text('Error: ${snapshot.error}');
+                                      } else {
+                                        // No user data or weight is 0
+                                        final double userWeight = snapshot.data!.preWeight!;
+                                        return Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 4.0),
+                                              child: Text(
+                                                'I weigh',
+                                                style: TextStyle(
+                                                  color: Color.fromARGB(255, 88, 119, 161),
+                                                  fontSize: 16.0,
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 6.0),
+                                              child: Text(
+                                                '${userWeight.toStringAsFixed(1)} Kg', // Display the fetched user weight as a double
+                                                style: TextStyle(
+                                                  color: Color.fromARGB(255, 88, 119, 161),
+                                                  fontSize: 36.0,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 2.0),
+                                              child: Text(
+                                                'Week on Week Gain - 1.5kg', // Update with the actual gain value
+                                                style: TextStyle(
+                                                  color: Color.fromARGB(255, 88, 119, 161),
+                                                  fontSize: 12.0,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      }
+                                    },
+                                  )
                                 ],
                               ),
-                            ),
+                            )
+                            ,
+                            // Add your second column here
+
                             // Container for the image with specified width and height
                             Container(
                               width: 180,
@@ -145,14 +167,12 @@ class _HealthTrackerState extends State<MotherHealthTracker> {
                   ),
                 ),
 
-
                 // Box 2 (Weight Growth Chart)
                 Padding(
                   padding: const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 2.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
                       WeightChartBox(),
                     ],
                   ),
@@ -168,7 +188,7 @@ class _HealthTrackerState extends State<MotherHealthTracker> {
                     );
                   },
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(18.0, 18.0, 18.0,2.0),
+                    padding: const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 2.0),
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
@@ -193,32 +213,38 @@ class _HealthTrackerState extends State<MotherHealthTracker> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 4.0),
+                                    padding: const EdgeInsets.fromLTRB(
+                                        18.0, 18.0, 18.0, 4.0),
                                     child: Text(
                                       'My Pressure Level',
                                       style: TextStyle(
-                                        color: Color.fromARGB(255, 88, 119, 161),
+                                        color:
+                                            Color.fromARGB(255, 88, 119, 161),
                                         fontSize: 16.0,
                                       ),
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 6.0),
+                                    padding: const EdgeInsets.fromLTRB(
+                                        18.0, 18.0, 18.0, 6.0),
                                     child: Text(
                                       '0/0',
                                       style: TextStyle(
-                                        color: Color.fromARGB(255, 88, 119, 161),
+                                        color:
+                                            Color.fromARGB(255, 88, 119, 161),
                                         fontSize: 36.0,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 2.0),
+                                    padding: const EdgeInsets.fromLTRB(
+                                        18.0, 18.0, 18.0, 2.0),
                                     child: Text(
                                       'Week on Week Gain - 10',
                                       style: TextStyle(
-                                        color: Color.fromARGB(255, 88, 119, 161),
+                                        color:
+                                            Color.fromARGB(255, 88, 119, 161),
                                         fontSize: 12.0,
                                       ),
                                     ),
@@ -246,7 +272,6 @@ class _HealthTrackerState extends State<MotherHealthTracker> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
                       PressureChartBox(),
                     ],
                   ),
@@ -282,40 +307,44 @@ class _HealthTrackerState extends State<MotherHealthTracker> {
                         ),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
-
                           children: [
                             Expanded(
                               child: Column(
-
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 6.0),
+                                    padding: const EdgeInsets.fromLTRB(
+                                        18.0, 18.0, 18.0, 6.0),
                                     child: Text(
                                       'I Drank',
                                       style: TextStyle(
-                                        color: Color.fromARGB(255, 88, 119, 161),
+                                        color:
+                                            Color.fromARGB(255, 88, 119, 161),
                                         fontSize: 16.0,
                                       ),
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 4.0),
+                                    padding: const EdgeInsets.fromLTRB(
+                                        18.0, 18.0, 18.0, 4.0),
                                     child: Text(
                                       '5 Glasses',
                                       style: TextStyle(
-                                        color: Color.fromARGB(255, 88, 119, 161),
+                                        color:
+                                            Color.fromARGB(255, 88, 119, 161),
                                         fontSize: 36.0,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 2.0),
+                                    padding: const EdgeInsets.fromLTRB(
+                                        18.0, 18.0, 18.0, 2.0),
                                     child: Text(
                                       'I need to Drink - 400ml/day',
                                       style: TextStyle(
-                                        color: Color.fromARGB(255, 88, 119, 161),
+                                        color:
+                                            Color.fromARGB(255, 88, 119, 161),
                                         fontSize: 12.0,
                                       ),
                                     ),
@@ -338,11 +367,6 @@ class _HealthTrackerState extends State<MotherHealthTracker> {
                     ),
                   ),
                 ),
-
-
-
-
-
               ],
             ),
           ),
@@ -355,7 +379,6 @@ class _HealthTrackerState extends State<MotherHealthTracker> {
     );
   }
 }
-
 
 class WeightChartBox extends StatelessWidget {
   @override
@@ -384,7 +407,8 @@ class WeightChartBox extends StatelessWidget {
               ],
             ),
             child: Padding(
-              padding: EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 16.0), // Adjust padding as needed
+              padding: EdgeInsets.fromLTRB(
+                  18.0, 18.0, 18.0, 16.0), // Adjust padding as needed
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -394,24 +418,19 @@ class WeightChartBox extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16.0,
                       color: Color.fromARGB(255, 88, 119, 161),
-
                       fontWeight: FontWeight.normal,
                     ),
                     textAlign: TextAlign.left, // Align the text to the left
                   ),
                   SizedBox(height: 16.0), // Adjust spacing
-
                 ],
               ),
             ),
           );
-
-
         }
       },
     );
   }
-
 
   Future<List<BarChartGroupData>> fetchData() async {
     // Simulate fetching data from an API or database
@@ -442,7 +461,6 @@ class WeightChartView extends StatelessWidget {
         border: Border.all(color: Colors.white),
       ),
       child: BarChart(
-
         BarChartData(
           gridData: FlGridData(show: false),
           titlesData: FlTitlesData(show: false),
@@ -484,7 +502,8 @@ class PressureChartBox extends StatelessWidget {
               ],
             ),
             child: Padding(
-              padding: EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 16.0), // Adjust padding as needed
+              padding: EdgeInsets.fromLTRB(
+                  18.0, 18.0, 18.0, 16.0), // Adjust padding as needed
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -494,24 +513,19 @@ class PressureChartBox extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16.0,
                       color: Color.fromARGB(255, 88, 119, 161),
-
                       fontWeight: FontWeight.normal,
                     ),
                     textAlign: TextAlign.left, // Align the text to the left
                   ),
                   SizedBox(height: 16.0), // Adjust spacing
-
                 ],
               ),
             ),
           );
-
-
         }
       },
     );
   }
-
 
   Future<List<BarChartGroupData>> fetchData() async {
     // Simulate fetching data from an API or database
@@ -542,7 +556,6 @@ class PressureChartView extends StatelessWidget {
         border: Border.all(color: Colors.white),
       ),
       child: BarChart(
-
         BarChartData(
           gridData: FlGridData(show: false),
           titlesData: FlTitlesData(show: false),
@@ -560,22 +573,34 @@ class PressureChartView extends StatelessWidget {
 
 
 
-
-
-
-
-
-
-class ModalContent extends StatelessWidget {
+class ModalContent extends StatefulWidget {
+  _ModalContent createState() => _ModalContent();
   final Function closeModal;
-
   ModalContent({required this.closeModal});
+}
+
+class _ModalContent extends State<ModalContent> {
+  final heightController = TextEditingController();
+  final weightController = TextEditingController();
+
+  // Initialize the controllers with initial values (if available)
+  @override
+  void initState() {
+    super.initState();
+
+    // Example: Set initial values if available
+    heightController.text = 'Initial Height Value'; // Replace with your initial value
+    weightController.text = 'Initial Weight Value'; // Replace with your initial value
+  }
+
+  String get height => heightController.text;
+  String get weight => weightController.text;
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        height: 500.0, // Increase the height as needed
+        height: 500.0,
         child: Padding(
           padding: const EdgeInsets.all(30.0),
           child: Column(
@@ -595,7 +620,8 @@ class ModalContent extends StatelessWidget {
                   style: DefaultTextStyle.of(context).style,
                   children: <TextSpan>[
                     TextSpan(
-                      text: "Before we embark on this incredible journey together, ",
+                      text:
+                      "Before we embark on this incredible journey together, ",
                       style: TextStyle(fontWeight: FontWeight.normal),
                     ),
                     TextSpan(
@@ -611,23 +637,27 @@ class ModalContent extends StatelessWidget {
                       ),
                     ),
                     TextSpan(
-                      text: " details to ensure your well-being and a healthy pregnancy.",
+                      text:
+                      " details to ensure your well-being and a healthy pregnancy.",
                       style: TextStyle(fontWeight: FontWeight.normal),
                     ),
                   ],
                 ),
               ),
               SizedBox(height: 16.0),
-              Text("Maintaining a healthy weight and understanding your body's baseline is essential for a successful and comfortable pregnancy."),
+              Text(
+                  "Maintaining a healthy weight and understanding your body's baseline is essential for a successful and comfortable pregnancy."),
               SizedBox(height: 16.0),
               SizedBox(height: 12.0),
               TextField(
+                controller: heightController,
                 decoration: InputDecoration(
                   labelText: 'Height (cm/inch)',
                 ),
               ),
               SizedBox(height: 10.0),
               TextField(
+                controller: weightController,
                 decoration: InputDecoration(
                   labelText: 'Weight (kg/lbs)',
                 ),
@@ -637,20 +667,39 @@ class ModalContent extends StatelessWidget {
               Align(
                 alignment: Alignment.center,
                 child: SizedBox(
-                  width: double.infinity, // Make the button full width
+                  width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      // Handle submit button logic here
-                      // For example, you can get the values from the input fields
-                      // and perform some action.
-                      closeModal(); // Close the modal using the provided function
+                      if (height.isNotEmpty && weight.isNotEmpty) {
+                        double heightValue = double.parse(height);
+                        double weightValue = double.parse(weight);
+
+                        // Create a User object with the updated values
+                        User updatedUser = User(
+                          height: heightValue,
+                          preWeight: weightValue,
+                        );
+
+                        // Call the updateUser method to update the user's data in the database
+                        UserService.updateUser('651565c2e11d243e01ee0565', updatedUser)
+                            .then((_) {
+                          // Data updated successfully, close the modal
+                          widget.closeModal(); // Close the modal
+                        }).catchError((error) {
+                          // Handle any errors that occur during the update
+                          print('Error updating user data: $error');
+                          // You can also show an error message to the user
+                        });
+                      } else {
+                        print('Error');
+                      }
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Color.fromARGB(255, 220, 104, 145), // Pink color
+                      primary: Color.fromARGB(255, 220, 104, 145),
                     ),
                     child: Text(
                       'Submit',
-                      style: TextStyle(color: Colors.white), // White text color
+                      style: TextStyle(color: Colors.white),
                     ),
                   ),
                 ),
@@ -662,3 +711,5 @@ class ModalContent extends StatelessWidget {
     );
   }
 }
+
+

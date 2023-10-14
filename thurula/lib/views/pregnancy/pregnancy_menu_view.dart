@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:thurula/views/HomeView.dart';
+import 'package:thurula/views/pregnancy/prepregnancy_details.dart';
 import 'package:thurula/views/pregnancy/pregnancy_timeline_view.dart';
 
 // import 'package:provider/provider.dart';
@@ -58,7 +59,7 @@ class PregnancyMenuView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const HomeView(),
+                      builder: (context) => const prepregnancyDetails(),
                     ),
                   );
                 },
