@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thurula/views/childcare/diaper_records.dart';
 import 'forum/forum_home_view.dart';
 import 'widgets/navbar_widget.dart';
 
@@ -14,7 +15,6 @@ import 'package:thurula/views/childcare/exercise/ExerciseView.dart';
 import 'package:thurula/views/childcare/growth_chart_view.dart';
 import 'package:thurula/views/childcare/vaccination_tracker_view.dart';
 import 'package:thurula/views/childcare/vision/VisionMenuView.dart';
-import 'package:thurula/views/childcare/diaper_change.dart';
 import 'package:thurula/views/childcare/nap/nap_details.dart';
 import 'package:thurula/views/childcare/meal_tracker.dart';
 
@@ -73,8 +73,8 @@ class AllServices extends StatelessWidget {
   final List<Widget Function()> childcareViews = [
     () => const GrowthChartView(),
     () => const VaccinationTrackerView(),
-    () => const NapDetails(),
-    () => const DiaperChange(),
+    () => NapDetails(),
+    () => DiaperRecords(),
     () => const MealTracker(),
     () => const ExerciseView(),
     () => const VisionMenuView(),
