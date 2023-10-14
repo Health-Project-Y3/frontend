@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:thurula/views/childcare/diaper_change.dart';
+import 'package:thurula/views/childcare/diaper_records.dart';
 import 'package:thurula/views/childcare/meal_tracker.dart';
 import 'package:thurula/views/childcare/nap/nap_timer.dart';
 import 'dart:math' as math;
-
 
 class CreateChildcareExpandableFab extends StatelessWidget {
   const CreateChildcareExpandableFab({super.key});
@@ -18,7 +17,7 @@ class CreateChildcareExpandableFab extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const NapTimer(),
+                builder: (context) => NapTimer(),
               ),
             );
           },
@@ -29,7 +28,7 @@ class CreateChildcareExpandableFab extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const DiaperChange(),
+                builder: (context) => DiaperRecords(),
               ),
             );
           },
