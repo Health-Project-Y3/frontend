@@ -256,7 +256,7 @@ class _ChildHomeViewState extends State<ChildHomeView> {
                             ),
                           ),
                         ),
-                      )),
+                      ),
 //Diaper Change Monitoring
                   Padding(
                       padding: const EdgeInsets.all(5.0),
