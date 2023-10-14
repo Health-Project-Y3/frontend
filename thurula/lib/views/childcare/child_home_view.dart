@@ -11,9 +11,12 @@ import 'package:thurula/views/childcare/vision/VisionMenuView.dart';
 import 'package:thurula/views/childcare/diaper_records.dart';
 import 'package:thurula/views/childcare/nap/nap_details.dart';
 import 'package:thurula/views/childcare/meal_tracker.dart';
+import 'package:thurula/views/widgets/expandable_fab_widget.dart';
 
 import '../../providers/baby_provider.dart';
 import '../../providers/user_provider.dart';
+import '../widgets/navbar_widget.dart';
+
 
 class ChildHomeView extends StatefulWidget {
   const ChildHomeView({Key? key}) : super(key: key);
@@ -52,6 +55,7 @@ class _ChildHomeViewState extends State<ChildHomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: const CreateChildcareExpandableFab(),
       backgroundColor: const Color.fromARGB(255, 247, 247, 247),
       body: ValueListenableBuilder<Baby?>(
         valueListenable: selectedBabyNotifier,
@@ -625,6 +629,9 @@ class _ChildHomeViewState extends State<ChildHomeView> {
             ],
           );
         },
+      ),
+      bottomNavigationBar: const CreateBottomNavigationBar(
+        pageIndex: 1,
       ),
     );
   }
