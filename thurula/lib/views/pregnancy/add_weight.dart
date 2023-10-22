@@ -5,6 +5,7 @@ import 'package:thurula/models/user_model.dart';
 import 'package:thurula/models/user_weight_model.dart';
 import 'package:thurula/services/user_weight_service.dart';
 import 'package:thurula/views/pregnancy/view_weight_records.dart';
+import 'package:thurula/views/pregnancy/mother_health_tracker.dart';
 
 class WeightMonitorPage extends StatefulWidget {
   @override
@@ -30,7 +31,8 @@ class _WeightMonitorPageState extends State<WeightMonitorPage> {
     if (picked != null) {
       setState(() {
         _selectedDate = picked;
-        _tempSelectedDate = "${picked.year}-${picked.month.toString().padLeft(2, '0')}-${picked.day.toString().padLeft(2, '0')}"; // Store date in the format yyyy-MM-dd
+        _tempSelectedDate =
+        "${picked.year}-${picked.month.toString().padLeft(2, '0')}-${picked.day.toString().padLeft(2, '0')}"; // Store date in the format yyyy-MM-dd
         _dateError = null;
       });
     }
@@ -38,6 +40,14 @@ class _WeightMonitorPageState extends State<WeightMonitorPage> {
 
   Future<User?> _getUserData() async {
     return UserService.getUser('652a5d43935d40f339c12d8b');
+  }
+
+  Future<List<UserWeight>> _getUserWeights() async {
+    // Fetch user weights here, using the UserWeightService
+    // Pass the user's ID and set null for the start and end date as needed
+    List<UserWeight> userWeights =
+    await UserWeightService.getUserWeights('652a5d43935d40f339c12d8b', null, null);
+    return userWeights;
   }
 
   Future<void> _createUserWeight(UserWeight userWeight) async {
@@ -53,8 +63,8 @@ class _WeightMonitorPageState extends State<WeightMonitorPage> {
       Fluttertoast.showToast(
         msg: "Weight recorded successfully",
         toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.TOP,
-        backgroundColor: Colors.green,
+        gravity: ToastGravity.BOTTOM, // Show the message at the bottom
+        backgroundColor: Colors.black,
         textColor: Colors.white,
         timeInSecForIosWeb: 1,
         fontSize: 16.0,
@@ -88,6 +98,15 @@ class _WeightMonitorPageState extends State<WeightMonitorPage> {
       appBar: AppBar(
         title: Text('Weight Monitor'),
         backgroundColor: Color.fromARGB(255, 220, 104, 145),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back), // You can use a different icon if desired
+          onPressed: () {
+            // Add navigation logic to go to the "Mother Health Tracker" page
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => MotherHealthTracker1()), // Replace with your actual page widget
+            );
+          },
+        ),
       ),
       body: ListView(
         children: [
@@ -112,13 +131,13 @@ class _WeightMonitorPageState extends State<WeightMonitorPage> {
                   ),
                 ),
                 SizedBox(height: 20),
-                FutureBuilder<User?>(
-                  future: _getUserData(),
-                  builder: (context, userSnapshot) {
-                    if (userSnapshot.connectionState == ConnectionState.waiting) {
+                FutureBuilder<List<UserWeight>>(
+                  future: _getUserWeights(),
+                  builder: (context, userWeightsSnapshot) {
+                    if (userWeightsSnapshot.connectionState == ConnectionState.waiting) {
                       return CircularProgressIndicator();
-                    } else if (userSnapshot.hasData) {
-                      final double userWeight = userSnapshot.data!.preWeight ?? 0.0;
+                    } else if (userWeightsSnapshot.hasData && userWeightsSnapshot.data!.isNotEmpty) {
+                      final double userWeight = userWeightsSnapshot.data!.last.weight ?? 0.0;
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -132,14 +151,14 @@ class _WeightMonitorPageState extends State<WeightMonitorPage> {
                           ),
                           ElevatedButton(
                             onPressed: () {
-                              // Navigate to AddPressurePage when the button is pressed
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => ViewWeightPage(userId: '652a5d43935d40f339c12d8b')),
+                                MaterialPageRoute(builder: (context) =>
+                                    ViewWeightPage(userId: '652a5d43935d40f339c12d8b')),
                               );
                             },
                             style: ElevatedButton.styleFrom(
-                              primary: Color.fromARGB(255, 88, 119, 161), // Customize the button color as needed
+                              primary: Color.fromARGB(255, 88, 119, 161),
                               minimumSize: Size(120, 0),
                               padding: EdgeInsets.all(16.0),
                             ),
@@ -148,17 +167,108 @@ class _WeightMonitorPageState extends State<WeightMonitorPage> {
                         ],
                       );
                     } else {
-                      return Text('User weight not available');
+                      // If no weight records are available, fetch and display the user's weight
+                      return FutureBuilder<User?>(
+                        future: _getUserData(),
+                        builder: (context, userSnapshot) {
+                          if (userSnapshot.connectionState == ConnectionState.waiting) {
+                            return CircularProgressIndicator();
+                          } else if (userSnapshot.hasData) {
+                            final double userWeight = userSnapshot.data!.preWeight ?? 0.0;
+                            return Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "${userWeight.toStringAsFixed(1)} Kg",
+                                  style: TextStyle(
+                                    fontSize: 58,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color.fromARGB(255, 88, 119, 161),
+                                  ),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) =>
+                                          ViewWeightPage(userId: '652a5d43935d40f339c12d8b')),
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Color.fromARGB(255, 88, 119, 161),
+                                    minimumSize: Size(120, 0),
+                                    padding: EdgeInsets.all(16.0),
+                                  ),
+                                  child: Text('View Records'),
+                                ),
+                              ],
+                            );
+                          } else {
+                            return Text('User weight not available');
+                          }
+                        },
+                      );
                     }
                   },
                 ),
                 SizedBox(height: 10),
-                Text(
-                  "Gained in the last week 5kg",
-                  style: TextStyle(
-                    fontSize: 14,
-                  ),
-                ),
+                FutureBuilder<List<UserWeight>>(
+                  future: _getUserWeights(),
+                  builder: (context, userWeightsSnapshot) {
+                    if (userWeightsSnapshot.connectionState == ConnectionState.waiting) {
+                      return CircularProgressIndicator();
+                    } else if (userWeightsSnapshot.hasData && userWeightsSnapshot.data!.length >= 2) {
+                      final List<UserWeight> userWeights = userWeightsSnapshot.data!;
+                      userWeights.sort((a, b) => b.date!.compareTo(a.date!));
+
+                      final double latestWeight = userWeights[0].weight!;
+                      final double secondLatestWeight = userWeights[1].weight!;
+
+                      double weightChange = latestWeight - secondLatestWeight;
+
+                      String changeText = "No change in weight";
+                      Color textColor = Colors.black;
+
+                      if (weightChange > 0) {
+                        changeText = "You have Gained ${weightChange.toStringAsFixed(1)} kg";
+                        textColor = Colors.red;
+                      } else if (weightChange < 0) {
+                        changeText = "You have lost ${(-weightChange).toStringAsFixed(1)} kg";
+                        textColor = Colors.green;
+                      }
+
+                      return Column(
+                        children: [
+                          Text(
+                            changeText,
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: textColor,
+                            ),
+                          ),
+                        ],
+                      );
+                    } else {
+                      // If no weight records are available, fetch and display the user's weight
+                      return FutureBuilder<User?>(
+                        future: _getUserData(),
+                        builder: (context, userSnapshot) {
+                          if (userSnapshot.connectionState == ConnectionState.waiting) {
+                            return CircularProgressIndicator();
+                          } else {
+                            return Text('User weight not available');
+                          }
+                        },
+                      );
+                    }
+                  },
+                )
+
+
+
+
+
+
               ],
             ),
           ),
@@ -199,7 +309,7 @@ class _WeightMonitorPageState extends State<WeightMonitorPage> {
                   readOnly: true,
                   controller: TextEditingController(text: _tempSelectedDate),
                 ),
-                SizedBox(height: 8),
+                SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () async {
                     // Clear the previous data before validation
@@ -224,7 +334,7 @@ class _WeightMonitorPageState extends State<WeightMonitorPage> {
                       final userWeight = UserWeight(
                         userId: '652a5d43935d40f339c12d8b',
                         weight: _userWeight,
-                        date: DateTime.parse(_tempSelectedDate), // Use the selected date stored in _tempSelectedDate
+                        date: DateTime.parse(_tempSelectedDate),
                       );
                       await _createUserWeight(userWeight);
                     }

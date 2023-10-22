@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:thurula/models/user_weight_model.dart';
 import 'package:thurula/services/user_weight_service.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:thurula/views/pregnancy/add_weight.dart';
 
 class ViewWeightPage extends StatefulWidget {
   final String userId;
@@ -35,6 +36,15 @@ class _ViewWeightPageState extends State<ViewWeightPage> {
       appBar: AppBar(
         title: Text('View Weight Records'),
         backgroundColor: Color.fromARGB(255, 220, 104, 145),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back), // You can use a different icon if desired
+          onPressed: () {
+            // Add navigation logic to go to the "Mother Health Tracker" page
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => WeightMonitorPage()), // Replace with your actual page widget
+            );
+          },
+        ),
       ),
       body: userWeights.isEmpty
           ? Center(
@@ -169,7 +179,7 @@ class _ViewWeightPageState extends State<ViewWeightPage> {
         });
       }
 
-      Fluttertoast.showToast(msg: 'Update successful');
+      Fluttertoast.showToast(msg: 'Updated successfully');
     } catch (e) {
       Fluttertoast.showToast(msg: 'Update failed: $e');
     }
@@ -291,17 +301,7 @@ class _EditWeightDialogState extends State<EditWeightDialog> {
               child: Text('Update'),
             ),
             SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                widget.onDelete();
-                Navigator.pop(context);
-              },
-              style: ElevatedButton.styleFrom(
-                primary: Colors.red,
-                minimumSize: Size(double.infinity, 0.0),
-              ),
-              child: Text('Delete'),
-            ),
+
           ],
         ),
       ),
