@@ -20,7 +20,7 @@ class _DiaperRecordsState extends State<DiaperRecords> {
     _loadDiaperRecords();
   }
 
-  // Function to load diaper change records
+// Function to load diaper change records
   Future<void> _loadDiaperRecords() async {
     try {
       _diaperRecordsFuture =
@@ -29,6 +29,8 @@ class _DiaperRecordsState extends State<DiaperRecords> {
       print('Loaded ${records.length} diaper records.');
       setState(() {
         diaperRecords = records;
+        // Sort diaperRecords in descending order by time
+        diaperRecords.sort((a, b) => b.time!.compareTo(a.time!));
       });
     } catch (e) {
       print('Error loading diaper records: $e');
@@ -42,69 +44,31 @@ class _DiaperRecordsState extends State<DiaperRecords> {
         title: Text('Diaper Change Details'),
         backgroundColor: const Color.fromARGB(255, 220, 104, 145),
       ),
-      body: FutureBuilder<List<DiaperTimes>>(
-        future: _diaperRecordsFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No diaper change records found.'));
-          } else {
-            // Data has been loaded successfully.
-            diaperRecords = snapshot.data!;
+      body: ListView.builder(
+        itemCount: diaperRecords.length,
+        itemBuilder: (context, index) {
+          DiaperTimes record = diaperRecords[index];
+          String formattedDate = DateFormat('EEEE, d MMMM y').format(record.time ?? DateTime.now());
+          String formattedTime = DateFormat('HH:mm:ss').format(record.time ?? DateTime.now());
 
-            // Create a ListView to display diaper change records
-            return ListView.builder(
-              itemCount: diaperRecords.length,
-              itemBuilder: (context, index) {
-                DiaperTimes record = diaperRecords[index];
-                // Format date and time
-                String formattedDate = DateFormat('yyyy-MM-dd').format(record.time ?? DateTime.now());
-                String formattedTime = DateFormat('HH:mm:ss').format(record.time ?? DateTime.now());
-                return Card(
-                  elevation: 3,
-                  margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('Date: $formattedDate'),
-                              SizedBox(height: 8),
-                              Text('Time: $formattedTime'),
-                              SizedBox(height: 8),
-                              Text('Notes: ${record.diaperNotes ?? ''}'),
-                              SizedBox(height: 8),
-                              Text('Type: ${record.diaperType ?? ''}'),
-                              SizedBox(height: 8),
-                              Text('Logged by: ${record.loggedBy ?? ''}'),
-                            ],
-                          ),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.edit),
-                          onPressed: () {
-                            _showEditDiaperDialog(context, record);
-                          },
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.delete),
-                          onPressed: () {
-                            _deleteDiaperRecord(record.id ?? '');
-                          },
-                        ),
-                      ],
-                    ),
+          if (index == 0 || formattedDate != DateFormat('EEEE, d MMMM y').format(diaperRecords[index - 1].time!)) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Divider(),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    formattedDate,
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.grey), // Adjust the font size and color
                   ),
-                );
-              },
+                ),
+                Divider(),
+                _buildDiaperRecord(formattedTime, record),
+              ],
             );
+          } else {
+            return _buildDiaperRecord(formattedTime, record);
           }
         },
       ),
@@ -117,6 +81,73 @@ class _DiaperRecordsState extends State<DiaperRecords> {
       ),
     );
   }
+
+
+  Widget _buildDiaperRecord(String formattedTime, DiaperTimes record) {
+    Icon diaperIcon = Icon(Icons.info_outline); // Default icon if diaperType is not recognized
+    Color iconColor = Colors.grey; // Default color
+
+    if (record.diaperType == 'wet') {
+      diaperIcon = Icon(Icons.water_drop, color: Colors.blue); // Replace with the appropriate wet icon
+      iconColor = Colors.blue;
+    } else if (record.diaperType == 'dirty') {
+      diaperIcon = Icon(Icons.cloud_off, color: Colors.green); // Replace with the appropriate dry icon
+      iconColor = Colors.green;
+    } else if (record.diaperType == 'mixed') {
+      diaperIcon = Icon(Icons.wb_cloudy, color: Colors.brown); // Replace with the appropriate mixed icon
+      iconColor = Colors.brown;
+    }
+
+    // Format the time in a more human-readable way (with AM or PM)
+    String formattedTime = DateFormat('h:mm a').format(record.time ?? DateTime.now());
+
+    return Card(
+      elevation: 3,
+      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.grey, // Change the color as needed
+              ),
+              child: Center(child: diaperIcon),
+            ),
+            VerticalDivider(color: Colors.grey), // Vertical line
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('$formattedTime'),
+                ],
+              ),
+            ),
+            IconButton(
+              icon: const Icon(Icons.edit),
+              onPressed: () {
+                _showEditDiaperDialog(context, record);
+              },
+              color: const Color.fromARGB(255, 185, 157, 2),
+            ),
+            IconButton(
+              icon: Icon(Icons.delete),
+              onPressed: () {
+                _deleteDiaperRecord(record.id ?? '');
+              },
+              color: const Color.fromARGB(206, 185, 2, 2),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+
 
 
 
@@ -231,11 +262,7 @@ class _DiaperRecordsState extends State<DiaperRecords> {
     );
   }
 
-  Future<String?> _validateTextField(
-      BuildContext context,
-      String fieldName,
-      String value,
-      ) async {
+  Future<String?> _validateTextField(BuildContext context, String fieldName, String value,) async {
     if (value.isEmpty) {
       // Display an error message for empty input
       ScaffoldMessenger.of(context).showSnackBar(
@@ -249,10 +276,6 @@ class _DiaperRecordsState extends State<DiaperRecords> {
     // Additional validation logic can be added here if needed
     return value;
   }
-
-
-
-
 
   Future<DateTime?> _selectTime(BuildContext context, DateTime? initialTime) async {
     DateTime? selectedTime = initialTime;
