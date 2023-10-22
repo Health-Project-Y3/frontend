@@ -97,12 +97,15 @@ class UserWeightService {
 
   static Future<void> deleteUserWeight(String id) async {
     var response = await http.delete(Uri.parse(getRoute("weight_tracker/$id")));
-    if (response.statusCode == 200) {
-      return;
+    if (response.statusCode == 204) {
+      // Deletion was successful
+    } else if (response.statusCode == 404) {
+      throw Exception("Record not found");
     } else {
-      log(jsonDecode(response.body));
-      throw Exception("Failed to delete record");
+      throw Exception("Failed to delete record: ${response.statusCode}");
     }
+
+
   }
 
   static Future<void> updateUserWeight(String id, UserWeight uex) async {
