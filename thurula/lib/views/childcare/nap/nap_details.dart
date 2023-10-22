@@ -39,13 +39,11 @@ class _NapDetailsState extends State<NapDetails> {
             color: Colors.white,
           ),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const ChildHomeView()),
-            );
+            Navigator.pop(context);
           },
         ),
       ),
+
       body: FutureBuilder<List<NapTimes>>(
         future: _napRecordsFuture,
         builder: (context, snapshot) {

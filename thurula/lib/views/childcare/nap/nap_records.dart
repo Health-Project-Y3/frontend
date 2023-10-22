@@ -130,9 +130,6 @@ class _NapRecordsState extends State<NapRecords> {
   }
 
 
-
-
-
   Future<void> showAddNapDialog(BuildContext context) async {
     NapTimes newNap = NapTimes(); // Create a new empty NapTimes object
     DateTime selectedStartTime = DateTime.now();
