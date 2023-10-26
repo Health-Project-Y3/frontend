@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:thurula/providers/baby_provider.dart';
 import 'package:thurula/services/auth/user_service.dart';
 import 'package:thurula/services/baby_service.dart';
+import 'package:thurula/services/local_service.dart';
 import 'package:thurula/views/menu_view.dart';
 import 'package:thurula/views/signup/sign_up_question_view.dart';
 import '../../models/baby_model.dart';
@@ -285,7 +287,9 @@ class _SignUpChildViewState extends State<SignUpChildView> {
                             .then((baby) => {
                                   UserService.addBaby(
                                       context.read<UserProvider>().user!.id!,
-                                      baby.id!)
+                                      baby.id!),
+                                  LocalService.setCurrentBabyId(baby.id!),
+                                  context.read<BabyProvider>().setBaby(baby),
                                 });
                         Navigator.push(
                           context,

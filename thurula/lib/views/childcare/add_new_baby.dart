@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:thurula/services/local_service.dart';
 import 'package:thurula/views/menu_view.dart';
-
 import '../../models/baby_model.dart';
+import '../../providers/baby_provider.dart';
 import '../../providers/user_provider.dart';
 import '../../services/auth/user_service.dart';
 import '../../services/baby_service.dart';
+import 'package:thurula/extensions/buildcontext/loc.dart';
 
 class AddNewBaby extends StatefulWidget {
   const AddNewBaby({Key? key}) : super(key: key);
@@ -44,15 +46,15 @@ class _AddNewBaby extends State<AddNewBaby> {
                 height: 120,
               ),
             ),
-            const Positioned(
+            Positioned(
               top: 170,
               left: 16,
               right: 16,
               child: Column(
                 children: [
                   Text(
-                    'When was your baby born?',
-                    style: TextStyle(
+                    context.loc.register_page3_Q1,
+                    style: const TextStyle(
                       color: Color.fromARGB(255, 220, 104, 145),
                       fontFamily: 'Inter',
                       fontSize: 18,
@@ -95,7 +97,7 @@ class _AddNewBaby extends State<AddNewBaby> {
                         Text(
                           selectedDate != null
                               ? DateFormat('yyyy-MM-dd').format(selectedDate!)
-                              : 'Enter Baby\'s Birthday',
+                              : context.loc.register_page3_Q1placeholder,
                           style: const TextStyle(
                             color: Colors.grey,
                             fontFamily: 'Inter',
@@ -134,7 +136,7 @@ class _AddNewBaby extends State<AddNewBaby> {
                       ),
                       borderRadius: BorderRadius.circular(15.0),
                     ),
-                    labelText: 'Enter Baby\'s Name',
+                    labelText: context.loc.register_page3_Q2placeholder,
                     labelStyle: const TextStyle(
                       color: Colors.grey,
                     ),
@@ -142,15 +144,15 @@ class _AddNewBaby extends State<AddNewBaby> {
                 ),
               ),
             ),
-            const Positioned(
+            Positioned(
               top: 380,
               left: 16,
               right: 16,
               child: Column(
                 children: [
                   Text(
-                    'What is the gender of your baby?',
-                    style: TextStyle(
+                    context.loc.register_page3_Q2,
+                    style: const TextStyle(
                       color: Color.fromARGB(255, 220, 104, 145),
                       fontFamily: 'Inter',
                       fontSize: 18,
@@ -178,16 +180,16 @@ class _AddNewBaby extends State<AddNewBaby> {
                           ? const Color.fromARGB(255, 220, 104, 145)
                           : Colors.grey,
                     ),
-                    child: const Row(
+                    child: Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.male,
                           color: Colors.white,
                         ),
-                        SizedBox(width: 8),
+                        const SizedBox(width: 8),
                         Text(
-                          "Male",
-                          style: TextStyle(
+                          context.loc.register_page3_Male,
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 16,
                           ),
@@ -207,16 +209,16 @@ class _AddNewBaby extends State<AddNewBaby> {
                           ? const Color.fromARGB(255, 220, 104, 145)
                           : Colors.grey,
                     ),
-                    child: const Row(
+                    child: Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.female,
                           color: Colors.white,
                         ),
-                        SizedBox(width: 8),
+                        const SizedBox(width: 8),
                         Text(
-                          "Female",
-                          style: TextStyle(
+                          context.loc.register_page3_Female,
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 16,
                           ),
@@ -249,16 +251,16 @@ class _AddNewBaby extends State<AddNewBaby> {
                   ),
                   elevation: 2,
                 ),
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.arrow_back,
                       color: Colors.white,
                     ),
                     Text(
-                      "Back",
-                      style: TextStyle(
+                      context.loc.back,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 16,
                       ),
@@ -274,25 +276,27 @@ class _AddNewBaby extends State<AddNewBaby> {
                 onPressed: isNextButtonEnabled()
                     ? () {
                         //create baby for user
-                  BabyService.createBaby(Baby(
-                      fname: babyNameController.text,
-                      lname: "",
-                      birthDate: selectedDate,
-                      ownerIDs: [
-                        context.read<UserProvider>().user?.id ?? ''
-                      ],
-                      gender: isMaleSelected ? "male" : "female"))
-                      .then((baby) => {
-                    UserService.addBaby(
-                        context.read<UserProvider>().user!.id!,
-                        baby.id!)
-                  });
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const MenuView(),
-                    ),
-                  );
+                        BabyService.createBaby(Baby(
+                                fname: babyNameController.text,
+                                lname: "",
+                                birthDate: selectedDate,
+                                ownerIDs: [
+                                  context.read<UserProvider>().user?.id ?? ''
+                                ],
+                                gender: isMaleSelected ? "male" : "female"))
+                            .then((baby) => {
+                                  UserService.addBaby(
+                                      context.read<UserProvider>().user!.id!,
+                                      baby.id!),
+                                  LocalService.setCurrentBabyId(baby.id!),
+                                  context.read<BabyProvider>().setBaby(baby),
+                                });
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const MenuView(),
+                          ),
+                        );
                       }
                     : null,
                 style: ElevatedButton.styleFrom(
@@ -305,17 +309,17 @@ class _AddNewBaby extends State<AddNewBaby> {
                   ),
                   elevation: 2,
                 ),
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Done",
-                      style: TextStyle(
+                      context.loc.save,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 16,
                       ),
                     ),
-                    Icon(
+                    const Icon(
                       Icons.check,
                       color: Colors.white,
                     ),
