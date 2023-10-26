@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 // import 'package:provider/provider.dart';
 
-class Week4View extends StatelessWidget {
-  const Week4View({super.key});
+class Week5View extends StatelessWidget {
+  const Week5View({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class Week4View extends StatelessWidget {
               child: Padding(
             padding: EdgeInsets.only(
                 left: 20.0, right: 20.0, top: 20.0, bottom: 0.0),
-            child: Text("First Trimester - Week 4",
+            child: Text("First Trimester - Week 5",
                 style: TextStyle(
                   color: Color.fromARGB(255, 220, 104, 145),
                   fontFamily: 'Inter',
@@ -72,7 +72,7 @@ class Week4View extends StatelessWidget {
                             //   wrapped text
                             const Expanded(
                               child: Text(
-                                'Your itty bitty embryo has two layers of cells called the epiblast and the hypoblast.\nSoon they’ll develop into all of your baby’s body parts and systems.',
+                                'The placenta is under construction and will finish forming by the end of the first trimester. It’s an organ that will soon connect your developing fetus to your uterine wall, providing baby-to-be with nutrients and oxygen.',
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: Colors.grey,
@@ -86,7 +86,7 @@ class Week4View extends StatelessWidget {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(5.0),
                                 child: Image.asset(
-                                    'assets/images/fetus-size/4.jpg',
+                                    'assets/images/fetus-size/5.jpg',
                                     height: 100),
                               ),
                             ),
@@ -139,7 +139,7 @@ class Week4View extends StatelessWidget {
                       ),
                       SizedBox(height: 10),
                       Text(
-                        "Breast tenderness, one of the earliest signs of pregnancy in some people, might make your bra feel extra uncomfortable at this time.\nSome also experience a heightened sense of smell or taste, fatigue, constipation, bloating, and mood swings. But don't worry if you don't have any pregnancy symptoms at all; they might take a few extra weeks to show up.",
+                        "Hormone-induced mood swings can bring on a lot of feelings starting at week five. Your emotions may change from happy to depressed to angry for no conceivable reason. Other early pregnancy symptoms like fatigue, breast tenderness, and even nausea can kick in this early too.",
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.grey,
@@ -206,7 +206,7 @@ class Week4View extends StatelessWidget {
                           ),
                           //   wrapped text
                           Text(
-                            "Make a prenatal appointment.",
+                            "Cut down on caffeine.",
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.grey,
@@ -232,7 +232,7 @@ class Week4View extends StatelessWidget {
                           ),
                           //   wrapped text
                           Text(
-                            "Don't forget vitamin D.",
+                            "Choose a pregnancy healthcare provider.",
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.grey,
@@ -258,7 +258,7 @@ class Week4View extends StatelessWidget {
                           ),
                           //   wrapped text
                           Text(
-                            "Avoid secondhand smoke.",
+                            "Exercise with precautions",
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.grey,
