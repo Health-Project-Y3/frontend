@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:thurula/views/menu_view.dart';
-
+import 'package:thurula/extensions/buildcontext/loc.dart';
 
 class WelcomeHomeView extends StatelessWidget {
   const WelcomeHomeView({super.key, required this.username});
@@ -14,17 +14,6 @@ class WelcomeHomeView extends StatelessWidget {
         length: 2,
         child: Scaffold(
           backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-          // appbar
-          // appBar: AppBar(
-          //   backgroundColor: const Color.fromARGB(255, 220, 104, 145),
-          //   title: const Text(
-          //     'Welcome',
-          //     style: TextStyle(
-          //       fontSize: 20,
-          //       fontWeight: FontWeight.bold,
-          //     ),
-          //   ),
-          //   ),
           body: Column(
             children: [
                 const Padding(
@@ -35,15 +24,15 @@ class WelcomeHomeView extends StatelessWidget {
                     height: 400,
                   ),
                 ),
-              const Center(
+               Center(
                 // add image
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(40, 20, 40, 0),
+                  padding: const EdgeInsets.fromLTRB(40, 20, 40, 0),
                   // add 2 text fields
                   child: Text(
-                    "New Life, Tiny Steps",
+                    context.loc.welcome_page_Caption1,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
                       color: Color.fromARGB(255, 220, 104, 145),
@@ -51,14 +40,14 @@ class WelcomeHomeView extends StatelessWidget {
                   ),
                 ),
               ),
-              const Center(
+               Center(
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(40, 10, 40, 30),
+                  padding: const EdgeInsets.fromLTRB(40, 10, 40, 30),
                   child: Text(
-                      "We just need a few quick answers from you to personalize your experience",
+                    context.loc.welcome_page_Caption2,
                       textAlign: TextAlign.center,
                       style:
-                      TextStyle(color: Color.fromARGB(255, 135, 135, 135))),
+                      const TextStyle(color: Color.fromARGB(255, 135, 135, 135))),
                 ),
               ),
               Padding(
@@ -81,9 +70,9 @@ class WelcomeHomeView extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15.0),
                       ),
                     ),
-                    child: const Text(
-                      'Let\'s get started!',
-                      style: TextStyle(
+                    child: Text(
+                      context.loc.welcome_page_GetStartedButton,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 16,
                       ),

@@ -1,132 +1,173 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:thurula/services/auth/user_service.dart';
 import 'package:thurula/views/signup/sign_up_child_view.dart';
 import 'package:thurula/views/signup/sign_up_pregnancy_view.dart';
+import 'package:thurula/views/signup/sign_up_view.dart';
+
+import '../../providers/user_provider.dart';
+import 'package:thurula/extensions/buildcontext/loc.dart';
 
 class SignUpViewQuestion extends StatelessWidget {
   const SignUpViewQuestion({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 220, 104, 145),
-      body: Padding(
-        padding: const EdgeInsets.all(30.0),
-        child: Column(
+    var user = context.read<UserProvider>().user!;
+    return MaterialApp(
+      home: Scaffold(
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        body: Stack(
+          fit: StackFit.expand,
           children: [
-            const Center(
-              child: Padding(
-                padding: EdgeInsets.all(20.0),
-                child: Image(
-                  image: AssetImage('assets/images/logo3.png'),
-                  height: 120,
+            Positioned(
+              top: 30,
+              right: 50,
+              left: 50,
+              child: Image.asset(
+                'assets/images/logo2.png',
+                height: 120,
+              ),
+            ),
+            Positioned(
+              top: 150,
+              left: 16,
+              right: 16,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        UserService.patchUser(user.id!,"pregnant" , true);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SignUpPregnancyView(),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        side: const BorderSide(
+                          color: Colors.grey,
+                        ),
+                        padding: const EdgeInsets.all(16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
+                      ),
+                      child:  Row(
+                        children: [
+                          const Expanded(
+                            flex: 3,
+                            child: Image(
+                              image: AssetImage('assets/images/pregnant.png'),
+                              width: 300,
+                              height: 200,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            flex: 7,
+                            child: Text(
+                              context.loc.register_page2_Q1,
+                              style: const TextStyle(
+                                color: Colors.grey,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    ElevatedButton(
+                      onPressed: () {
+                        UserService.patchUser(user.id!,"pregnant" , false);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SignUpChildView(),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        side: const BorderSide(
+                          color: Colors.grey,
+                        ),
+                        padding: const EdgeInsets.all(16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          const Expanded(
+                            flex: 3,
+                            child: Image(
+                              image: AssetImage('assets/images/child.png'),
+                              width: 300,
+                              height: 200,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            flex: 7,
+                            child: Text(
+                              context.loc.register_page2_Q2,
+                              style: const TextStyle(
+                                color: Colors.grey,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Text(
-                'Few more steps to go!',
-                style: TextStyle(
-                  color: Color.fromARGB(255, 255, 255, 255),
-                  fontFamily: 'Inter',
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Text(
-                'Has your baby been born yet?',
-                style: TextStyle(
-                  color: Color.fromARGB(255, 255, 255, 255),
-                  fontFamily: 'Inter',
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
+            Positioned(
+              left: 16,
+              bottom: 30,
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const SignUpChildView(),
+                      builder: (context) => const SignUpView(),
                     ),
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 88, 119, 161),
+                  backgroundColor: const Color.fromARGB(
+                      255, 220, 104, 145), // Pink button color
                   padding:
-                      const EdgeInsets.symmetric(vertical: 12, horizontal: 120),
+                      const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
+                    borderRadius: BorderRadius.circular(5.0),
                   ),
+                  elevation: 2,
                 ),
-                child: const Text(
-                  'Yes',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SignUpPregnancyView(),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
                     ),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 88, 119, 161),
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 12, horizontal: 120),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                ),
-                child: const Text(
-                  'No',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                  ),
-                ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.topLeft, // Align to top-left corner
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context); // Navigate back
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 12,
-                      horizontal: 25,
+                    Text(
+                      context.loc.back,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
                     ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                  ),
-                  child: const Text(
-                    'Back',
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 220, 104, 145),
-                      fontSize: 16,
-                    ),
-                  ),
+                  ],
                 ),
               ),
             ),
