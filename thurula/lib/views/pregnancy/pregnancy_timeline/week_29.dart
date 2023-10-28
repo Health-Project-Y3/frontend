@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 // import 'package:provider/provider.dart';
 
-class Week4View extends StatelessWidget {
-  const Week4View({super.key});
+class Week29View extends StatelessWidget {
+  const Week29View({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class Week4View extends StatelessWidget {
               child: Padding(
             padding: EdgeInsets.only(
                 left: 20.0, right: 20.0, top: 20.0, bottom: 0.0),
-            child: Text("First Trimester - Week 4",
+            child: Text("Third Trimester - Week 29",
                 style: TextStyle(
                   color: Color.fromARGB(255, 220, 104, 145),
                   fontFamily: 'Inter',
@@ -72,7 +72,7 @@ class Week4View extends StatelessWidget {
                             //   wrapped text
                             const Expanded(
                               child: Text(
-                                'Your itty bitty embryo has two layers of cells called the epiblast and the hypoblast.\nSoon they’ll develop into all of your baby’s body parts and systems.',
+                                'Your baby may begin to smile this week, especially in his sleep.As your little bean plumps up, your womb is getting a bit cramped, so those hard kicks you were feeling will be more like jabs and pokes now.',
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: Colors.grey,
@@ -86,7 +86,7 @@ class Week4View extends StatelessWidget {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(5.0),
                                 child: Image.asset(
-                                    'assets/images/fetus-size/4.jpg',
+                                    'assets/images/fetus-size/29.jpg',
                                     height: 100),
                               ),
                             ),
@@ -139,7 +139,7 @@ class Week4View extends StatelessWidget {
                       ),
                       SizedBox(height: 10),
                       Text(
-                        "Breast tenderness, one of the earliest signs of pregnancy in some people, might make your bra feel extra uncomfortable at this time.\nSome also experience a heightened sense of smell or taste, fatigue, constipation, bloating, and mood swings. But don't worry if you don't have any pregnancy symptoms at all; they might take a few extra weeks to show up.",
+                        "As your body prepares to feed your baby after birth, you might notice yellowish colostrum leaking from your breasts within the next few weeks. This fluid serves as a precursor to mature breast milk, and it helps your little one's body adjust to life outside the womb. Also, blood pressure starts to rise after 28-32 weeks of pregnancy.",
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.grey,
@@ -206,7 +206,7 @@ class Week4View extends StatelessWidget {
                           ),
                           //   wrapped text
                           Text(
-                            "Make a prenatal appointment.",
+                            "Soothe sensitive skin.",
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.grey,
@@ -232,7 +232,7 @@ class Week4View extends StatelessWidget {
                           ),
                           //   wrapped text
                           Text(
-                            "Don't forget vitamin D.",
+                            "Recognize contractions.",
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.grey,
@@ -258,7 +258,7 @@ class Week4View extends StatelessWidget {
                           ),
                           //   wrapped text
                           Text(
-                            "Avoid secondhand smoke.",
+                            "Learn about third-trimester prenatal visits.",
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.grey,

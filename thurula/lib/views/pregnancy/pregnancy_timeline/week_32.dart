@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 // import 'package:provider/provider.dart';
 
-class Week4View extends StatelessWidget {
-  const Week4View({super.key});
+class Week32View extends StatelessWidget {
+  const Week32View({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class Week4View extends StatelessWidget {
               child: Padding(
             padding: EdgeInsets.only(
                 left: 20.0, right: 20.0, top: 20.0, bottom: 0.0),
-            child: Text("First Trimester - Week 4",
+            child: Text("Third Trimester - Week 32",
                 style: TextStyle(
                   color: Color.fromARGB(255, 220, 104, 145),
                   fontFamily: 'Inter',
@@ -72,7 +72,7 @@ class Week4View extends StatelessWidget {
                             //   wrapped text
                             const Expanded(
                               child: Text(
-                                'Your itty bitty embryo has two layers of cells called the epiblast and the hypoblast.\nSoon they’ll develop into all of your baby’s body parts and systems.',
+                                'All your baby’s major organs are fully developed now, except for the lungs. So even if you gave birth this week, your little one would probably do just fine. Your baby inhales amniotic fluid to practice using those lungs.',
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: Colors.grey,
@@ -86,7 +86,7 @@ class Week4View extends StatelessWidget {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(5.0),
                                 child: Image.asset(
-                                    'assets/images/fetus-size/4.jpg',
+                                    'assets/images/fetus-size/32.jpg',
                                     height: 100),
                               ),
                             ),
@@ -139,7 +139,7 @@ class Week4View extends StatelessWidget {
                       ),
                       SizedBox(height: 10),
                       Text(
-                        "Breast tenderness, one of the earliest signs of pregnancy in some people, might make your bra feel extra uncomfortable at this time.\nSome also experience a heightened sense of smell or taste, fatigue, constipation, bloating, and mood swings. But don't worry if you don't have any pregnancy symptoms at all; they might take a few extra weeks to show up.",
+                        "After 20 weeks of pregnancy, your body might produce 'practice' contractions called Braxton Hicks. They're characterized by a sporadic hardening or tightening of the uterus—and they come more often as the pregnancy progresses. Braxton Hicks contractions usually last between 30 seconds and two minutes, and they often come irregularly. While Braxton Hicks are expected, call a health care provider if you experience contractions that get stronger and more frequent, as that can be a sign of premature labor.",
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.grey,
@@ -206,7 +206,7 @@ class Week4View extends StatelessWidget {
                           ),
                           //   wrapped text
                           Text(
-                            "Make a prenatal appointment.",
+                            "Manage varicose veins.",
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.grey,
@@ -232,7 +232,7 @@ class Week4View extends StatelessWidget {
                           ),
                           //   wrapped text
                           Text(
-                            "Don't forget vitamin D.",
+                            "Get the RSV vaccine.",
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.grey,
@@ -258,7 +258,7 @@ class Week4View extends StatelessWidget {
                           ),
                           //   wrapped text
                           Text(
-                            "Avoid secondhand smoke.",
+                            "Prepare for breastfeeding.",
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.grey,

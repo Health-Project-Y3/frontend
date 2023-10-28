@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 // import 'package:provider/provider.dart';
 
-class Week4View extends StatelessWidget {
-  const Week4View({super.key});
+class Week24View extends StatelessWidget {
+  const Week24View({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class Week4View extends StatelessWidget {
               child: Padding(
             padding: EdgeInsets.only(
                 left: 20.0, right: 20.0, top: 20.0, bottom: 0.0),
-            child: Text("First Trimester - Week 4",
+            child: Text("Second Trimester - Week 24",
                 style: TextStyle(
                   color: Color.fromARGB(255, 220, 104, 145),
                   fontFamily: 'Inter',
@@ -72,7 +72,7 @@ class Week4View extends StatelessWidget {
                             //   wrapped text
                             const Expanded(
                               child: Text(
-                                'Your itty bitty embryo has two layers of cells called the epiblast and the hypoblast.\nSoon they’ll develop into all of your baby’s body parts and systems.',
+                                'Your little bean is putting on more and more weight, much of it coming from accumulating baby fat along with growing muscles, organs and bones.Baby\'s auditory system is rapidly advancing, which means if she frequently hears a certain song now she\'s likely to recognize it and feel calmed by it when she\'s born.',
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: Colors.grey,
@@ -86,7 +86,7 @@ class Week4View extends StatelessWidget {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(5.0),
                                 child: Image.asset(
-                                    'assets/images/fetus-size/4.jpg',
+                                    'assets/images/fetus-size/24.jpg',
                                     height: 100),
                               ),
                             ),
@@ -139,7 +139,7 @@ class Week4View extends StatelessWidget {
                       ),
                       SizedBox(height: 10),
                       Text(
-                        "Breast tenderness, one of the earliest signs of pregnancy in some people, might make your bra feel extra uncomfortable at this time.\nSome also experience a heightened sense of smell or taste, fatigue, constipation, bloating, and mood swings. But don't worry if you don't have any pregnancy symptoms at all; they might take a few extra weeks to show up.",
+                        "Maybe you didn't expect so many seemingly random symptoms — such as the red, itchy palms that have nothing to do with the amount of dishwashing you're doing. The red may spread, too, to the soles of your feet, though you're less likely to notice that once your feet become more difficult to see.",
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.grey,
@@ -206,7 +206,7 @@ class Week4View extends StatelessWidget {
                           ),
                           //   wrapped text
                           Text(
-                            "Make a prenatal appointment.",
+                            "Get ready for the glucose screening.",
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.grey,
@@ -232,7 +232,7 @@ class Week4View extends StatelessWidget {
                           ),
                           //   wrapped text
                           Text(
-                            "Don't forget vitamin D.",
+                            "Remember to floss.",
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.grey,
@@ -258,7 +258,7 @@ class Week4View extends StatelessWidget {
                           ),
                           //   wrapped text
                           Text(
-                            "Avoid secondhand smoke.",
+                            "Get your home baby-ready.",
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.grey,
