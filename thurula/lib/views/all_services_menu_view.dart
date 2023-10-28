@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:thurula/views/childcare/diaper_records.dart';
+import 'package:thurula/views/pregnancy/vaccination_tracker_view.dart';
 import 'forum/forum_home_view.dart';
 import 'widgets/navbar_widget.dart';
 
 // pregnancy services
 import 'package:thurula/views/pregnancy/mother_health_tracker.dart';
 import 'package:thurula/views/pregnancy/pregnancy_timeline_view.dart';
-import 'package:thurula/views/pregnancy/pregnancy_vaccination_tracker_view.dart';
 import 'package:thurula/views/pregnancy/pregnancy_exercises/pregnancy_exercise_recommendations_view.dart';
 import 'package:thurula/views/pregnancy/pregnancy_baby_names_view.dart';
 
@@ -45,7 +45,7 @@ class AllServices extends StatelessWidget {
     () => const ForumHomeView(),
     () => const PregnancyTimelineView(),
     () => const MotherHealthTracker(),
-    () => const PregnancyVaccinationTrackerView(),
+    () => const MomVaccinationTrackerView(),
     () => PregnancyExercisesView(),
     () => const BabyNames(),
   ];
@@ -97,8 +97,7 @@ class AllServices extends StatelessWidget {
             pregnancyViews: pregnancyViews,
             imageNamesChildcare: imageNamesChildcare,
             titlesChildcare: titlesChildcare,
-            childcareViews: childcareViews
-        ),
+            childcareViews: childcareViews),
         bottomNavigationBar: const CreateBottomNavigationBar(pageIndex: 2),
       ),
     );
@@ -113,52 +112,53 @@ class TilePage extends StatelessWidget {
   final List<String> titlesChildcare;
   final List<Widget Function()> childcareViews;
 
-  const TilePage({
-    super.key,
-    required this.imageNamesPregnancy,
-    required this.titlesPregnancy,
-    required this.pregnancyViews,
-    required this.imageNamesChildcare,
-    required this.titlesChildcare,
-    required this.childcareViews
-  });
+  const TilePage(
+      {super.key,
+      required this.imageNamesPregnancy,
+      required this.titlesPregnancy,
+      required this.pregnancyViews,
+      required this.imageNamesChildcare,
+      required this.titlesChildcare,
+      required this.childcareViews});
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: imageNamesPregnancy.length + imageNamesChildcare.length,
-      itemBuilder: (context, index) {
-        if (index < imageNamesPregnancy.length) {
-          if (index % 3 == 0 ) {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              buildPregnancyTile(index, context: context),
-              buildPregnancyTile(index + 1, context: context),
-              buildPregnancyTile(index + 2, context: context),
-            ],
-          );
-          } else {
-            return const SizedBox(); // Empty SizedBox for the remaining items in the row
-          }
-          // Create a new row for every 3 tiles
-        } else {
-          if (index % 3 == 0) {
+        itemCount: imageNamesPregnancy.length + imageNamesChildcare.length,
+        itemBuilder: (context, index) {
+          if (index < imageNamesPregnancy.length) {
+            if (index % 3 == 0) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  buildPregnancyTile(index, context: context),
+                  buildPregnancyTile(index + 1, context: context),
+                  buildPregnancyTile(index + 2, context: context),
+                ],
+              );
+            } else {
+              return const SizedBox(); // Empty SizedBox for the remaining items in the row
+            }
             // Create a new row for every 3 tiles
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                buildChildcareTile(index - imageNamesPregnancy.length, context: context),
-                buildChildcareTile(index - imageNamesPregnancy.length + 1, context: context),
-                buildChildcareTile(index - imageNamesPregnancy.length + 2, context: context),
-              ],
-            );
-        } else {
-          return const SizedBox(); // Empty SizedBox for the remaining items in the row
-        }
-        }
-      }
-    );
+          } else {
+            if (index % 3 == 0) {
+              // Create a new row for every 3 tiles
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  buildChildcareTile(index - imageNamesPregnancy.length,
+                      context: context),
+                  buildChildcareTile(index - imageNamesPregnancy.length + 1,
+                      context: context),
+                  buildChildcareTile(index - imageNamesPregnancy.length + 2,
+                      context: context),
+                ],
+              );
+            } else {
+              return const SizedBox(); // Empty SizedBox for the remaining items in the row
+            }
+          }
+        });
   }
 
   Widget buildPregnancyTile(int index, {required BuildContext context}) {

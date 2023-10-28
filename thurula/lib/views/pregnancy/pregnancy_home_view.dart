@@ -5,9 +5,9 @@ import 'package:thurula/views/forum/forum_home_view.dart';
 // import 'package:thurula/views/login_view.dart';
 import 'package:thurula/views/pregnancy/mother_health_tracker.dart';
 import 'package:thurula/views/pregnancy/pregnancy_timeline_view.dart';
-import 'package:thurula/views/pregnancy/pregnancy_vaccination_tracker_view.dart';
 import 'package:thurula/views/pregnancy/pregnancy_exercises/pregnancy_exercise_recommendations_view.dart';
 import 'package:thurula/views/pregnancy/pregnancy_baby_names_view.dart';
+import 'package:thurula/views/pregnancy/vaccination_tracker_view.dart';
 
 import '../../providers/user_provider.dart';
 import '../widgets/navbar_widget.dart';
@@ -204,7 +204,7 @@ class PregnancyHomeView extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  const PregnancyVaccinationTrackerView(),
+                                  const MomVaccinationTrackerView(),
                             ),
                           );
                         },
