@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
-import 'dart:async';
 import 'package:thurula/constants/routes.dart';
 import '../models/user_drinking_model.dart';
 
@@ -13,58 +12,44 @@ class UserDrinkingService {
         headers: {'Content-Type': 'application/json'},
       );
 
-      // check the status code of the response
+      // Check the status code of the response
       if (response.statusCode == 200) {
         return UserDrinking.fromJson(jsonDecode(response.body));
       } else {
-        log(jsonDecode(response.body));
+        log(jsonDecode(response.body).toString());
         throw Exception('Failed to find the record');
       }
     } catch (e) {
-      log(e as String);
+      log(e.toString());
     }
     return null;
   }
 
-  // method to get drinking/user/ giving id, start date and end date, start date and end date can be null
-  static Future<List<UserDrinking>> getUserDrinkings(
-      String id, DateTime? startDate, DateTime? endDate) async {
+  static Future<List<UserDrinking>> getUserDrinkings(String id, String? startDate, String? endDate) async {
     try {
-      // response if theres start and end date if not null and without start and end date
-      http.Response response;
-      if (startDate != null && endDate != null) {
-        response = await http.get(
-          Uri.parse(
-              getRoute("drinking/user/$id?startDate=$startDate&endDate=$endDate")),
-          headers: {'Content-Type': 'application/json'},
-        );
-      } else {
-        response = await http.get(
-          Uri.parse(getRoute("drinking_tracker/user/$id")),
-          headers: {'Content-Type': 'application/json'},
-        );
-      }
+      // Define the URI based on whether start and end dates are provided
+      final Uri uri = startDate != null && endDate != null
+          ? Uri.parse(getRoute('drinking_tracker/user/$id?startDate=$startDate&endDate=$endDate'))
+          : Uri.parse(getRoute('drinking_tracker/user/$id'));
 
-      // check the status code of the response
+      final response = await http.get(uri, headers: {'Content-Type': 'application/json'});
+
       if (response.statusCode == 200) {
-        List<UserDrinking> drinkings = [];
-        var body = jsonDecode(response.body);
-        for (var drinking in body) {
-          drinkings.add(UserDrinking.fromJson(drinking));
-        }
+        final List<UserDrinking> drinkings = (jsonDecode(response.body) as List)
+            .map((json) => UserDrinking.fromJson(json))
+            .toList();
         return drinkings;
       } else {
-        log(jsonDecode(response.body));
+        log(jsonDecode(response.body).toString());
         throw Exception('Failed to find the record');
       }
     } catch (e) {
-      log(e as String);
+      log(e.toString());
     }
     return [];
   }
 
-  static Future<bool> patchUserDrinking(
-      String id, String key, dynamic value) async {
+  static Future<bool> patchUserDrinking(String id, String key, dynamic value) async {
     var response = await http.patch(
       Uri.parse(getRoute('drinking/$id')),
       headers: {'Content-Type': 'application/json'},
@@ -87,11 +72,11 @@ class UserDrinkingService {
       body: body,
     );
     if (response.statusCode == 201) {
-      return UserDrinking.fromJson((jsonDecode(response.body)));
+      return UserDrinking.fromJson(jsonDecode(response.body));
     } else if (response.statusCode == 400) {
-      throw (Exception(jsonDecode(response.body)));
+      throw Exception(jsonDecode(response.body).toString());
     } else {
-      throw (Exception("Unable to create record"));
+      throw Exception("Unable to create record");
     }
   }
 
@@ -100,7 +85,7 @@ class UserDrinkingService {
     if (response.statusCode == 200) {
       return;
     } else {
-      log(jsonDecode(response.body));
+      log(jsonDecode(response.body).toString());
       throw Exception("Failed to delete record");
     }
   }
@@ -115,9 +100,9 @@ class UserDrinkingService {
     if (response.statusCode == 204) {
       return;
     } else if (response.statusCode == 400) {
-      throw (Exception(jsonDecode(response.body)));
+      throw Exception(jsonDecode(response.body).toString());
     } else {
-      throw (Exception("Unable to update record"));
+      throw Exception("Unable to update record");
     }
   }
 }
