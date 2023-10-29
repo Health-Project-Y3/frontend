@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:thurula/services/diapers_service.dart';
 import 'package:thurula/models/diapertimes_model.dart';
-import 'dart:convert';
 import 'package:intl/intl.dart';
 
 class DiaperRecords extends StatefulWidget {
@@ -10,8 +9,7 @@ class DiaperRecords extends StatefulWidget {
 }
 
 class _DiaperRecordsState extends State<DiaperRecords> {
-  Future<List<DiaperTimes>> _diaperRecordsFuture =
-  Future<List<DiaperTimes>>.value([]);
+  Future<List<DiaperTimes>> _diaperRecordsFuture = Future<List<DiaperTimes>>.value([]);
   List<DiaperTimes> diaperRecords = [];
 
   @override
@@ -20,16 +18,13 @@ class _DiaperRecordsState extends State<DiaperRecords> {
     _loadDiaperRecords();
   }
 
-// Function to load diaper change records
   Future<void> _loadDiaperRecords() async {
     try {
-      _diaperRecordsFuture =
-          DiaperService.getBabyDiapers('64b01605b55b765169e1c9b6');
+      _diaperRecordsFuture = DiaperService.getBabyDiapers('64b01605b55b765169e1c9b6');
       final records = await _diaperRecordsFuture;
       print('Loaded ${records.length} diaper records.');
       setState(() {
         diaperRecords = records;
-        // Sort diaperRecords in descending order by time
         diaperRecords.sort((a, b) => b.time!.compareTo(a.time!));
       });
     } catch (e) {
@@ -60,7 +55,7 @@ class _DiaperRecordsState extends State<DiaperRecords> {
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
                     formattedDate,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.grey), // Adjust the font size and color
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.grey),
                   ),
                 ),
                 Divider(),
@@ -82,23 +77,21 @@ class _DiaperRecordsState extends State<DiaperRecords> {
     );
   }
 
-
   Widget _buildDiaperRecord(String formattedTime, DiaperTimes record) {
-    Icon diaperIcon = Icon(Icons.info_outline); // Default icon if diaperType is not recognized
-    Color iconColor = Colors.grey; // Default color
+    Icon diaperIcon = Icon(Icons.info_outline);
+    Color iconColor = Colors.grey;
 
     if (record.diaperType == 'wet') {
-      diaperIcon = Icon(Icons.water_drop, color: Colors.blue); // Replace with the appropriate wet icon
+      diaperIcon = Icon(Icons.water_drop, color: Colors.blue);
       iconColor = Colors.blue;
     } else if (record.diaperType == 'dirty') {
-      diaperIcon = Icon(Icons.cloud_off, color: Colors.green); // Replace with the appropriate dry icon
+      diaperIcon = Icon(Icons.cloud_off, color: Colors.green);
       iconColor = Colors.green;
     } else if (record.diaperType == 'mixed') {
-      diaperIcon = Icon(Icons.wb_cloudy, color: Colors.brown); // Replace with the appropriate mixed icon
+      diaperIcon = Icon(Icons.wb_cloudy, color: Colors.brown);
       iconColor = Colors.brown;
     }
 
-    // Format the time in a more human-readable way (with AM or PM)
     String formattedTime = DateFormat('h:mm a').format(record.time ?? DateTime.now());
 
     return Card(
@@ -114,11 +107,11 @@ class _DiaperRecordsState extends State<DiaperRecords> {
               height: 40,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.grey, // Change the color as needed
+                color: Colors.grey,
               ),
               child: Center(child: diaperIcon),
             ),
-            VerticalDivider(color: Colors.grey), // Vertical line
+            VerticalDivider(color: Colors.grey),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -147,11 +140,6 @@ class _DiaperRecordsState extends State<DiaperRecords> {
     );
   }
 
-
-
-
-
-
   Future<void> showAddDiaperDialog(BuildContext context) async {
     final TextEditingController diaperNotesController = TextEditingController();
     final TextEditingController diaperTypeController = TextEditingController();
@@ -175,7 +163,7 @@ class _DiaperRecordsState extends State<DiaperRecords> {
                     Text('Time: '),
                     Text(
                       '${selectedTime?.hour.toString().padLeft(2, '0')}:${selectedTime?.minute.toString().padLeft(2, '0')} ${selectedTime?.day.toString().padLeft(2, '0')}/${selectedTime?.month.toString().padLeft(2, '0')}/${selectedTime?.year}',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      // style: TextStyle(fontweight: FontWeight.bold),
                     ),
                     SizedBox(width: 10),
                   ],
@@ -218,22 +206,9 @@ class _DiaperRecordsState extends State<DiaperRecords> {
             TextButton(
               child: Text('Save'),
               onPressed: () async {
-                // Validate the fields using _validateTextField function
-                final diaperNotes = await _validateTextField(
-                  context,
-                  'Diaper Notes',
-                  diaperNotesController.text,
-                );
-                final diaperType = await _validateTextField(
-                  context,
-                  'Diaper Type',
-                  diaperTypeController.text,
-                );
-                final loggedBy = await _validateTextField(
-                  context,
-                  'Logged By',
-                  loggedByController.text,
-                );
+                final diaperNotes = await _validateTextField(context, 'Diaper Notes', diaperNotesController.text);
+                final diaperType = await _validateTextField(context, 'Diaper Type', diaperTypeController.text);
+                final loggedBy = await _validateTextField(context, 'Logged By', loggedByController.text);
 
                 if (diaperNotes != null && diaperType != null && loggedBy != null) {
                   final newDiaper = DiaperTimes(
@@ -246,12 +221,11 @@ class _DiaperRecordsState extends State<DiaperRecords> {
 
                   try {
                     await DiaperService.createDiaper(newDiaper);
-
                     message = 'Diaper change record added successfully!';
-                    Navigator.of(context).pop(); // Close the dialog
-                    _loadDiaperRecords(); // Refresh the diaper change record list
+                    Navigator.of(context).pop();
+                    _loadDiaperRecords();
                   } catch (e) {
-                    print('Error in _showAddDiaperDialog: $e');
+                    print('Error in showAddDiaperDialog: $e');
                   }
                 }
               },
@@ -262,9 +236,8 @@ class _DiaperRecordsState extends State<DiaperRecords> {
     );
   }
 
-  Future<String?> _validateTextField(BuildContext context, String fieldName, String value,) async {
+  Future<String?> _validateTextField(BuildContext context, String fieldName, String value) async {
     if (value.isEmpty) {
-      // Display an error message for empty input
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('$fieldName is required'),
@@ -273,7 +246,6 @@ class _DiaperRecordsState extends State<DiaperRecords> {
       );
       return null;
     }
-    // Additional validation logic can be added here if needed
     return value;
   }
 
@@ -287,7 +259,6 @@ class _DiaperRecordsState extends State<DiaperRecords> {
       lastDate: DateTime(2101),
     ).then((pickedTime) async {
       if (pickedTime != null) {
-        // Use the initialTime if available, or set to noon
         final TimeOfDay initialTimeOfDay = TimeOfDay.fromDateTime(
           initialTime ?? DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 12, 0),
         );
@@ -297,7 +268,7 @@ class _DiaperRecordsState extends State<DiaperRecords> {
           initialTime: initialTimeOfDay,
           builder: (BuildContext context, Widget? child) {
             return MediaQuery(
-              data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true), // Use 24-hour format
+              data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
               child: child!,
             );
           },
@@ -340,7 +311,7 @@ class _DiaperRecordsState extends State<DiaperRecords> {
                       children: [
                         Text('Time: '),
                         Text(
-                          '${selectedTime.hour}:${selectedTime.minute.toString().padLeft(2, '0')}', // Format time as HH:mm
+                          '${selectedTime.hour}:${selectedTime.minute.toString().padLeft(2, '0')}',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         SizedBox(width: 10),
@@ -395,10 +366,10 @@ class _DiaperRecordsState extends State<DiaperRecords> {
                       },
                       decoration: InputDecoration(labelText: 'Logged By'),
                     ),
-                    Text(message ?? '',
-                        style: TextStyle(
-                            color:
-                            message == 'Error' ? Colors.red : Colors.green)),
+                    Text(
+                      message ?? '',
+                      style: TextStyle(color: message == 'Error' ? Colors.red : Colors.green),
+                    ),
                   ],
                 ),
               ),
@@ -419,12 +390,11 @@ class _DiaperRecordsState extends State<DiaperRecords> {
                         existingDiaper.diaperType = diaperType;
                         existingDiaper.loggedBy = loggedBy;
 
-                        await DiaperService.updateDiaper(
-                            existingDiaper.id ?? '', existingDiaper);
+                        await DiaperService.updateDiaper(existingDiaper.id ?? '', existingDiaper);
 
                         message = 'Diaper change record updated successfully!';
-                        Navigator.of(context).pop(); // Close the dialog
-                        _loadDiaperRecords(); // Refresh the diaper change record list
+                        Navigator.of(context).pop();
+                        _loadDiaperRecords();
                       } catch (e) {
                         message = 'Error';
                       }
@@ -442,7 +412,6 @@ class _DiaperRecordsState extends State<DiaperRecords> {
       },
     );
   }
-
 
 
   Future<void> _deleteDiaperRecord(String id) async {
