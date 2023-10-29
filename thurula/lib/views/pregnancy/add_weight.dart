@@ -149,21 +149,7 @@ class _WeightMonitorPageState extends State<WeightMonitorPage> {
                               color: Color.fromARGB(255, 88, 119, 161),
                             ),
                           ),
-                          ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) =>
-                                    ViewWeightPage(userId: '652a5d43935d40f339c12d8b')),
-                              );
-                            },
-                            style: ElevatedButton.styleFrom(
-                              primary: Color.fromARGB(255, 88, 119, 161),
-                              minimumSize: Size(120, 0),
-                              padding: EdgeInsets.all(16.0),
-                            ),
-                            child: Text('View Records'),
-                          ),
+
                         ],
                       );
                     } else {
@@ -310,48 +296,72 @@ class _WeightMonitorPageState extends State<WeightMonitorPage> {
                   controller: TextEditingController(text: _tempSelectedDate),
                 ),
                 SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () async {
-                    // Clear the previous data before validation
-                    setState(() {
-                      _weightError = null;
-                      _dateError = null;
-                    });
-
-                    if (_userWeight == null) {
-                      setState(() {
-                        _weightError = "Please add weight";
-                      });
-                    }
-
-                    if (_tempSelectedDate.isEmpty) {
-                      setState(() {
-                        _dateError = "Please select a date";
-                      });
-                    }
-
-                    if (_userWeight != null && _tempSelectedDate.isNotEmpty) {
-                      final userWeight = UserWeight(
-                        userId: '652a5d43935d40f339c12d8b',
-                        weight: _userWeight,
-                        date: DateTime.parse(_tempSelectedDate),
-                      );
-                      await _createUserWeight(userWeight);
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    primary: Color.fromARGB(255, 220, 104, 145),
-                    minimumSize: Size(
-                      double.infinity,
-                      0.0,
+                Row( // Wrap the buttons in a Row
+                  children: [
+                    Expanded( // Expanded for "View Records" button
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) =>
+                                ViewWeightPage(userId: '652a5d43935d40f339c12d8b')),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: Color.fromARGB(255, 88, 119, 161),
+                          minimumSize: Size(100, 0), // Adjust the width as needed
+                          padding: EdgeInsets.all(16.0),
+                        ),
+                        child: Text('View Records'),
+                      ),
                     ),
-                    padding: EdgeInsets.all(16.0),
-                  ),
-                  child: Text('Add Record'),
+                    SizedBox(width: 16), // Add spacing between the buttons
+                    Expanded( // Expanded for "Add Record" button
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          // Clear the previous data before validation
+                          setState(() {
+                            _weightError = null;
+                            _dateError = null;
+                          });
+
+                          if (_userWeight == null) {
+                            setState(() {
+                              _weightError = "Please add weight";
+                            });
+                          }
+
+                          if (_tempSelectedDate.isEmpty) {
+                            setState(() {
+                              _dateError = "Please select a date";
+                            });
+                          }
+
+                          if (_userWeight != null && _tempSelectedDate.isNotEmpty) {
+                            final userWeight = UserWeight(
+                              userId: '652a5d43935d40f339c12d8b',
+                              weight: _userWeight,
+                              date: DateTime.parse(_tempSelectedDate),
+                            );
+                            await _createUserWeight(userWeight);
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: Color.fromARGB(255, 220, 104, 145),
+                          minimumSize: Size(150, 0), // Adjust the width as needed
+                          padding: EdgeInsets.all(16.0),
+                        ),
+                        child: Text('Add Record'),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
           ),
+
+
+
         ],
       ),
     );

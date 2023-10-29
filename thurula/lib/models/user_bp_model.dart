@@ -1,7 +1,7 @@
 class UserBp {
   String? id;
   String? userId;
-  double? bloodPressure;
+  String? bloodPressure;
   DateTime? date;
 
   UserBp({

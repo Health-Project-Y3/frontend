@@ -31,6 +31,9 @@ dependencies:
   flutter:
     sdk: flutter
   fluttertoast: ^8.0.8
+
+
+
   flutter_localizations:
     sdk: flutter
 
