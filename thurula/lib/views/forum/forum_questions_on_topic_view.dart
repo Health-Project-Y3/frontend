@@ -3,13 +3,16 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:thurula/services/forum_service.dart';
 import 'package:thurula/views/forum/forum_drawer_widget.dart';
 import 'package:thurula/views/forum/forum_question_widget.dart';
+import 'package:thurula/views/widgets/navbar_widget.dart';
 import '../../models/forum_question_model.dart';
 import 'forum_question_add_view.dart';
 
 class ForumQuestionsOnTopicView extends StatefulWidget {
   final List<String> topic;
 
-  const ForumQuestionsOnTopicView({Key? key, required this.topic}) : super(key: key);
+  final int pageIndex;
+
+  const ForumQuestionsOnTopicView({Key? key, required this.topic, required this.pageIndex}) : super(key: key);
 
   @override
   State<ForumQuestionsOnTopicView> createState() =>
@@ -55,26 +58,22 @@ class _ForumQuestionsOnTopicViewState extends State<ForumQuestionsOnTopicView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // title: Text('Forum Questions on ${widget.topic[0]}'), // Display the topic in the title
+        backgroundColor: const Color.fromARGB(255, 220, 104, 145),
         title: const Text('Forum Questions'),
       ),
+      bottomNavigationBar: CreateBottomNavigationBar(pageIndex: 0),
       drawer: const ForumDrawer(),
       body: Column(
         children: [
           // Add a container or card for the topic at the top
           Container(
             padding: const EdgeInsets.all(16.0),
-            color: Colors.blue, // Customize the background color
+            color: const Color.fromARGB(255, 88, 119, 161), // Customize the background color
             child: Row(
               children: [
-                const Icon(
-                  Icons.topic, // You can use an appropriate icon
-                  size: 24,
-                  color: Colors.white, // Customize the icon color
-                ),
-                const SizedBox(width: 8),
+                const SizedBox(width: 15),
                 Text(
-                  'Topic: ${widget.topic[0]}', // Display the topic name
+                  'Topic:   ${widget.topic[0]}', // Display the topic name
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -96,6 +95,7 @@ class _ForumQuestionsOnTopicViewState extends State<ForumQuestionsOnTopicView> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color.fromARGB(255, 220, 104, 145),
         onPressed: () {
           Navigator.push(
             context,

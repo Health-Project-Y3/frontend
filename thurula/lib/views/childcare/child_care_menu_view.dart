@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:thurula/views/HomeView.dart';
 import 'package:thurula/views/childcare/growth_chart_view.dart';
@@ -292,7 +291,7 @@ class ChildCareMenuView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ExerciseView(),
+                      builder: (context) => const ExerciseView(),
                     ),
                   );
                 },

@@ -15,8 +15,8 @@ DateTime tomorrow = today.add(const Duration(days: 1));
 // get only day
 // String todayDate = today.toString().substring(0, 10);
 
-class ExercisesView extends StatelessWidget {
-  ExercisesView({Key? key}) : super(key: key);
+class PregnancyExercisesView extends StatelessWidget {
+  PregnancyExercisesView({Key? key}) : super(key: key);
 
   late Future<String> userId;
   late Future<List<UserExercise>> exercises;

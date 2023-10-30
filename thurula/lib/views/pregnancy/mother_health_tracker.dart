@@ -26,7 +26,7 @@ class MotherHealthTracker extends StatelessWidget {
         ),
       ),
 
-      backgroundColor: Color(0xFFFFFFFF),
+      backgroundColor: const Color(0xFFFFFFFF),
       body: Center(
         // single child scroll view
         child: SingleChildScrollView(
@@ -56,7 +56,7 @@ class MotherHealthTracker extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   DashboardCard(
@@ -75,8 +75,8 @@ class MotherHealthTracker extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 16),
-              Center(
-                child: Container(
+              const Center(
+                child: SizedBox(
                   width: 200,
                   child: FullWidthCard(
                     label: "Blood Pressure",
@@ -88,9 +88,9 @@ class MotherHealthTracker extends StatelessWidget {
               ),
               const SizedBox(height: 45),
               // padding
-              Padding(
+              const Padding(
                 // left and right padding
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: EdgeInsets.symmetric(horizontal: 20),
                 child: FullWidthCard(
                   label: "Doctor recommendations",
                   value: "You are in good health conditions mummy",
@@ -103,7 +103,7 @@ class MotherHealthTracker extends StatelessWidget {
                 onPressed: () {
                   showDialog(
                     context: context,
-                    builder: (context) => RecordEntryDialog(),
+                    builder: (context) => const RecordEntryDialog(),
                   );
                 },
                 style: ElevatedButton.styleFrom(
@@ -132,10 +132,10 @@ class DashboardCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 160,
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
-        border: Border.all(color: Color(0xFFDC6891)),
+        border: Border.all(color: const Color(0xFFDC6891)),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -168,16 +168,16 @@ class FullWidthCard extends StatelessWidget {
   final bool isBold;
   final double fontSize;
 
-  FullWidthCard({required this.label, required this.value, this.isBold = false, this.fontSize = 14});
+  const FullWidthCard({super.key, required this.label, required this.value, this.isBold = false, this.fontSize = 14});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
-        border: Border.all(color: Color(0xFFDC6891)),
+        border: Border.all(color: const Color(0xFFDC6891)),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(

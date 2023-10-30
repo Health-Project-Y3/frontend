@@ -5,11 +5,12 @@ import 'package:thurula/views/forum/forum_home_view.dart';
 // import 'package:thurula/views/login_view.dart';
 import 'package:thurula/views/pregnancy/mother_health_tracker.dart';
 import 'package:thurula/views/pregnancy/pregnancy_timeline_view.dart';
-import 'package:thurula/views/pregnancy/pregnancy_vaccination_tracker_view.dart';
 import 'package:thurula/views/pregnancy/pregnancy_exercises/pregnancy_exercise_recommendations_view.dart';
 import 'package:thurula/views/pregnancy/pregnancy_baby_names_view.dart';
+import 'package:thurula/views/pregnancy/vaccination_tracker_view.dart';
 
 import '../../providers/user_provider.dart';
+import '../widgets/navbar_widget.dart';
 
 class PregnancyHomeView extends StatelessWidget {
   const PregnancyHomeView({super.key});
@@ -18,29 +19,24 @@ class PregnancyHomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 247, 247, 247),
-      body: Stack(
-        children: [
-          Positioned(
-            top: 20,
-            left: 25,
-            child: Text(
-              'Welcome, ${context.read<UserProvider>().user?.fname ?? ''}',
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          children: [
+            const SizedBox(height: 15),
+            Text(
+              'Welcome, ${context.read<UserProvider>().user?.fname ?? ''}!',
               style: const TextStyle(
-                color: Color.fromARGB(255, 88, 119, 161),
+                color: Color.fromARGB(255, 220, 104, 145),
                 fontFamily: 'Inter',
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
-          ),
+            const SizedBox(height: 8),
 
-          // menu tiles
-          Positioned(
-            top: 35,
-            left: 15,
-            right: 20,
-            child: Container(
-              margin: const EdgeInsets.symmetric(vertical: 20),
+            // menu tiles
+            SizedBox(
               height: 120,
               width: MediaQuery.of(context).size.width, // Set the width
               child: ListView(
@@ -55,7 +51,7 @@ class PregnancyHomeView extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const ForumHomeView(), // Replace with the actual forum view
+                            builder: (context) => const ForumHomeView(),
                           ),
                         );
                       },
@@ -77,18 +73,28 @@ class PregnancyHomeView extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            ClipRRect(
-                              child: Image.asset(
-                                'assets/images/menu-tiles/forum.png', // Replace with your forum tile image
-                                height: 80,
-                              ),
+                            const SizedBox(height: 5),
+                            Image.asset(
+                              'assets/images/menu-tiles/forum2.png',
+                              height: 70,
                             ),
+                            const SizedBox(height: 7),
+                            const Text(
+                              'Forum',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 88, 119, 161),
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )
                           ],
                         ),
                       ),
                     ),
                   ),
-                  //Pregnancy Timeline
+
+                  // Pregnancy Timeline
                   Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: InkResponse(
@@ -119,16 +125,27 @@ class PregnancyHomeView extends StatelessWidget {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              ClipRRect(
-                                child: Image.asset(
-                                    'assets/images/menu-tiles/timeline2.png',
-                                    height: 100),
-                              ),
+                              const SizedBox(height: 5),
+                              Image.asset(
+                                  'assets/images/menu-tiles/timeline2.png',
+                                  height: 70),
+                              // ),
+                              const SizedBox(height: 7),
+                              const Text(
+                                'Timeline',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 88, 119, 161),
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )
                             ],
                           ),
                         ),
                       )),
-                  //Health Monitoring
+
+                  // Health Monitoring
                   Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: InkResponse(
@@ -136,7 +153,7 @@ class PregnancyHomeView extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => MotherHealthTracker(),
+                              builder: (context) => const MotherHealthTracker(),
                             ),
                           );
                         },
@@ -158,16 +175,27 @@ class PregnancyHomeView extends StatelessWidget {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              ClipRRect(
-                                child: Image.asset(
-                                    'assets/images/menu-tiles/monitor2.png',
-                                    height: 100),
-                              ),
+                              const SizedBox(height: 5),
+                              Image.asset(
+                                  'assets/images/menu-tiles/monitor2.png',
+                                  height: 70),
+                              // ),
+                              const SizedBox(height: 7),
+                              const Text(
+                                'Health',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 88, 119, 161),
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )
                             ],
                           ),
                         ),
                       )),
-                  //Vaccination Tracking
+
+                  // Vaccination Tracking
                   Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: InkResponse(
@@ -176,7 +204,7 @@ class PregnancyHomeView extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  PregnancyVaccinationTrackerView(),
+                                  const MomVaccinationTrackerView(),
                             ),
                           );
                         },
@@ -198,17 +226,27 @@ class PregnancyHomeView extends StatelessWidget {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              ClipRRect(
-                                child: Image.asset(
-                                    'assets/images/menu-tiles/vaccine2.png',
-                                    height: 100),
-                              ),
+                              const SizedBox(height: 5),
+                              Image.asset(
+                                  'assets/images/menu-tiles/vaccine2.png',
+                                  height: 70),
+                              // ),
+                              const SizedBox(height: 7),
+                              const Text(
+                                'Vaccines',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 88, 119, 161),
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )
                             ],
                           ),
                         ),
                       )),
 
-                  //Exercise Recommendations
+                  // Exercise Recommendations
                   Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: InkResponse(
@@ -216,7 +254,7 @@ class PregnancyHomeView extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ExercisesView(),
+                              builder: (context) => PregnancyExercisesView(),
                             ),
                           );
                         },
@@ -238,17 +276,27 @@ class PregnancyHomeView extends StatelessWidget {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              ClipRRect(
-                                child: Image.asset(
-                                    'assets/images/menu-tiles/exercise2.png',
-                                    height: 100),
-                              ),
+                              const SizedBox(height: 5),
+                              Image.asset(
+                                  'assets/images/menu-tiles/exercise2.png',
+                                  height: 70),
+                              // ),
+                              const SizedBox(height: 7),
+                              const Text(
+                                'Exercises',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 88, 119, 161),
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )
                             ],
                           ),
                         ),
                       )),
 
-                  //Baby Name Suggestions
+                  // Baby Name Suggestions
                   Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: InkResponse(
@@ -261,7 +309,7 @@ class PregnancyHomeView extends StatelessWidget {
                           );
                         },
                         child: Container(
-                          width: 120,
+                          width: 100,
                           height: 120,
                           decoration: BoxDecoration(
                             color: const Color.fromARGB(255, 255, 255, 255),
@@ -278,11 +326,20 @@ class PregnancyHomeView extends StatelessWidget {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              ClipRRect(
-                                child: Image.asset(
-                                    'assets/images/menu-tiles/names2.png',
-                                    height: 100),
-                              ),
+                              const SizedBox(height: 5),
+                              Image.asset('assets/images/menu-tiles/names2.png',
+                                  height: 70),
+                              // ),
+                              const SizedBox(height: 7),
+                              const Text(
+                                'Baby Names',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 88, 119, 161),
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )
                             ],
                           ),
                         ),
@@ -290,16 +347,11 @@ class PregnancyHomeView extends StatelessWidget {
                 ],
               ),
             ),
-          ),
 
-          // days left
-          Positioned(
-            top: 180,
-            left: 20,
-            right: 20,
-            child: Container(
+            // days left
+            Container(
               width: 400,
-              height: 200,
+              height: 170,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10.0),
@@ -320,11 +372,9 @@ class PregnancyHomeView extends StatelessWidget {
                       Padding(
                         // padding top
                         padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
-                        child: ClipRRect(
-                          child: Image.asset(
-                            'assets/images/pregnancy-home/countdown1.jpg',
-                            height: 150,
-                          ),
+                        child: Image.asset(
+                          'assets/images/pregnancy-home/countdown1.jpg',
+                          height: 150,
                         ),
                       ),
                       const Padding(
@@ -343,14 +393,11 @@ class PregnancyHomeView extends StatelessWidget {
                 ),
               ),
             ),
-          ),
 
-          // baby size
-          Positioned(
-            top: 390,
-            left: 20,
-            right: 20,
-            child: IntrinsicHeight(
+            const SizedBox(height: 5),
+
+            // baby size
+            IntrinsicHeight(
               child: Container(
                 width: 400,
                 // height: 200,
@@ -403,12 +450,12 @@ class PregnancyHomeView extends StatelessWidget {
                       const Text(
                         'Your baby is putting on fat and growing chubbier, which helps the baby adapt to the relatively low temperature of the outside world after leaving the womb.',
                         style: TextStyle(
-                          fontSize: 12,
+                          fontSize: 14,
                           color: Colors.grey,
                           height: 1.5,
                         ),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -431,77 +478,77 @@ class PregnancyHomeView extends StatelessWidget {
                 ),
               ),
             ),
-          ),
 
-          Positioned(
-              bottom: 13,
-              left: 20,
-              right: 20,
-              child: Container(
-                width: 380,
-                height: 80,
-                decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 255, 255, 255),
-                  borderRadius: BorderRadius.circular(10.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 0.5,
-                      blurRadius: 2,
-                      offset: const Offset(0, 2),
+            const SizedBox(height: 5),
+
+            // next vaccine
+            Container(
+              width: 380,
+              height: 80,
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 255, 255, 255),
+                borderRadius: BorderRadius.circular(10.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 0.5,
+                    blurRadius: 2,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Center(
+                child: Row(
+                  children: [
+                    const Expanded(
+                        child: Padding(
+                      padding: EdgeInsets.only(
+                        left: 40.0,
+                      ),
+                      child: Text(
+                        'Your next vaccine is in',
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 220, 104, 145),
+                            fontSize: 16,
+                            height: 1.5,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.bold),
+                      ),
+                    )),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 5.0,
+                        right: 5.0,
+                      ),
+                      child: Image.asset(
+                          'assets/images/pregnancy-home/calendar/9.png',
+                          height: 60),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(
+                        right: 40.0,
+                        left: 5.0,
+                      ),
+                      child: Text(
+                        'days',
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 220, 104, 145),
+                            fontSize: 16.0,
+                            height: 1.5,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ],
                 ),
-                child: Center(
-                  child: Row(
-                    children: [
-                      const Expanded(
-                          child: Padding(
-                        padding: EdgeInsets.only(
-                          left: 40.0,
-                        ),
-                        child: Text(
-                          'Your next vaccine is in',
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 220, 104, 145),
-                              fontSize: 16,
-                              height: 1.5,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.bold),
-                        ),
-                      )),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 5.0,
-                          right: 5.0,
-                        ),
-                        child: ClipRRect(
-                          child: Image.asset(
-                              'assets/images/pregnancy-home/calendar/9.png',
-                              height: 60),
-                        ),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(
-                          right: 40.0,
-                          left: 5.0,
-                        ),
-                        child: Text(
-                          'days',
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 220, 104, 145),
-                              fontSize: 16.0,
-                              height: 1.5,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              )),
-        ],
+              ),
+            ),
+
+            const SizedBox(height: 5),
+          ],
+        ),
       ),
+      bottomNavigationBar: const CreateBottomNavigationBar(pageIndex: 1),
     );
   }
 }

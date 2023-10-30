@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:thurula/services/baby_length_service.dart';
 import 'package:thurula/views/widgets/graphs/baby_length_chart_widget.dart';
+import '../../providers/baby_provider.dart';
 import '../widgets/graphs/point_widget.dart';
 
 int lengthAddedMonths = 0;
-
-//Todo: Add baby ID  and gender function
-const babyid = "64a9cb10ec5c9834ff73fc36";
-const babygender = "male";
 
 class LengthChartView extends StatefulWidget {
   const LengthChartView({Key? key}) : super(key: key);
@@ -44,6 +42,8 @@ ValueNotifier<int> refreshCounter = ValueNotifier<int>(0);
 class _LengthChartViewState extends State<LengthChartView> {
   @override
   Widget build(BuildContext context) {
+    final babyid = context.read<BabyProvider>().baby!.id!;
+    final babygender = context.read<BabyProvider>().baby!.gender;
     return Scaffold(
       backgroundColor: Colors.grey[200],
       body: Center(
@@ -215,6 +215,8 @@ class _LengthChartViewState extends State<LengthChartView> {
 
 // Add Reading
 class AddReadingDialog extends StatefulWidget {
+  const AddReadingDialog({super.key});
+
   @override
   _AddReadingDialogState createState() => _AddReadingDialogState();
 }
@@ -229,6 +231,8 @@ class _AddReadingDialogState extends State<AddReadingDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final babyid = context.read<BabyProvider>().baby!.id!;
+
     return AlertDialog(
       title: const Text('Add New Reading'),
       contentPadding:
@@ -306,13 +310,15 @@ void showAdd(BuildContext context) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      return AddReadingDialog(); // Use the Stateful dialog
+      return const AddReadingDialog(); // Use the Stateful dialog
     },
   );
 }
 
 // Update Reading
 class UpdateReadingDialog extends StatefulWidget {
+  const UpdateReadingDialog({super.key});
+
   @override
   _UpdateReadingDialogState createState() => _UpdateReadingDialogState();
 }
@@ -327,6 +333,7 @@ class _UpdateReadingDialogState extends State<UpdateReadingDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final babyid = context.read<BabyProvider>().baby!.id!;
     return AlertDialog(
       title: const Text('Update Reading'),
       contentPadding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
@@ -403,7 +410,7 @@ void showUpdate(BuildContext context) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      return UpdateReadingDialog(); // Use the Stateful dialog
+      return const UpdateReadingDialog(); // Use the Stateful dialog
     },
   );
 }
@@ -414,6 +421,8 @@ bool _validateLength(double? length) {
 
 // Delete latest reading
 class DeleteReadingDialog extends StatefulWidget {
+  const DeleteReadingDialog({super.key});
+
   @override
   _DeleteReadingDialogState createState() => _DeleteReadingDialogState();
 }
@@ -423,6 +432,8 @@ class _DeleteReadingDialogState extends State<DeleteReadingDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final babyid = context.read<BabyProvider>().baby!.id!;
+
     return AlertDialog(
       title: const Text('Delete Latest Reading'),
       contentPadding:
@@ -467,7 +478,7 @@ void showDelete(BuildContext context) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      return DeleteReadingDialog(); // Use the Stateful dialog
+      return const DeleteReadingDialog(); // Use the Stateful dialog
     },
   );
 }

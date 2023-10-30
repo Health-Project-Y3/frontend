@@ -26,7 +26,7 @@ class _SignUpPregnancyViewState extends State<SignUpPregnancyView> {
   void calculateDueDateFromPredicted() {
     if (selectedPredictedDate != null) {
       final calculatedDueDate = selectedPredictedDate!
-          .add(Duration(days: 270)); // 270 days = 9 months
+          .add(const Duration(days: 270)); // 270 days = 9 months
       setState(() {
         selectedDueDate = calculatedDueDate;
       });

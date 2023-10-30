@@ -1,18 +1,25 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:thurula/services/eye_check_service.dart';
 
 final GlobalKey<NavigatorState> _navKey = GlobalKey<NavigatorState>();
 
 // import 'package:provider/provider.dart';
 class SnellenCardView extends StatefulWidget {
-  SnellenCardView({Key? key}) : super(key: key);
+  const SnellenCardView({Key? key}) : super(key: key);
 
   @override
   _SnellenCardViewState createState() => _SnellenCardViewState();
+}
+
+class FirstPage extends StatefulWidget {
+  const FirstPage({Key? key}) : super(key: key);
+
+  @override
+  _FirstPage createState() => _FirstPage();
 }
 
 class _SnellenCardViewState extends State<SnellenCardView>
@@ -42,7 +49,7 @@ class _SnellenCardViewState extends State<SnellenCardView>
         child: Scaffold(
           appBar: AppBar(
             title: const Row(children: [Text('Snellen Card Test')]),
-            backgroundColor: Color.fromARGB(255, 220, 104, 145),
+            backgroundColor: const Color.fromARGB(255, 220, 104, 145),
             bottom: TabBar(
               controller: _tabController,
               isScrollable: true,
@@ -57,7 +64,7 @@ class _SnellenCardViewState extends State<SnellenCardView>
             onGenerateRoute: (_) => MaterialPageRoute(
               builder: (_) => TabBarView(
                 controller: _tabController,
-                children: [FirstPage(), SecondPage(), ThirdPage()],
+                children: [const FirstPage(), SecondPage(), ThirdPage()],
               ),
             ),
           ),
@@ -65,18 +72,30 @@ class _SnellenCardViewState extends State<SnellenCardView>
   }
 }
 
-class FirstPage extends StatelessWidget {
-  FirstPage({Key? key}) : super(key: key);
+class _FirstPage extends State<FirstPage> {
+  // FirstPage({Key? key}) : super(key: key);
+
+  late final TextEditingController babyIdController = TextEditingController();
+  late final TextEditingController checkeddateController =
+      TextEditingController();
+  late final TextEditingController scoreController = TextEditingController();
+
   late final String _localPath;
   late final bool _permissionReady;
   late final TargetPlatform? platform = TargetPlatform.android;
 
+  // final List<String> list = [
+  //   "At 1 month, babies still prefer focusing on bright objects within a foot in front of them",
+  //   "They can see distance (not as clearly) but prefer near objects.",
+  //   "This is typically the same distance between their eyes and their parent's faces.",
+  //   "You should aim to keep the black and white flashcards in an area that is near to your baby's face",
+  //   "Choosing a distance that is similar to the distance between baby's eyes and your face will produce the best results",
+  // ];
+
   final List<String> list = [
-    "At 1 month, babies still prefer focusing on bright objects within a foot in front of them",
-    "They can see distance (not as clearly) but prefer near objects.",
-    "This is typically the same distance between their eyes and their parent's faces.",
-    "You should aim to keep the black and white flashcards in an area that is near to your baby's face",
-    "Choosing a distance that is similar to the distance between baby's eyes and your face will produce the best results",
+    "Have your child sit in the chair 10 feet from the chart, holding the cover over one eye without applying any pressure. Do not let the child peek. A second person may be needed to hold the cover in place and watch for peeking. If your child wears glasses, he or she should wear them during the test.",
+    "If the chart seems too dark to see clearly, use the flashlight to illuminate the test letters.",
+    "Point at each of the Es, starting with the largest. Have your child point in the direction the E is pointing."
   ];
 
   Future<bool> _checkPermission() async {
@@ -107,10 +126,14 @@ class FirstPage extends StatelessWidget {
     return "/sdcard/download/";
   }
 
+  String? eyescore;
+  String? message;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
+        body: SingleChildScrollView(
+            child: Column(
       children: [
         // const FittedBox(
         //     fit: BoxFit.fill,
@@ -130,10 +153,10 @@ class FirstPage extends StatelessWidget {
                   try {
                     await Dio().download(
                         "https://en.wikipedia.org/wiki/Snellen_chart#/media/File:Snellen_chart.svg",
-                        _localPath + "/" + "filename.jpg");
+                        "$_localPath/filename.jpg");
                     print("Download Completed.");
                   } catch (e) {
-                    print("Download Failed.\n\n" + e.toString());
+                    print("Download Failed.\n\n$e");
                   }
                 }
               },
@@ -141,8 +164,8 @@ class FirstPage extends StatelessWidget {
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.grey.withOpacity(0.5)),
-                padding: EdgeInsets.all(8),
-                child: Icon(Icons.download, color: Colors.black),
+                padding: const EdgeInsets.all(8),
+                child: const Icon(Icons.download, color: Colors.black),
               )),
         ),
         Padding(
@@ -172,9 +195,136 @@ class FirstPage extends StatelessWidget {
                 ),
               )),
         ),
+        const Padding(
+          padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
+          child: Text(
+            "The value that is observed: ",
+            textAlign: TextAlign.left,
+            style: TextStyle(fontSize: 18),
+          ),
+        ),
+        RadioListTile(
+          title: const Text("20/100"),
+          value: "100",
+          groupValue: eyescore,
+          onChanged: (value) {
+            setState(() {
+              eyescore = value.toString();
+            });
+          },
+        ),
+        RadioListTile(
+          title: const Text("20/70"),
+          value: "70",
+          groupValue: eyescore,
+          onChanged: (value) {
+            setState(() {
+              eyescore = value.toString();
+            });
+          },
+        ),
+        RadioListTile(
+          title: const Text("20/50"),
+          value: "50",
+          groupValue: eyescore,
+          onChanged: (value) {
+            setState(() {
+              eyescore = value.toString();
+            });
+          },
+        ),
+        RadioListTile(
+            title: const Text("20/40"),
+            value: "40",
+            groupValue: eyescore,
+            onChanged: (value) {
+              setState(() {
+                eyescore = value.toString();
+              });
+            }),
+        RadioListTile(
+          title: const Text("20/30"),
+          value: "30",
+          groupValue: eyescore,
+          onChanged: (value) {
+            setState(() {
+              eyescore = value.toString();
+            });
+          },
+        ),
+        ElevatedButton(
+          onPressed: () async {
+            if (eyescore == null) {
+              ErrorMessage(context);
+            } else {
+              QuickMessage(context, eyescore);
+              var newuser = await EyeCheckupService.create_eyecheck(
+                  "64a9cb10ec5c9834ff73fc36", DateTime.now(), eyescore);
+            }
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color.fromARGB(255, 220, 104, 145),
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 50),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+          ),
+          child: const Text("Enter"),
+        ),
       ],
-    ));
+    )));
   }
+
+  void ErrorMessage(BuildContext context) {
+    showDialog(
+      context: context, // You need a BuildContext for this
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Error Message"),
+          content: Text("Select from above before entering."),
+          actions: <Widget>[
+            TextButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+void QuickMessage(BuildContext context, String? eyescore) {
+  print(eyescore);
+  String message;
+  if (int.parse(eyescore!) <= 30) {
+    message = "Take your child to a doctor";
+  } else if (int.parse(eyescore) <= 40) {
+    message = "Do the test every week";
+  } else {
+    message = "Your child has good eyesight";
+  }
+
+  // Show a dialog with the message
+  showDialog(
+    context: context, // You need a BuildContext for this
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text("Results/Further Considerations"),
+        content: Text(message),
+        actions: <Widget>[
+          TextButton(
+            child: const Text("OK"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }
 
 class SecondPage extends StatelessWidget {
@@ -240,10 +390,10 @@ class SecondPage extends StatelessWidget {
                   try {
                     await Dio().download(
                         "https://en.wikipedia.org/wiki/Snellen_chart#/media/File:Snellen_chart.svg",
-                        _localPath + "/" + "filename.jpg");
+                        "$_localPath/filename.jpg");
                     print("Download Completed.");
                   } catch (e) {
-                    print("Download Failed.\n\n" + e.toString());
+                    print("Download Failed.\n\n$e");
                   }
                 }
               },
@@ -251,8 +401,8 @@ class SecondPage extends StatelessWidget {
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.grey.withOpacity(0.5)),
-                padding: EdgeInsets.all(8),
-                child: Icon(Icons.download, color: Colors.black),
+                padding: const EdgeInsets.all(8),
+                child: const Icon(Icons.download, color: Colors.black),
               )),
         ),
         Padding(
@@ -349,10 +499,10 @@ class ThirdPage extends StatelessWidget {
                   try {
                     await Dio().download(
                         "https://en.wikipedia.org/wiki/Snellen_chart#/media/File:Snellen_chart.svg",
-                        _localPath + "/" + "filename.jpg");
+                        "$_localPath/filename.jpg");
                     print("Download Completed.");
                   } catch (e) {
-                    print("Download Failed.\n\n" + e.toString());
+                    print("Download Failed.\n\n$e");
                   }
                 }
               },
@@ -360,8 +510,8 @@ class ThirdPage extends StatelessWidget {
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.grey.withOpacity(0.5)),
-                padding: EdgeInsets.all(8),
-                child: Icon(Icons.download, color: Colors.black),
+                padding: const EdgeInsets.all(8),
+                child: const Icon(Icons.download, color: Colors.black),
               )),
         ),
         Padding(

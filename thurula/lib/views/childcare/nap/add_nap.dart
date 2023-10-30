@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thurula/views/childcare/nap/nap_details.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import '../../../services/notification_service.dart';
+
+
 
 class AddNap extends StatefulWidget {
   @override
@@ -12,16 +12,6 @@ class _AddNapState extends State<AddNap> {
   DateTime? _selectedDate;
   TimeOfDay? _selectedStartTime;
   TimeOfDay? _selectedEndTime;
-
-  late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
-
-  @override
-  void initState() {
-    super.initState();
-
-    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-    NotificationService.initialize(flutterLocalNotificationsPlugin);
-  }
 
   void _showDatePicker() async {
     final pickedDate = await showDatePicker(
@@ -58,8 +48,7 @@ class _AddNapState extends State<AddNap> {
         } else if (type == 'end') {
           _selectedEndTime = pickedTime;
           // Calculate and update the difference in hours
-          final diff = pickedTime.hour -
-              _selectedStartTime!.hour +
+          final diff = pickedTime.hour - _selectedStartTime!.hour +
               (pickedTime.minute - _selectedStartTime!.minute) / 60;
           _selectedEndTime = pickedTime;
           _selectedDate = DateTime(
@@ -69,8 +58,7 @@ class _AddNapState extends State<AddNap> {
             _selectedStartTime!.hour,
             _selectedStartTime!.minute,
           );
-          _selectedDate = _selectedDate!.add(
-              Duration(hours: diff.toInt(), minutes: (diff * 60).toInt() % 60));
+          _selectedDate = _selectedDate!.add(Duration(hours: diff.toInt(), minutes: (diff * 60).toInt() % 60));
         }
       });
     }
@@ -101,6 +89,7 @@ class _AddNapState extends State<AddNap> {
           },
         ),
       ),
+
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
         child: Column(
@@ -162,23 +151,9 @@ class _AddNapState extends State<AddNap> {
                 onPressed: () {
                   // action to add nap details
                 },
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 220, 104, 145)),
+                style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 220, 104, 145)),
                 child: Text('Add Nap'),
               ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                NotificationService.showBigTextNotifications(
-                    title: "Message title",
-                    body: "message body",
-                    fln: flutterLocalNotificationsPlugin);
-              }, // saveData function
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: const Color.fromARGB(255, 220, 104, 145),
-              ),
-              child: const Text('Save Data'),
             ),
           ],
         ),
@@ -221,3 +196,4 @@ class TimeSelectionClock extends StatelessWidget {
     );
   }
 }
+
