@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fl_chart/fl_chart.dart';
-
 import 'package:thurula/views/pregnancy/add_weight.dart';
 import 'package:thurula/views/pregnancy/add_pressure.dart';
 import 'package:thurula/views/pregnancy/add_water.dart';
@@ -12,6 +10,9 @@ import 'package:thurula/services/user_bp_service.dart';
 import 'package:thurula/models/user_bp_model.dart';
 import 'package:thurula/services/user_drinking_service.dart';
 import 'package:thurula/models/user_drinking_model.dart';
+import 'package:thurula/services/user_bmi_service.dart';
+import 'package:thurula/services/local_service.dart';
+import 'package:thurula/providers/user_provider.dart';
 
 class MotherHealthTracker1 extends StatefulWidget {
   const MotherHealthTracker1({Key? key}) : super(key: key);
@@ -21,6 +22,7 @@ class MotherHealthTracker1 extends StatefulWidget {
 }
 
 class _HealthTrackerState extends State<MotherHealthTracker1> {
+
   bool isModalOpen = false;
   double? _userWeight;
   late Future<List<UserDrinking>> _userDrinkingsFuture;
@@ -31,21 +33,28 @@ class _HealthTrackerState extends State<MotherHealthTracker1> {
     _userDrinkingsFuture = _fetchUserDrinkings();
   }
 
+
   Future<User?> _getUserData() async {
-    return UserService.getUser('652a5d43935d40f339c12d8b');
+    String userId = await LocalService.getCurrentUserId();
+    return UserService.getUser(userId);
+  }
+
+  Future<String?> checkBmiRange() async {
+    String userId = await LocalService.getCurrentUserId();
+    return UserBmiService.checkBmiRange(userId);
   }
 
   Future<UserBp> _getLastBloodPressure() async {
+    String userId = await LocalService.getCurrentUserId();
     try {
       List<UserBp> userBps = await UserBpService.getUserBps(
-          '650a6c285a1bbcfe70b8ad08',
+          userId,
           null,
-          null); // Replace with your actual user ID
+          null);
       if (userBps.isNotEmpty) {
         userBps.sort((a, b) => b.date!.compareTo(a.date!));
         return userBps.first;
       } else {
-        // If there are no records, return a default UserBp
         return UserBp(bloodPressure: '', date: null);
       }
     } catch (e) {
@@ -55,22 +64,42 @@ class _HealthTrackerState extends State<MotherHealthTracker1> {
     }
   }
 
+  Future<int> getLastBloodPressureValue() async {
+    String userId = await LocalService.getCurrentUserId();
+    try {
+      UserBp lastUserBp = await _getLastBloodPressure();
+      String? bloodPressure = lastUserBp.bloodPressure;
+      int value = extractFirstThreeDigits(bloodPressure);
+      return value;
+    } catch (e) {
+      print("Error fetching and extracting blood pressure value: $e");
+      // Handle the error gracefully by returning a default value
+      return 0;
+    }
+  }
+
+  int extractFirstThreeDigits(String? bloodPressure) {
+    String? firstThreeChars = bloodPressure?.substring(0, 3);
+    int value = int.tryParse(firstThreeChars ?? "0") ?? 0;
+    return value;
+  }
+
   Future<List<UserWeight>> _getUserWeights() async {
-    // Fetch user weights here, using the UserWeightService
-    // Pass the user's ID and set null for the start and end date as needed
+    String userId = await LocalService.getCurrentUserId();
     List<UserWeight> userWeights = await UserWeightService.getUserWeights(
-        '652a5d43935d40f339c12d8b', null, null);
+        userId, null, null);
     return userWeights;
   }
 
   Future<List<UserDrinking>> _fetchUserDrinkings() async {
+    String userId = await LocalService.getCurrentUserId();
     final today = DateTime.now();
     final startDate = DateTime(today.year, today.month, today.day);
     final endDate = startDate.add(Duration(days: 1));
 
     try {
       final userDrinkings = await UserDrinkingService.getUserDrinkings(
-        '652a5d43935d40f339c12d8b',
+        userId,
         startDate.toIso8601String(),
         endDate.toIso8601String(),
       );
@@ -90,26 +119,130 @@ class _HealthTrackerState extends State<MotherHealthTracker1> {
     }
   }
 
-  void _openModal() {
-    Future.delayed(Duration.zero, () {
-      showModalBottomSheet(
-        context: context,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        builder: (BuildContext context) {
-          return ModalContent(
-            closeModal: () {
-              setState(() {
-                isModalOpen = false;
-              });
-              Navigator.pop(context);
-            },
+  Widget buildBMIWidget() {
+    return FutureBuilder<String?>(
+      future: checkBmiRange(), // Replace 'userId' with the actual user ID
+      builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return buildLoadingIndicator();
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else if (snapshot.hasData) {
+          final bmiResult = snapshot.data;
+          String changeText;
+          Color textColor;
+
+          if (bmiResult == 'low') {
+            changeText = 'Healthy';
+            textColor = Colors.green;
+          } else if (bmiResult == 'average') {
+            changeText = 'Over Weight';
+            textColor = Colors.yellow;
+          } else if (bmiResult == 'Obese') {
+            changeText = 'High BMI';
+            textColor = Colors.red;
+          } else {
+            changeText = 'Unknown BMI';
+            textColor = Colors.black;
+          }
+
+          return Container(
+            padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+            decoration: BoxDecoration(
+              color: textColor,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Text(
+              changeText,
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.white,
+              ),
+            ),
           );
-        },
-      );
-    });
+        } else {
+          return Text('No BMI data available');
+        }
+      },
+    );
   }
+
+  Widget buildLoadingIndicator() {
+    return Padding(
+      padding: EdgeInsets.all(20.0),
+      child: CircularProgressIndicator(),
+    );
+  }
+
+  Widget buildWeightChangeCard(List<UserWeight> userWeights) {
+    userWeights.sort((a, b) => b.date!.compareTo(a.date!));
+    final double latestWeight = userWeights[0].weight!;
+    final double secondLatestWeight = userWeights[1].weight!;
+    double weightChange = latestWeight - secondLatestWeight;
+    String changeText = "No change in weight";
+    Color textColor = Colors.black;
+
+    if (weightChange > 0) {
+      changeText = "You have gained ${weightChange.toStringAsFixed(1)} kg";
+      textColor = Colors.red;
+    } else if (weightChange < 0) {
+      changeText = "You have lost ${(-weightChange).toStringAsFixed(1)} kg";
+      textColor = Colors.green;
+    }
+
+    return Text(
+      changeText,
+      style: TextStyle(
+        fontSize: 14,
+        color: textColor,
+      ),
+    );
+  }
+
+  Widget buildUserWeightCard(double userWeight) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 4.0),
+          child: Text(
+            'I weigh',
+            style: TextStyle(
+              color: Color.fromARGB(255, 88, 119, 161),
+              fontSize: 16.0,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(18.0),
+          child: Text(
+            "${userWeight.toStringAsFixed(1)} Kg",
+            style: TextStyle(
+              fontSize: 36.0,
+              fontWeight: FontWeight.bold,
+              color: Color.fromARGB(255, 88, 119, 161),
+            ),
+          ),
+        ),
+        // Padding(
+        //   padding: const EdgeInsets.fromLTRB(18.0, 2.0, 18.0, 18.0),
+        //   child: FutureBuilder<List<UserWeight>(
+        //     future: _getUserWeights(),
+        //     builder: (context, userWeightsSnapshot) {
+        //       if (userWeightsSnapshot.connectionState == ConnectionState.waiting) {
+        //         return buildLoadingIndicator();
+        //       } else if (userWeightsSnapshot.hasData && userWeightsSnapshot.data!.length >= 2) {
+        //         return buildWeightChangeCard(userWeightsSnapshot.data!);
+        //       } else {
+        //         return Text('User weight not available');
+        //       }
+        //     },
+        //   ),
+        // ),
+      ],
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -118,10 +251,12 @@ class _HealthTrackerState extends State<MotherHealthTracker1> {
         title: Text('Health Tracker'),
         backgroundColor: Color.fromARGB(255, 220, 104, 145),
         leading: IconButton(
-          icon:
-              Icon(Icons.arrow_back), // You can use a different icon if desired
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Color.fromARGB(255, 255, 255, 255),
+          ),
           onPressed: () {
-            // Add navigation logic to go back to the previous page
+
             Navigator.of(context).pop();
           },
         ),
@@ -132,10 +267,9 @@ class _HealthTrackerState extends State<MotherHealthTracker1> {
           SingleChildScrollView(
             child: Column(
               children: [
-                // Box 1
+                // Weight Card
                 GestureDetector(
                   onTap: () {
-                    // Navigate to the new page when the box is tapped
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => WeightMonitorPage(),
@@ -170,293 +304,39 @@ class _HealthTrackerState extends State<MotherHealthTracker1> {
                                   FutureBuilder<List<UserWeight>>(
                                     future: _getUserWeights(),
                                     builder: (context, userWeightsSnapshot) {
-                                      if (userWeightsSnapshot.connectionState ==
-                                          ConnectionState.waiting) {
-                                        return CircularProgressIndicator();
-                                      } else if (userWeightsSnapshot.hasData &&
-                                          userWeightsSnapshot
-                                              .data!.isNotEmpty) {
-                                        final double userWeight =
-                                            userWeightsSnapshot
-                                                    .data!.last.weight ??
-                                                0.0;
-                                        return Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      18.0, 18.0, 18.0, 4.0),
-                                              child: Text(
-                                                'I weigh',
-                                                style: TextStyle(
-                                                  color: Color.fromARGB(
-                                                      255, 88, 119, 161),
-                                                  fontSize: 16.0,
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(18.0),
-                                              child: Text(
-                                                "${userWeight.toStringAsFixed(1)} Kg",
-                                                style: TextStyle(
-                                                  fontSize: 36.0,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Color.fromARGB(
-                                                      255, 88, 119, 161),
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      18.0, 2.0, 18.0, 18.0),
-                                              child: FutureBuilder<
-                                                  List<UserWeight>>(
-                                                future: _getUserWeights(),
-                                                builder: (context,
-                                                    userWeightsSnapshot) {
-                                                  if (userWeightsSnapshot
-                                                          .connectionState ==
-                                                      ConnectionState.waiting) {
-                                                    return CircularProgressIndicator();
-                                                  } else if (userWeightsSnapshot
-                                                          .hasData &&
-                                                      userWeightsSnapshot
-                                                              .data!.length >=
-                                                          2) {
-                                                    final List<UserWeight>
-                                                        userWeights =
-                                                        userWeightsSnapshot
-                                                            .data!;
-                                                    userWeights.sort((a, b) => b
-                                                        .date!
-                                                        .compareTo(a.date!));
-
-                                                    final double latestWeight =
-                                                        userWeights[0].weight!;
-                                                    final double
-                                                        secondLatestWeight =
-                                                        userWeights[1].weight!;
-
-                                                    double weightChange =
-                                                        latestWeight -
-                                                            secondLatestWeight;
-
-                                                    String changeText =
-                                                        "No change in weight";
-                                                    Color textColor =
-                                                        Colors.black;
-
-                                                    if (weightChange > 0) {
-                                                      changeText =
-                                                          "You have Gained ${weightChange.toStringAsFixed(1)} kg";
-                                                      textColor = Colors.red;
-                                                    } else if (weightChange <
-                                                        0) {
-                                                      changeText =
-                                                          "You have lost ${(-weightChange).toStringAsFixed(1)} kg";
-                                                      textColor = Colors.green;
-                                                    }
-
-                                                    return Column(
-                                                      children: [
-                                                        Text(
-                                                          changeText,
-                                                          style: TextStyle(
-                                                            fontSize: 14,
-                                                            color: textColor,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    );
-                                                  } else {
-                                                    // If no weight records are available, fetch and display the user's weight
-                                                    return FutureBuilder<User?>(
-                                                      future: _getUserData(),
-                                                      builder: (context,
-                                                          userSnapshot) {
-                                                        if (userSnapshot
-                                                                .connectionState ==
-                                                            ConnectionState
-                                                                .waiting) {
-                                                          return CircularProgressIndicator();
-                                                        } else {
-                                                          return Text(
-                                                              'User weight not available');
-                                                        }
-                                                      },
-                                                    );
-                                                  }
-                                                },
-                                              ),
-                                            ),
-                                          ],
-                                        );
+                                      if (userWeightsSnapshot.connectionState == ConnectionState.waiting) {
+                                        return buildLoadingIndicator();
+                                      } else if (userWeightsSnapshot.hasData && userWeightsSnapshot.data!.isNotEmpty) {
+                                        final double userWeight = userWeightsSnapshot.data!.last.weight ?? 0.0;
+                                        return buildUserWeightCard(userWeight);
                                       } else {
-                                        // If no weight records are available, fetch and display the user's weight
                                         return FutureBuilder<User?>(
                                           future: _getUserData(),
                                           builder: (context, userSnapshot) {
-                                            if (userSnapshot.connectionState ==
-                                                ConnectionState.waiting) {
-                                              return CircularProgressIndicator();
+                                            if (userSnapshot.connectionState == ConnectionState.waiting) {
+                                              return buildLoadingIndicator();
                                             } else if (userSnapshot.hasData) {
-                                              final double userWeight =
-                                                  userSnapshot
-                                                          .data!.preWeight ??
-                                                      0.0;
-                                              return Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                        .fromLTRB(
-                                                        18.0, 18.0, 18.0, 4.0),
-                                                    child: Text(
-                                                      'I weigh',
-                                                      style: TextStyle(
-                                                        color: Color.fromARGB(
-                                                            255, 88, 119, 161),
-                                                        fontSize: 16.0,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            18.0),
-                                                    child: Text(
-                                                      "${userWeight.toStringAsFixed(1)} Kg",
-                                                      style: TextStyle(
-                                                        fontSize: 36.0,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Color.fromARGB(
-                                                            255, 88, 119, 161),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                      padding: const EdgeInsets
-                                                          .fromLTRB(18.0, 2.0,
-                                                          18.0, 18.0),
-                                                      child: FutureBuilder<
-                                                          List<UserWeight>>(
-                                                        future:
-                                                            _getUserWeights(),
-                                                        builder: (context,
-                                                            userWeightsSnapshot) {
-                                                          if (userWeightsSnapshot
-                                                                  .connectionState ==
-                                                              ConnectionState
-                                                                  .waiting) {
-                                                            return CircularProgressIndicator();
-                                                          } else if (userWeightsSnapshot
-                                                                  .hasData &&
-                                                              userWeightsSnapshot
-                                                                      .data!
-                                                                      .length >=
-                                                                  2) {
-                                                            final List<
-                                                                    UserWeight>
-                                                                userWeights =
-                                                                userWeightsSnapshot
-                                                                    .data!;
-                                                            userWeights.sort(
-                                                                (a, b) => b
-                                                                    .date!
-                                                                    .compareTo(a
-                                                                        .date!));
-
-                                                            final double
-                                                                latestWeight =
-                                                                userWeights[0]
-                                                                    .weight!;
-                                                            final double
-                                                                secondLatestWeight =
-                                                                userWeights[1]
-                                                                    .weight!;
-
-                                                            double
-                                                                weightChange =
-                                                                latestWeight -
-                                                                    secondLatestWeight;
-
-                                                            String changeText =
-                                                                "No change in weight";
-                                                            Color textColor =
-                                                                Colors.black;
-
-                                                            if (weightChange >
-                                                                0) {
-                                                              changeText =
-                                                                  "You have Gained ${weightChange.toStringAsFixed(1)} kg";
-                                                              textColor =
-                                                                  Colors.red;
-                                                            } else if (weightChange <
-                                                                0) {
-                                                              changeText =
-                                                                  "You have lost ${(-weightChange).toStringAsFixed(1)} kg";
-                                                              textColor =
-                                                                  Colors.green;
-                                                            }
-
-                                                            return Column(
-                                                              children: [
-                                                                Text(
-                                                                  changeText,
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontSize:
-                                                                        14,
-                                                                    color:
-                                                                        textColor,
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            );
-                                                          } else {
-                                                            // If no weight records are available, fetch and display the user's weight
-                                                            return FutureBuilder<
-                                                                User?>(
-                                                              future:
-                                                                  _getUserData(),
-                                                              builder: (context,
-                                                                  userSnapshot) {
-                                                                if (userSnapshot
-                                                                        .connectionState ==
-                                                                    ConnectionState
-                                                                        .waiting) {
-                                                                  return CircularProgressIndicator();
-                                                                } else {
-                                                                  return Text(
-                                                                      'User weight not available');
-                                                                }
-                                                              },
-                                                            );
-                                                          }
-                                                        },
-                                                      )),
-                                                ],
-                                              );
+                                              final double userWeight = userSnapshot.data!.preWeight ?? 0.0;
+                                              return buildUserWeightCard(userWeight);
                                             } else {
-                                              return Text(
-                                                  'User weight not available');
+                                              return Text('User weight not available');
                                             }
                                           },
                                         );
                                       }
                                     },
-                                  )
-                                  // Box 1
+                                  ),
+
+
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(18.0, 10.0, 18.0, 18.0), // Add padding to the BMI widget
+                                    child: buildBMIWidget(),
+                                  ), // Add the BMI widget outside of the conditional statement
                                 ],
                               ),
                             ),
+
+
                             // Add your second column here
 
                             // Container for the image with specified width and height
@@ -486,6 +366,17 @@ class _HealthTrackerState extends State<MotherHealthTracker1> {
                   ),
                 ),
 
+
+
+
+
+
+
+
+
+
+
+                // Box 3
                 // Box 3
                 GestureDetector(
                   onTap: () {
@@ -501,7 +392,7 @@ class _HealthTrackerState extends State<MotherHealthTracker1> {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
-                        width: 400,
+                        width: 400, // Limit the width to a specific value
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10.0),
@@ -514,138 +405,196 @@ class _HealthTrackerState extends State<MotherHealthTracker1> {
                             ),
                           ],
                         ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            FutureBuilder<UserBp>(
-                              future: _getLastBloodPressure(),
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                } else if (snapshot.hasError) {
-                                  return Text(
-                                    "Error: ${snapshot.error}",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      // Adjust the font size as needed
-                                      fontWeight: FontWeight.bold,
-                                      color: Color.fromARGB(255, 88, 119, 161),
-                                    ),
-                                  );
-                                } else {
-                                  final lastRecord = snapshot.data;
-                                  if (lastRecord != null) {
-                                    return Expanded(
-                                      // Wrap the Column with Expanded
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                        child: SingleChildScrollView( // Wrap the content with SingleChildScrollView
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              FutureBuilder<UserBp>(
+                                future: _getLastBloodPressure(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState == ConnectionState.waiting) {
+                                    return Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  } else if (snapshot.hasError) {
+                                    return Text(
+                                      "Error: ${snapshot.error}",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromARGB(255, 88, 119, 161),
+                                      ),
+                                    );
+                                  } else {
+                                    final lastRecord = snapshot.data;
+                                    if (lastRecord != null) {
+                                      return Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Row(
                                             children: [
                                               Padding(
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                        18.0, 18.0, 8.0, 28.0),
+                                                padding: const EdgeInsets.fromLTRB(18.0, 18.0, 8.0, 18.0),
                                                 child: Text(
                                                   'My blood pressure',
                                                   style: TextStyle(
-                                                    color: Color.fromARGB(
-                                                        255, 88, 119, 161),
+                                                    color: Color.fromARGB(255, 88, 119, 161),
                                                     fontSize: 16.0,
                                                   ),
                                                 ),
                                               ),
+
+                                              // Container(
+                                              //   child: FutureBuilder<int>(
+                                              //     future: getLastBloodPressureValue(),
+                                              //     builder: (context, snapshot) {
+                                              //       if (snapshot.connectionState == ConnectionState.waiting) {
+                                              //         return Center(
+                                              //           child: CircularProgressIndicator(),
+                                              //         ); // Show a loading indicator while waiting.
+                                              //       } else if (snapshot.hasError) {
+                                              //         return Center(
+                                              //           child: Text("Error: ${snapshot.error}"),
+                                              //         ); // Handle the error case.
+                                              //       } else {
+                                              //         int bloodPressureValue = snapshot.data ?? 0;
+                                              //         String bpStatus = getBloodPressureStatus(bloodPressureValue);
+                                              //
+                                              //
+                                              //
+                                              //         return Container(
+                                              //           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+                                              //           decoration: BoxDecoration(
+                                              //             color:getBackgroundColorForStatus(bloodPressureValue),
+                                              //             borderRadius: BorderRadius.circular(10),
+                                              //           ),
+                                              //           child: Text(
+                                              //             bpStatus,
+                                              //             style: TextStyle(
+                                              //               fontSize: 10,
+                                              //               color: Colors.white,
+                                              //             ),
+                                              //           ),
+                                              //         );
+                                              //       }
+                                              //     },
+                                              //   ),
+                                              // ),
+
                                             ],
                                           ),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                        18.0, 4.0, 0.0, 4.0),
-                                                child: Text(
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(18.0, 4.0, 0.0, 30.0),
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
                                                   "${lastRecord.bloodPressure} mmHg",
                                                   style: TextStyle(
-                                                    fontSize: 32,
+                                                    fontSize: 28,
                                                     fontWeight: FontWeight.bold,
-                                                    color: Color.fromARGB(
-                                                        255, 88, 119, 161),
+                                                    color: Color.fromARGB(255, 88, 119, 161),
                                                   ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
+                                                SizedBox(height: 20), // Add a gap of 10 units between the Text and Container
+
+                                                Container(
+
+                                                  child: FutureBuilder<int>(
+                                                    future: getLastBloodPressureValue(),
+                                                    builder: (context, snapshot) {
+                                                      if (snapshot.connectionState == ConnectionState.waiting) {
+                                                        return Center(
+                                                          child: CircularProgressIndicator(),
+                                                        ); // Show a loading indicator while waiting.
+                                                      } else if (snapshot.hasError) {
+                                                        return Center(
+                                                          child: Text("Error: ${snapshot.error}"),
+                                                        ); // Handle the error case.
+                                                      } else {
+                                                        int bloodPressureValue = snapshot.data ?? 0;
+                                                        String bpStatus = getBloodPressureStatus(bloodPressureValue);
+
+                                                        return Container(
+                                                          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                                          decoration: BoxDecoration(
+                                                            color: getBackgroundColorForStatus(bloodPressureValue),
+                                                            borderRadius: BorderRadius.circular(10),
+                                                          ),
+                                                          child: Text(
+                                                            bpStatus,
+                                                            style: TextStyle(
+                                                              fontSize: 10,
+                                                              color: Colors.white,
+                                                            ),
+                                                          ),
+                                                        );
+                                                      }
+                                                    },
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          )
+
+
+
                                         ],
-                                      ),
-                                    );
-                                  } else {
-                                    return Expanded(
-                                      // Wrap the Column with Expanded
-                                      child: Column(
+                                      );
+                                    } else {
+                                      return Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                18.0, 18.0, 18.0, 4.0),
+                                            padding: const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 4.0),
                                             child: Text(
                                               'My blood pressure',
                                               style: TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 88, 119, 161),
+                                                color: Color.fromARGB(255, 88, 119, 161),
                                                 fontSize: 16.0,
                                               ),
                                             ),
                                           ),
                                           SizedBox(height: 8),
                                           Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                18.0, 18.0, 18.0, 4.0),
+                                            padding: const EdgeInsets.fromLTRB(18.0, 4.0, 18.0, 4.0),
                                             child: Text(
                                               "0/0",
                                               style: TextStyle(
                                                 fontSize: 32,
                                                 fontWeight: FontWeight.bold,
-                                                color: Color.fromARGB(
-                                                    255, 88, 119, 161),
+                                                color: Color.fromARGB(255, 88, 119, 161),
                                               ),
                                             ),
                                           ),
-                                        ],
-                                      ),
-                                    );
-                                  }
-                                }
-                              },
-                            ),
 
-                            // Container for the image with specified width and height
-                            Container(
-                              width: 140,
-                              height: 140,
-                              child: Image.asset(
-                                'assets/images/health_tracker/Blood.png',
-                                fit: BoxFit.cover,
+                                        ],
+                                      );
+                                    }
+                                  }
+                                },
                               ),
-                            ),
-                          ],
+
+
+
+
+                              Container(
+                                width: 180, // You can adjust the width as needed
+                                height: 180, // You can adjust the height as needed
+                                child: Image.asset(
+                                  'assets/images/health_tracker/Blood.png',
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
 
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 2.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [],
-                  ),
-                ),
 
                 // Box 4 (Copy the above code with different content)
                 GestureDetector(
@@ -724,8 +673,9 @@ class _HealthTrackerState extends State<MotherHealthTracker1> {
                                         final balanceNeeded = 11 - totalGlasses;
 
                                         return Padding(
-                                          padding: const EdgeInsets.all(16.0), // You can adjust the padding as needed
+                                          padding: const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 6.0), // You can adjust the padding as needed
                                           child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start, // Align content to the left
                                             children: [
                                               Text(
                                                 "$totalGlasses Glasses",
@@ -736,34 +686,27 @@ class _HealthTrackerState extends State<MotherHealthTracker1> {
                                                 ),
                                               ),
                                               if (balanceNeeded > 0)
-                                                Text(
-                                                  "Balance needed to achieve 11: $balanceNeeded Glasses",
-                                                  style: TextStyle(
-                                                    fontSize: 16,
-                                                    color: Colors.red,
+                                                Container(
+                                                  padding: EdgeInsets.only(top: 20), // Adjust the left padding as needed
+                                                  child: Text(
+                                                    "Drink $balanceNeeded More Glasess",
+                                                    style: TextStyle(
+                                                      fontSize: 14,
+                                                      color: Color.fromARGB(255, 88, 119, 161),
+                                                    ),
                                                   ),
                                                 ),
                                             ],
                                           ),
                                         );
 
+
                                       } else {
                                         return Text('No data available.');
                                       }
                                     },
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        18.0, 18.0, 18.0, 2.0),
-                                    child: Text(
-                                      'I need to Drink - 400ml/day',
-                                      style: TextStyle(
-                                        color:
-                                            Color.fromARGB(255, 88, 119, 161),
-                                        fontSize: 12.0,
-                                      ),
-                                    ),
-                                  ),
+
                                 ],
                               ),
                             ),
@@ -860,7 +803,7 @@ class WeightChartBox extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
-                          top: 8.0,
+                          top: 20.0,
                           left: 20.0), // Add left padding under "Weight (kg)"
                       child: Text(
                         'Weight (kg)',
@@ -1170,3 +1113,32 @@ class _ModalContent extends State<ModalContent> {
     );
   }
 }
+
+
+String getBloodPressureStatus(int bpValue) {
+
+
+  if (bpValue >= 70 && bpValue < 90) {
+    return "Low";
+  } else if (bpValue >= 90 && bpValue < 120) {
+    return "Ideal";
+  } else if (bpValue >= 120 && bpValue < 140) {
+    return "Pre high";
+  } else {
+    return "High";
+  }
+}
+Color getBackgroundColorForStatus(int bloodPressure) {
+  String status = getBloodPressureStatus(bloodPressure);
+  switch (status) {
+    case "Low":
+      return Colors.green;
+    case "Ideal":
+      return Colors.blue;
+    case "Pre high":
+      return Colors.orange;
+    case "High":
+      return Colors.red; // Red background for "High" status
+    default:
+      return Colors.red; // Default red background for any other status
+  }}
