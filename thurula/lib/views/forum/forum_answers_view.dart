@@ -72,6 +72,7 @@ class _ForumAnswersViewState extends State<ForumAnswersView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 220, 104, 145),
         title: const Text('Forum Question and Answers'),
       ),
       body: FutureBuilder<ForumQuestion>(

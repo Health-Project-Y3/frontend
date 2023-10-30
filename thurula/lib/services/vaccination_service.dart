@@ -65,7 +65,7 @@ class VaccinationService {
 
   static Future<List<Vaccination>> getDueMomVaccinations(userId) async {
     var response = await http.get(
-      Uri.parse(getRoute("vaccines/baby/due/$userId")),
+      Uri.parse(getRoute("vaccines/mom/due/$userId")),
       headers: {'Content-Type': 'application/json'},
     );
     if (response.statusCode == 200) {

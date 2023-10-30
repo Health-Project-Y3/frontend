@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:thurula/services/baby_weight_service.dart';
 import 'package:thurula/views/widgets/graphs/baby_weight_chart_widget.dart';
+import '../../providers/baby_provider.dart';
 import '../widgets/graphs/point_widget.dart';
 
 int weightAddedMonths = 0;
-
-//Todo: Add baby ID  and gender function
-const babyid = "64a9cb10ec5c9834ff73fc36";
-const babygender = "male";
 
 class WeightChartView extends StatefulWidget {
   const WeightChartView({Key? key}) : super(key: key);
@@ -42,8 +40,11 @@ Future<List<List<Point>>> loadData(gender, {id = ""}) async {
 ValueNotifier<int> refreshCounter = ValueNotifier<int>(0);
 
 class _WeightChartView extends State<WeightChartView> {
+
   @override
   Widget build(BuildContext context) {
+  final babyid = context.read<BabyProvider>().baby!.id!;
+  final babygender = context.read<BabyProvider>().baby!.gender!;
     return Scaffold(
       backgroundColor: Colors.grey[200],
       body: Center(
@@ -231,6 +232,8 @@ class _AddReadingDialogState extends State<AddReadingDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final babyid = context.read<BabyProvider>().baby!.id!;
+
     return AlertDialog(
       title: const Text('Add New Reading'),
       contentPadding:
@@ -331,6 +334,8 @@ class _UpdateReadingDialogState extends State<UpdateReadingDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final babyid = context.read<BabyProvider>().baby!.id!;
+
     return AlertDialog(
       title: const Text('Update Reading'),
       contentPadding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
@@ -429,6 +434,8 @@ class _DeleteReadingDialogState extends State<DeleteReadingDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final babyid = context.read<BabyProvider>().baby!.id!;
+
     return AlertDialog(
       title: const Text('Delete Latest Reading'),
       contentPadding:

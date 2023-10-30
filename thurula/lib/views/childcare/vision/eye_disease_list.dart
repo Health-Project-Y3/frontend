@@ -6,7 +6,6 @@ import 'package:thurula/views/childcare/vision/eye_cataract.dart';
 import 'package:thurula/views/childcare/vision/lazy_eye.dart';
 import 'package:thurula/views/childcare/vision/pink_eye.dart';
 // import '../../signup/Question2View.dart';
-import './SnellenCardView.dart';
 import '../../../constants/eye_disease.dart';
 
 class EyeDiseaseList extends StatelessWidget {

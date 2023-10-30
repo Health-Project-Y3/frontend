@@ -2,16 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:thurula/models/baby_model.dart';
 import 'package:thurula/services/baby_service.dart';
+import 'package:thurula/services/local_service.dart';
 import 'package:thurula/views/childcare/add_new_baby.dart';
 import 'package:thurula/views/childcare/exercise/ExerciseView.dart';
 import 'package:thurula/views/childcare/growth_chart_view.dart';
 import 'package:thurula/views/childcare/vaccination_tracker_view.dart';
 import 'package:thurula/views/childcare/vision/VisionMenuView.dart';
-import 'package:thurula/views/childcare/diaper_change.dart';
+import 'package:thurula/views/childcare/diaper_records.dart';
 import 'package:thurula/views/childcare/nap/nap_details.dart';
 import 'package:thurula/views/childcare/meal_tracker.dart';
+import 'package:thurula/views/widgets/expandable_fab_widget.dart';
 
+import '../../providers/baby_provider.dart';
 import '../../providers/user_provider.dart';
+import '../widgets/navbar_widget.dart';
+
 
 class ChildHomeView extends StatefulWidget {
   const ChildHomeView({Key? key}) : super(key: key);
@@ -50,6 +55,7 @@ class _ChildHomeViewState extends State<ChildHomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: const CreateChildcareExpandableFab(),
       backgroundColor: const Color.fromARGB(255, 247, 247, 247),
       body: ValueListenableBuilder<Baby?>(
         valueListenable: selectedBabyNotifier,
@@ -255,38 +261,38 @@ class _ChildHomeViewState extends State<ChildHomeView> {
                           ),
                         ),
                       ),
-                      // Diaper Change Monitoring
-                      Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: InkResponse(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => DiaperChange(),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            width: 120,
-                            height: 120,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(5.0),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 0.5,
-                                  blurRadius: 2,
-                                  offset: const Offset(0, 2),
-                                ),
-                              ],
+//Diaper Change Monitoring
+                  Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: InkResponse(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DiaperRecords(),
                             ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                ClipRRect(
-                                  child: Image.asset(
+                          );
+                        },
+                        child: Container(
+                          width: 120,
+                          height: 120,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(5.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 0.5,
+                                blurRadius: 2,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ClipRRect(
+                                child: Image.asset(
                                     'assets/images/menu-icons/diaper.png',
                                     height: 50,
                                   ),
@@ -624,6 +630,9 @@ class _ChildHomeViewState extends State<ChildHomeView> {
           );
         },
       ),
+      bottomNavigationBar: const CreateBottomNavigationBar(
+        pageIndex: 1,
+      ),
     );
   }
 
@@ -633,7 +642,7 @@ class _ChildHomeViewState extends State<ChildHomeView> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Baby Profiles'),
-          contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+          contentPadding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -643,11 +652,14 @@ class _ChildHomeViewState extends State<ChildHomeView> {
                   value: baby,
                   groupValue: selectedBabyNotifier.value,
                   onChanged: (value) {
-                    selectedBabyNotifier.value = value as Baby?;
+                    final babyProvider = Provider.of<BabyProvider>(context,listen: false);
+                    babyProvider.setBaby(value!);
+                    LocalService.setCurrentBabyId(value.id!);
+                    selectedBabyNotifier.value = value;
                     Navigator.of(context).pop(); // Close the dialog
                   },
                 ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
             ],
           ),
           actions: [
@@ -679,10 +691,10 @@ class _ChildHomeViewState extends State<ChildHomeView> {
                 onPressed: () {
                   Navigator.of(context).pop(); // Close the dialog
                 },
-                child: Text('Close'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromARGB(255, 88, 119, 161),
+                  backgroundColor: const Color.fromARGB(255, 88, 119, 161),
                 ),
+                child: const Text('Close'),
               ),
             ),
           ],
