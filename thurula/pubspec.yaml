@@ -87,6 +87,7 @@ flutter:
     - assets/fonts/
     - assets/images/sleeping_image.png
     - assets/images/exercises/
+    - assets/images/icons/
     - assets/images/menu-tiles/
     - assets/images/mom.png
 

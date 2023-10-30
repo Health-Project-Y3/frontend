@@ -1,38 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:thurula/services/baby_length_service.dart';
-import 'package:thurula/views/widgets/graphs/baby_length_chart_widget.dart';
+import 'package:thurula/services/baby_weight_service.dart';
+import 'package:thurula/views/widgets/graphs/baby_weight_chart_widget.dart';
 import '../widgets/graphs/point_widget.dart';
 
-int lengthAddedMonths = 0;
+int weightAddedMonths = 0;
 
 //Todo: Add baby ID  and gender function
 const babyid = "64a9cb10ec5c9834ff73fc36";
 const babygender = "male";
 
-class LengthChartView extends StatefulWidget {
-  const LengthChartView({Key? key}) : super(key: key);
+class WeightChartView extends StatefulWidget {
+  const WeightChartView({Key? key}) : super(key: key);
 
   @override
-  State<LengthChartView> createState() => _LengthChartViewState();
+  State<WeightChartView> createState() => _WeightChartView();
 }
 
 Future<List<List<Point>>> loadData(gender, {id = ""}) async {
   List<List<Point>> allDataLists = [];
 
-  allDataLists.add(await BabyLengthService().getReferenceLength(gender, 10));
-  allDataLists.add(await BabyLengthService().getReferenceLength(gender, 25));
-  allDataLists.add(await BabyLengthService().getReferenceLength(gender, 50));
-  allDataLists.add(await BabyLengthService().getReferenceLength(gender, 75));
-  allDataLists.add(await BabyLengthService().getReferenceLength(gender, 90));
+  allDataLists.add(await BabyWeightService().getReferenceWeight(gender, 10));
+  allDataLists.add(await BabyWeightService().getReferenceWeight(gender, 25));
+  allDataLists.add(await BabyWeightService().getReferenceWeight(gender, 50));
+  allDataLists.add(await BabyWeightService().getReferenceWeight(gender, 75));
+  allDataLists.add(await BabyWeightService().getReferenceWeight(gender, 90));
 
   if (id != "") {
-    final babyData = await BabyLengthService().getBabyLength(id);
+    final babyData = await BabyWeightService().getBabyWeight(id);
     final modifiedBabyData = babyData
         .where((point) => point.y != -1.0) // Filter out points with y = -1.0
         .toList();
 
     allDataLists.add(modifiedBabyData);
-    lengthAddedMonths = modifiedBabyData.length;
+    weightAddedMonths = modifiedBabyData.length;
   }
 
   return allDataLists;
@@ -41,7 +41,7 @@ Future<List<List<Point>>> loadData(gender, {id = ""}) async {
 // Define ValueNotifier here
 ValueNotifier<int> refreshCounter = ValueNotifier<int>(0);
 
-class _LengthChartViewState extends State<LengthChartView> {
+class _WeightChartView extends State<WeightChartView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +53,7 @@ class _LengthChartViewState extends State<LengthChartView> {
               padding: const EdgeInsets.fromLTRB(40, 15, 40, 10),
               child: Row(children: [
                 const Text(
-                  'Length Chart',
+                  'Weight Chart',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -101,7 +101,7 @@ class _LengthChartViewState extends State<LengthChartView> {
                       child: Padding(
                         padding: EdgeInsets.only(bottom: 10),
                         child: Text(
-                          'Length (cm)',
+                          'Weight (kg)',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -136,7 +136,7 @@ class _LengthChartViewState extends State<LengthChartView> {
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(20)),
                                         ),
-                                        child: BabyLengthChartWidget(
+                                        child: BabyWeightChartWidget(
                                             snapshot.data),
                                       );
                                     } else {
@@ -220,11 +220,11 @@ class AddReadingDialog extends StatefulWidget {
 }
 
 class _AddReadingDialogState extends State<AddReadingDialog> {
-  int selectedMonth = lengthAddedMonths; // Default selected month
-  double? length; // Variable to store the entered length
-  String? lengthError; // Error message for invalid length
+  int selectedMonth = weightAddedMonths; // Default selected month
+  double? weight; // Variable to store the entered weight
+  String? weightError; // Error message for invalid weight
 
-  TextEditingController lengthController =
+  TextEditingController weightController =
       TextEditingController(); // Define the controller
 
   @override
@@ -244,27 +244,27 @@ class _AddReadingDialogState extends State<AddReadingDialog> {
               });
             },
             items: List.generate(
-              25 - lengthAddedMonths,
+              25 - weightAddedMonths,
               (index) => DropdownMenuItem<int>(
-                value: index + lengthAddedMonths,
-                child: Text('Month ${index + lengthAddedMonths}'),
+                value: index + weightAddedMonths,
+                child: Text('Month ${index + weightAddedMonths}'),
               ),
             ),
           ),
           const SizedBox(height: 10), // Adjust the height as needed
           TextField(
-            controller: lengthController, // Use the defined controller
+            controller: weightController, // Use the defined controller
             decoration: InputDecoration(
-              labelText: 'Length (cm)',
-              errorText: lengthError, // Set the error text here
+              labelText: 'Weight (kg)',
+              errorText: weightError, // Set the error text here
             ),
             keyboardType: TextInputType.number,
             onChanged: (value) {
-              // Parse the value to a double and store it in the length variable
-              length = double.tryParse(value);
+              // Parse the value to a double and store it in the weight variable
+              weight = double.tryParse(value);
               // Clear the error when the user makes changes
               setState(() {
-                lengthError = null;
+                weightError = null;
               });
             },
           ),
@@ -280,15 +280,15 @@ class _AddReadingDialogState extends State<AddReadingDialog> {
         ),
         ElevatedButton(
           onPressed: () {
-            double? enteredLength = double.tryParse(lengthController.text);
-            if (_validateLength(enteredLength)) {
-              BabyLengthService()
-                  .addBabyLength(babyid, selectedMonth, enteredLength!);
+            double? enteredWeight = double.tryParse(weightController.text);
+            if (_validateWeight(enteredWeight)) {
+              BabyWeightService()
+                  .addBabyWeight(babyid, selectedMonth, enteredWeight!);
               Navigator.of(context).pop(); // Close the dialog
               refreshCounter.value++; // Trigger UI update
             } else {
               setState(() {
-                lengthError = 'Length must be between 40 and 150 cm.';
+                weightError = 'Weight must be between 1 and 15 kg.';
               });
             }
           },
@@ -319,10 +319,10 @@ class UpdateReadingDialog extends StatefulWidget {
 
 class _UpdateReadingDialogState extends State<UpdateReadingDialog> {
   int selectedMonth = 0; // Default selected month
-  double? length; // Variable to store the entered length
-  String? lengthError; // Error message for invalid length
+  double? weight; // Variable to store the entered Weight
+  String? weightError; // Error message for invalid Weight
 
-  TextEditingController lengthController =
+  TextEditingController weightController =
       TextEditingController(); // Define the controller
 
   @override
@@ -341,7 +341,7 @@ class _UpdateReadingDialogState extends State<UpdateReadingDialog> {
               });
             },
             items: List.generate(
-              lengthAddedMonths - 1,
+              weightAddedMonths - 1,
               (index) => DropdownMenuItem<int>(
                 value: index,
                 child: Text('Month ${index + 1}'),
@@ -350,18 +350,18 @@ class _UpdateReadingDialogState extends State<UpdateReadingDialog> {
           ),
           const SizedBox(height: 10),
           TextField(
-            controller: lengthController, // Use the defined controller
+            controller: weightController, // Use the defined controller
             decoration: InputDecoration(
-              labelText: 'Length (cm)',
-              errorText: lengthError, // Set the error text here
+              labelText: 'Weight (kg)',
+              errorText: weightError, // Set the error text here
             ),
             keyboardType: TextInputType.number,
             onChanged: (value) {
-              // Parse the value to a double and store it in the length variable
-              length = double.tryParse(value);
+              // Parse the value to a double and store it in the Weight variable
+              weight = double.tryParse(value);
               // Clear the error when the user makes changes
               setState(() {
-                lengthError = null;
+                weightError = null;
               });
             },
           ),
@@ -377,15 +377,15 @@ class _UpdateReadingDialogState extends State<UpdateReadingDialog> {
         ),
         ElevatedButton(
           onPressed: () {
-            double? enteredLength = double.tryParse(lengthController.text);
-            if (_validateLength(enteredLength)) {
-              BabyLengthService()
-                  .editBabyLength(babyid, selectedMonth + 1, enteredLength!);
+            double? enteredWeight = double.tryParse(weightController.text);
+            if (_validateWeight(enteredWeight)) {
+              BabyWeightService()
+                  .editBabyWeight(babyid, selectedMonth + 1, enteredWeight!);
               Navigator.of(context).pop(); // Close the dialog
               refreshCounter.value++; // Trigger UI update
             } else {
               setState(() {
-                lengthError = 'Length must be between 40 and 150 cm.';
+                weightError = 'Weight must be between 1 and 15 kg.';
               });
             }
           },
@@ -408,8 +408,8 @@ void showUpdate(BuildContext context) {
   );
 }
 
-bool _validateLength(double? length) {
-  return length != null && length >= 40 && length <= 150;
+bool _validateWeight(double? weight) {
+  return weight != null && weight >= 1 && weight <= 20;
 }
 
 // Delete latest reading
@@ -419,7 +419,7 @@ class DeleteReadingDialog extends StatefulWidget {
 }
 
 class _DeleteReadingDialogState extends State<DeleteReadingDialog> {
-  int selectedMonth = lengthAddedMonths - 1; // Default selected month
+  int selectedMonth = weightAddedMonths - 1; // Default selected month
 
   @override
   Widget build(BuildContext context) {
@@ -449,7 +449,7 @@ class _DeleteReadingDialogState extends State<DeleteReadingDialog> {
         ),
         ElevatedButton(
           onPressed: () {
-            BabyLengthService().deleteBabyLength(babyid, selectedMonth);
+            BabyWeightService().deleteBabyWeight(babyid, selectedMonth);
             Navigator.of(context).pop(); // Close the dialog
             refreshCounter.value++; // Trigger UI update
           },

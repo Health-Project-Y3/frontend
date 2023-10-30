@@ -2,20 +2,20 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:thurula/views/widgets/graphs/point_widget.dart';
 
-class BabyLengthChartWidget extends StatefulWidget {
+class BabyWeightChartWidget extends StatefulWidget {
   final List<List<Point>> dataList;
 
-  const BabyLengthChartWidget(this.dataList, {Key? key}) : super(key: key);
+  const BabyWeightChartWidget(this.dataList, {Key? key}) : super(key: key);
 
   @override
-  _BabyLengthChartWidgetState createState() => _BabyLengthChartWidgetState();
+  _BabyWeightChartWidget createState() => _BabyWeightChartWidget();
 }
 
-class _BabyLengthChartWidgetState extends State<BabyLengthChartWidget> {
+class _BabyWeightChartWidget extends State<BabyWeightChartWidget> {
   double minX = 0;
   double maxX = 24;
-  double minY = 40;
-  double maxY = 100;
+  double minY = 1;
+  double maxY = 15;
   double scaleFactor = 1.0;
 
   @override
@@ -42,7 +42,7 @@ class _BabyLengthChartWidgetState extends State<BabyLengthChartWidget> {
                     sideTitles: SideTitles(
                   showTitles: true,
                   reservedSize: 40,
-                  interval: 5,
+                  interval: 1,
                 )),
                 bottomTitles: AxisTitles(
                     sideTitles: SideTitles(showTitles: true, reservedSize: 40)),
