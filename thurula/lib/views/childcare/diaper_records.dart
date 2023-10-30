@@ -141,9 +141,8 @@ class _DiaperRecordsState extends State<DiaperRecords> {
   }
 
   Future<void> showAddDiaperDialog(BuildContext context) async {
-    final TextEditingController diaperNotesController = TextEditingController();
     final TextEditingController diaperTypeController = TextEditingController();
-    final TextEditingController loggedByController = TextEditingController();
+
     DateTime? selectedTime = DateTime.now();
     String? message;
 
@@ -175,18 +174,13 @@ class _DiaperRecordsState extends State<DiaperRecords> {
                   },
                   child: Text('Select Time'),
                 ),
-                TextField(
-                  controller: diaperNotesController,
-                  decoration: InputDecoration(labelText: 'Diaper Notes'),
-                ),
+
                 TextField(
                   controller: diaperTypeController,
                   decoration: InputDecoration(labelText: 'Diaper Type'),
                 ),
-                TextField(
-                  controller: loggedByController,
-                  decoration: InputDecoration(labelText: 'Logged By'),
-                ),
+
+
                 Text(
                   message ?? '',
                   style: TextStyle(
@@ -206,16 +200,16 @@ class _DiaperRecordsState extends State<DiaperRecords> {
             TextButton(
               child: Text('Save'),
               onPressed: () async {
-                final diaperNotes = await _validateTextField(context, 'Diaper Notes', diaperNotesController.text);
-                final diaperType = await _validateTextField(context, 'Diaper Type', diaperTypeController.text);
-                final loggedBy = await _validateTextField(context, 'Logged By', loggedByController.text);
 
-                if (diaperNotes != null && diaperType != null && loggedBy != null) {
+                final diaperType = await _validateTextField(context, 'Diaper Type', diaperTypeController.text);
+
+
+                if (diaperType != null ) {
                   final newDiaper = DiaperTimes(
                     time: selectedTime,
-                    diaperNotes: diaperNotes,
+
                     diaperType: diaperType,
-                    loggedBy: loggedBy,
+
                     babyId: '64b01605b55b765169e1c9b6',
                   );
 
