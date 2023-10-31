@@ -7,6 +7,9 @@ class User {
   String? gender;
   String? email;
   String? phone;
+  double? weight;
+  double? preWeight;
+  double? height;
   bool? pregnant;
   DateTime? dueDate;
   DateTime? conceptionDate;
@@ -21,6 +24,9 @@ class User {
     this.gender,
     this.email,
     this.phone,
+    this.weight,
+    this.preWeight,
+    this.height,
     this.pregnant,
     this.dueDate,
     this.conceptionDate,
@@ -44,6 +50,9 @@ class User {
       email: jsonDecode['email'],
       babyIDs: jsonDecode['babies'].cast<String>(),
       phone: jsonDecode['phone'],
+      weight: jsonDecode['weight'],
+      preWeight: jsonDecode['preWeight'],
+      height: jsonDecode['height'],
       pregnant: jsonDecode['pregnant'],
       dueDate: DateTime.parse(jsonDecode['dueDate']),
       conceptionDate:DateTime.parse(jsonDecode['conceptionDate'])
@@ -59,6 +68,9 @@ class User {
       'gender': user.gender,
       'email': user.email,
       'phone': user.phone,
+      'weight': user.weight,
+      'preWeight': user.preWeight,
+      'height': user.height,
       'pregnant': user.pregnant,
       'dueDate': user.dueDate?.toIso8601String(),
       'conceptionDate': user.conceptionDate?.toIso8601String(),
