@@ -191,7 +191,7 @@ class _NapRecordsState extends State<NapRecords> {
                     Row(
                       children: [
                         Text('From: '),
-                        Text(DateFormat('HH:mm a , d MMMM yyyy')
+                        Text(DateFormat('hh:mm a , d MMMM yyyy')
                             .format(selectedStartTime.toLocal())),
                         SizedBox(width: 10),
                       ],
@@ -229,7 +229,7 @@ class _NapRecordsState extends State<NapRecords> {
                     Row(
                       children: [
                         Text('To: '),
-                        Text(DateFormat('HH:mm a , d MMMM yyyy')
+                        Text(DateFormat('hh:mm a , d MMMM yyyy')
                             .format(selectedEndTime.toLocal())),
                         SizedBox(width: 10),
                       ],
@@ -329,7 +329,7 @@ class _NapRecordsState extends State<NapRecords> {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              title: Text('Edit Nap Record'),
+              // title: Text('Edit Nap Record'),
               content: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -337,7 +337,7 @@ class _NapRecordsState extends State<NapRecords> {
                     Row(
                       children: [
                         Text('From: '),
-                        Text(DateFormat('HH:mm a,d MMMM yyyy')
+                        Text(DateFormat('hh:mm a,d MMMM yyyy')
                             .format(selectedStartTime.toLocal())),
                         SizedBox(width: 10),
                       ],
@@ -375,7 +375,7 @@ class _NapRecordsState extends State<NapRecords> {
                     Row(
                       children: [
                         Text('To: '),
-                        Text(DateFormat('HH:mm s,d MMMM yyyy')
+                        Text(DateFormat('h:mm a,d MMMM yyyy')
                             .format(selectedEndTime.toLocal())),
                         SizedBox(width: 10),
                       ],
