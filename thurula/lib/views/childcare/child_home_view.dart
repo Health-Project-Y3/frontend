@@ -146,8 +146,8 @@ class _ChildHomeViewState extends State<ChildHomeView> {
                               children: [
                                 ClipRRect(
                                   child: Image.asset(
-                                    'assets/images/menu-icons/growth.png',
-                                    height: 60,
+                                    'assets/images/menu-tiles/growth.png',
+                                    height: 70,
                                   ),
                                 ),
                                 const SizedBox(height: 10),
@@ -196,8 +196,8 @@ class _ChildHomeViewState extends State<ChildHomeView> {
                               children: [
                                 ClipRRect(
                                   child: Image.asset(
-                                    'assets/images/menu-icons/vaccine.png',
-                                    height: 60,
+                                    'assets/images/menu-tiles/vaccine.png',
+                                    height: 70,
                                   ),
                                 ),
                                 const SizedBox(height: 10),
@@ -245,8 +245,8 @@ class _ChildHomeViewState extends State<ChildHomeView> {
                               children: [
                                 ClipRRect(
                                   child: Image.asset(
-                                    'assets/images/menu-icons/nap.png',
-                                    height: 60,
+                                    'assets/images/menu-tiles/nap.png',
+                                    height: 70,
                                   ),
                                 ),
                                 const SizedBox(height: 10),
@@ -294,12 +294,12 @@ class _ChildHomeViewState extends State<ChildHomeView> {
                               children: [
                                 ClipRRect(
                                   child: Image.asset(
-                                    'assets/images/menu-icons/diaper.png',
-                                    height: 50,
+                                    'assets/images/menu-tiles/diaper.png',
+                                    height: 70,
                                   ),
                                 ),
                                 const SizedBox(height: 10),
-                                const Text("Diaper Change\nMonitoring",
+                                const Text("Diaper Change",
                                     style: TextStyle(
                                         fontFamily: 'Inter',
                                         color:
@@ -343,8 +343,8 @@ class _ChildHomeViewState extends State<ChildHomeView> {
                               children: [
                                 ClipRRect(
                                   child: Image.asset(
-                                    'assets/images/menu-icons/feeding.png',
-                                    height: 60,
+                                    'assets/images/menu-tiles/feeding.png',
+                                    height: 70,
                                   ),
                                 ),
                                 const SizedBox(height: 10),
@@ -392,8 +392,8 @@ class _ChildHomeViewState extends State<ChildHomeView> {
                               children: [
                                 ClipRRect(
                                   child: Image.asset(
-                                    'assets/images/menu-icons/skills.png',
-                                    height: 55,
+                                    'assets/images/menu-tiles/checklist.png',
+                                    height: 70,
                                   ),
                                 ),
                                 const SizedBox(height: 10),
@@ -441,8 +441,8 @@ class _ChildHomeViewState extends State<ChildHomeView> {
                               children: [
                                 ClipRRect(
                                   child: Image.asset(
-                                    'assets/images/menu-icons/vision.png',
-                                    height: 55,
+                                    'assets/images/menu-tiles/vision.png',
+                                    height: 70,
                                   ),
                                 ),
                                 const SizedBox(height: 10),
