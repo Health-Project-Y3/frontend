@@ -542,7 +542,10 @@ class _ChildHomeViewState extends State<ChildHomeView> {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return CircularProgressIndicator();
+                          return CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                Color.fromARGB(255, 220, 104, 145)),
+                          );
                         } else if (snapshot.hasError) {
                           return const Text("");
                         } else {
@@ -607,7 +610,10 @@ class _ChildHomeViewState extends State<ChildHomeView> {
                       builder: (context, dueSnapshot) {
                         if (dueSnapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return CircularProgressIndicator();
+                          return CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                Color.fromARGB(255, 220, 104, 145)),
+                          );
                         } else if (dueSnapshot.hasError) {
                           return const Text("No due vaccinations");
                         } else {

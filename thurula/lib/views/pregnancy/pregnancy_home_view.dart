@@ -503,7 +503,7 @@ class _PregnancyHomeViewState extends State<PregnancyHomeView> {
               ),
             ),
             const SizedBox(height: 5),
-           Container(
+            Container(
               width: 400,
               height: 80,
               decoration: BoxDecoration(
@@ -525,7 +525,10 @@ class _PregnancyHomeViewState extends State<PregnancyHomeView> {
                   builder: (context, dueSnapshot) {
                     if (dueSnapshot.connectionState ==
                         ConnectionState.waiting) {
-                      return CircularProgressIndicator();
+                      return CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                            Color.fromARGB(255, 220, 104, 145)),
+                      );
                     } else if (dueSnapshot.hasError) {
                       return const Text("No due vaccinations");
                     } else {
