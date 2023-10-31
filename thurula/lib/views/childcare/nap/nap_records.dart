@@ -23,15 +23,14 @@ class _NapRecordsState extends State<NapRecords> {
     final int hours = durationInSeconds ~/ 3600;
     final int minutes = (durationInSeconds % 3600) ~/ 60;
     final int seconds = durationInSeconds % 60;
-    return '$hours hrs $minutes mins $seconds s';
+    return '$hours hrs $minutes mins ';
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('All Nap Details'),
+        title: Text('Nap Records'),
         backgroundColor: const Color.fromARGB(255, 220, 104, 145),
       ),
       body: FutureBuilder<List<NapTimes>>(
@@ -46,61 +45,50 @@ class _NapRecordsState extends State<NapRecords> {
           } else {
             // Data has been loaded successfully.
             napRecords = snapshot.data!;
+            napRecords.sort((a, b) => b.startTime!.compareTo(a.startTime!));
 
-            // Create a ListView to display nap records in a vertical timeline format
             return ListView.builder(
               itemCount: napRecords.length,
               itemBuilder: (context, index) {
                 NapTimes record = napRecords[index];
-                // Calculate the duration in seconds
-                int durationSeconds = record.endTime!.difference(record.startTime!).inSeconds;
-                // Format the duration in hours, minutes, and seconds
+                int durationSeconds =
+                    record.endTime!.difference(record.startTime!).inSeconds;
                 String formattedDuration = _formatDuration(durationSeconds);
-                return Card(
-                  elevation: 3,
-                  margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('Date: ${DateFormat('yyyy-MM-dd').format(record.startTime!)}'),
-                              SizedBox(height: 8),
-                              Text('Start Time: ${DateFormat('HH:mm:ss').format(record.startTime!)}'),
-                              SizedBox(height: 8),
-                              Text('End Time: ${DateFormat('HH:mm:ss').format(record.endTime!)}'),
-                              SizedBox(height: 8),
-                              Text('Duration: $formattedDuration'),
-                              // Display the formatted duration
-                            ],
+
+                // Check if it's a new date, and add a date title with a divider.
+                if (index == 0 ||
+                    DateFormat('EEEE, d MMMM yyyy').format(record.startTime!) !=
+                        DateFormat('EEEE, d MMMM yyyy')
+                            .format(napRecords[index - 1].startTime!)) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Divider(
+                        color: Colors.black54,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Text(
+                          DateFormat('EEEE, d MMMM yyyy')
+                              .format(record.startTime!),
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: Color.fromARGB(255, 88, 119, 161),
                           ),
                         ),
-                        IconButton(
-                          icon: const Icon(Icons.edit),
-                          onPressed: () {
-                            _showEditNapDialog(context, record);
-                          },
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.delete),
-                          onPressed: () {
-                            _deleteNapRecord(napRecords, record.id ?? '');
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                );
+                      ),
+                      _buildNapRecord(record, formattedDuration),
+                    ],
+                  );
+                } else {
+                  return _buildNapRecord(record, formattedDuration);
+                }
               },
             );
           }
         },
       ),
-
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -113,10 +101,12 @@ class _NapRecordsState extends State<NapRecords> {
                 ),
               );
             },
-            child: Icon(Icons.timer), // Change the icon to stopwatch or timer
+            child: Icon(Icons.timer),
             backgroundColor: const Color.fromARGB(255, 220, 104, 145),
           ),
-          SizedBox(height: 16), // Add some spacing between the FloatingActionButton
+          SizedBox(
+            height: 16,
+          ),
           FloatingActionButton(
             onPressed: () {
               showAddNapDialog(context);
@@ -129,6 +119,57 @@ class _NapRecordsState extends State<NapRecords> {
     );
   }
 
+  Widget _buildNapRecord(NapTimes record, String formattedDuration) {
+    return Card(
+      elevation: 3,
+      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: 40,
+              height: 30,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.lightBlue[50],
+              ),
+              child: Center(
+                  child: Icon(Icons.hourglass_empty, color: Colors.blue)),
+            ),
+            VerticalDivider(color: Colors.black54),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'From:${DateFormat('HH:mm a').format(record.startTime!)} -  To:${DateFormat('HH:mm a').format(record.endTime!)}',
+                  ),
+                  SizedBox(height: 8),
+                  Text('Duration: $formattedDuration'),
+                ],
+              ),
+            ),
+            IconButton(
+              icon: const Icon(Icons.edit),
+              color: Color.fromARGB(255, 88, 119, 161),
+              onPressed: () {
+                _showEditNapDialog(context, record);
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.delete),
+              color: const Color.fromARGB(206, 185, 2, 2),
+              onPressed: () {
+                _deleteNapRecord(napRecords, record.id ?? '');
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   Future<void> showAddNapDialog(BuildContext context) async {
     NapTimes newNap = NapTimes(); // Create a new empty NapTimes object
@@ -142,19 +183,21 @@ class _NapRecordsState extends State<NapRecords> {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              title: Text('Add Nap Record'),
+              // title: Text('Add Nap Record'),
               content: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Row(
                       children: [
-                        Text('Start Time: '),
-                        Text(DateFormat('HH:mm:ss').format(selectedStartTime.toLocal())),
+                        Text('From: '),
+                        Text(DateFormat('HH:mm a , d MMMM yyyy')
+                            .format(selectedStartTime.toLocal())),
                         SizedBox(width: 10),
                       ],
                     ),
                     ElevatedButton(
+                      child: Text('Select Nap Start Date/Time'),
                       onPressed: () async {
                         DateTime? pickedStartTime = await showDatePicker(
                           context: context,
@@ -163,9 +206,11 @@ class _NapRecordsState extends State<NapRecords> {
                           lastDate: DateTime(2101),
                         );
                         if (pickedStartTime != null) {
-                          TimeOfDay? pickedStartTimeOfDay = await showTimePicker(
+                          TimeOfDay? pickedStartTimeOfDay =
+                              await showTimePicker(
                             context: context,
-                            initialTime: TimeOfDay.fromDateTime(selectedStartTime),
+                            initialTime:
+                                TimeOfDay.fromDateTime(selectedStartTime),
                           );
                           if (pickedStartTimeOfDay != null) {
                             setState(() {
@@ -180,16 +225,17 @@ class _NapRecordsState extends State<NapRecords> {
                           }
                         }
                       },
-                      child: Text('Select Start Time'),
                     ),
                     Row(
                       children: [
-                        Text('End Time: '),
-                        Text(DateFormat('HH:mm:ss').format(selectedEndTime.toLocal())),
+                        Text('To: '),
+                        Text(DateFormat('HH:mm a , d MMMM yyyy')
+                            .format(selectedEndTime.toLocal())),
                         SizedBox(width: 10),
                       ],
                     ),
                     ElevatedButton(
+                      child: Text('Select Nap End Date/Time'),
                       onPressed: () async {
                         DateTime? pickedEndTime = await showDatePicker(
                           context: context,
@@ -200,7 +246,8 @@ class _NapRecordsState extends State<NapRecords> {
                         if (pickedEndTime != null) {
                           TimeOfDay? pickedEndTimeOfDay = await showTimePicker(
                             context: context,
-                            initialTime: TimeOfDay.fromDateTime(selectedEndTime),
+                            initialTime:
+                                TimeOfDay.fromDateTime(selectedEndTime),
                           );
                           if (pickedEndTimeOfDay != null) {
                             setState(() {
@@ -215,11 +262,12 @@ class _NapRecordsState extends State<NapRecords> {
                           }
                         }
                       },
-                      child: Text('Select End Time'),
                     ),
-
-                    Text(message ?? '', style: TextStyle(
-                        color: message == 'Error' ? Colors.red : Colors.green)),
+                    Text(message ?? '',
+                        style: TextStyle(
+                            color: message == 'Error'
+                                ? Colors.red
+                                : Colors.green)),
                   ],
                 ),
               ),
@@ -269,7 +317,8 @@ class _NapRecordsState extends State<NapRecords> {
     );
   }
 
-  Future<void> _showEditNapDialog(BuildContext context, NapTimes existingNap) async {
+  Future<void> _showEditNapDialog(
+      BuildContext context, NapTimes existingNap) async {
     DateTime selectedStartTime = existingNap.startTime ?? DateTime.now();
     DateTime selectedEndTime = existingNap.endTime ?? DateTime.now();
     String? message;
@@ -287,8 +336,9 @@ class _NapRecordsState extends State<NapRecords> {
                   children: <Widget>[
                     Row(
                       children: [
-                        Text('Start Time: '),
-                        Text(DateFormat('HH:mm:ss').format(selectedStartTime.toLocal())),
+                        Text('From: '),
+                        Text(DateFormat('HH:mm a,d MMMM yyyy')
+                            .format(selectedStartTime.toLocal())),
                         SizedBox(width: 10),
                       ],
                     ),
@@ -301,9 +351,11 @@ class _NapRecordsState extends State<NapRecords> {
                           lastDate: DateTime(2101),
                         );
                         if (pickedStartTime != null) {
-                          TimeOfDay? pickedStartTimeOfDay = await showTimePicker(
+                          TimeOfDay? pickedStartTimeOfDay =
+                              await showTimePicker(
                             context: context,
-                            initialTime: TimeOfDay.fromDateTime(selectedStartTime),
+                            initialTime:
+                                TimeOfDay.fromDateTime(selectedStartTime),
                           );
                           if (pickedStartTimeOfDay != null) {
                             setState(() {
@@ -318,12 +370,13 @@ class _NapRecordsState extends State<NapRecords> {
                           }
                         }
                       },
-                      child: Text('Select Start Time'),
+                      child: Text('Update Nap Start Date/Time'),
                     ),
                     Row(
                       children: [
-                        Text('End Time: '),
-                        Text(DateFormat('HH:mm:ss').format(selectedEndTime.toLocal())),
+                        Text('To: '),
+                        Text(DateFormat('HH:mm s,d MMMM yyyy')
+                            .format(selectedEndTime.toLocal())),
                         SizedBox(width: 10),
                       ],
                     ),
@@ -338,7 +391,8 @@ class _NapRecordsState extends State<NapRecords> {
                         if (pickedEndTime != null) {
                           TimeOfDay? pickedEndTimeOfDay = await showTimePicker(
                             context: context,
-                            initialTime: TimeOfDay.fromDateTime(selectedEndTime),
+                            initialTime:
+                                TimeOfDay.fromDateTime(selectedEndTime),
                           );
                           if (pickedEndTimeOfDay != null) {
                             setState(() {
@@ -353,10 +407,13 @@ class _NapRecordsState extends State<NapRecords> {
                           }
                         }
                       },
-                      child: Text('Select End Time'),
+                      child: Text('Update Nap End Date/Time'),
                     ),
-                    Text(message ?? '', style: TextStyle(
-                        color: message == 'Error' ? Colors.red : Colors.green)),
+                    Text(message ?? '',
+                        style: TextStyle(
+                            color: message == 'Error'
+                                ? Colors.red
+                                : Colors.green)),
                   ],
                 ),
               ),
@@ -379,7 +436,6 @@ class _NapRecordsState extends State<NapRecords> {
 
                         message = 'Nap record updated successfully!';
                         Navigator.of(context).pop(); // Close the dialog
-
                       } catch (e) {
                         message = 'Error';
                       }
@@ -409,15 +465,15 @@ class _NapRecordsState extends State<NapRecords> {
             TextButton(
               child: Text('No'),
               onPressed: () {
-                Navigator.of(context).pop(
-                    false); // Return false to indicate cancellation
+                Navigator.of(context)
+                    .pop(false); // Return false to indicate cancellation
               },
             ),
             TextButton(
               child: Text('Yes'),
               onPressed: () {
-                Navigator.of(context).pop(
-                    true); // Return true to indicate confirmation
+                Navigator.of(context)
+                    .pop(true); // Return true to indicate confirmation
               },
             ),
           ],
@@ -438,8 +494,4 @@ class _NapRecordsState extends State<NapRecords> {
       }
     }
   }
-
-
 }
-
-

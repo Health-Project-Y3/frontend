@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:thurula/views/childcare/child_home_view.dart';
 import 'package:thurula/views/childcare/nap/nap_records.dart';
 import 'package:thurula/services/naps_service.dart';
 import 'package:thurula/models/naptimes_model.dart';
@@ -27,7 +26,7 @@ class _NapDetailsState extends State<NapDetails> {
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 220, 104, 145),
         title: const Text(
-          'Baby Nap Details',
+          'Nap Time Monitoring',
           style: TextStyle(
             color: Colors.white,
           ),
@@ -43,7 +42,6 @@ class _NapDetailsState extends State<NapDetails> {
           },
         ),
       ),
-
       body: FutureBuilder<List<NapTimes>>(
         future: _napRecordsFuture,
         builder: (context, snapshot) {
@@ -58,16 +56,16 @@ class _NapDetailsState extends State<NapDetails> {
             final sleepDurationByDay = _calculateSleepDurationByDay(napRecords);
             final List<DataPoint> dataPoints = sleepDurationByDay.entries
                 .map((entry) => DataPoint(
-              x: entry.key, // Use the DateTime representing the day
-              y: entry.value,
-            ))
+                      x: entry.key, // Use the DateTime representing the day
+                      y: entry.value,
+                    ))
                 .toList();
 
             int totalNapsToday = _calculateTotalNapsToday(napRecords);
             double totalSleepDurationMinutes =
-            _calculateTotalSleepDurationToday(napRecords);
+                _calculateTotalSleepDurationToday(napRecords);
             String totalSleepDurationFormatted =
-            _formatDuration(totalSleepDurationMinutes);
+                _formatDuration(totalSleepDurationMinutes);
 
             return SingleChildScrollView(
               child: Padding(
@@ -75,44 +73,25 @@ class _NapDetailsState extends State<NapDetails> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const SizedBox(height: 16),
-                    Text(
-                      "Mary's Nap Details",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color.fromARGB(255, 88, 119, 161),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
                     const SizedBox(height: 2),
                     Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        NapStatCard(
-                          title: 'Total Naps Today',
-                          value: totalNapsToday.toString(),
-                        ),
-                        SizedBox(height: 5),
-                        NapStatCard(
-                          title: 'Total Sleep Duration Today',
-                          value: totalSleepDurationFormatted,
+                        CustomCard(
+                          title1: 'Total Naps Today',
+                          title2: totalNapsToday.toString(),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 16),
-                    Center(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => NapRecords(),
-                            ),
-                          );
-                        },
-                        child: const Text('All Nap Details'),
-                      ),
+                    const SizedBox(height: 2),
+                    Column(
+                      children: [
+                        CustomCard(
+                          title1: 'Total Sleep Time Today',
+                          title2: totalSleepDurationFormatted,
+                        ),
+                      ],
                     ),
+                    const SizedBox(height: 4),
                     Card(
                       elevation: 10,
                       child: Padding(
@@ -128,7 +107,7 @@ class _NapDetailsState extends State<NapDetails> {
                                   padding: const EdgeInsets.all(20.0),
                                   child: Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     children: [],
                                   ),
                                 ),
@@ -141,8 +120,7 @@ class _NapDetailsState extends State<NapDetails> {
                                     width: dataPoints.length * 80,
                                     height: 200,
                                     child: CustomPaint(
-                                      size: Size(
-                                          dataPoints.length * 80, 200),
+                                      size: Size(dataPoints.length * 80, 200),
                                       painter: ChartPainter(dataPoints),
                                     ),
                                   ),
@@ -151,6 +129,30 @@ class _NapDetailsState extends State<NapDetails> {
                               ],
                             ),
                           ),
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => NapRecords(),
+                            ),
+                          );
+                        },
+                        style: ButtonStyle(
+                          minimumSize: MaterialStateProperty.all(
+                              Size(50, 40)), // Adjust height and width
+                          backgroundColor: MaterialStateProperty.all(
+                            const Color(
+                                0xFFDC6891), // Change to the desired color
+                          ),
+                        ),
+                        child: const Text(
+                          'View All Nap Records',
+                          style: TextStyle(color: Colors.white), // Text color
                         ),
                       ),
                     ),
@@ -204,7 +206,7 @@ class _NapDetailsState extends State<NapDetails> {
       final duration = record.endTime!.difference(record.startTime!).inMinutes;
       sleepDurationByDay.update(
         day,
-            (value) => value + duration.toDouble(),
+        (value) => value + duration.toDouble(),
         ifAbsent: () => duration.toDouble(),
       );
     });
@@ -263,7 +265,7 @@ class ChartPainter extends CustomPainter {
       ..strokeWidth = 2;
 
     final maxY =
-    dataPoints.map((point) => point.y).reduce((a, b) => a > b ? a : b);
+        dataPoints.map((point) => point.y).reduce((a, b) => a > b ? a : b);
 
     final xAxisStart = Offset(0, size.height);
     final xAxisEnd = Offset(size.width, size.height);
@@ -367,7 +369,6 @@ class ChartPainter extends CustomPainter {
     return '$hours Hr';
   }
 
-
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return true;
@@ -379,4 +380,62 @@ class DataPoint {
   final double y;
 
   DataPoint({required this.x, required this.y});
+}
+
+class CustomCard extends StatelessWidget {
+  final String title1;
+  final String title2;
+
+  CustomCard({required this.title1, required this.title2});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius:
+            BorderRadius.circular(15.0), // Adjust the border radius as needed
+      ),
+      elevation: 4, // Adjust the shadow as needed
+      margin: EdgeInsets.all(10), // Adjust the margin as needed
+      child: Container(
+        width: double.infinity, // Card should be full width
+        height: 100,
+        padding: EdgeInsets.all(10),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title1,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 16,
+                    ),
+                  ),
+                  SizedBox(height: 10), // Add space between titles
+                  Text(
+                    title2,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 22, // Increase font size
+                      color: Color.fromARGB(255, 220, 104, 145), // Change color
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(width: 10),
+            Container(
+              width: 70.0, // Adjust the width as needed
+              child: Image(
+                image: AssetImage('assets/images/menu-icons/nap.png'),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

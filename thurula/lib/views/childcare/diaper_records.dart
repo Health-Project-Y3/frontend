@@ -9,7 +9,8 @@ class DiaperRecords extends StatefulWidget {
 }
 
 class _DiaperRecordsState extends State<DiaperRecords> {
-  Future<List<DiaperTimes>> _diaperRecordsFuture = Future<List<DiaperTimes>>.value([]);
+  Future<List<DiaperTimes>> _diaperRecordsFuture =
+      Future<List<DiaperTimes>>.value([]);
   List<DiaperTimes> diaperRecords = [];
 
   @override
@@ -20,7 +21,8 @@ class _DiaperRecordsState extends State<DiaperRecords> {
 
   Future<void> _loadDiaperRecords() async {
     try {
-      _diaperRecordsFuture = DiaperService.getBabyDiapers('64b01605b55b765169e1c9b6');
+      _diaperRecordsFuture =
+          DiaperService.getBabyDiapers('64b01605b55b765169e1c9b6');
       final records = await _diaperRecordsFuture;
       print('Loaded ${records.length} diaper records.');
       setState(() {
@@ -36,29 +38,40 @@ class _DiaperRecordsState extends State<DiaperRecords> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Diaper Change Details'),
+        title: Text('Diaper Change Monitoring'),
         backgroundColor: const Color.fromARGB(255, 220, 104, 145),
       ),
       body: ListView.builder(
         itemCount: diaperRecords.length,
         itemBuilder: (context, index) {
           DiaperTimes record = diaperRecords[index];
-          String formattedDate = DateFormat('EEEE, d MMMM y').format(record.time ?? DateTime.now());
-          String formattedTime = DateFormat('HH:mm:ss').format(record.time ?? DateTime.now());
+          String formattedDate = DateFormat('EEEE, d MMMM y')
+              .format(record.time ?? DateTime.now());
+          String formattedTime =
+              DateFormat('HH:mm:ss').format(record.time ?? DateTime.now());
 
-          if (index == 0 || formattedDate != DateFormat('EEEE, d MMMM y').format(diaperRecords[index - 1].time!)) {
+          if (index == 0 ||
+              formattedDate !=
+                  DateFormat('EEEE, d MMMM y')
+                      .format(diaperRecords[index - 1].time!)) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Divider(),
+                Divider(
+                  color: Colors.black54,
+                ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
                     formattedDate,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.grey),
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: Color.fromARGB(255, 88, 119, 161),
+                    ),
                   ),
                 ),
-                Divider(),
+                // Divider(),
                 _buildDiaperRecord(formattedTime, record),
               ],
             );
@@ -79,20 +92,21 @@ class _DiaperRecordsState extends State<DiaperRecords> {
 
   Widget _buildDiaperRecord(String formattedTime, DiaperTimes record) {
     Icon diaperIcon = Icon(Icons.info_outline);
-    Color iconColor = Colors.grey;
+    Color iconColor = Colors.white70;
 
     if (record.diaperType == 'wet') {
       diaperIcon = Icon(Icons.water_drop, color: Colors.blue);
       iconColor = Colors.blue;
     } else if (record.diaperType == 'dirty') {
       diaperIcon = Icon(Icons.cloud_off, color: Colors.green);
-      iconColor = Colors.green;
+      iconColor = Colors.yellow;
     } else if (record.diaperType == 'mixed') {
       diaperIcon = Icon(Icons.wb_cloudy, color: Colors.brown);
       iconColor = Colors.brown;
     }
 
-    String formattedTime = DateFormat('h:mm a').format(record.time ?? DateTime.now());
+    String formattedTime =
+        DateFormat('h:mm a').format(record.time ?? DateTime.now());
 
     return Card(
       elevation: 3,
@@ -104,14 +118,14 @@ class _DiaperRecordsState extends State<DiaperRecords> {
           children: [
             Container(
               width: 40,
-              height: 40,
+              height: 30,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.grey,
+                color: Colors.lightBlue[50],
               ),
               child: Center(child: diaperIcon),
             ),
-            VerticalDivider(color: Colors.grey),
+            VerticalDivider(color: Colors.black54),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -125,7 +139,7 @@ class _DiaperRecordsState extends State<DiaperRecords> {
               onPressed: () {
                 _showEditDiaperDialog(context, record);
               },
-              color: const Color.fromARGB(255, 185, 157, 2),
+              color: Color.fromARGB(255, 88, 119, 161),
             ),
             IconButton(
               icon: Icon(Icons.delete),
@@ -140,6 +154,68 @@ class _DiaperRecordsState extends State<DiaperRecords> {
     );
   }
 
+  Future<String?> _validateTextField(
+      BuildContext context, String fieldName, String value) async {
+    if (value.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('$fieldName is required'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return null;
+    }
+    return value;
+  }
+
+  Future<DateTime?> _selectTime(
+      BuildContext context, DateTime? initialTime) async {
+    DateTime? selectedTime = initialTime;
+
+    await showDatePicker(
+      context: context,
+      initialDate: initialTime ?? DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    ).then((pickedTime) async {
+      if (pickedTime != null) {
+        final TimeOfDay initialTimeOfDay = TimeOfDay.fromDateTime(
+          initialTime ??
+              DateTime(DateTime.now().year, DateTime.now().month,
+                  DateTime.now().day, 12, 0),
+        );
+
+        TimeOfDay? pickedTimeOfDay = await showTimePicker(
+          context: context,
+          initialTime: initialTimeOfDay,
+          builder: (BuildContext context, Widget? child) {
+            return MediaQuery(
+              data:
+                  MediaQuery.of(context).copyWith(alwaysUse24HourFormat: false),
+              child: child!,
+            );
+          },
+        );
+
+        if (pickedTimeOfDay != null) {
+          selectedTime = DateTime(
+            pickedTime.year,
+            pickedTime.month,
+            pickedTime.day,
+            pickedTimeOfDay.hour,
+            pickedTimeOfDay.minute,
+          );
+          String formattedTime = DateFormat('h:mm a, EEEE, d MMMM y')
+              .format(selectedTime ?? DateTime.now());
+
+          print('Selected time: $formattedTime');
+        }
+      }
+    });
+
+    return selectedTime;
+  }
+
   Future<void> showAddDiaperDialog(BuildContext context) async {
     final TextEditingController diaperTypeController = TextEditingController();
 
@@ -152,18 +228,19 @@ class _DiaperRecordsState extends State<DiaperRecords> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Add Diaper Change Record'),
+          // title: Text('Diaper Change Record'),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Row(
                   children: [
-                    Text('Time: '),
+                    // Text('Time: '),
                     Text(
-                      '${selectedTime?.hour.toString().padLeft(2, '0')}:${selectedTime?.minute.toString().padLeft(2, '0')} ${selectedTime?.day.toString().padLeft(2, '0')}/${selectedTime?.month.toString().padLeft(2, '0')}/${selectedTime?.year}',
-                      // style: TextStyle(fontweight: FontWeight.bold),
+                      '${selectedTime != null ? DateFormat('h:mm a').format(selectedTime!) : ''}, ' // Time
+                      '${selectedTime != null ? DateFormat(' d MMMM y').format(selectedTime!) : ''}', // Date
                     ),
+
                     SizedBox(width: 10),
                   ],
                 ),
@@ -172,15 +249,12 @@ class _DiaperRecordsState extends State<DiaperRecords> {
                     selectedTime = await _selectTime(context, selectedTime);
                     setState(() {});
                   },
-                  child: Text('Select Time'),
+                  child: Text('Change Date/Time'),
                 ),
-
                 TextField(
                   controller: diaperTypeController,
                   decoration: InputDecoration(labelText: 'Diaper Type'),
                 ),
-
-
                 Text(
                   message ?? '',
                   style: TextStyle(
@@ -200,16 +274,13 @@ class _DiaperRecordsState extends State<DiaperRecords> {
             TextButton(
               child: Text('Save'),
               onPressed: () async {
+                final diaperType = await _validateTextField(
+                    context, 'Diaper Type', diaperTypeController.text);
 
-                final diaperType = await _validateTextField(context, 'Diaper Type', diaperTypeController.text);
-
-
-                if (diaperType != null ) {
+                if (diaperType != null) {
                   final newDiaper = DiaperTimes(
                     time: selectedTime,
-
                     diaperType: diaperType,
-
                     babyId: '64b01605b55b765169e1c9b6',
                   );
 
@@ -230,65 +301,19 @@ class _DiaperRecordsState extends State<DiaperRecords> {
     );
   }
 
-  Future<String?> _validateTextField(BuildContext context, String fieldName, String value) async {
-    if (value.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('$fieldName is required'),
-          duration: Duration(seconds: 2),
-        ),
-      );
-      return null;
-    }
-    return value;
-  }
-
-  Future<DateTime?> _selectTime(BuildContext context, DateTime? initialTime) async {
-    DateTime? selectedTime = initialTime;
-
-    await showDatePicker(
-      context: context,
-      initialDate: initialTime ?? DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-    ).then((pickedTime) async {
-      if (pickedTime != null) {
-        final TimeOfDay initialTimeOfDay = TimeOfDay.fromDateTime(
-          initialTime ?? DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 12, 0),
-        );
-
-        TimeOfDay? pickedTimeOfDay = await showTimePicker(
-          context: context,
-          initialTime: initialTimeOfDay,
-          builder: (BuildContext context, Widget? child) {
-            return MediaQuery(
-              data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
-              child: child!,
-            );
-          },
-        );
-
-        if (pickedTimeOfDay != null) {
-          selectedTime = DateTime(
-            pickedTime.year,
-            pickedTime.month,
-            pickedTime.day,
-            pickedTimeOfDay.hour,
-            pickedTimeOfDay.minute,
-          );
-        }
-      }
-    });
-
-    return selectedTime;
-  }
-
-  Future<void> _showEditDiaperDialog(BuildContext context, DiaperTimes existingDiaper) async {
+  Future<void> _showEditDiaperDialog(
+      BuildContext context, DiaperTimes existingDiaper) async {
     DateTime selectedTime = existingDiaper.time ?? DateTime.now();
     String? diaperNotes = existingDiaper.diaperNotes;
     String? diaperType = existingDiaper.diaperType;
     String? loggedBy = existingDiaper.loggedBy;
     String? message;
+
+    String formattedTime =
+        DateFormat('h:mm a').format(existingDiaper.time ?? DateTime.now());
+
+    String formattedDate =
+        DateFormat(' d MMMM y').format(existingDiaper.time ?? DateTime.now());
 
     await showDialog(
       context: context,
@@ -296,17 +321,19 @@ class _DiaperRecordsState extends State<DiaperRecords> {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              title: Text('Edit Diaper Change Record'),
+              // title: Text('Edit Diaper Change Record'),
               content: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Row(
                       children: [
-                        Text('Time: '),
+                        // Text('Time: '),
                         Text(
-                          '${selectedTime.hour}:${selectedTime.minute.toString().padLeft(2, '0')}',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          '$formattedTime, '
+                          '$formattedDate  ',
+
+                          // style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         SizedBox(width: 10),
                       ],
@@ -337,39 +364,31 @@ class _DiaperRecordsState extends State<DiaperRecords> {
                           }
                         }
                       },
-                      child: Text('Select Time'),
-                    ),
-                    TextFormField(
-                      initialValue: diaperNotes,
-                      onChanged: (value) {
-                        diaperNotes = value;
-                      },
-                      decoration: InputDecoration(labelText: 'Diaper Notes'),
+                      child: Text('Update Date/Time'),
                     ),
                     TextFormField(
                       initialValue: diaperType,
                       onChanged: (value) {
                         diaperType = value;
                       },
-                      decoration: InputDecoration(labelText: 'Diaper Type'),
-                    ),
-                    TextFormField(
-                      initialValue: loggedBy,
-                      onChanged: (value) {
-                        loggedBy = value;
-                      },
-                      decoration: InputDecoration(labelText: 'Logged By'),
+                      decoration: InputDecoration(
+                        labelText: 'Diaper Type (wet/mixed/dirty)',
+                      ),
                     ),
                     Text(
                       message ?? '',
-                      style: TextStyle(color: message == 'Error' ? Colors.red : Colors.green),
+                      style: TextStyle(
+                          color:
+                              message == 'Error' ? Colors.red : Colors.green),
                     ),
                   ],
                 ),
               ),
               actions: <Widget>[
                 TextButton(
-                  child: Text('Cancel'),
+                  child: Text(
+                    'Cancel',
+                  ),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
@@ -384,7 +403,8 @@ class _DiaperRecordsState extends State<DiaperRecords> {
                         existingDiaper.diaperType = diaperType;
                         existingDiaper.loggedBy = loggedBy;
 
-                        await DiaperService.updateDiaper(existingDiaper.id ?? '', existingDiaper);
+                        await DiaperService.updateDiaper(
+                            existingDiaper.id ?? '', existingDiaper);
 
                         message = 'Diaper change record updated successfully!';
                         Navigator.of(context).pop();
@@ -406,7 +426,6 @@ class _DiaperRecordsState extends State<DiaperRecords> {
       },
     );
   }
-
 
   Future<void> _deleteDiaperRecord(String id) async {
     bool confirmed = await showDialog(
