@@ -146,7 +146,7 @@ class _ChildHomeViewState extends State<ChildHomeView> {
                               children: [
                                 ClipRRect(
                                   child: Image.asset(
-                                    'assets/images/menu-icons/growth.png',
+                                    'assets/images/menu-tiles/growth.png',
                                     height: 60,
                                   ),
                                 ),
@@ -196,7 +196,7 @@ class _ChildHomeViewState extends State<ChildHomeView> {
                               children: [
                                 ClipRRect(
                                   child: Image.asset(
-                                    'assets/images/menu-icons/vaccine.png',
+                                    'assets/images/menu-tiles/vaccine.png',
                                     height: 60,
                                   ),
                                 ),
@@ -245,7 +245,7 @@ class _ChildHomeViewState extends State<ChildHomeView> {
                               children: [
                                 ClipRRect(
                                   child: Image.asset(
-                                    'assets/images/menu-icons/nap.png',
+                                    'assets/images/menu-tiles/nap.png',
                                     height: 60,
                                   ),
                                 ),
@@ -294,7 +294,7 @@ class _ChildHomeViewState extends State<ChildHomeView> {
                               children: [
                                 ClipRRect(
                                   child: Image.asset(
-                                    'assets/images/menu-icons/diaper.png',
+                                    'assets/images/menu-tiles/diaper.png',
                                     height: 50,
                                   ),
                                 ),
@@ -343,7 +343,7 @@ class _ChildHomeViewState extends State<ChildHomeView> {
                               children: [
                                 ClipRRect(
                                   child: Image.asset(
-                                    'assets/images/menu-icons/feeding.png',
+                                    'assets/images/menu-tiles/feeding.png',
                                     height: 60,
                                   ),
                                 ),
@@ -392,7 +392,7 @@ class _ChildHomeViewState extends State<ChildHomeView> {
                               children: [
                                 ClipRRect(
                                   child: Image.asset(
-                                    'assets/images/menu-icons/skills.png',
+                                    'assets/images/menu-tiles/checklist.png',
                                     height: 55,
                                   ),
                                 ),
@@ -441,7 +441,7 @@ class _ChildHomeViewState extends State<ChildHomeView> {
                               children: [
                                 ClipRRect(
                                   child: Image.asset(
-                                    'assets/images/menu-icons/vision.png',
+                                    'assets/images/menu-tiles/vision.png',
                                     height: 55,
                                   ),
                                 ),
