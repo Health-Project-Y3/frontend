@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +49,7 @@ class _SnellenCardViewState extends State<SnellenCardView>
         length: tabs.length,
         child: Scaffold(
           appBar: AppBar(
-            title: const Row(children: [Text('Snellen Card Test')]),
+            title: const Row(children: [Text('Visual Activity')]),
             backgroundColor: const Color.fromARGB(255, 220, 104, 145),
             bottom: TabBar(
               controller: _tabController,
@@ -80,8 +81,8 @@ class _FirstPage extends State<FirstPage> {
       TextEditingController();
   late final TextEditingController scoreController = TextEditingController();
 
-  late final String _localPath;
-  late final bool _permissionReady;
+  String _localPath = "/sdcard/download/";
+  bool _permissionReady = false;
   late final TargetPlatform? platform = TargetPlatform.android;
 
   // final List<String> list = [
@@ -133,50 +134,64 @@ class _FirstPage extends State<FirstPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SingleChildScrollView(
-            child: Column(
-      children: [
-        // const FittedBox(
-        //     fit: BoxFit.fill,
-        //     child: Image(
-        //         image:
-        //             AssetImage('assets/images/baby vision cards 1 month.jpg'),
-        //         //width: 300,
-        //         height: 200)),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-          child: InkWell(
-              onTap: () async {
-                _permissionReady = await _checkPermission();
-                if (_permissionReady) {
-                  await _prepareSaveDir();
-                  print("Downloading");
-                  try {
-                    await Dio().download(
-                        "https://en.wikipedia.org/wiki/Snellen_chart#/media/File:Snellen_chart.svg",
-                        "$_localPath/filename.jpg");
-                    print("Download Completed.");
-                  } catch (e) {
-                    print("Download Failed.\n\n$e");
-                  }
+            child: Column(children: [
+      // const FittedBox(
+      //     fit: BoxFit.fill,
+      //     child: Image(
+      //         image:
+      //             AssetImage('assets/images/baby vision cards 1 month.jpg'),
+      //         //width: 300,
+      //         height: 200)),
+      Padding(
+        padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+        child: InkWell(
+            onTap: () async {
+              _permissionReady = await _checkPermission();
+              if (_permissionReady) {
+                await _prepareSaveDir();
+                print("Downloading");
+                try {
+                  print("test");
+                  await Dio().download(
+                      "https://en.wikipedia.org/wiki/Snellen_chart#/media/File:Snellen_chart.svg",
+                      "$_localPath/filename.jpg");
+                  // await Dio().download(
+                  //     "https://askeyedoc.com/wp-content/uploads/2020/04/Children-10-ft_small-1-pdf-802x1024.jpg",
+                  //     "$_localPath/filename.jpg");
+                  print("Download Completed.");
+                  // final file = File("$_localPath/example.pdf");
+                  // Uint8List data = await file.readAsBytesSync();
+                  // void saveFile(Uint8List data, "my_sample_file.pdf", "appliation/pdf");
+                } catch (e) {
+                  print("Download Failed.\n\n$e");
                 }
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.grey.withOpacity(0.5)),
-                padding: const EdgeInsets.all(8),
-                child: const Icon(Icons.download, color: Colors.black),
-              )),
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(20, 20, 10, 0),
-          child: Card(
-              elevation: 20,
+              }
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle, color: Colors.grey.withOpacity(0.5)),
+              padding: const EdgeInsets.all(8),
+              child: const Icon(Icons.download, color: Colors.black),
+            )),
+      ),
+      Padding(
+        padding: const EdgeInsets.fromLTRB(20, 20, 10, 0),
+        child: Card(
+            elevation: 20,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(5, 20, 10, 20),
               child: Container(
                 decoration:
                     BoxDecoration(borderRadius: BorderRadius.circular(20)),
                 child: Column(
                   children: [
+                    const Text("Instructions",
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 220, 104, 145),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22)
+                        //     padding: const EdgeInsets.only(bottom: 10),
+                        ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 20, 10, 0),
                       child: SizedBox(
@@ -184,95 +199,153 @@ class _FirstPage extends State<FirstPage> {
                         child: ListView.builder(
                             itemCount: list.length,
                             itemBuilder: (BuildContext ctxt, int index) {
-                              return Text(
-                                "${index + 1}.${list[index]}",
-                                style: const TextStyle(fontSize: 16),
+                              // return Text(
+                              //   "${index + 1}.${list[index]}",
+                              //   style: const TextStyle(fontSize: 16),
+                              // );
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
+                                child: Row(
+                                  children: [
+                                    // circled number
+                                    Container(
+                                      width: 25,
+                                      height: 25,
+                                      decoration: const BoxDecoration(
+                                        color:
+                                            Color.fromARGB(255, 88, 119, 161),
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          "${index + 1}",
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    // text
+                                    Expanded(
+                                      child: Text(
+                                        list[index],
+                                        style: const TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 80, 78, 78),
+                                          // fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               );
                             }),
                       ),
                     ),
                   ],
                 ),
-              )),
-        ),
-        const Padding(
-          padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
-          child: Text(
-            "The value that is observed: ",
-            textAlign: TextAlign.left,
-            style: TextStyle(fontSize: 18),
-          ),
-        ),
-        RadioListTile(
-          title: const Text("20/100"),
-          value: "100",
-          groupValue: eyescore,
-          onChanged: (value) {
-            setState(() {
-              eyescore = value.toString();
-            });
-          },
-        ),
-        RadioListTile(
-          title: const Text("20/70"),
-          value: "70",
-          groupValue: eyescore,
-          onChanged: (value) {
-            setState(() {
-              eyescore = value.toString();
-            });
-          },
-        ),
-        RadioListTile(
-          title: const Text("20/50"),
-          value: "50",
-          groupValue: eyescore,
-          onChanged: (value) {
-            setState(() {
-              eyescore = value.toString();
-            });
-          },
-        ),
-        RadioListTile(
-            title: const Text("20/40"),
-            value: "40",
-            groupValue: eyescore,
-            onChanged: (value) {
-              setState(() {
-                eyescore = value.toString();
-              });
-            }),
-        RadioListTile(
-          title: const Text("20/30"),
-          value: "30",
-          groupValue: eyescore,
-          onChanged: (value) {
-            setState(() {
-              eyescore = value.toString();
-            });
-          },
-        ),
-        ElevatedButton(
-          onPressed: () async {
-            if (eyescore == null) {
-              ErrorMessage(context);
-            } else {
-              QuickMessage(context, eyescore);
-              var newuser = await EyeCheckupService.create_eyecheck(
-                  "64a9cb10ec5c9834ff73fc36", DateTime.now(), eyescore);
-            }
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color.fromARGB(255, 220, 104, 145),
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 50),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.0),
-            ),
-          ),
-          child: const Text("Enter"),
-        ),
-      ],
-    )));
+              ),
+            )),
+      ),
+      Padding(
+        padding: const EdgeInsets.fromLTRB(20, 20, 10, 0),
+        child: Card(
+            elevation: 20,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(5, 20, 10, 5),
+              child: Container(
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                child: Column(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                      child: Text(
+                        "The value that is observed: ",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ),
+                    RadioListTile(
+                      title: const Text("20/100"),
+                      value: "100",
+                      groupValue: eyescore,
+                      onChanged: (value) {
+                        setState(() {
+                          eyescore = value.toString();
+                        });
+                      },
+                    ),
+                    RadioListTile(
+                      title: const Text("20/70"),
+                      value: "70",
+                      groupValue: eyescore,
+                      onChanged: (value) {
+                        setState(() {
+                          eyescore = value.toString();
+                        });
+                      },
+                    ),
+                    RadioListTile(
+                      title: const Text("20/50"),
+                      value: "50",
+                      groupValue: eyescore,
+                      onChanged: (value) {
+                        setState(() {
+                          eyescore = value.toString();
+                        });
+                      },
+                    ),
+                    RadioListTile(
+                        title: const Text("20/40"),
+                        value: "40",
+                        groupValue: eyescore,
+                        onChanged: (value) {
+                          setState(() {
+                            eyescore = value.toString();
+                          });
+                        }),
+                    RadioListTile(
+                      title: const Text("20/30"),
+                      value: "30",
+                      groupValue: eyescore,
+                      onChanged: (value) {
+                        setState(() {
+                          eyescore = value.toString();
+                        });
+                      },
+                    ),
+                    ElevatedButton(
+                      onPressed: () async {
+                        if (eyescore == null) {
+                          ErrorMessage(context);
+                        } else {
+                          QuickMessage(context, eyescore);
+                          var newuser = await EyeCheckupService.create_eyecheck(
+                              "64a9cb10ec5c9834ff73fc36",
+                              DateTime.now(),
+                              eyescore);
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            const Color.fromARGB(255, 220, 104, 145),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 12, horizontal: 50),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                      ),
+                      child: const Text("Enter"),
+                    ),
+                  ],
+                ),
+              ),
+            )),
+      )
+    ])));
   }
 
   void ErrorMessage(BuildContext context) {

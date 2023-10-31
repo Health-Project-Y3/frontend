@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:thurula/services/local_service.dart';
 import 'package:thurula/services/vaccination_service.dart';
 import 'package:thurula/models/vaccination_model.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import '../../../services/notification_service.dart';
 
 class VaccinationTrackerView extends StatefulWidget {
   const VaccinationTrackerView({super.key});
@@ -15,18 +19,55 @@ class _VaccinationTrackerViewState extends State<VaccinationTrackerView> {
   late Future<List<Vaccination>> upcomingVaccinations;
   late Future<List<Vaccination>> completedVaccinations;
   late Future<String> babyId;
+  late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+  Timer? notificationTimer;
+  int daysToNotify = 5;
+  // late final NotificationService NotificationService;
 
   @override
   void initState() {
     super.initState();
+
     babyId = LocalService.getCurrentBabyId();
     refreshCounter = ValueNotifier<int>(0); // Initialize the ValueNotifier
     _refreshData();
+    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    NotificationService.initialize(flutterLocalNotificationsPlugin);
+    // notificationTimer = Timer.periodic(const Duration(seconds: 5), (timer) {
+    //   checkOverdueCondition();
+    // });
+    // checkOverdueCondition();
   }
 
+  void checkOverdueCondition(int? daysFromBirth, String? vaccineName) {
+    if (daysFromBirth == null) {
+      return;
+    }
+    // int difference = calculateDifference(daysFromBirth);
+    // final difference = daysFromBirth;
+    if (daysFromBirth < 0 && daysToNotify > 0) {
+      NotificationService.showOverdueNotification(
+          overdueDays: daysFromBirth,
+          vaccineName: vaccineName,
+          fln: flutterLocalNotificationsPlugin);
+      daysToNotify--;
+    }
+  }
+
+  // int calculateDifference(int? daysFromBirth) {
+  //   // Calculate the difference here (e.g., compare with today's date)
+  //   // Return the difference in days
+  //   // final currentDate = DateTime.now();
+
+  //   return -1;
+  // }
+
   Future<void> _refreshData() async {
-    final babyIdValue = await babyId;
-    upcomingVaccinations = VaccinationService.getDueBabyVaccinations(babyIdValue);
+    final babyIdValue = "650fe71a1953bf17d815fac4";
+    // final babyIdValue = await babyId;
+    // print(babyIdValue);
+    upcomingVaccinations =
+        VaccinationService.getDueBabyVaccinations(babyIdValue);
     completedVaccinations =
         VaccinationService.getCompletedBabyVaccinations(babyIdValue);
     // Increment the refresh counter to trigger UI update
@@ -98,10 +139,17 @@ class _VaccinationTrackerViewState extends State<VaccinationTrackerView> {
               );
             } else {
               List<Vaccination> vaccinations = snapshot.data!;
+
+              for (var vaccination in vaccinations) {
+                checkOverdueCondition(
+                    vaccination.daysFromBirth, vaccination.name);
+              }
+
               return Column(
                 children: [
                   const SizedBox(height: 25.0),
                   for (var vaccination in vaccinations)
+                    // checkOverdueCondition(vaccination.name ?? '', 3,'jnedkcjn' ),
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: ListTile(
@@ -134,8 +182,9 @@ class _VaccinationTrackerViewState extends State<VaccinationTrackerView> {
                           onPressed: () async {
                             final value = await babyId;
                             try {
-                              await VaccinationService.markCompletedBabyVaccination(
-                                  value, vaccination.id);
+                              await VaccinationService
+                                  .markCompletedBabyVaccination(
+                                      value, vaccination.id);
                               _refreshData();
                             } catch (error) {
                               print(
@@ -154,6 +203,19 @@ class _VaccinationTrackerViewState extends State<VaccinationTrackerView> {
                         ),
                       ),
                     ),
+                  ElevatedButton(
+                    onPressed: () {
+                      NotificationService.showBigTextNotifications(
+                          title: "Message title",
+                          body: "message body",
+                          fln: flutterLocalNotificationsPlugin);
+                    }, // saveData function
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: const Color.fromARGB(255, 220, 104, 145),
+                    ),
+                    child: const Text('Save Data'),
+                  )
                 ],
               );
             }

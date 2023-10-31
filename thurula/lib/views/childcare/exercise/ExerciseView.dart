@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:thurula/views/childcare/exercise/week3.dart';
+import 'package:thurula/views/childcare/exercise/week2.dart';
+import 'package:thurula/views/childcare/exercise/month1.dart';
+import 'package:thurula/views/childcare/exercise/week5.dart';
+import 'package:thurula/views/childcare/exercise/week6.dart';
+import 'package:thurula/views/childcare/exercise/week7.dart';
 import '../../../models/checklist_model.dart';
 import '../../../services/checklist_service.dart';
 
@@ -19,12 +25,19 @@ class Newborn extends StatefulWidget {
   _NewbornState createState() => _NewbornState();
 }
 
-class Week2 extends StatefulWidget {
-  const Week2({Key? key}) : super(key: key);
+// class Week2 extends StatefulWidget {
+//   const Week2({Key? key}) : super(key: key);
 
-  @override
-  _Week2State createState() => _Week2State();
-}
+//   @override
+//   _Week2State createState() => _Week2State();
+// }
+
+// class Week3 extends StatefulWidget {
+//   const Week3({Key? key}) : super(key: key);
+
+//   @override
+//   _Week3State createState() => _Week3State();
+// }
 
 class _ExerciseViewState extends State<ExerciseView>
     with SingleTickerProviderStateMixin {
@@ -72,19 +85,6 @@ class _ExerciseViewState extends State<ExerciseView>
           appBar: AppBar(
             title: const Row(children: [Text('Check list')]),
             backgroundColor: const Color.fromARGB(255, 220, 104, 145),
-            // actions: <Widget>[
-            //   Padding(
-            //       padding: const EdgeInsets.only(right: 10.0),
-            //       child: IconButton(
-            //           icon: const Icon(Icons.menu),
-            //           onPressed: () {
-            //             Navigator.push(
-            //                 context,
-            //                 MaterialPageRoute(
-            //                     builder: (context) =>
-            //                         const MenuView()));
-            //           })),
-            // ],
             bottom: TabBar(
               controller: _tabController,
               isScrollable: true,
@@ -130,11 +130,7 @@ class _ExerciseViewState extends State<ExerciseView>
 }
 
 class _NewbornState extends State<Newborn> {
-  //FirstPage({Key? key}) : super(key: key);
-
   final List<bool> expanded = [false, false, false, false, false, false, false];
-
-  // final service = ChecklistService('http://localhost:5154/');
 
   late Future<List<Checklists>> checklist1;
   late Future<List<Checklists>> _newborns;
@@ -157,9 +153,9 @@ class _NewbornState extends State<Newborn> {
             width: 10.0,
             child: Center(
                 child: CircularProgressIndicator(
-                  //   color
-                  color: Color.fromARGB(255, 220, 104, 145),
-                )),
+              //   color
+              color: Color.fromARGB(255, 220, 104, 145),
+            )),
           );
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
@@ -171,12 +167,13 @@ class _NewbornState extends State<Newborn> {
                 ExpansionPanelList(
                   expansionCallback: (panelIndex, isExpanded) {
                     setState(() {
-                      expanded[int.parse(newborns[panelIndex].id ?? "0")] =
-                          !isExpanded;
+                      expanded[int.parse(newborns[panelIndex].panel ?? "0")] =
+                          isExpanded;
                     });
                   },
                   animationDuration: const Duration(seconds: 2),
                   //animation duration while expanding/collapsing
+
                   children: newborns.map((newborn) {
                     return ExpansionPanel(
                         headerBuilder: (context, isOpen) {
@@ -194,19 +191,35 @@ class _NewbornState extends State<Newborn> {
                               children: newborn.instructions.map((instruction) {
                                 return Column(
                                   children: [
-                                    Text(
-                                      instruction.instruction ??
-                                          'Default Instruction',
-                                      style: const TextStyle(fontSize: 14),
-                                    ),
-                                    const Divider(
-                                      color: Colors.black,
+                                    Row(
+                                      children: [
+                                        const Padding(
+                                          padding:
+                                              EdgeInsets.fromLTRB(0, 0, 5, 0),
+                                          child: Icon(
+                                            Icons.tips_and_updates,
+                                            size: 22,
+                                            color: Color.fromARGB(
+                                                255, 212, 160, 178),
+                                          ),
+                                        ),
+                                        Flexible(
+                                            child: Text(
+                                          instruction.instruction ??
+                                              'Default Instruction',
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.grey,
+                                            height: 1.5,
+                                          ),
+                                        )),
+                                      ],
                                     ),
                                   ],
                                 );
                               }).toList(),
                             )),
-                        isExpanded: expanded[int.parse(newborn.id ?? "0")]);
+                        isExpanded: expanded[int.parse(newborn.panel ?? "0")]);
                   }).toList(),
                 )
               ]),
@@ -220,161 +233,159 @@ class _NewbornState extends State<Newborn> {
   }
 }
 
-class _Week2State extends State<Week2> {
-  late Future<List<Checklists>> _week2;
+// class _Week2State extends State<Week2> {
+//   late Future<List<Checklists>> _week2;
 
-  @override
-  void initState() {
-    super.initState();
+//   @override
+//   void initState() {
+//     super.initState();
 
-    _week2 = ChecklistService.fetchWeek2();
-  }
+//     _week2 = ChecklistService.fetchWeek2();
+//   }
 
-  final List<bool> expanded = [
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false
-  ];
+//   final List<bool> expanded = [
+//     false,
+//     false,
+//     false,
+//     false,
+//     false,
+//     false,
+//     false,
+//     false
+//   ];
 
+//   @override
+//   Widget build(BuildContext context) {
+//     return FutureBuilder<List<Checklists>>(
+//       future: _week2,
+//       builder: (context, snapshot) {
+//         if (snapshot.connectionState == ConnectionState.waiting) {
+//           return const SizedBox(
+//             height: 10.0,
+//             width: 10.0,
+//             child: Center(
+//                 child: CircularProgressIndicator(
+//               //   color
+//               color: Color.fromARGB(255, 220, 104, 145),
+//             )),
+//           );
+//         } else if (snapshot.hasError) {
+//           return Text('Error: ${snapshot.error}');
+//         } else if (snapshot.hasData) {
+//           final week2borns = snapshot.data!;
+//           return Scaffold(
+//             body: SingleChildScrollView(
+//               child: Column(children: [
+//                 ExpansionPanelList(
+//                   expansionCallback: (panelIndex, isExpanded) {
+//                     setState(() {
+//                       expanded[int.parse(week2borns[panelIndex].id ?? "0")] =
+//                           !isExpanded;
+//                     });
+//                   },
+//                   animationDuration: const Duration(seconds: 2),
+//                   //animation duration while expanding/collapsing
+//                   children: week2borns.map((week2) {
+//                     return ExpansionPanel(
+//                         headerBuilder: (context, isOpen) {
+//                           return Padding(
+//                               padding: const EdgeInsets.all(15),
+//                               child: Text(week2.category ?? 'Default Category',
+//                                   style: const TextStyle(fontSize: 16)));
+//                         },
+//                         body: Container(
+//                             padding: const EdgeInsets.all(20),
+//                             color: const Color.fromARGB(255, 250, 219, 219),
+//                             width: double.infinity,
+//                             child: Column(
+//                               children: week2.instructions.map((instruction) {
+//                                 return Column(
+//                                   children: [
+//                                     Text(
+//                                       instruction.instruction ??
+//                                           'Default Instruction',
+//                                       style: const TextStyle(fontSize: 14),
+//                                     ),
+//                                     const Divider(
+//                                       color: Colors.black,
+//                                     ),
+//                                   ],
+//                                 );
+//                               }).toList(),
+//                             )),
+//                         isExpanded: expanded[int.parse(week2.id ?? "0")]);
+//                   }).toList(),
+//                 )
+//               ]),
+//             ),
+//           );
+//         } else {
+//           return const Text('No data available.');
+//         }
+//       },
+//     );
+//   }
+// }
 
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<List<Checklists>>(
-      future: _week2,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
+// class Week3 extends StatelessWidget {
+//   const Week3({Key? key}) : super(key: key);
 
-          return const SizedBox(
-            height: 10.0,
-            width: 10.0,
-            child: Center(
-                child: CircularProgressIndicator(
-                  //   color
-                  color: Color.fromARGB(255, 220, 104, 145),
-                )),
-          );
-        } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else if (snapshot.hasData) {
-          final week2borns = snapshot.data!;
-          return Scaffold(
-            body: SingleChildScrollView(
-              child: Column(children: [
-                ExpansionPanelList(
-                  expansionCallback: (panelIndex, isExpanded) {
-                    setState(() {
-                      expanded[int.parse(week2borns[panelIndex].id ?? "0")] =
-                          !isExpanded;
-                    });
-                  },
-                  animationDuration: const Duration(seconds: 2),
-                  //animation duration while expanding/collapsing
-                  children: week2borns.map((week2) {
-                    return ExpansionPanel(
-                        headerBuilder: (context, isOpen) {
-                          return Padding(
-                              padding: const EdgeInsets.all(15),
-                              child: Text(week2.category ?? 'Default Category',
-                                  style: const TextStyle(fontSize: 16)));
-                        },
-                        body: Container(
-                            padding: const EdgeInsets.all(20),
-                            color: const Color.fromARGB(255, 250, 219, 219),
-                            width: double.infinity,
-                            child: Column(
-                              children: week2.instructions.map((instruction) {
-                                return Column(
-                                  children: [
-                                    Text(
-                                      instruction.instruction ??
-                                          'Default Instruction',
-                                      style: const TextStyle(fontSize: 14),
-                                    ),
-                                    const Divider(
-                                      color: Colors.black,
-                                    ),
-                                  ],
-                                );
-                              }).toList(),
-                            )),
-                        isExpanded: expanded[int.parse(week2.id ?? "0")]);
-                  }).toList(),
-                )
-              ]),
-            ),
-          );
-        } else {
-          return const Text('No data available.');
-        }
-      },
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return const Scaffold(
+//         body: Column(
+//       children: [Text("hi")],
+//     ));
+//   }
+// }
 
-class Week3 extends StatelessWidget {
-  const Week3({Key? key}) : super(key: key);
+// class Month1 extends StatelessWidget {
+//   const Month1({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-        body: Column(
-      children: [Text("hi")],
-    ));
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return const Scaffold(
+//         body: Column(
+//       children: [Text("hi")],
+//     ));
+//   }
+// }
 
-class Month1 extends StatelessWidget {
-  const Month1({Key? key}) : super(key: key);
+// class Week5 extends StatelessWidget {
+//   const Week5({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-        body: Column(
-      children: [Text("hi")],
-    ));
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return const Scaffold(
+//         body: Column(
+//       children: [Text("hi")],
+//     ));
+//   }
+// }
 
-class Week5 extends StatelessWidget {
-  const Week5({Key? key}) : super(key: key);
+// class Week6 extends StatelessWidget {
+//   const Week6({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-        body: Column(
-      children: [Text("hi")],
-    ));
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return const Scaffold(
+//         body: Column(
+//       children: [Text("hi")],
+//     ));
+//   }
+// }
 
-class Week6 extends StatelessWidget {
-  const Week6({Key? key}) : super(key: key);
+// class Week7 extends StatelessWidget {
+//   const Week7({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-        body: Column(
-      children: [Text("hi")],
-    ));
-  }
-}
-
-class Week7 extends StatelessWidget {
-  const Week7({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-        body: Column(
-      children: [Text("hi")],
-    ));
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return const Scaffold(
+//         body: Column(
+//       children: [Text("hi")],
+//     ));
+//   }
+// }
 
 class Month2 extends StatelessWidget {
   const Month2({Key? key}) : super(key: key);

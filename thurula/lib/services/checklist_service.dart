@@ -29,14 +29,14 @@ class ChecklistService {
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonData = json.decode(response.body);
-      print(response.body);
+      // print(response.body);
       final i = jsonData.map((item) => Checklists.fromJson(item)).toList();
 
       for (var checklist in i) {
         print(checklist);
         // checklists.add(Checklists.fromJson(checklist));
       }
-      print(i.toList());
+      // print(i.toList());
       return i.toList();
     } else {
       print("HI");
@@ -48,6 +48,20 @@ class ChecklistService {
 
   static Future<List<Checklists>> fetchWeek2() async {
     final response = await http.get(Uri.parse(getRoute('checklist/week2')),
+        headers: {'Content-Type': 'application/json'});
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonData = json.decode(response.body);
+      print(response.body);
+      final i = jsonData.map((item) => Checklists.fromJson(item)).toList();
+      return i.toList();
+    } else {
+      throw Exception(response.body);
+    }
+  }
+
+  static Future<List<Checklists>> fetchWeek3() async {
+    final response = await http.get(Uri.parse(getRoute('checklist/week3')),
         headers: {'Content-Type': 'application/json'});
 
     if (response.statusCode == 200) {

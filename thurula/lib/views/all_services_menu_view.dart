@@ -44,7 +44,7 @@ class AllServices extends StatelessWidget {
   final List<Widget Function()> pregnancyViews = [
     () => const ForumHomeView(),
     () => const PregnancyTimelineView(),
-    () => const MotherHealthTracker(),
+    () => const MotherHealthTracker1(),
     () => const MomVaccinationTrackerView(),
     () => PregnancyExercisesView(),
     () => const BabyNames(),
@@ -75,8 +75,8 @@ class AllServices extends StatelessWidget {
     () => const VaccinationTrackerView(),
     () => NapDetails(),
     () => DiaperRecords(),
-    () => const MealTracker(),
-    () => const ExerciseView(),
+    () => MealTracker(),
+    () => ExerciseView(),
     () => const VisionMenuView(),
   ];
 

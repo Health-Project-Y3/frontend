@@ -176,7 +176,7 @@ class _PregnancyHomeViewState extends State<PregnancyHomeView> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const MotherHealthTracker(),
+                              builder: (context) => const MotherHealthTracker1(),
                             ),
                           );
                         },
