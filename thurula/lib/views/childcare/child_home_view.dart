@@ -147,7 +147,7 @@ class _ChildHomeViewState extends State<ChildHomeView> {
                                 ClipRRect(
                                   child: Image.asset(
                                     'assets/images/menu-tiles/growth.png',
-                                    height: 60,
+                                    height: 70,
                                   ),
                                 ),
                                 const SizedBox(height: 10),
@@ -197,7 +197,7 @@ class _ChildHomeViewState extends State<ChildHomeView> {
                                 ClipRRect(
                                   child: Image.asset(
                                     'assets/images/menu-tiles/vaccine.png',
-                                    height: 60,
+                                    height: 70,
                                   ),
                                 ),
                                 const SizedBox(height: 10),
@@ -246,7 +246,7 @@ class _ChildHomeViewState extends State<ChildHomeView> {
                                 ClipRRect(
                                   child: Image.asset(
                                     'assets/images/menu-tiles/nap.png',
-                                    height: 60,
+                                    height: 70,
                                   ),
                                 ),
                                 const SizedBox(height: 10),
@@ -295,11 +295,11 @@ class _ChildHomeViewState extends State<ChildHomeView> {
                                 ClipRRect(
                                   child: Image.asset(
                                     'assets/images/menu-tiles/diaper.png',
-                                    height: 50,
+                                    height: 70,
                                   ),
                                 ),
                                 const SizedBox(height: 10),
-                                const Text("Diaper Change\nMonitoring",
+                                const Text("Diaper Change",
                                     style: TextStyle(
                                         fontFamily: 'Inter',
                                         color:
@@ -344,7 +344,7 @@ class _ChildHomeViewState extends State<ChildHomeView> {
                                 ClipRRect(
                                   child: Image.asset(
                                     'assets/images/menu-tiles/feeding.png',
-                                    height: 60,
+                                    height: 70,
                                   ),
                                 ),
                                 const SizedBox(height: 10),
@@ -393,7 +393,7 @@ class _ChildHomeViewState extends State<ChildHomeView> {
                                 ClipRRect(
                                   child: Image.asset(
                                     'assets/images/menu-tiles/checklist.png',
-                                    height: 55,
+                                    height: 70,
                                   ),
                                 ),
                                 const SizedBox(height: 10),
@@ -442,7 +442,7 @@ class _ChildHomeViewState extends State<ChildHomeView> {
                                 ClipRRect(
                                   child: Image.asset(
                                     'assets/images/menu-tiles/vision.png',
-                                    height: 55,
+                                    height: 70,
                                   ),
                                 ),
                                 const SizedBox(height: 10),
