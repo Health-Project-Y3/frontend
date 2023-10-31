@@ -29,14 +29,14 @@ class ChecklistService {
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonData = json.decode(response.body);
-      print(response.body);
+      // print(response.body);
       final i = jsonData.map((item) => Checklists.fromJson(item)).toList();
 
       for (var checklist in i) {
         print(checklist);
         // checklists.add(Checklists.fromJson(checklist));
       }
-      print(i.toList());
+      // print(i.toList());
       return i.toList();
     } else {
       print("HI");

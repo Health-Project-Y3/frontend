@@ -131,7 +131,7 @@ class _ExerciseViewState extends State<ExerciseView>
 
 class _NewbornState extends State<Newborn> {
   //FirstPage({Key? key}) : super(key: key);
-
+  // final Map<String, bool> expansionStates = {};
   final List<bool> expanded = [false, false, false, false, false, false, false];
 
   // final service = ChecklistService('http://localhost:5154/');
@@ -157,9 +157,9 @@ class _NewbornState extends State<Newborn> {
             width: 10.0,
             child: Center(
                 child: CircularProgressIndicator(
-                  //   color
-                  color: Color.fromARGB(255, 220, 104, 145),
-                )),
+              //   color
+              color: Color.fromARGB(255, 220, 104, 145),
+            )),
           );
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
@@ -171,13 +171,22 @@ class _NewbornState extends State<Newborn> {
                 ExpansionPanelList(
                   expansionCallback: (panelIndex, isExpanded) {
                     setState(() {
-                      expanded[int.parse(newborns[panelIndex].id ?? "0")] =
-                          !isExpanded;
+                      // final checklist = newborns[panelIndex].panel;
+                      // final id = (checklist.id ?? "0");
+                      // expansionStates[id] = !isExpanded;
+                      expanded[int.parse(newborns[panelIndex].panel ?? "0")] =
+                          isExpanded;
+                      print(int.parse(newborns[panelIndex].panel ?? "0"));
+                      print(expanded[
+                          int.parse(newborns[panelIndex].panel ?? "0")]);
                     });
                   },
                   animationDuration: const Duration(seconds: 2),
                   //animation duration while expanding/collapsing
+
                   children: newborns.map((newborn) {
+                    // final id = newborn.id ?? "0";
+                    // final isExpanded = expansionStates[id] ?? false;
                     return ExpansionPanel(
                         headerBuilder: (context, isOpen) {
                           return Padding(
@@ -206,7 +215,8 @@ class _NewbornState extends State<Newborn> {
                                 );
                               }).toList(),
                             )),
-                        isExpanded: expanded[int.parse(newborn.id ?? "0")]);
+                        isExpanded: expanded[int.parse(newborn.panel ?? "0")]);
+                    // isExpanded: isExpanded);
                   }).toList(),
                 )
               ]),
@@ -241,22 +251,20 @@ class _Week2State extends State<Week2> {
     false
   ];
 
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Checklists>>(
       future: _week2,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-
           return const SizedBox(
             height: 10.0,
             width: 10.0,
             child: Center(
                 child: CircularProgressIndicator(
-                  //   color
-                  color: Color.fromARGB(255, 220, 104, 145),
-                )),
+              //   color
+              color: Color.fromARGB(255, 220, 104, 145),
+            )),
           );
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
