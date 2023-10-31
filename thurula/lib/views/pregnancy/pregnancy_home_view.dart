@@ -176,7 +176,8 @@ class _PregnancyHomeViewState extends State<PregnancyHomeView> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const MotherHealthTracker1(),
+                              builder: (context) =>
+                                  const MotherHealthTracker1(),
                             ),
                           );
                         },
@@ -502,6 +503,52 @@ class _PregnancyHomeViewState extends State<PregnancyHomeView> {
               ),
             ),
             const SizedBox(height: 5),
+           Container(
+              width: 400,
+              height: 80,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 0.5,
+                    blurRadius: 2,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Center(
+                child: FutureBuilder<String?>(
+                  future: getRecentDue(context.read<UserProvider>().user?.id ??
+                      "No due vaccinations"),
+                  builder: (context, dueSnapshot) {
+                    if (dueSnapshot.connectionState ==
+                        ConnectionState.waiting) {
+                      return CircularProgressIndicator();
+                    } else if (dueSnapshot.hasError) {
+                      return const Text("No due vaccinations");
+                    } else {
+                      final dueMessage =
+                          dueSnapshot.data ?? "No due vaccinations found";
+                      return Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
+                          dueMessage, // Display the due message here
+                          style: const TextStyle(
+                            color: Color.fromARGB(255, 220, 104, 145),
+                            fontSize: 17.0,
+                            height: 1.5,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -684,5 +731,19 @@ String Babyfactor(int week) {
     return babyGrowthFactors[week - 1];
   } else {
     return "Congratulations! Your baby has arrived and is in your arms.";
+  }
+}
+
+Future<String?> getRecentDue(String Id) async {
+  final vaccinationService = VaccinationService(); // Create an instance
+  final dueDate = await vaccinationService.getFirstDueMomVaccine(Id);
+  final difference = dueDate;
+  if (difference! < 0) {
+    return "Baby's next vaccination is overdue";
+  } else if (difference < 31) {
+    return "Next vaccination is due in $difference days";
+  } else {
+    final months = difference ~/ 30;
+    return "Next vaccination is due in $months months";
   }
 }

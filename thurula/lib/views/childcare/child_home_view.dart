@@ -5,6 +5,7 @@ import 'package:thurula/services/baby_length_service.dart';
 import 'package:thurula/services/baby_service.dart';
 import 'package:thurula/services/baby_weight_service.dart';
 import 'package:thurula/services/local_service.dart';
+import 'package:thurula/services/vaccination_service.dart';
 import 'package:thurula/views/childcare/add_new_baby.dart';
 import 'package:thurula/views/childcare/exercise/ExerciseView.dart';
 import 'package:thurula/views/childcare/growth_chart_view.dart';
@@ -14,7 +15,6 @@ import 'package:thurula/views/childcare/diaper_records.dart';
 import 'package:thurula/views/childcare/nap/nap_details.dart';
 import 'package:thurula/views/childcare/meal_tracker.dart';
 import 'package:thurula/views/widgets/expandable_fab_widget.dart';
-import '../widgets/graphs/point_widget.dart';
 import '../../providers/baby_provider.dart';
 import '../../providers/user_provider.dart';
 import '../widgets/navbar_widget.dart';
@@ -518,7 +518,7 @@ class _ChildHomeViewState extends State<ChildHomeView> {
                 right: 20,
                 child: Container(
                   width: 400,
-                  height: 150,
+                  height: 120,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10.0),
@@ -551,7 +551,7 @@ class _ChildHomeViewState extends State<ChildHomeView> {
                           final recentBabyWeight = data[0];
                           final recentBabyLength = data[1];
                           final displayString =
-                              "Baby is ${recentBabyWeight ?? 'N/A'} kg and ${recentBabyLength ?? 'N/A'} cm";
+                              "Baby ${selectedBaby?.fname ?? ''} is\n${recentBabyWeight ?? 'N/A'} kg and ${recentBabyLength ?? 'N/A'} cm";
                           return Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -571,9 +571,60 @@ class _ChildHomeViewState extends State<ChildHomeView> {
                               ),
                               Image.asset(
                                 'assets/images/child-home/size.png',
-                                height: 60,
+                                height: 70,
                               ),
                             ],
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 20,
+                left: 20,
+                right: 20,
+                child: Container(
+                  width: 400,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 0.5,
+                        blurRadius: 2,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: Center(
+                    child: FutureBuilder<String?>(
+                      future: getRecentDue(selectedBaby?.id ??
+                          "No due vaccinations"), // Use a default value if selectedBaby is null
+                      builder: (context, dueSnapshot) {
+                        if (dueSnapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        } else if (dueSnapshot.hasError) {
+                          return const Text("No due vaccinations");
+                        } else {
+                          final dueMessage =
+                              dueSnapshot.data ?? "No due vaccinations found";
+                          return Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                              dueMessage, // Display the due message here
+                              style: const TextStyle(
+                                color: Color.fromARGB(255, 220, 104, 145),
+                                fontSize: 17.0,
+                                height: 1.5,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           );
                         }
                       },
@@ -690,5 +741,19 @@ Future<double?> getRecentBabyLength(String Id) async {
     return mostRecentLenght.toDouble();
   } else {
     return null; // Return null if there are no valid weights
+  }
+}
+
+Future<String?> getRecentDue(String Id) async {
+  final vaccinationService = VaccinationService(); // Create an instance
+  final dueDate = await vaccinationService.getFirstDueVaccine(Id);
+  final difference = dueDate;
+  if (difference! < 0) {
+    return "Baby's next vaccination is overdue";
+  } else if (difference < 31) {
+    return "Next vaccination is due in $difference days";
+  } else {
+    final months = difference ~/ 30;
+    return "Next vaccination is due in $months months";
   }
 }
