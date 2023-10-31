@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thurula/views/childcare/exercise/week3.dart';
 import '../../../models/checklist_model.dart';
 import '../../../services/checklist_service.dart';
 
@@ -25,6 +26,13 @@ class Week2 extends StatefulWidget {
   @override
   _Week2State createState() => _Week2State();
 }
+
+// class Week3 extends StatefulWidget {
+//   const Week3({Key? key}) : super(key: key);
+
+//   @override
+//   _Week3State createState() => _Week3State();
+// }
 
 class _ExerciseViewState extends State<ExerciseView>
     with SingleTickerProviderStateMixin {
@@ -176,9 +184,6 @@ class _NewbornState extends State<Newborn> {
                       // expansionStates[id] = !isExpanded;
                       expanded[int.parse(newborns[panelIndex].panel ?? "0")] =
                           isExpanded;
-                      print(int.parse(newborns[panelIndex].panel ?? "0"));
-                      print(expanded[
-                          int.parse(newborns[panelIndex].panel ?? "0")]);
                     });
                   },
                   animationDuration: const Duration(seconds: 2),
@@ -324,17 +329,17 @@ class _Week2State extends State<Week2> {
   }
 }
 
-class Week3 extends StatelessWidget {
-  const Week3({Key? key}) : super(key: key);
+// class Week3 extends StatelessWidget {
+//   const Week3({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-        body: Column(
-      children: [Text("hi")],
-    ));
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return const Scaffold(
+//         body: Column(
+//       children: [Text("hi")],
+//     ));
+//   }
+// }
 
 class Month1 extends StatelessWidget {
   const Month1({Key? key}) : super(key: key);
