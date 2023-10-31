@@ -97,4 +97,30 @@ class BabyLengthService {
       throw Exception(jsonDecode(response.body));
     }
   }
+
+  Future<double?> getRecentBabyLength(id) async {
+    // Send a get request to the API endpoint
+    var response =
+        await http.get(Uri.parse(getRoute("babychart/length/get?id=$id")));
+
+    // Check the status code of the response
+    if (response.statusCode == 200) {
+      // Read the body and filter out points with y = -1.0
+      final data = jsonDecode(response.body);
+      final validWeights = data.where((weight) => weight != -1.0).toList();
+
+      if (validWeights.isNotEmpty) {
+        final mostRecentWeight =
+            validWeights.last; // Get the most recent non-negative weight
+        return mostRecentWeight.toDouble(); // Assuming the weight is a double
+      } else {
+        return null; // Return null if there are no valid weights
+      }
+    } else {
+      // Handle the error
+      throw Exception(jsonDecode(response.body));
+    }
+  }
 }
+
+
