@@ -22,6 +22,18 @@ class VaccinationService {
     }
   }
 
+  Future<int?> getFirstDueVaccine(String babyId) async {
+    final List<Vaccination> dueVaccinations =
+        await getDueBabyVaccinations(babyId);
+
+    if (dueVaccinations.isNotEmpty) {
+      final firstDueVaccine = dueVaccinations.first;
+      return firstDueVaccine.daysFromBirth;
+    } else {
+      return null; // Return null if no due vaccinations are found
+    }
+  }
+
   static Future<List<Vaccination>> getCompletedBabyVaccinations(babyId) async {
     var response = await http.get(
       Uri.parse(getRoute("vaccines/baby/completed/$babyId")),
@@ -77,6 +89,18 @@ class VaccinationService {
       return vaccinations;
     } else {
       throw Exception('Failed to get vaccinations');
+    }
+  }
+
+  Future<int?> getFirstDueMomVaccine(String userId) async {
+    final List<Vaccination> dueVaccinations =
+        await getDueMomVaccinations(userId);
+
+    if (dueVaccinations.isNotEmpty) {
+      final firstDueVaccine = dueVaccinations.first;
+      return firstDueVaccine.daysFromBirth;
+    } else {
+      return null; // Return null if no due vaccinations are found
     }
   }
 

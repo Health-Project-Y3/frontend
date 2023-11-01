@@ -47,7 +47,7 @@ class PregnancyTimelineView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final int week = CalculateCurrentWeek(context) - 1;
+    final int week = CalculateCurrentWeek(context);
     return MaterialApp(
       home: DefaultTabController(
         initialIndex: week,

@@ -5,6 +5,7 @@ import 'package:thurula/services/local_service.dart';
 import 'package:thurula/services/vaccination_service.dart';
 import 'package:thurula/models/vaccination_model.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:thurula/views/custom_loading_indicator.dart';
 import '../../../services/notification_service.dart';
 
 class VaccinationTrackerView extends StatefulWidget {
@@ -130,7 +131,7 @@ class _VaccinationTrackerViewState extends State<VaccinationTrackerView> {
           future: upcomingVaccinations,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
+              return CustomLoadingIndicator();
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
@@ -203,19 +204,6 @@ class _VaccinationTrackerViewState extends State<VaccinationTrackerView> {
                         ),
                       ),
                     ),
-                  ElevatedButton(
-                    onPressed: () {
-                      NotificationService.showBigTextNotifications(
-                          title: "Message title",
-                          body: "message body",
-                          fln: flutterLocalNotificationsPlugin);
-                    }, // saveData function
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: const Color.fromARGB(255, 220, 104, 145),
-                    ),
-                    child: const Text('Save Data'),
-                  )
                 ],
               );
             }
@@ -233,7 +221,7 @@ class _VaccinationTrackerViewState extends State<VaccinationTrackerView> {
           future: completedVaccinations,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
+              return CustomLoadingIndicator();
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {

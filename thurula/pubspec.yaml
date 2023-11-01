@@ -32,6 +32,7 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+  fluttertoast: ^8.0.8
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -82,8 +83,8 @@ flutter:
     - assets/images/menu-icons/
     - assets/images/pregnancy-home/
     - assets/images/pregnancy-home/calendar/
+    - assets/images/pregnancy-home/size/
     - assets/images/child-home/
-    - assets/images/child-home/calendar/
     - assets/fonts/
     - assets/images/sleeping_image.png
     - assets/images/exercises/
@@ -92,6 +93,12 @@ flutter:
     - assets/images/mom.png
     - assets/files/vision_test1.pdf
     - assets/images/eye-diseases/
+    - assets/images/mom.png
+    - assets/images/health_tracker/Weight.png
+    - assets/images/health_tracker/Blood.png
+    - assets/images/health_tracker/Water.png
+    - assets/images/health_tracker/initial_ht.png
+
 
   # To add assets to your application, add an assets section, like this:
   # assets:
