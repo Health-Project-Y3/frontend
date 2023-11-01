@@ -9,7 +9,6 @@ class FeedingRecords extends StatefulWidget {
 }
 
 class _FeedingRecordsState extends State<FeedingRecords> {
-  Future<List<FeedingTimes>> _feedingRecordsFuture = Future.value([]);
   List<FeedingTimes> feedingRecords = [];
 
   @override
@@ -20,9 +19,7 @@ class _FeedingRecordsState extends State<FeedingRecords> {
 
   Future<void> _loadFeedingRecords() async {
     try {
-      _feedingRecordsFuture =
-          FeedingService.getBabyFeedings('64a9cb10ec5c9834ff73fc36');
-      final records = await _feedingRecordsFuture;
+      final records = await FeedingService.getBabyFeedings('64a9cb10ec5c9834ff73fc36');
       print('Loaded ${records.length} feeding records.');
       setState(() {
         feedingRecords = records;
@@ -33,12 +30,13 @@ class _FeedingRecordsState extends State<FeedingRecords> {
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Feeding Records'),
-        backgroundColor: const Color.fromARGB(255, 220, 104, 145),
+        backgroundColor: const Color(0xFFDC6891),
       ),
       body: Column(
         children: <Widget>[
@@ -68,7 +66,27 @@ class _FeedingRecordsState extends State<FeedingRecords> {
                   leading: Icon(iconMap[record.feedingType] ?? Icons.error),
                   title: Text('Start Time: $formattedStartTime'),
                   subtitle: Text('End Time: $formattedEndTime'),
-                  trailing: Text(' ${record.feedingType}'),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.edit),
+                        onPressed: () {
+                          // Handle the Edit button action for this record
+                          // You can call a function to edit the record here
+                          // _editFeedingRecord(record);
+                        },
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.delete),
+                        onPressed: () {
+                          // Handle the Delete button action for this record
+                          // You can call a function to delete the record here
+                          // _deleteFeedingRecord(record);
+                        },
+                      ),
+                    ],
+                  ),
                 );
               },
             ),
@@ -80,14 +98,16 @@ class _FeedingRecordsState extends State<FeedingRecords> {
           showAddFeedingDialog(context);
         },
         child: Icon(Icons.add),
-        backgroundColor: const Color.fromARGB(255, 220, 104, 145),
+        backgroundColor: const Color(0xFFDC6891),
       ),
     );
   }
 
+
   Future<void> showAddFeedingDialog(BuildContext context) async {
     TextEditingController feedingTypeController = TextEditingController();
-    DateTime selectedDateTime = DateTime.now();
+    DateTime selectedStartDateTime = DateTime.now();
+    DateTime selectedEndDateTime = DateTime.now();
     String? message;
 
     await showDialog(
@@ -102,21 +122,21 @@ class _FeedingRecordsState extends State<FeedingRecords> {
                   children: <Widget>[
                     Row(
                       children: [
-                        Text('Date & Time: '),
+                        Text('Start Date & Time: '),
                         Text(
-                          DateFormat('hh:mm a, d MMMM yyyy')
-                              .format(selectedDateTime.toLocal()),
+                          DateFormat('hh:mm a, d M yyyy')
+                              .format(selectedStartDateTime.toLocal()),
                           style: TextStyle(fontSize: 16),
                         ),
                         SizedBox(width: 10),
                       ],
                     ),
                     ElevatedButton(
-                      child: Text('Select Feeding Date/Time'),
+                      child: Text('Select Start Date/Time'),
                       onPressed: () async {
                         DateTime? pickedDateTime = await showDatePicker(
                           context: context,
-                          initialDate: selectedDateTime,
+                          initialDate: selectedStartDateTime,
                           firstDate: DateTime(2000),
                           lastDate: DateTime(2101),
                         );
@@ -124,11 +144,56 @@ class _FeedingRecordsState extends State<FeedingRecords> {
                           TimeOfDay? pickedTimeOfDay = await showTimePicker(
                             context: context,
                             initialTime:
-                                TimeOfDay.fromDateTime(selectedDateTime),
+                            TimeOfDay.fromDateTime(selectedStartDateTime),
                           );
                           if (pickedTimeOfDay != null) {
                             setState(() {
-                              selectedDateTime = DateTime(pickedDateTime.year, pickedDateTime.month, pickedDateTime.day, pickedTimeOfDay.hour, pickedTimeOfDay.minute,
+                              selectedStartDateTime = DateTime(
+                                pickedDateTime.year,
+                                pickedDateTime.month,
+                                pickedDateTime.day,
+                                pickedTimeOfDay.hour,
+                                pickedTimeOfDay.minute,
+                              );
+                            });
+                          }
+                        }
+                      },
+                    ),
+                    Row(
+                      children: [
+                        Text('End Date & Time: '),
+                        Text(
+                          DateFormat('hh:mm a, d M yyyy')
+                              .format(selectedEndDateTime.toLocal()),
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        SizedBox(width: 10),
+                      ],
+                    ),
+                    ElevatedButton(
+                      child: Text('Select End Date/Time'),
+                      onPressed: () async {
+                        DateTime? pickedDateTime = await showDatePicker(
+                          context: context,
+                          initialDate: selectedEndDateTime,
+                          firstDate: DateTime(2000),
+                          lastDate: DateTime(2101),
+                        );
+                        if (pickedDateTime != null) {
+                          TimeOfDay? pickedTimeOfDay = await showTimePicker(
+                            context: context,
+                            initialTime:
+                            TimeOfDay.fromDateTime(selectedEndDateTime),
+                          );
+                          if (pickedTimeOfDay != null) {
+                            setState(() {
+                              selectedEndDateTime = DateTime(
+                                pickedDateTime.year,
+                                pickedDateTime.month,
+                                pickedDateTime.day,
+                                pickedTimeOfDay.hour,
+                                pickedTimeOfDay.minute,
                               );
                             });
                           }
@@ -163,12 +228,22 @@ class _FeedingRecordsState extends State<FeedingRecords> {
                     if (feedingType.isNotEmpty) {
                       try {
                         // Create a new FeedingTimes object and populate it with the selected data
-                        FeedingTimes newFeeding = FeedingTimes(
-                          startTime: selectedDateTime,
-                          feedingType: feedingType,
-                          babyId:
-                              '64b01605b55b765169e1c9b6', // Replace with your actual baby ID
-                        );
+                        FeedingTimes newFeeding = FeedingTimes();
+                        newFeeding.startTime = selectedStartDateTime;
+                        newFeeding.endTime = selectedEndDateTime;
+                        newFeeding.feedingType = feedingType;
+                        newFeeding.babyId = '64b01605b55b765169e1c9b6';
+                        newFeeding.id= '12345';
+                        newFeeding.feedingNotes = 'ew4tw2';
+                        newFeeding.feedingMood = 5;
+                        newFeeding.loggedBy = 'ew4tw2';
+
+
+                        // Print the selected values in the terminal
+                        print('Start Time: $selectedStartDateTime');
+                        print('End Time: $selectedEndDateTime');
+                        print('Feeding Type: $feedingType');
+                        print('$newFeeding');
 
                         // Call your FeedingService to save the feeding record
                         await FeedingService.createFeeding(newFeeding);
@@ -184,9 +259,11 @@ class _FeedingRecordsState extends State<FeedingRecords> {
                       message = 'Please enter a feeding type.';
                     }
 
+
                     setState(() {});
                   },
                 ),
+
               ],
             );
           },
@@ -194,6 +271,7 @@ class _FeedingRecordsState extends State<FeedingRecords> {
       },
     );
   }
+
 
   int _calculateTotalFeedingsToday(List<FeedingTimes> records) {
     DateTime today = DateTime.now();
@@ -216,8 +294,7 @@ class CustomCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius:
-            BorderRadius.circular(15.0), // Adjust the border radius as needed
+        borderRadius: BorderRadius.circular(15.0), // Adjust the border radius as needed
       ),
       elevation: 4, // Adjust the shadow as needed
       margin: EdgeInsets.all(10), // Adjust the margin as needed
@@ -244,7 +321,7 @@ class CustomCard extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 22, // Increase font size
-                      color: Color.fromARGB(255, 220, 104, 145), // Change color
+                      color: const Color(0xFFDC6891), // Change color
                     ),
                   ),
                 ],

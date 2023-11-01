@@ -41,7 +41,7 @@ class FeedingTimes {
 
   static Map<String, dynamic> toJson(FeedingTimes feedingTimes) {
     return {
-      'id': feedingTimes.id,
+      if(feedingTimes.id != null) 'id': feedingTimes.id,
       'babyId': feedingTimes.babyId,
       'startTime': feedingTimes.startTime?.toIso8601String(),
       'endTime': feedingTimes.endTime?.toIso8601String(),
