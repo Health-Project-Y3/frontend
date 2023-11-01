@@ -25,7 +25,6 @@ class VaccinationService {
   Future<int?> getFirstDueVaccine(String babyId) async {
     final List<Vaccination> dueVaccinations =
         await getDueBabyVaccinations(babyId);
-
     if (dueVaccinations.isNotEmpty) {
       final firstDueVaccine = dueVaccinations.first;
       return firstDueVaccine.daysFromBirth;
