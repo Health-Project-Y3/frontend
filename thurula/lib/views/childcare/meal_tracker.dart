@@ -1,13 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:thurula/services/feeding_service.dart';
+import 'package:thurula/models/feeding_times_model.dart';
 
 class MealTracker extends StatefulWidget {
+  MealTracker({Key? key}) : super(key: key);
+
   @override
   _MealTrackerState createState() => _MealTrackerState();
 }
 
 class _MealTrackerState extends State<MealTracker> {
-  DateTime selectedDate = DateTime.now();
-  List<String> feedingEntries = ['Milk', 'Puree', 'Fruits', 'Rice'];
+  List<FeedingTimes> _feedings = [];
+  String? _successMessage;
+  String? _errorMessage;
+
+  FeedingTimes newFeeding = FeedingTimes();
+  DateTime selectedDateTime = DateTime(2023, 10, 28, 12, 0);
+  String selectedFeedingType = 'Solid';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadFeedings();
+  }
+
+  Future<void> _loadFeedings() async {
+    try {
+      List<FeedingTimes> feedings = await FeedingService.getBabyFeedings('64a9cb10ec5c9834ff73fc36');
+      setState(() {
+        _feedings = feedings;
+      });
+    } catch (e) {
+      print('Failed to load feedings: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,69 +43,48 @@ class _MealTrackerState extends State<MealTracker> {
         title: const Text(
           'Baby Meal Tracker',
           style: TextStyle(
-            color: Colors.white, // Title color
+            color: Colors.white,
           ),
         ),
-        backgroundColor: const Color.fromARGB(255, 220, 104, 145), // Background color of the app bar
+        backgroundColor: const Color.fromARGB(255, 220, 104, 145),
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
-            color: Colors.white, // Back icon color
+            color: Colors.white,
           ),
           onPressed: () {
-            // Handle back button press here
-            Navigator.pop(context); // Navigate back
+            Navigator.pop(context);
           },
         ),
       ),
-
-
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
-            child: Container(
-              height: 100,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: feedingEntries.length + 1,
-                itemBuilder: (context, index) {
-                  if (index < feedingEntries.length) {
-                    return _FeedingTypeCircle(feedingType: feedingEntries[index]);
-
-                  } else {
-                    return _AddFeedingCircle(
-                      onAddPressed: () {
-                        _showAddFeedingDialog(context);
-                      },
-
-                    );
-                  }
-                },
-              ),
-            ),
-          ),
+          _buildFeedingTypeButtons(),
           Expanded(
             child: ListView.builder(
-              itemCount: 10,
+              itemCount: _feedings.length,
               itemBuilder: (context, index) {
+                FeedingTimes feeding = _feedings[index];
                 return ListTile(
-                  title: Text('Milk'),
-                  subtitle: Text('5.30pm 24-05-2023'),
+                  title: Text(feeding.feedingType ?? 'No Type'),
+                  subtitle: Text(
+                    DateFormat('hh:mm a dd-MM-yyyy').format(
+                      feeding.startTime ?? DateTime.now(),
+                    ),
+                  ),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       IconButton(
-                        icon: Icon(Icons.edit, color: Color.fromARGB(255, 220, 104, 145)), // Custom edit icon color
+                        icon: const Icon(Icons.edit, color: Color.fromARGB(255, 220, 104, 145)),
                         onPressed: () {
-                          // Handle edit action
+                          _showEditMealDialog(context, feeding);
                         },
                       ),
                       IconButton(
-                        icon: Icon(Icons.delete, color: Colors.red), // Change to your custom color
+                        icon: const Icon(Icons.delete, color: Colors.red),
                         onPressed: () {
-                          // Handle delete action
+                          _handleDeleteFeeding(feeding);
                         },
                       ),
                     ],
@@ -87,223 +93,327 @@ class _MealTrackerState extends State<MealTracker> {
               },
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text('Statistics and Summary'),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _showAddFeedingDialog(context);
+        },
+        child: Icon(Icons.add),
+      ),
+      bottomSheet: _successMessage != null || _errorMessage != null
+          ? Container(
+        color: Colors.white,
+        padding: EdgeInsets.all(8.0),
+        child: Text(
+          _successMessage ?? _errorMessage ?? '',
+          style: TextStyle(
+            color: _successMessage != null ? Colors.green : Colors.red,
           ),
+        ),
+      )
+          : null,
+    );
+  }
+
+  Widget _buildFeedingTypeButtons() {
+    return Container(
+      height: 150,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          _buildFeedingTypeButton('Right', Icons.water_drop),
+          _buildFeedingTypeButton('Left', Icons.water_drop_outlined),
+          _buildFeedingTypeButton('Bottle', Icons.local_cafe),
+          _buildFeedingTypeButton('Solids', Icons.rice_bowl),
         ],
       ),
     );
   }
 
+  Widget _buildFeedingTypeButton(String label, IconData icon) {
+    return ElevatedButton.icon(
+      onPressed: () {
+        _handleAddFeedingType(label);
+      },
+      icon: Icon(icon),
+      label: Text(label),
+    );
+  }
 
-  void _showAddFeedingDialog(BuildContext context) {
-    showDialog(
+  Future<void> _showAddFeedingDialog(BuildContext context) async {
+    String babyId = '64a9cb10ec5c9834ff73fc36';
+    String selectedFeedingType = ''; // Initialize as an empty string
+    TextEditingController textController = TextEditingController();
+
+    // Create a list of feeding types for the dropdown
+    List<String> feedingTypes = ['Solid', 'Right Breast', 'Left Breast'];
+
+    await showDialog(
       context: context,
-      builder: (context) {
+      builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Add Feeding Entry'),
-          content: FeedingEntryForm(),
+          title: Text('Add Meal Entry'),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text('Select Feeding Type:'),
+                DropdownButton<String>(
+                  value: selectedFeedingType,
+                  items: feedingTypes.map((type) {
+                    return DropdownMenuItem<String>(
+                      value: type,
+                      child: Text(type),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    selectedFeedingType = value!;
+                  },
+                ),
+                Text(
+                  _successMessage ?? _errorMessage ?? '',
+                  style: TextStyle(
+                    color: _errorMessage != null ? Colors.red : Colors.green,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Save'),
+              onPressed: () async {
+                if (selectedFeedingType.isNotEmpty) { // Check if it's not empty
+                  newFeeding.feedingType = selectedFeedingType;
+                  newFeeding.babyId = babyId;
+
+                  try {
+                    final response = await FeedingService.createFeeding(newFeeding);
+
+                    if (response == 'success') {
+                      _successMessage = 'Meal added successfully';
+                      newFeeding = FeedingTimes();
+                      _loadFeedings();
+                    } else {
+                      _errorMessage = 'Error adding meal. Response: $response';
+                    }
+                  } catch (e) {
+                    _errorMessage = 'Error: $e';
+                  }
+
+                  Navigator.of(context).pop();
+                  setState(() {});
+                }
+              },
+            ),
+          ],
         );
       },
     );
   }
-}
 
-class FeedingEntryForm extends StatefulWidget {
-  @override
-  _FeedingEntryFormState createState() => _FeedingEntryFormState();
-}
 
-class _FeedingEntryFormState extends State<FeedingEntryForm> {
-  String selectedMealType = 'Breakfast';
-  DateTime selectedDateTime = DateTime.now();
-  String specialNote = '';
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        DropdownButton<String>(
-          value: selectedMealType,
-          onChanged: (newValue) {
-            setState(() {
-              selectedMealType = newValue!;
-            });
-          },
-          items: ['Breakfast', 'Lunch', 'Dinner', 'Snack']
-              .map<DropdownMenuItem<String>>(
-                (value) => DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
+
+
+
+
+  void _handleDeleteFeeding(FeedingTimes? feeding) async {
+    if (feeding != null) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Delete Feeding'),
+          content: Text('Are you sure you want to delete this feeding?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text('Cancel'),
             ),
-          )
-              .toList(),
+            TextButton(
+              onPressed: () async {
+                await FeedingService.deleteFeeding(feeding.id!);
+                setState(() {
+                  _feedings.remove(feeding);
+                  _successMessage = 'Feeding deleted successfully.';
+                });
+                Navigator.pop(context);
+              },
+              child: Text('Delete'),
+            ),
+          ],
         ),
-        const SizedBox(height: 16),
-        ElevatedButton(
-          onPressed: () async {
-            final pickedDateTime = await showDatePicker(
-              context: context,
-              initialDate: selectedDateTime,
-              firstDate: DateTime(2000),
-              lastDate: DateTime(2101),
-            );
-
-            if (pickedDateTime != null && pickedDateTime != selectedDateTime) {
-              setState(() {
-                selectedDateTime = pickedDateTime;
-              });
-            }
-          },
-          child: Text(
-              'Select Date',
-          ),
-        ),
-        SizedBox(height: 16),
-        ElevatedButton(
-          onPressed: () async {
-            final pickedTime = await showTimePicker(
-              context: context,
-              initialTime: TimeOfDay.now(),
-            );
-
-            if (pickedTime != null) {
-              setState(() {
-                selectedDateTime = DateTime(
-                  selectedDateTime.year,
-                  selectedDateTime.month,
-                  selectedDateTime.day,
-                  pickedTime.hour,
-                  pickedTime.minute,
-                );
-              });
-            }
-          },
-          child: Text('Select Time'),
-        ),
-        SizedBox(height: 16),
-        TextFormField(
-          onChanged: (value) {
-            setState(() {
-              specialNote = value;
-            });
-          },
-          decoration: InputDecoration(
-            hintText: 'Add a special note',
-          ),
-        ),
-        SizedBox(height: 16),
-        ElevatedButton(
-          onPressed: () {
-            // Handle form submission and update UI
-            Navigator.of(context).pop(); // Close the dialog
-          },
-          child: Text('Add Entry'),
-        ),
-      ],
-    );
+      );
+    }
   }
-}
 
-class _FeedingTypeCircle extends StatelessWidget {
-  final String feedingType;
+  void _handleAddFeedingType(String feedingType) {
+    newFeeding.feedingType = feedingType;
+  }
 
-  const _FeedingTypeCircle({required this.feedingType});
+  Future<void> _showEditMealDialog(BuildContext context, FeedingTimes existingMeal) async {
+    if (existingMeal == null) {
+      return;
+    }
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: Stack(
-        alignment: Alignment.bottomRight,
-        children: [
-          Column(
-            children: [
-              Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: const Color.fromARGB(255, 220, 104, 145),
-                ),
-                child: Center(
-                  child: Text(
-                    feedingType[0],
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+    FeedingTimes updatedMeal = FeedingTimes(
+      id: existingMeal.id,
+      feedingType: existingMeal.feedingType,
+      startTime: existingMeal.startTime,
+      endTime: existingMeal.endTime,
+      feedingAmount: existingMeal.feedingAmount,
+      feedingNotes: existingMeal.feedingNotes,
+      feedingMood: existingMeal.feedingMood,
+      loggedBy: existingMeal.loggedBy,
+    );
+    DateTime selectedDateTime = existingMeal.startTime ?? DateTime.now();
+    String message = '';
+
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: Text('Edit Meal Entry'),
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    TextField(
+                      onChanged: (text) {
+                        updatedMeal.feedingType = text;
+                      },
+                      decoration: InputDecoration(
+                        labelText: 'Feeding Type',
+                        hintText: existingMeal.feedingType,
+                      ),
                     ),
-                  ),
+                    Row(
+                      children: [
+                        Text('Date and Time: '),
+                        Text(DateFormat('HH:mm:ss dd-MM-yyyy').format(
+                            selectedDateTime.toLocal())),
+                        SizedBox(width: 10),
+                      ],
+                    ),
+                    ElevatedButton(
+                      onPressed: () async {
+                        DateTime? pickedDateTime = await showDatePicker(
+                          context: context,
+                          initialDate: selectedDateTime,
+                          firstDate: DateTime(2000),
+                          lastDate: DateTime(2101),
+                        );
+                        if (pickedDateTime != null) {
+                          TimeOfDay? pickedTimeOfDay = await showTimePicker(
+                            context: context,
+                            initialTime: TimeOfDay.fromDateTime(selectedDateTime),
+                          );
+                          if (pickedTimeOfDay != null) {
+                            setState(() {
+                              selectedDateTime = DateTime(
+                                pickedDateTime.year,
+                                pickedDateTime.month,
+                                pickedDateTime.day,
+                                pickedTimeOfDay.hour,
+                                pickedTimeOfDay.minute,
+                              );
+                            });
+                          }
+                        }
+                      },
+                      child: Text('Select Date and Time'),
+                    ),
+                    Text(message ?? '', style: TextStyle(
+                      color: message == 'Error' ? Colors.red : Colors.green,
+                    )),
+                  ],
                 ),
               ),
-              SizedBox(height: 8),
-              Text(feedingType),
-            ],
-          ),
-          GestureDetector(
-            onTap: () {
-              // Handle adding entry for this feeding type
-              // _showAddFeedingDialog(context);
-            },
-            child: Container(
-              width: 20,
-              height: 20,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color.fromARGB(255, 88, 119, 161),
-              ),
-              child: const Center(
-                child: Icon(
-                  Icons.add,
-                  color: Colors.white,
-                  size: 16,
+              actions: <Widget>[
+                TextButton(
+                  child: Text('Cancel'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
                 ),
-              ),
-            ),
-          ),
-        ],
-      ),
+                TextButton(
+                  child: Text('Save'),
+                  onPressed: () async {
+                    if (updatedMeal.feedingType != null &&
+                        updatedMeal.feedingType!.isNotEmpty) {
+                      updatedMeal.startTime = selectedDateTime;
+
+                      try {
+                        if (existingMeal.id != null) {
+                          await FeedingService.updateFeeding(existingMeal.id!, updatedMeal);
+                        }
+
+                        message = 'Meal entry updated successfully!';
+                        Navigator.of(context).pop();
+                        setState(() {
+                          existingMeal.feedingType = updatedMeal.feedingType;
+                          existingMeal.startTime = updatedMeal.startTime;
+                          existingMeal.endTime = updatedMeal.endTime;
+                          existingMeal.feedingAmount = updatedMeal.feedingAmount;
+                          existingMeal.feedingNotes = updatedMeal.feedingNotes;
+                          existingMeal.feedingMood = updatedMeal.feedingMood;
+                          existingMeal.loggedBy = updatedMeal.loggedBy;
+                        });
+                      } catch (e) {
+                        message = 'Error: $e';
+                      }
+                    } else {
+                      message = 'Please provide a feeding type.';
+                    }
+                    setState(() {});
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+  Widget _buildFeedingTimePicker() {
+    DateTime selectedDateTime = newFeeding.startTime ?? DateTime.now();
+    return ElevatedButton(
+      onPressed: () async {
+        DateTime? pickedDateTime = await showDatePicker(
+          context: context,
+          initialDate: selectedDateTime,
+          firstDate: DateTime(2000),
+          lastDate: DateTime(2101),
+        );
+        if (pickedDateTime != null) {
+          TimeOfDay? pickedTimeOfDay = await showTimePicker(
+            context: context,
+            initialTime: TimeOfDay.fromDateTime(selectedDateTime),
+          );
+          if (pickedTimeOfDay != null) {
+            setState(() {
+              selectedDateTime = DateTime(
+                pickedDateTime.year,
+                pickedDateTime.month,
+                pickedDateTime.day,
+                pickedTimeOfDay.hour,
+                pickedTimeOfDay.minute,
+              );
+              newFeeding.startTime = selectedDateTime;
+            });
+          }
+        }
+      },
+      child: Text('Select Date and Time'),
     );
   }
 }
-
-class _AddFeedingCircle extends StatelessWidget {
-  final VoidCallback onAddPressed;
-
-  const _AddFeedingCircle({required this.onAddPressed});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: Column(
-        children: [
-          GestureDetector(
-            onTap: onAddPressed,
-            child: Container(
-              width: 60,
-              height: 60,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color.fromARGB(255, 88, 119, 161),
-              ),
-              child: Center(
-                child: Icon(
-                  Icons.add,
-                  color: Colors.white,
-                  size: 30,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: 8),
-          Text('Add Meal Type'),
-        ],
-      ),
-    );
-  }
-}
-

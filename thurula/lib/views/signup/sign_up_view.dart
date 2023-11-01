@@ -193,7 +193,7 @@ class _SignUpViewState extends State<SignUpView> {
                                           context.loc.register_page_UsernameTakenError,
                                           context,
                                           toastPosition: GFToastPosition.BOTTOM,
-                                          textStyle: TextStyle(
+                                          textStyle: const TextStyle(
                                             color:Colors.black
                                           ),
                                           toastDuration: 3,
