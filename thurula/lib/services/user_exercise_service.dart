@@ -4,13 +4,18 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'package:thurula/constants/routes.dart';
 import '../models/user_exercise_model.dart';
+import 'local_service.dart';
 
 class UserExerciseService {
   static Future<UserExercise?> getUserExercise(String id) async {
+    String jwt = await LocalService.getCurrentUserToken();
     try {
       var response = await http.get(
         Uri.parse(getRoute("exercise/$id")),
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $jwt'
+        },
       );
 
       // check the status code of the response
@@ -29,6 +34,7 @@ class UserExerciseService {
   // method to get exercise/user/ giving id, start date and end date, start date and end date can be null
   static Future<List<UserExercise>> getUserExercises(
       String id, DateTime? startDate, DateTime? endDate) async {
+    String jwt = await LocalService.getCurrentUserToken();
     try {
       // response if theres start and end date if not null and without start and end date
       http.Response response;
@@ -36,14 +42,20 @@ class UserExerciseService {
       var endDatestr = endDate?.toIso8601String();
       if (startDate != null && endDate != null) {
         response = await http.get(
-          Uri.parse(
-              getRoute("exercise/user/$id?startDate=$startDatestr&endDate=$endDatestr")),
-          headers: {'Content-Type': 'application/json'},
+          Uri.parse(getRoute(
+              "exercise/user/$id?startDate=$startDatestr&endDate=$endDatestr")),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $jwt'
+          },
         );
       } else {
         response = await http.get(
           Uri.parse(getRoute("exercise/user/$id")),
-          headers: {'Content-Type': 'application/json'},
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $jwt'
+          },
         );
       }
 
@@ -67,9 +79,13 @@ class UserExerciseService {
 
   static Future<bool> patchUserExercise(
       String id, String key, dynamic value) async {
+    String jwt = await LocalService.getCurrentUserToken();
     var response = await http.patch(
       Uri.parse(getRoute('exercise/$id')),
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
       body: jsonEncode([
         {"op": "replace", "path": "/$key", "value": value}
       ]),
@@ -82,10 +98,14 @@ class UserExerciseService {
   }
 
   static Future<UserExercise> createUserExercise(UserExercise uex) async {
+    String jwt = await LocalService.getCurrentUserToken();
     String body = json.encode(UserExercise.toJson(uex));
     var response = await http.post(
       Uri.parse(getRoute("exercise")),
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
       body: body,
     );
     if (response.statusCode == 201) {
@@ -98,7 +118,14 @@ class UserExerciseService {
   }
 
   static Future<void> deleteUserExercise(String id) async {
-    var response = await http.delete(Uri.parse(getRoute("exercise/$id")));
+    String jwt = await LocalService.getCurrentUserToken();
+    var response = await http.delete(
+      Uri.parse(getRoute("exercise/$id")),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
+    );
     if (response.statusCode == 200) {
       return;
     } else {
@@ -108,10 +135,14 @@ class UserExerciseService {
   }
 
   static Future<void> updateUserExercise(String id, UserExercise uex) async {
+    String jwt = await LocalService.getCurrentUserToken();
     String body = json.encode(UserExercise.toJson(uex));
     var response = await http.put(
       Uri.parse(getRoute("exercise/$id")),
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
       body: body,
     );
     if (response.statusCode == 204) {

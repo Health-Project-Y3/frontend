@@ -4,8 +4,11 @@ import 'dart:async';
 import 'package:thurula/constants/routes.dart';
 import 'package:thurula/models/eye_check_model.dart';
 
+import 'local_service.dart';
+
 class EyeCheckupService {
   static Future<EyeCheck?> create_eyecheck(babyId, checkeddate, score) async {
+    String jwt = await LocalService.getCurrentUserToken();
     // create a map of the data to be sent
     String formattedDateTime = checkeddate.toIso8601String();
     Map<String, dynamic> data = {
@@ -17,7 +20,10 @@ class EyeCheckupService {
     String body = json.encode(data);
     var response = await http.post(
       Uri.parse(getRoute("eyecheckup")),
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
       body: body,
     );
     if (response.statusCode == 201) {

@@ -89,10 +89,14 @@ class UserService {
   }
 
   static Future<User?> getUser(String id) async {
+    String jwt = await LocalService.getCurrentUserToken();
     try {
       var response = await http.get(
         Uri.parse(getRoute("user/$id")),
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $jwt'
+        },
       );
 
       // check the status code of the response
@@ -108,10 +112,14 @@ class UserService {
   }
 
   static Future<User?> getByUsername(String username) async {
+    String jwt = await LocalService.getCurrentUserToken();
     try {
       var response = await http.get(
         Uri.parse(getRoute("Auth/username/$username")),
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $jwt'
+        },
       );
 
       // check the status code of the response
@@ -127,9 +135,13 @@ class UserService {
   }
 
   static Future<bool> patchUser(String id, String key, dynamic value) async {
+    String jwt = await LocalService.getCurrentUserToken();
     var response = await http.patch(
       Uri.parse(getRoute('User/$id')),
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
       body: jsonEncode([
         {"op": "replace", "path": "/$key", "value": value}
       ]),
@@ -142,9 +154,13 @@ class UserService {
   }
 
   static Future<void> updateUser(String id, User user) async {
+    String jwt = await LocalService.getCurrentUserToken();
     var response = await http.put(
       Uri.parse(getRoute('User/$id')),
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
       body: jsonEncode(User.toJson(user)),
     );
     if (response.statusCode == 204) {
