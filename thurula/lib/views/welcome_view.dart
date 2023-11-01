@@ -1,6 +1,12 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:thurula/providers/user_provider.dart';
+import 'package:thurula/views/childcare/child_home_view.dart';
 import 'package:thurula/views/menu_view.dart';
 import 'package:thurula/extensions/buildcontext/loc.dart';
+import 'package:thurula/views/pregnancy/pregnancy_home_view.dart';
 
 class WelcomeHomeView extends StatelessWidget {
   const WelcomeHomeView({super.key, required this.username});
@@ -16,15 +22,15 @@ class WelcomeHomeView extends StatelessWidget {
           backgroundColor: const Color.fromARGB(255, 255, 255, 255),
           body: Column(
             children: [
-                const Padding(
-                  padding: EdgeInsets.fromLTRB(0, 100, 0, 0),
-                  child: Image(
-                    image: AssetImage('assets/images/landing.jpg'),
-                    width: 300,
-                    height: 400,
-                  ),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(0, 100, 0, 0),
+                child: Image(
+                  image: AssetImage('assets/images/landing.jpg'),
+                  width: 300,
+                  height: 400,
                 ),
-               Center(
+              ),
+              Center(
                 // add image
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(40, 20, 40, 0),
@@ -40,26 +46,45 @@ class WelcomeHomeView extends StatelessWidget {
                   ),
                 ),
               ),
-               Center(
+              Center(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(40, 10, 40, 30),
-                  child: Text(
-                    context.loc.welcome_page_Caption2,
+                  child: Text(context.loc.welcome_page_Caption2,
                       textAlign: TextAlign.center,
-                      style:
-                      const TextStyle(color: Color.fromARGB(255, 135, 135, 135))),
+                      style: const TextStyle(
+                          color: Color.fromARGB(255, 135, 135, 135))),
                 ),
               ),
               Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const MenuView(),
-                        ),
-                      );
+                      if (context.read<UserProvider>().user?.pregnant ??
+                          false) {
+                        if (context.read<UserProvider>().user?.babyIDs !=
+                            null) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const MenuView(),
+                            ),
+                          );
+                        } else {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const PregnancyHomeView(),
+                            ),
+                          );
+                        }
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ChildHomeView(),
+                          ),
+                        );
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromARGB(
