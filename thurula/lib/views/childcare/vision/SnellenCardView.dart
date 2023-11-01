@@ -6,6 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:thurula/services/eye_check_service.dart';
 
+// import 'dart:typed_data';
+// import 'dart:io';
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
+
 final GlobalKey<NavigatorState> _navKey = GlobalKey<NavigatorState>();
 
 class SnellenCardView extends StatefulWidget {
@@ -73,8 +78,6 @@ class _FirstPage extends State<FirstPage> {
       TextEditingController();
   late final TextEditingController scoreController = TextEditingController();
 
-  String _localPath = "/sdcard/download/";
-  bool _permissionReady = false;
   late final TargetPlatform? platform = TargetPlatform.android;
 
   final List<String> list = [
@@ -83,32 +86,27 @@ class _FirstPage extends State<FirstPage> {
     "Point at each of the Es, starting with the largest. Have your child point in the direction the E is pointing."
   ];
 
-  Future<bool> _checkPermission() async {
-    final status = await Permission.storage.status;
-    if (status != PermissionStatus.granted) {
-      final result = await Permission.storage.request();
-      if (result == PermissionStatus.granted) {
-        return true;
-      }
-    } else {
-      return true;
-    }
-    return false;
+  Future<void> copyPDFToStorage() async {
+    // Get the asset file as a byte data
+    print("Downloading");
+    final ByteData data =
+        await rootBundle.load('assets/files/vision_test1.pdf');
+    final List<int> bytes = data.buffer.asUint8List();
+
+    // Get the document directory using path_provider
+    final Directory directory = await getApplicationDocumentsDirectory();
+    print(directory);
+    final String filePath = '${directory.path}/sample.pdf';
+    String _localPath = "/sdcard/download/sample.pdf";
+    // Write the PDF data to the file
+    final File file = File(_localPath);
+    await file.writeAsBytes(bytes, flush: true);
+
+    print('PDF file copied to: $_localPath');
   }
 
-  Future<void> _prepareSaveDir() async {
-    _localPath = (await _findLocalPath())!;
-
-    print(_localPath);
-    final savedDir = Directory(_localPath);
-    bool hasExisted = await savedDir.exists();
-    if (!hasExisted) {
-      savedDir.create();
-    }
-  }
-
-  Future<String?> _findLocalPath() async {
-    return "/sdcard/download/";
+  void handleButtonPress() async {
+    await copyPDFToStorage();
   }
 
   String? eyescore;
@@ -121,35 +119,19 @@ class _FirstPage extends State<FirstPage> {
             child: Column(children: [
       Padding(
         padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-        child: InkWell(
-            onTap: () async {
-              _permissionReady = await _checkPermission();
-              if (_permissionReady) {
-                await _prepareSaveDir();
-                print("Downloading");
-                try {
-                  print("test");
-                  await Dio().download(
-                      "https://en.wikipedia.org/wiki/Snellen_chart#/media/File:Snellen_chart.svg",
-                      "$_localPath/filename.jpg");
-                  // await Dio().download(
-                  //     "https://askeyedoc.com/wp-content/uploads/2020/04/Children-10-ft_small-1-pdf-802x1024.jpg",
-                  //     "$_localPath/filename.jpg");
-                  print("Download Completed.");
-                  // final file = File("$_localPath/example.pdf");
-                  // Uint8List data = await file.readAsBytesSync();
-                  // void saveFile(Uint8List data, "my_sample_file.pdf", "appliation/pdf");
-                } catch (e) {
-                  print("Download Failed.\n\n$e");
-                }
-              }
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle, color: Colors.grey.withOpacity(0.5)),
-              padding: const EdgeInsets.all(8),
-              child: const Icon(Icons.download, color: Colors.black),
-            )),
+        child: ElevatedButton(
+          onPressed: () {
+            handleButtonPress();
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color.fromARGB(255, 220, 104, 145),
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 50),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+          ),
+          child: const Text("Download the card"),
+        ),
       ),
       Padding(
         padding: const EdgeInsets.fromLTRB(20, 20, 10, 0),
@@ -290,6 +272,7 @@ class _FirstPage extends State<FirstPage> {
                     ),
                     ElevatedButton(
                       onPressed: () async {
+                        print("hi");
                         if (eyescore == null) {
                           ErrorMessage(context);
                         } else {
