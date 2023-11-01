@@ -5,6 +5,7 @@ import 'package:thurula/providers/baby_provider.dart';
 import 'package:thurula/services/auth/user_service.dart';
 import 'package:thurula/services/baby_service.dart';
 import 'package:thurula/services/local_service.dart';
+import 'package:thurula/views/childcare/child_home_view.dart';
 import 'package:thurula/views/menu_view.dart';
 import 'package:thurula/views/signup/sign_up_question_view.dart';
 import '../../models/baby_model.dart';
@@ -181,7 +182,7 @@ class _SignUpChildViewState extends State<SignUpChildView> {
                           ? const Color.fromARGB(255, 220, 104, 145)
                           : Colors.grey,
                     ),
-                    child:  Row(
+                    child: Row(
                       children: [
                         const Icon(
                           Icons.male,
@@ -294,7 +295,7 @@ class _SignUpChildViewState extends State<SignUpChildView> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const MenuView(),
+                            builder: (context) => const ChildHomeView(),
                           ),
                         );
                       }
