@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:thurula/constants/routes.dart';
+import 'package:thurula/services/local_service.dart';
 import '../views/widgets/graphs/point_widget.dart';
 
 class BabyWeightService {
@@ -99,6 +100,8 @@ class BabyWeightService {
 
   Future<double?> getRecentBabyWeight(id) async {
     // Send a get request to the API endpoint
+    // id ??= await LocalService.getCurrentBabyId();
+    id = '64cd599fc65bbef9519bc04c';
     var response =
         await http.get(Uri.parse(getRoute("babychart/weight/get?id=$id")));
 

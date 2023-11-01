@@ -100,6 +100,8 @@ class BabyLengthService {
 
   Future<double?> getRecentBabyLength(id) async {
     // Send a get request to the API endpoint
+    id = '64cd599fc65bbef9519bc04c';
+
     var response =
         await http.get(Uri.parse(getRoute("babychart/length/get?id=$id")));
 
@@ -122,5 +124,3 @@ class BabyLengthService {
     }
   }
 }
-
-
