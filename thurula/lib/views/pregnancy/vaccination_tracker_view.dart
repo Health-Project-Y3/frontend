@@ -4,6 +4,7 @@ import 'package:thurula/providers/user_provider.dart';
 import 'package:thurula/services/local_service.dart';
 import 'package:thurula/services/vaccination_service.dart';
 import 'package:thurula/models/vaccination_model.dart';
+import 'package:thurula/views/custom_loading_indicator.dart';
 
 class MomVaccinationTrackerView extends StatefulWidget {
   const MomVaccinationTrackerView({super.key});
@@ -92,7 +93,7 @@ class _VaccinationTrackerViewState extends State<MomVaccinationTrackerView> {
           future: upcomingVaccinations,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
+             return CustomLoadingIndicator();
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
@@ -175,7 +176,7 @@ class _VaccinationTrackerViewState extends State<MomVaccinationTrackerView> {
           future: completedVaccinations,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
+              return CustomLoadingIndicator();
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {

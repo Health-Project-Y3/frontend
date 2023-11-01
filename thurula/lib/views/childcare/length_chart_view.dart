@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:thurula/services/baby_length_service.dart';
+import 'package:thurula/views/custom_loading_indicator.dart';
 import 'package:thurula/views/widgets/graphs/baby_length_chart_widget.dart';
 import '../../providers/baby_provider.dart';
 import '../widgets/graphs/point_widget.dart';
@@ -140,16 +141,7 @@ class _LengthChartViewState extends State<LengthChartView> {
                                             snapshot.data),
                                       );
                                     } else {
-                                      return const SizedBox(
-                                        height: 10.0,
-                                        width: 10.0,
-                                        child: Center(
-                                          child: CircularProgressIndicator(
-                                            color: Color.fromARGB(
-                                                255, 220, 104, 145),
-                                          ),
-                                        ),
-                                      );
+                                      return CustomLoadingIndicator();
                                     }
                                   },
                                 );
