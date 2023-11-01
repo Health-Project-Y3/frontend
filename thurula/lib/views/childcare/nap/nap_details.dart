@@ -20,18 +20,6 @@ class _NapDetailsState extends State<NapDetails> {
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    // Listen for the named route pop result
-    final shouldRefresh = ModalRoute.of(context)!.settings.arguments as bool?;
-
-    if (shouldRefresh == true) {
-      // Refresh data when coming back from the NapRecords page
-      _refreshNapRecords();
-    }
-  }
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -54,11 +42,9 @@ class _NapDetailsState extends State<NapDetails> {
           },
         ),
       ),
-    body: RefreshIndicator(
-    onRefresh: _refreshNapRecords,
-    child: FutureBuilder<List<NapTimes>>(
-    future: _napRecordsFuture,
-    builder: (context, snapshot) {
+      body: FutureBuilder<List<NapTimes>>(
+        future: _napRecordsFuture,
+        builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
@@ -177,16 +163,9 @@ class _NapDetailsState extends State<NapDetails> {
           }
         },
       ),
-    ),
     );
-
-
   }
-  Future<void> _refreshNapRecords() async {
-    setState(() {
-      _napRecordsFuture = NapService.getBabyNaps('64b01605b55b765169e1c9b6');
-    });
-  }
+
   int _calculateTotalNapsToday(List<NapTimes> records) {
     DateTime today = DateTime.now();
     return records.where((record) {
@@ -360,7 +339,7 @@ class ChartPainter extends CustomPainter {
     );
     final dayLabelPainter = TextPainter(
       text: TextSpan(
-        text: 'Day (d/MM)',
+        text: 'Day (mm:dd)',
         style: dayLabelStyle,
       ),
       textAlign: TextAlign.center,
@@ -387,7 +366,7 @@ class ChartPainter extends CustomPainter {
       return '0 Hr';
     }
     int hours = (minutes / 60).floor();
-    return '$hours Hrs';
+    return '$hours Hr';
   }
 
   @override
@@ -459,8 +438,4 @@ class CustomCard extends StatelessWidget {
       ),
     );
   }
-
-
 }
-
-
