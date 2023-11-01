@@ -4,6 +4,22 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class FeedingService {
+
+
+  static Future<FeedingTimes> createFeeding(FeedingTimes feeding) async {
+    var response = await http.post(
+      Uri.parse(getRoute('feeding')),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(FeedingTimes.toJson(feeding)),
+    );
+    if (response.statusCode == 201) {
+      return FeedingTimes.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to create feeding');
+    }
+  }
+
+
   static Future<FeedingTimes> getFeeding(String id) async {
     var response = await http.get(
       Uri.parse(getRoute('feeding/$id')),
@@ -33,18 +49,7 @@ class FeedingService {
     }
   }
 
-  static Future<FeedingTimes> createFeeding(FeedingTimes feeding) async {
-    var response = await http.post(
-      Uri.parse(getRoute('feeding')),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(FeedingTimes.toJson(feeding)),
-    );
-    if (response.statusCode == 201) {
-      return FeedingTimes.fromJson(jsonDecode(response.body));
-    } else {
-      throw Exception('Failed to create feeding');
-    }
-  }
+
 
   static Future<void> deleteFeeding(String id) async {
     var response = await http.delete(
