@@ -11,6 +11,9 @@ class ForumQuestion {
   int? upvotes;
   int? downvotes;
   List<ForumAnswer>? answers;
+  List<String>? upvoters;
+  List<String>? downvoters;
+
 
   ForumQuestion({
     this.id,
@@ -25,6 +28,8 @@ class ForumQuestion {
     this.upvotes,
     this.downvotes,
     this.answers,
+    this.upvoters,
+    this.downvoters,
   });
 
   static Map<String, dynamic> toJson(ForumQuestion question) {
@@ -39,6 +44,8 @@ class ForumQuestion {
       'visible': question.visible,
       'upvotes': question.upvotes,
       'downvotes': question.downvotes,
+      'upvoters': question.upvoters,
+      'downvoters': question.downvoters,
       'answers': [
         for (var answer in question.answers!)
           {
@@ -51,6 +58,8 @@ class ForumQuestion {
             'accepted': answer.accepted,
             'upvotes': answer.upvotes,
             'downvotes': answer.downvotes,
+            'upvoters': answer.upvoters,
+            'downvoters': answer.downvoters,
           }
       ]
     };
@@ -72,6 +81,8 @@ class ForumQuestion {
       answers: jsonDecode['answers']
           .map<ForumAnswer>((answer) => ForumAnswer.fromJson(answer))
           .toList(),
+      upvoters: jsonDecode['upvoters'].cast<String>(),
+      downvoters: jsonDecode['downvoters'].cast<String>(),
     );
   }
 
@@ -92,6 +103,8 @@ class ForumAnswer {
   bool? accepted;
   int? upvotes;
   int? downvotes;
+  List<String>? upvoters;
+  List<String>? downvoters;
 
   ForumAnswer({
     this.id,
@@ -104,6 +117,8 @@ class ForumAnswer {
     this.accepted,
     this.upvotes,
     this.downvotes,
+    this.upvoters,
+    this.downvoters,
   });
 
   static Map<String, dynamic> toJson(ForumAnswer answer) {
@@ -117,6 +132,8 @@ class ForumAnswer {
       'accepted': answer.accepted,
       'upvotes': answer.upvotes,
       'downvotes': answer.downvotes,
+      'upvoters': answer.upvoters,
+      'downvoters': answer.downvoters,
     };
   }
 
@@ -132,6 +149,8 @@ class ForumAnswer {
       accepted: jsonDecode['accepted'] == 1,
       upvotes: jsonDecode['upvotes'],
       downvotes: jsonDecode['downvotes'],
+      upvoters: jsonDecode['upvoters'].cast<String>(),
+      downvoters: jsonDecode['downvoters'].cast<String>(),
     );
   }
 
