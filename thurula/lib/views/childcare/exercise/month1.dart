@@ -14,8 +14,8 @@ class Month1 extends StatefulWidget {
 class _Month1State extends State<Month1> {
   //FirstPage({Key? key}) : super(key: key);
   // final Map<String, bool> expansionStates = {};
-  final List<bool> expanded = [false, false, false, false, false];
-
+  final List<bool> expanded = [false, false, false, false, false, false];
+  
   // final service = ChecklistService('http://localhost:5154/');
 
   late Future<List<Checklists>> checklist1;
@@ -25,7 +25,7 @@ class _Month1State extends State<Month1> {
   void initState() {
     super.initState();
     checklist1 = ChecklistService.getChecklist('64cbb52cf2083327515c7058');
-    _month1 = ChecklistService.fetchWeek3();
+    _month1 = ChecklistService.fetchMonth1();
   }
 
   @override
