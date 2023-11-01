@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:thurula/providers/baby_provider.dart';
 import 'package:thurula/services/local_service.dart';
 import 'package:thurula/services/vaccination_service.dart';
 import 'package:thurula/models/vaccination_model.dart';
@@ -55,18 +57,9 @@ class _VaccinationTrackerViewState extends State<VaccinationTrackerView> {
     }
   }
 
-  // int calculateDifference(int? daysFromBirth) {
-  //   // Calculate the difference here (e.g., compare with today's date)
-  //   // Return the difference in days
-  //   // final currentDate = DateTime.now();
-
-  //   return -1;
-  // }
-
   Future<void> _refreshData() async {
-    final babyIdValue = "650fe71a1953bf17d815fac4";
-    // final babyIdValue = await babyId;
-    // print(babyIdValue);
+    final babyIdValue = context.read<BabyProvider>().baby!.id!;
+
     upcomingVaccinations =
         VaccinationService.getDueBabyVaccinations(babyIdValue);
     completedVaccinations =
