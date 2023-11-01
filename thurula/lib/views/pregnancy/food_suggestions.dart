@@ -36,7 +36,7 @@ class _FoodViewPageState extends State<FoodViewPage>
       {"name": "A Variety of Vegetables", "description": "Incorporate vegetables that contain magnesium and calcium such as broccoli, green beans, carrots, cabbage, and okra into your meals. Stir-fry or steam to retain the nutrients, and try not to overcook them."},
       {"name": "Sunflower and Pumpkin Seeds", "description": "A small handful of sunflower seeds or pumpkin seeds, whether as a snack to nibble, or added to yoghurt and salads, will give you a magnesium, iron, and omega-3 boost."},
       {"name": "Dried Fruit", "description": "Dried fruit such as apricots, dates, and figs contain calcium and iron, and are a great snack to have stashed in your desk. Or add some chopped to low-fat yoghurt."},
-      {"name": "Brown Rice Vegetable Risotto", "description": "Wholegrain or brown rice and mushrooms contain magnesium, fiber, vitamin D, and calcium. Try a mushroom risotto with cooked spinach on the side, or with peas mixed through. Or make a chicken and edamame bean pilaf with brown basmati rice."},
+
       {"name": "Peanut Butter on Wholemeal Bread", "description": "Peanut butter, or any nut butter, contains healthy fats and is a good source of magnesium and iron, as is fortified wholegrain bread. The two together make a sustaining snack, and a glass of milk on the side adds calcium."},
       {"name": "Cheese on Seeded Bread", "description": "Low-fat cream cheese, or any cheese that you like, on seeded bread, will give you calcium, as well as magnesium. Have it with a crunchy salad such as radishes and cucumber."},
       {"name": "Hummus", "description": "Have a pot of low-fat hummus in the fridge for a tasty way to get calcium and iron. A small wholegrain pitta or granary bread and crunchy raw vegetables will add magnesium."},
@@ -51,7 +51,6 @@ class _FoodViewPageState extends State<FoodViewPage>
       {"name": "Bean Chili", "description": "Use canned kidney, borlotti, cannellini, or black-eyed beans to make a spicy chili that is full of thiamine, iron, and fiber. Add fresh tomatoes and peppers for vitamin C."},
       {"name": "Lentils", "description": "Add cooked lentils to dals, soups, stews, and salads for a tasty thiamine and fiber boost. If you are buying a soup, check that it is low in salt, and make sure that you heat it through thoroughly before eating."},
       {"name": "Seeds and Nuts", "description": "If snacking on seeds and nuts is not your thing, thiamine-packed sunflower seeds and nuts such as walnuts and hazelnuts are added to some breads, breakfast cereals, and cereal bars. They also contain essential omega-3 fats."},
-      {"name": "Calcium and Iron", "description": "A small wholegrain pitta or granary bread and crunchy raw vegetables will add magnesium."},
       {"name": "Canned Sardines", "description": "Mash canned sardines, including the soft, edible bones, on a slice of wholegrain toast. Or mix through spaghetti with a little parmesan and pine nuts for extra magnesium and iron. Choose sardines in oil or tomato sauce. A watercress salad is a refreshing accompaniment that is packed with calcium and vitamin C."},
       // Add more food items for the third trimester...
     ],
@@ -73,17 +72,15 @@ class _FoodViewPageState extends State<FoodViewPage>
   String getImagePath(int index, int trimester) {
     int startImageIndex = 1;
 
-    // Update the starting image index based on the trimester
-    if (trimester == 2) {
+    if (trimester == 1) {
       startImageIndex = 12;
-    } else if (trimester == 3) {
-      startImageIndex = 23;
+    } else if (trimester == 2) {
+      startImageIndex = 21; // Change this to 21 for the third trimester
     }
 
     final imagePath = 'assets/images/food/${startImageIndex + index}.png';
     return imagePath;
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
