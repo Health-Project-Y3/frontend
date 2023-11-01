@@ -15,7 +15,7 @@ import 'package:thurula/views/childcare/vaccination_tracker_view.dart';
 import 'package:thurula/views/childcare/vision/VisionMenuView.dart';
 import 'package:thurula/views/childcare/diaper_records.dart';
 import 'package:thurula/views/childcare/nap/nap_details.dart';
-import 'package:thurula/views/childcare/feeding.dart';
+import 'package:thurula/views/childcare/meal_tracker.dart';
 import 'package:thurula/views/widgets/expandable_fab_widget.dart';
 import '../../providers/baby_provider.dart';
 import '../../providers/user_provider.dart';
@@ -311,31 +311,15 @@ class _ChildHomeViewState extends State<ChildHomeView> {
                             ),
                           ),
                         ),
-                      ),
-                      // Feeding Monitoring
-                      Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: InkResponse(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => FeedingRecords(),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            width: 120,
-                            height: 120,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(5.0),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 0.5,
-                                  blurRadius: 2,
-                                  offset: const Offset(0, 2),
+                        // Feeding Monitoring
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: InkResponse(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MealTracker(),
                                 ),
                               );
                             },
