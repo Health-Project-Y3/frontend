@@ -21,7 +21,7 @@ class SignUpChildView extends StatefulWidget {
 
 class _SignUpChildViewState extends State<SignUpChildView> {
   DateTime? selectedDate;
-  bool isMaleSelected = true;
+  bool isMaleSelected = false;
   bool isFemaleSelected = false;
 
   final TextEditingController babyNameController = TextEditingController();
@@ -232,8 +232,8 @@ class _SignUpChildViewState extends State<SignUpChildView> {
               ),
             ),
             Positioned(
+              top: 710,
               left: 16,
-              bottom: 20,
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -272,8 +272,8 @@ class _SignUpChildViewState extends State<SignUpChildView> {
               ),
             ),
             Positioned(
+              top: 710,
               right: 16,
-              bottom: 20,
               child: ElevatedButton(
                 onPressed: isNextButtonEnabled()
                     ? () {
