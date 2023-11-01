@@ -45,6 +45,7 @@ class UserService {
         LocalService.setCurrentUserToken(response.body);
         getByUsername(username).then((value) {
           LocalService.setCurrentUserId(value!.id!);
+          LocalService.setCurrentBabyId("650fe71a1953bf17d815fac4");
         });
         return true;
       } else {

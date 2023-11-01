@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:thurula/views/pregnancy/pregnancy_timeline/week_1.dart';
 import 'package:thurula/views/pregnancy/pregnancy_timeline/week_10.dart';
 import 'package:thurula/views/pregnancy/pregnancy_timeline/week_11.dart';
@@ -39,14 +40,14 @@ import 'package:thurula/views/pregnancy/pregnancy_timeline/week_6.dart';
 import 'package:thurula/views/pregnancy/pregnancy_timeline/week_7.dart';
 import 'package:thurula/views/pregnancy/pregnancy_timeline/week_8.dart';
 import 'package:thurula/views/pregnancy/pregnancy_timeline/week_9.dart';
-
-var week = 5; // Todo
+import 'package:thurula/providers/user_provider.dart';
 
 class PregnancyTimelineView extends StatelessWidget {
   const PregnancyTimelineView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final int week = CalculateCurrentWeek(context);
     return MaterialApp(
       home: DefaultTabController(
         initialIndex: week,
@@ -293,4 +294,18 @@ class PregnancyTimelineView extends StatelessWidget {
       ),
     );
   }
+}
+
+int CalculateCurrentWeek(BuildContext context) {
+  DateTime? dueDate = context.read<UserProvider>().user?.dueDate;
+
+  if (dueDate != null) {
+    final currentDate = DateTime.now();
+    final difference = dueDate.difference(currentDate);
+    final remainingWeeks = (difference.inDays / 7).ceil();
+    int week = 40 - remainingWeeks;
+    return week;
+  }
+
+  return 0; // If there's no due date available
 }

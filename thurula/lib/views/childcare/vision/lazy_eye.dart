@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:thurula/views/childcare/child_care_menu_view.dart';
 // import '../../signup/Question2View.dart';
-import './SnellenCardView.dart';
-import '../../../constants/eye_disease.dart';
 
 class LazyEye extends StatelessWidget {
   const LazyEye({super.key});

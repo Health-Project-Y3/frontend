@@ -5,8 +5,6 @@ import 'package:thurula/views/childcare/vision/droopy_eye.dart';
 import 'package:thurula/views/childcare/vision/eye_cataract.dart';
 import 'package:thurula/views/childcare/vision/lazy_eye.dart';
 import 'package:thurula/views/childcare/vision/pink_eye.dart';
-// import '../../signup/Question2View.dart';
-import './SnellenCardView.dart';
 import '../../../constants/eye_disease.dart';
 
 class EyeDiseaseList extends StatelessWidget {
@@ -14,26 +12,11 @@ class EyeDiseaseList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final size = MediaQuery.of(context).size;
-    // final bool keyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
-    // final model = Provider.of<HomeModel>(context);
-
     return Scaffold(
         appBar: AppBar(
           title: const Row(children: [Text('Eye Diseases')]),
           backgroundColor: const Color.fromARGB(255, 220, 104, 145),
-          actions: <Widget>[
-            Padding(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: IconButton(
-                    icon: const Icon(Icons.menu),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const ChildCareMenuView()));
-                    })),
-          ],
+      
         ),
         body: SingleChildScrollView(
             child: Column(
@@ -89,7 +72,6 @@ class EyeDiseaseList extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       backgroundColor: Colors.white,
-                      // Color of the card
                       elevation: 2, // Card elevation
                     ),
                     child: Padding(
@@ -102,7 +84,7 @@ class EyeDiseaseList extends StatelessWidget {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(5.0),
                               child: Image.asset(
-                                'assets/images/exercises/secondm1.png',
+                                'assets/images/eye-diseases/eye$x.jpeg',
                                 height: 100,
                                 width: 100,
                                 fit: BoxFit.cover,
@@ -114,20 +96,19 @@ class EyeDiseaseList extends StatelessWidget {
                               child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
 
-                            // exercise card
+                            // eye-diseases card
                             children: <Widget>[
                               Container(height: 5),
                               Padding(
                                 padding:
                                     const EdgeInsets.only(left: 15, bottom: 5),
-                                // exercise title/name
+                                // eye-diseases title/name
                                 child: Text(
                                   eye_disease_list[x - 1],
                                   style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                     fontFamily: 'Inter',
-                                    //   color #504E4E
                                     color: Color.fromARGB(255, 80, 78, 78),
                                   ),
                                 ),
