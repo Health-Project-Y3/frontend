@@ -6,6 +6,7 @@ import 'package:thurula/providers/user_provider.dart';
 import 'package:thurula/services/auth/user_service.dart';
 import 'package:thurula/services/baby_service.dart';
 import 'package:thurula/services/local_service.dart';
+import 'package:thurula/views/custom_loading_indicator.dart';
 import 'package:thurula/views/login_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:thurula/views/menu_view.dart';
@@ -30,32 +31,28 @@ class MyApp extends StatelessWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       debugShowCheckedModeBanner: false,
-      home: FutureBuilder<String>(
-        future: _getInitialRoute(context),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Container(
-              color: Colors
-                  .white, // Set the background color to match your app's theme
-              child: const Center(
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                      Colors.blue), // Customize the color of the indicator
-                ),
-              ),
-            );
-          } else if (snapshot.hasError) {
-            // Handle error
-            return Text('Error: ${snapshot.error}');
-          } else {
-            final initialRoute = snapshot.data;
-            if (initialRoute == "LoginView") {
-              return const LoginView();
-            } else {
-              return const MenuView();
-            }
-          }
-        },
+      home: Scaffold(
+        backgroundColor: Colors.white, // Set the background color to white
+        body: Center(
+          child: FutureBuilder<String>(
+            future: _getInitialRoute(context),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return CustomLoadingIndicator();
+              } else if (snapshot.hasError) {
+                // Handle error
+                return Text('Error: ${snapshot.error}');
+              } else {
+                final initialRoute = snapshot.data;
+                if (initialRoute == "LoginView") {
+                  return const LoginView();
+                } else {
+                  return const MenuView();
+                }
+              }
+            },
+          ),
+        ),
       ),
     );
   }

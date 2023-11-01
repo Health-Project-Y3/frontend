@@ -1,24 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:thurula/providers/baby_provider.dart';
-import 'package:thurula/services/auth/user_service.dart';
 import 'package:thurula/services/baby_service.dart';
-import 'package:thurula/services/local_service.dart';
 import 'package:thurula/views/menu_view.dart';
-import 'package:thurula/views/signup/sign_up_question_view.dart';
+import 'package:thurula/views/signup/sign_up_both_view1.dart';
 import '../../models/baby_model.dart';
 import '../../providers/user_provider.dart';
 import 'package:thurula/extensions/buildcontext/loc.dart';
 
-class SignUpChildView extends StatefulWidget {
-  const SignUpChildView({Key? key}) : super(key: key);
+class SignUpBothView2 extends StatefulWidget {
+  const SignUpBothView2({Key? key}) : super(key: key);
 
   @override
   _SignUpChildViewState createState() => _SignUpChildViewState();
 }
 
-class _SignUpChildViewState extends State<SignUpChildView> {
+class _SignUpChildViewState extends State<SignUpBothView2> {
   DateTime? selectedDate;
   bool isMaleSelected = true;
   bool isFemaleSelected = false;
@@ -181,7 +178,7 @@ class _SignUpChildViewState extends State<SignUpChildView> {
                           ? const Color.fromARGB(255, 220, 104, 145)
                           : Colors.grey,
                     ),
-                    child:  Row(
+                    child: Row(
                       children: [
                         const Icon(
                           Icons.male,
@@ -238,7 +235,7 @@ class _SignUpChildViewState extends State<SignUpChildView> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const SignUpViewQuestion(),
+                      builder: (context) => const SignUpBothView1(),
                     ),
                   );
                 },
@@ -277,20 +274,13 @@ class _SignUpChildViewState extends State<SignUpChildView> {
                 onPressed: isNextButtonEnabled()
                     ? () {
                         BabyService.createBaby(Baby(
-                                fname: babyNameController.text,
-                                lname: "",
-                                birthDate: selectedDate,
-                                ownerIDs: [
-                                  context.read<UserProvider>().user?.id ?? ''
-                                ],
-                                gender: isMaleSelected ? "male" : "female"))
-                            .then((baby) => {
-                                  UserService.addBaby(
-                                      context.read<UserProvider>().user!.id!,
-                                      baby.id!),
-                                  LocalService.setCurrentBabyId(baby.id!),
-                                  context.read<BabyProvider>().setBaby(baby),
-                                });
+                            fname: babyNameController.text,
+                            lname: "",
+                            birthDate: selectedDate,
+                            ownerIDs: [
+                              context.read<UserProvider>().user?.id ?? ''
+                            ],
+                            gender: isMaleSelected ? "male" : "female"));
                         Navigator.push(
                           context,
                           MaterialPageRoute(
