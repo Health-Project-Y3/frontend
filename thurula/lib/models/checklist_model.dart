@@ -17,12 +17,14 @@ class Checklists {
   String? period;
   String? category;
   final List<Instruction> instructions;
+  String? panel;
 
   Checklists({
     this.id = '',
     this.period = '',
     this.category = '',
     required this.instructions,
+    this.panel = '',
   });
 
   factory Checklists.fromJson(Map<String, dynamic> json) {
@@ -37,6 +39,7 @@ class Checklists {
       period: json['period'],
       category: json['category'],
       instructions: instructions,
+      panel: json['panel'],
     );
   }
 }

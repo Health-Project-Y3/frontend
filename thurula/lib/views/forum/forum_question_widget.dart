@@ -267,9 +267,14 @@ class _ForumQuestionCardState extends State<ForumQuestionCard> {
     } else if (difference.inHours < 24) {
       final hours = difference.inHours;
       return '$hours ${hours == 1 ? 'hour' : 'hours'} ago';
-    } else if (difference.inDays < 14) {
+    } else if (difference.inDays < 7) {
       final days = difference.inDays;
       return '$days ${days == 1 ? 'day' : 'days'} ago';
+    } else if (difference.inDays < 14) {
+      return '1 week ago';
+    } else if (difference.inDays < 30) {
+      final weeks = difference.inDays ~/ 7;
+      return '$weeks ${weeks == 1 ? 'week' : 'weeks'} ago';
     } else if (difference.inDays < 365) {
       final months = difference.inDays ~/ 30;
       return '$months ${months == 1 ? 'month' : 'months'} ago';
