@@ -144,7 +144,7 @@ class _NapRecordsState extends State<NapRecords> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'From:${DateFormat('HH:mm a').format(record.startTime!)} -  To:${DateFormat('HH:mm a').format(record.endTime!)}',
+                    '${DateFormat('HH:mm a').format(record.startTime!)} To ${DateFormat('HH:mm a').format(record.endTime!)}',
                   ),
                   SizedBox(height: 8),
                   Text('Duration: $formattedDuration'),
@@ -191,7 +191,7 @@ class _NapRecordsState extends State<NapRecords> {
                   children: <Widget>[
                     Row(
                       children: [
-                        Text('From: '),
+
                         Text(
                           DateFormat('hh:mm a , d MMMM yyyy')
                               .format(selectedStartTime.toLocal()),
@@ -229,7 +229,7 @@ class _NapRecordsState extends State<NapRecords> {
                     ),
                     Row(
                       children: [
-                        Text('To: '),
+                        Text('To'),
                         Text(
                           DateFormat('hh:mm a , d MMMM yyyy')
                               .format(selectedEndTime.toLocal()),

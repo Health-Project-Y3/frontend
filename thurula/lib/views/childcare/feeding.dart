@@ -71,6 +71,7 @@ class _FeedingRecordsState extends State<FeedingRecords> {
                     children: [
                       IconButton(
                         icon: Icon(Icons.edit),
+                        color: Color.fromARGB(255, 88, 119, 161),
                         onPressed: () {
                           // Handle the Edit button action for this record
                           // You can call a function to edit the record here
@@ -79,6 +80,7 @@ class _FeedingRecordsState extends State<FeedingRecords> {
                       ),
                       IconButton(
                         icon: Icon(Icons.delete),
+                        color: const Color.fromARGB(206, 185, 2, 2),
                         onPressed: () {
                           // Handle the Delete button action for this record
                           // You can call a function to delete the record here
