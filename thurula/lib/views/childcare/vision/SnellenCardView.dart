@@ -8,7 +8,6 @@ import 'package:thurula/services/eye_check_service.dart';
 
 final GlobalKey<NavigatorState> _navKey = GlobalKey<NavigatorState>();
 
-// import 'package:provider/provider.dart';
 class SnellenCardView extends StatefulWidget {
   const SnellenCardView({Key? key}) : super(key: key);
 
@@ -25,9 +24,6 @@ class FirstPage extends StatefulWidget {
 
 class _SnellenCardViewState extends State<SnellenCardView>
     with SingleTickerProviderStateMixin {
-  //const SnellenCardView({Key? key}) : super(key: key);
-  //SnellenCardView({super.key});
-
   late final TabController _tabController;
   @override
   void initState() {
@@ -37,12 +33,10 @@ class _SnellenCardViewState extends State<SnellenCardView>
 
   @override
   Widget build(BuildContext context) {
-    // final model = Provider.of<HomeModel>(context);
-
     final tabs = [
-      '1 month',
-      '2-3 months',
-      '5-6 months',
+      'snellen card',
+      '',
+      '',
     ];
 
     return DefaultTabController(
@@ -74,8 +68,6 @@ class _SnellenCardViewState extends State<SnellenCardView>
 }
 
 class _FirstPage extends State<FirstPage> {
-  // FirstPage({Key? key}) : super(key: key);
-
   late final TextEditingController babyIdController = TextEditingController();
   late final TextEditingController checkeddateController =
       TextEditingController();
@@ -84,14 +76,6 @@ class _FirstPage extends State<FirstPage> {
   String _localPath = "/sdcard/download/";
   bool _permissionReady = false;
   late final TargetPlatform? platform = TargetPlatform.android;
-
-  // final List<String> list = [
-  //   "At 1 month, babies still prefer focusing on bright objects within a foot in front of them",
-  //   "They can see distance (not as clearly) but prefer near objects.",
-  //   "This is typically the same distance between their eyes and their parent's faces.",
-  //   "You should aim to keep the black and white flashcards in an area that is near to your baby's face",
-  //   "Choosing a distance that is similar to the distance between baby's eyes and your face will produce the best results",
-  // ];
 
   final List<String> list = [
     "Have your child sit in the chair 10 feet from the chart, holding the cover over one eye without applying any pressure. Do not let the child peek. A second person may be needed to hold the cover in place and watch for peeking. If your child wears glasses, he or she should wear them during the test.",
@@ -135,13 +119,6 @@ class _FirstPage extends State<FirstPage> {
     return Scaffold(
         body: SingleChildScrollView(
             child: Column(children: [
-      // const FittedBox(
-      //     fit: BoxFit.fill,
-      //     child: Image(
-      //         image:
-      //             AssetImage('assets/images/baby vision cards 1 month.jpg'),
-      //         //width: 300,
-      //         height: 200)),
       Padding(
         padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
         child: InkWell(
@@ -189,9 +166,7 @@ class _FirstPage extends State<FirstPage> {
                         style: TextStyle(
                             color: Color.fromARGB(255, 220, 104, 145),
                             fontWeight: FontWeight.bold,
-                            fontSize: 22)
-                        //     padding: const EdgeInsets.only(bottom: 10),
-                        ),
+                            fontSize: 22)),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 20, 10, 0),
                       child: SizedBox(
@@ -199,10 +174,6 @@ class _FirstPage extends State<FirstPage> {
                         child: ListView.builder(
                             itemCount: list.length,
                             itemBuilder: (BuildContext ctxt, int index) {
-                              // return Text(
-                              //   "${index + 1}.${list[index]}",
-                              //   style: const TextStyle(fontSize: 16),
-                              // );
                               return Padding(
                                 padding: const EdgeInsets.only(bottom: 10),
                                 child: Row(
@@ -382,7 +353,7 @@ void QuickMessage(BuildContext context, String? eyescore) {
 
   // Show a dialog with the message
   showDialog(
-    context: context, // You need a BuildContext for this
+    context: context,
     builder: (BuildContext context) {
       return AlertDialog(
         title: const Text("Results/Further Considerations"),
@@ -445,13 +416,6 @@ class SecondPage extends StatelessWidget {
     return Scaffold(
         body: Column(
       children: [
-        // const FittedBox(
-        //     fit: BoxFit.fill,
-        //     child: Image(
-        //         image:
-        //             AssetImage('assets/images/baby vision cards 1 month.jpg'),
-        //         //width: 300,
-        //         height: 200)),
         Padding(
           padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
           child: InkWell(
@@ -554,13 +518,6 @@ class ThirdPage extends StatelessWidget {
     return Scaffold(
         body: Column(
       children: [
-        // const FittedBox(
-        //     fit: BoxFit.fill,
-        //     child: Image(
-        //         image:
-        //             AssetImage('assets/images/baby vision cards 1 month.jpg'),
-        //         //width: 300,
-        //         height: 200)),
         Padding(
           padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
           child: InkWell(
