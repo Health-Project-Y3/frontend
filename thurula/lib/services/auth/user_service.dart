@@ -45,12 +45,13 @@ class UserService {
         LocalService.setCurrentUserToken(response.body);
         getByUsername(username).then((value) {
           LocalService.setCurrentUserId(value!.id!);
-          LocalService.setCurrentBabyId("650fe71a1953bf17d815fac4");
+          //take first baby as default
+          LocalService.setCurrentBabyId(value.babyIDs![0]);
         });
         return true;
       } else {
         // login failed, handle the error
-        print(response.statusCode);
+        print(response.body);
         return false;
       }
     } catch (e) {
@@ -78,6 +79,7 @@ class UserService {
       body: body,
     );
     if (response.statusCode == 200) {
+      login(username, password);
       return User.fromJson((jsonDecode(response.body)));
     } else if (response.statusCode == 409) {
       throw UsernameTakenException();
