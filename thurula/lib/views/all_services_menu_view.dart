@@ -77,7 +77,6 @@ class AllServices extends StatelessWidget {
     () => DiaperRecords(),
     () => MealTracker(),
     () => const ExerciseView(),
-    () => ExerciseView(),
     () => const VisionMenuView(),
   ];
 
