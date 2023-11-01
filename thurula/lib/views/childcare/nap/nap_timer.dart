@@ -61,7 +61,8 @@ class _NapTimerState extends State<NapTimer> {
       stopwatch.stop();
       isSleeping = false;
 
-      DateTime startTime = DateTime.now().subtract(Duration(milliseconds: stopwatch.elapsedMilliseconds));
+      DateTime startTime = DateTime.now()
+          .subtract(Duration(milliseconds: stopwatch.elapsedMilliseconds));
       DateTime endTime = DateTime.now();
 
       NapTimes newNap = NapTimes(
@@ -77,9 +78,9 @@ class _NapTimerState extends State<NapTimer> {
       } catch (e) {
         print('Error creating nap record: $e');
       }
-    }
-    else{
-      DateTime startTime = DateTime.now().subtract(Duration(milliseconds: stopwatch.elapsedMilliseconds));
+    } else {
+      DateTime startTime = DateTime.now()
+          .subtract(Duration(milliseconds: stopwatch.elapsedMilliseconds));
       DateTime endTime = DateTime.now();
 
       NapTimes newNap = NapTimes(
@@ -95,8 +96,6 @@ class _NapTimerState extends State<NapTimer> {
       } catch (e) {
         print('Error creating nap record: $e');
       }
-
-
     }
   }
 
@@ -105,29 +104,9 @@ class _NapTimerState extends State<NapTimer> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor:Color.fromARGB(255, 220, 104, 145),
-        title: const Text(
-          'Baby Nap Timer',
-          style: TextStyle(
-            color:  Colors.white, // Title color
-          ),
-        ),
-         // Background color of the app bar
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color:  Colors.white, // Back icon color
-          ),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => NapDetails()),
-            );
-          },
-        ),
-      ),
-
+        title: Text('Nap Timer'),
+    backgroundColor: const Color.fromARGB(255, 220, 104, 145),
+    ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -136,20 +115,29 @@ class _NapTimerState extends State<NapTimer> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 buildTimeCard(
-                  time: formatTime(stopwatch.elapsedMilliseconds).substring(0, 2),
+                  time:
+                      formatTime(stopwatch.elapsedMilliseconds).substring(0, 2),
                   header: "HOURS",
                 ),
-                const SizedBox(width: 10,),
+                const SizedBox(
+                  width: 10,
+                ),
                 buildTimeCard(
-                  time: formatTime(stopwatch.elapsedMilliseconds).substring(3, 5),
+                  time:
+                      formatTime(stopwatch.elapsedMilliseconds).substring(3, 5),
                   header: "MINUTES",
                 ),
-                const SizedBox(width: 10,),
+                const SizedBox(
+                  width: 10,
+                ),
                 buildTimeCard(
-                  time: formatTime(stopwatch.elapsedMilliseconds).substring(6, 8),
+                  time:
+                      formatTime(stopwatch.elapsedMilliseconds).substring(6, 8),
                   header: "SECONDS",
                 ),
-                const SizedBox(width: 10,),
+                const SizedBox(
+                  width: 10,
+                ),
               ],
             ),
             const SizedBox(height: 30),
@@ -168,29 +156,33 @@ class _NapTimerState extends State<NapTimer> {
             ),
             const SizedBox(height: 20),
             Text(
-              isSleeping ? 'Mary is sleeping' : 'Start Mary\'s sleep timer',
+              isSleeping ? 'Baby is sleeping' : 'Start sleep timer',
               style: const TextStyle(
                 fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.blue,
+                fontWeight: FontWeight.w600,
+                color: Color.fromARGB(255, 88, 119, 161),
               ),
             ),
-            const SizedBox(height: 40), // spacing between "Mary is sleeping" text and buttons
+            const SizedBox(
+                height:
+                    40), // spacing between "Mary is sleeping" text and buttons
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 FloatingActionButton(
                   onPressed: handleStopwatchStartStop,
-                  backgroundColor: Colors.lightBlueAccent,
+                  backgroundColor: Color.fromARGB(255, 88, 119, 161),
                   child: Icon(
                     stopwatch.isRunning ? Icons.pause : Icons.play_arrow,
                     color: Colors.white,
                   ),
                 ),
-                const SizedBox(width: 50,),
+                const SizedBox(
+                  width: 50,
+                ),
                 FloatingActionButton(
                   onPressed: resetStopwatch,
-                  backgroundColor: Colors.lightBlueAccent,
+                  backgroundColor: Color.fromARGB(255, 88, 119, 161),
                   child: const Icon(
                     Icons.refresh,
                     color: Colors.white,
@@ -202,7 +194,8 @@ class _NapTimerState extends State<NapTimer> {
             ElevatedButton(
               onPressed: saveData, // saveData function
               style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white, backgroundColor: const Color.fromARGB(255, 220, 104, 145),
+                foregroundColor: Colors.white,
+                backgroundColor: const Color.fromARGB(255, 220, 104, 145),
               ),
               child: const Text('Save Data'),
             ),
@@ -211,9 +204,6 @@ class _NapTimerState extends State<NapTimer> {
       ),
     );
   }
-
-
-
 }
 
 Widget buildTimeCard({required String time, required String header}) {
@@ -222,30 +212,26 @@ Widget buildTimeCard({required String time, required String header}) {
     children: [
       Container(
         decoration: BoxDecoration(
-          color:const Color.fromARGB(255, 220, 104, 145),
-          borderRadius: BorderRadius.circular(20)
+            color: Colors.lightBlue[50],
+            borderRadius: BorderRadius.circular(20)),
+        child: Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Text(
+            time,
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 60,
+                color: Colors.black54),
+          ),
         ),
-        child: Padding(padding: EdgeInsets.all(8.0),
-        child: Text(time,style: TextStyle(fontWeight: FontWeight.bold, fontSize: 60, color: Colors.black54 ),),),
       ),
-      SizedBox(height: 10,),
-      Text(header, style: TextStyle(color: Colors.blue),)
+      SizedBox(
+        height: 10,
+      ),
+      Text(
+        header,
+        style: TextStyle(color: Colors.blue),
+      )
     ],
   );
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
