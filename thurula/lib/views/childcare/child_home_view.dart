@@ -13,7 +13,7 @@ import 'package:thurula/views/childcare/vaccination_tracker_view.dart';
 import 'package:thurula/views/childcare/vision/VisionMenuView.dart';
 import 'package:thurula/views/childcare/diaper_records.dart';
 import 'package:thurula/views/childcare/nap/nap_details.dart';
-import 'package:thurula/views/childcare/meal_tracker.dart';
+import 'package:thurula/views/childcare/feeding.dart';
 import 'package:thurula/views/widgets/expandable_fab_widget.dart';
 import '../../providers/baby_provider.dart';
 import '../../providers/user_provider.dart';
@@ -319,7 +319,7 @@ class _ChildHomeViewState extends State<ChildHomeView> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => MealTracker(),
+                                builder: (context) => FeedingRecords(),
                               ),
                             );
                           },

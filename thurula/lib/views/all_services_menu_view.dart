@@ -16,7 +16,7 @@ import 'package:thurula/views/childcare/growth_chart_view.dart';
 import 'package:thurula/views/childcare/vaccination_tracker_view.dart';
 import 'package:thurula/views/childcare/vision/VisionMenuView.dart';
 import 'package:thurula/views/childcare/nap/nap_details.dart';
-import 'package:thurula/views/childcare/meal_tracker.dart';
+import 'package:thurula/views/childcare/feeding.dart';
 
 void main() {
   runApp(AllServices());
@@ -75,7 +75,7 @@ class AllServices extends StatelessWidget {
     () => const VaccinationTrackerView(),
     () => NapDetails(),
     () => DiaperRecords(),
-    () => MealTracker(),
+    () => FeedingRecords(),
     () => const ExerciseView(),
     () => ExerciseView(),
     () => const VisionMenuView(),
