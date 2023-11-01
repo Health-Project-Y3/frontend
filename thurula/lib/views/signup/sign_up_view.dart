@@ -81,7 +81,7 @@ class _SignUpViewState extends State<SignUpView> {
                           Expanded(
                             child: TextFieldWidget(
                               controller: lastNameController,
-                              hintText: 'Last Name',
+                              hintText: context.loc.register_page_LastName,
                               isPassword: false,
                             ),
                           ),
