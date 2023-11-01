@@ -3,13 +3,18 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:thurula/constants/routes.dart';
 import '../models/user_drinking_model.dart';
+import 'local_service.dart';
 
 class UserDrinkingService {
   static Future<UserDrinking?> getUserDrinking(String id) async {
+    String jwt = await LocalService.getCurrentUserToken();
     try {
       var response = await http.get(
         Uri.parse(getRoute("drinking_tracker/$id")),
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $jwt'
+        },
       );
 
       // Check the status code of the response
@@ -25,14 +30,20 @@ class UserDrinkingService {
     return null;
   }
 
-  static Future<List<UserDrinking>> getUserDrinkings(String id, String? startDate, String? endDate) async {
+  static Future<List<UserDrinking>> getUserDrinkings(
+      String id, String? startDate, String? endDate) async {
+    String jwt = await LocalService.getCurrentUserToken();
     try {
       // Define the URI based on whether start and end dates are provided
       final Uri uri = startDate != null && endDate != null
-          ? Uri.parse(getRoute('drinking_tracker/user/$id?startDate=$startDate&endDate=$endDate'))
+          ? Uri.parse(getRoute(
+              'drinking_tracker/user/$id?startDate=$startDate&endDate=$endDate'))
           : Uri.parse(getRoute('drinking_tracker/user/$id'));
 
-      final response = await http.get(uri, headers: {'Content-Type': 'application/json'});
+      final response = await http.get(uri, headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      });
 
       if (response.statusCode == 200) {
         final List<UserDrinking> drinkings = (jsonDecode(response.body) as List)
@@ -49,10 +60,15 @@ class UserDrinkingService {
     return [];
   }
 
-  static Future<bool> patchUserDrinking(String id, String key, dynamic value) async {
+  static Future<bool> patchUserDrinking(
+      String id, String key, dynamic value) async {
+    String jwt = await LocalService.getCurrentUserToken();
     var response = await http.patch(
       Uri.parse(getRoute('drinking/$id')),
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
       body: jsonEncode([
         {"op": "replace", "path": "/$key", "value": value}
       ]),
@@ -65,10 +81,14 @@ class UserDrinkingService {
   }
 
   static Future<UserDrinking> createUserDrinking(UserDrinking uex) async {
+    String jwt = await LocalService.getCurrentUserToken();
     String body = json.encode(UserDrinking.toJson(uex));
     var response = await http.post(
       Uri.parse(getRoute("drinking_tracker")),
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
       body: body,
     );
     if (response.statusCode == 201) {
@@ -81,7 +101,14 @@ class UserDrinkingService {
   }
 
   static Future<void> deleteUserDrinking(String id) async {
-    var response = await http.delete(Uri.parse(getRoute("drinking_tracker/$id")));
+    String jwt = await LocalService.getCurrentUserToken();
+    var response = await http.delete(
+      Uri.parse(getRoute("drinking_tracker/$id")),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
+    );
     if (response.statusCode == 200) {
       return;
     } else {
@@ -91,10 +118,14 @@ class UserDrinkingService {
   }
 
   static Future<void> updateUserDrinking(String id, UserDrinking uex) async {
+    String jwt = await LocalService.getCurrentUserToken();
     String body = json.encode(UserDrinking.toJson(uex));
     var response = await http.put(
       Uri.parse(getRoute("drinking_tracker/$id")),
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
       body: body,
     );
     if (response.statusCode == 204) {

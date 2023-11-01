@@ -11,6 +11,7 @@ import 'package:thurula/views/pregnancy/pregnancy_timeline_view.dart';
 import 'package:thurula/views/pregnancy/pregnancy_exercises/pregnancy_exercise_recommendations_view.dart';
 import 'package:thurula/views/pregnancy/pregnancy_baby_names_view.dart';
 import 'package:thurula/views/pregnancy/vaccination_tracker_view.dart';
+import 'package:thurula/views/pregnancy/food_suggestions.dart';
 
 import '../../providers/user_provider.dart';
 import '../widgets/navbar_widget.dart';
@@ -357,6 +358,53 @@ class _PregnancyHomeViewState extends State<PregnancyHomeView> {
                               const SizedBox(height: 7),
                               const Text(
                                 'Baby Names',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 88, 119, 161),
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      )),
+                  Padding(
+                      padding: const EdgeInsets.all(1.0),
+                      child: InkResponse(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => FoodViewPage(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          width: 100,
+                          height: 120,
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 255, 255, 255),
+                            borderRadius: BorderRadius.circular(5.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 0.5,
+                                blurRadius: 3,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const SizedBox(height: 5),
+                              Image.asset('assets/images/menu-tiles/meal.png',
+                                  height: 70),
+                              // ),
+                              const SizedBox(height: 7),
+                              const Text(
+                                'Food Suggestions',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Color.fromARGB(255, 88, 119, 161),
