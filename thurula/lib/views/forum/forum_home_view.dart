@@ -113,7 +113,7 @@ class _ForumHomeViewState extends State<ForumHomeView> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 220, 104, 145),
-        title: const Text('Recent Forum Questions'),
+        title: const Text(''),
         actions: [
           // Add a search bar in the app bar
           IconButton(
