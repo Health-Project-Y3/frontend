@@ -10,7 +10,7 @@ class DiaperRecords extends StatefulWidget {
 
 class _DiaperRecordsState extends State<DiaperRecords> {
   Future<List<DiaperTimes>> _diaperRecordsFuture =
-      Future<List<DiaperTimes>>.value([]);
+  Future<List<DiaperTimes>>.value([]);
   List<DiaperTimes> diaperRecords = [];
 
   @override
@@ -41,44 +41,56 @@ class _DiaperRecordsState extends State<DiaperRecords> {
         title: Text('Diaper Change Monitoring'),
         backgroundColor: const Color.fromARGB(255, 220, 104, 145),
       ),
-      body: ListView.builder(
-        itemCount: diaperRecords.length,
-        itemBuilder: (context, index) {
-          DiaperTimes record = diaperRecords[index];
-          String formattedDate = DateFormat('EEEE, d MMMM y')
-              .format(record.time ?? DateTime.now());
-          String formattedTime =
-              DateFormat('hh:mm:ss').format(record.time ?? DateTime.now());
+      body: Column(
+        children: <Widget>[
+          SizedBox(height: 10),
 
-          if (index == 0 ||
-              formattedDate !=
-                  DateFormat('EEEE, d MMMM y')
-                      .format(diaperRecords[index - 1].time!)) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Divider(
-                  color: Colors.black54,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text(
-                    formattedDate,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      color: Color.fromARGB(255, 88, 119, 161),
-                    ),
-                  ),
-                ),
-                // Divider(),
-                _buildDiaperRecord(formattedTime, record),
-              ],
-            );
-          } else {
-            return _buildDiaperRecord(formattedTime, record);
-          }
-        },
+          CustomCard(
+            title1: 'Total Diaper Changes Today',
+            title2: '${_calculateTotalDiaperChangesToday(diaperRecords)}',
+          ),
+
+          Expanded(
+            child: ListView.builder(
+              itemCount: diaperRecords.length,
+              itemBuilder: (context, index) {
+                DiaperTimes record = diaperRecords[index];
+                String formattedDate = DateFormat('EEEE, d MMMM y')
+                    .format(record.time ?? DateTime.now());
+                String formattedTime =
+                DateFormat('hh:mm:ss').format(record.time ?? DateTime.now());
+
+                if (index == 0 ||
+                    formattedDate !=
+                        DateFormat('EEEE, d MMMM y')
+                            .format(diaperRecords[index - 1].time!)) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Divider(
+                        color: Colors.black54,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Text(
+                          formattedDate,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: Color.fromARGB(255, 88, 119, 161),
+                          ),
+                        ),
+                      ),
+                      _buildDiaperRecord(formattedTime, record),
+                    ],
+                  );
+                } else {
+                  return _buildDiaperRecord(formattedTime, record);
+                }
+              },
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -89,6 +101,354 @@ class _DiaperRecordsState extends State<DiaperRecords> {
       ),
     );
   }
+  Future<void> showAddDiaperDialog(BuildContext context) async {
+    final TextEditingController diaperTypeController = TextEditingController();
+    DateTime? selectedTime = DateTime.now();
+    String? selectedDiaperType; // Store the selected diaper type
+    String? message;
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Row(
+                      children: [
+                        Text(
+                          '${selectedTime != null ? DateFormat('h:mm a').format(selectedTime!) : ''}, ' // Time
+                              '${selectedTime != null ? DateFormat('d MMMM y').format(selectedTime!) : ''}', // Date
+                        ),
+                        SizedBox(width: 10),
+                      ],
+                    ),
+
+                    ElevatedButton(
+                      onPressed: () async {
+                        selectedTime = await _selectTime(context, selectedTime);
+                        setState(() {}); // Update the dialog state
+                      },
+                      child: Text('Change Date/Time'),
+                    ),
+                    Column(
+                      children: <Widget>[
+                        Text(
+                          'Diaper Type: ',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Row(
+                          children: [
+                            Radio<String>(
+                              value: 'wet',
+                              groupValue: selectedDiaperType,
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedDiaperType = value;
+                                });
+                              },
+                            ),
+                            Text('Wet'),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Radio<String>(
+                              value: 'mixed',
+                              groupValue: selectedDiaperType,
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedDiaperType = value;
+                                });
+                              },
+                            ),
+                            Text('Mixed'),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Radio<String>(
+                              value: 'dirty',
+                              groupValue: selectedDiaperType,
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedDiaperType = value;
+                                });
+                              },
+                            ),
+                            Text('Dirty'),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Text(
+                      message ?? '',
+                      style: TextStyle(
+                        color: message == 'Error' ? Colors.red : Colors.green,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: Text('Cancel'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                TextButton(
+                  child: Text('Save'),
+                  onPressed: () async {
+                    final diaperType = selectedDiaperType;
+
+                    if (diaperType != null) {
+                      final newDiaper = DiaperTimes(
+                        time: selectedTime,
+                        diaperType: diaperType,
+                        babyId: '64b01605b55b765169e1c9b6',
+                      );
+
+                      try {
+                        await DiaperService.createDiaper(newDiaper);
+                        message = 'Diaper change record added successfully!';
+                        Navigator.of(context).pop();
+                        _loadDiaperRecords();
+                      } catch (e) {
+                        print('Error in showAddDiaperDialog: $e');
+                      }
+                    } else {
+                      message = 'Please select a valid diaper type.';
+                    }
+
+                    setState(() {}); // Update the dialog state
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+
+  Future<void> _showEditDiaperDialog(BuildContext context, DiaperTimes existingDiaper) async {
+    DateTime selectedTime = existingDiaper.time ?? DateTime.now();
+    DateTime initialSelectedTime = selectedTime; // Store the initial selected time
+    String? diaperNotes = existingDiaper.diaperNotes;
+    String? selectedDiaperType = existingDiaper.diaperType;
+    String? loggedBy = existingDiaper.loggedBy;
+    String? message;
+
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            String formattedTime =
+            DateFormat('h:mm a').format(selectedTime);
+            String formattedDate =
+            DateFormat(' d MMMM y').format(selectedTime);
+
+            return AlertDialog(
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Row(
+                      children: [
+                        Text(
+                          '$formattedTime, '
+                              '$formattedDate  ',
+                        ),
+                        SizedBox(width: 10),
+                      ],
+                    ),
+                    ElevatedButton(
+                      onPressed: () async {
+                        DateTime? pickedTime = await showDatePicker(
+                          context: context,
+                          initialDate: selectedTime,
+                          firstDate: DateTime(2000),
+                          lastDate: DateTime(2101),
+                        );
+                        if (pickedTime != null) {
+                          TimeOfDay? pickedTimeOfDay = await showTimePicker(
+                            context: context,
+                            initialTime: TimeOfDay.fromDateTime(selectedTime),
+                          );
+                          if (pickedTimeOfDay != null) {
+                            setState(() {
+                              selectedTime = DateTime(
+                                pickedTime.year,
+                                pickedTime.month,
+                                pickedTime.day,
+                                pickedTimeOfDay.hour,
+                                pickedTimeOfDay.minute,
+                              );
+                            });
+                          }
+                        }
+                      },
+                      child: Text('Update Date/Time'),
+                    ),
+                    Column(
+                      children: <Widget>[
+                        Text(
+                          'Diaper Type: ',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Row(
+                          children: [
+                            Radio<String>(
+                              value: 'wet',
+                              groupValue: selectedDiaperType,
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedDiaperType = value;
+                                });
+                              },
+                            ),
+                            Text('Wet'),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Radio<String>(
+                              value: 'mixed',
+                              groupValue: selectedDiaperType,
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedDiaperType = value;
+                                });
+                              },
+                            ),
+                            Text('Mixed'),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Radio<String>(
+                              value: 'dirty',
+                              groupValue: selectedDiaperType,
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedDiaperType = value;
+                                });
+                              },
+                            ),
+                            Text('Dirty'),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Text(
+                      message ?? '',
+                      style: TextStyle(
+                        color: message == 'Error' ? Colors.red : Colors.green,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: Text(
+                    'Cancel',
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                TextButton(
+                  child: Text('Save'),
+                  onPressed: () async {
+                    if (selectedTime != null && selectedDiaperType != null) {
+                      try {
+                        existingDiaper.time = selectedTime;
+                        existingDiaper.diaperNotes = diaperNotes;
+                        existingDiaper.diaperType = selectedDiaperType;
+                        existingDiaper.loggedBy = loggedBy;
+
+                        await DiaperService.updateDiaper(
+                          existingDiaper.id ?? '', existingDiaper,
+                        );
+
+                        message = 'Diaper change record updated successfully!';
+                        Navigator.of(context).pop();
+                        _loadDiaperRecords();
+                      } catch (e) {
+                        message = 'Error';
+                      }
+                    } else {
+                      message = 'Please select a valid time and diaper type.';
+                    }
+
+                    setState(() {});
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+
+  Future<void> _deleteDiaperRecord(String id) async {
+    bool confirmed = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Confirm Deletion'),
+          content: Text('Are you sure you want to delete this record?'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('No'),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            ),
+            TextButton(
+              child: Text('Yes'),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+            ),
+          ],
+        );
+      },
+    );
+
+    if (confirmed == true) {
+      try {
+        await DiaperService.deleteDiaper(id);
+
+        setState(() {
+          diaperRecords.removeWhere((record) => record.id == id);
+        });
+      } catch (e) {
+        print('Failed to delete diaper change record: $e');
+      }
+    }
+  }
+
+  int _calculateTotalDiaperChangesToday(List<DiaperTimes> records) {
+    DateTime today = DateTime.now();
+    DateTime startOfDay = DateTime(today.year, today.month, today.day);
+    DateTime endOfDay = DateTime(today.year, today.month, today.day, 23, 59, 59);
+
+    return records.where((record) {
+      DateTime recordTime = record.time ?? DateTime.now();
+      return recordTime.isAfter(startOfDay) && recordTime.isBefore(endOfDay);
+    }).length;
+  }
+
 
   Widget _buildDiaperRecord(String formattedTime, DiaperTimes record) {
     Icon diaperIcon = Icon(Icons.info_outline);
@@ -106,7 +466,7 @@ class _DiaperRecordsState extends State<DiaperRecords> {
     }
 
     String formattedTime =
-        DateFormat('h:mm a').format(record.time ?? DateTime.now());
+    DateFormat('h:mm a').format(record.time ?? DateTime.now());
 
     return Card(
       elevation: 3,
@@ -201,251 +561,67 @@ class _DiaperRecordsState extends State<DiaperRecords> {
   }
 
 
-  Future<void> showAddDiaperDialog(BuildContext context) async {
-    final TextEditingController diaperTypeController = TextEditingController();
-    DateTime? selectedTime = DateTime.now();
-    DateTime? initialSelectedTime = selectedTime; // Store the initial selected time
-    String? message;
 
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return StatefulBuilder(
-          builder: (context, setState) {
-            return AlertDialog(
-              content: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Row(
-                      children: [
-                        Text(
-                          '${selectedTime != null ? DateFormat('h:mm a').format(selectedTime!) : ''}, ' // Time
-                              '${selectedTime != null ? DateFormat('d MMMM y').format(selectedTime!) : ''}', // Date
-                        ),
-                        SizedBox(width: 10),
-                      ],
+}
+
+
+class CustomCard extends StatelessWidget {
+  final String title1;
+  final String title2;
+
+  CustomCard({required this.title1, required this.title2});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0), // Adjust the border radius as needed
+      ),
+      elevation: 4, // Adjust the shadow as needed
+      margin: EdgeInsets.all(10), // Adjust the margin as needed
+      child: Container(
+        width: double.infinity, // Card should be full width
+        height: 100,
+        padding: EdgeInsets.all(10),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title1,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 16,
                     ),
-
-                    ElevatedButton(
-                      onPressed: () async {
-                        selectedTime = await _selectTime(context, selectedTime);
-                        setState(() {}); // Update the dialog state
-                      },
-                      child: Text('Change Date/Time'),
-                    ),
-                    TextField(
-                      controller: diaperTypeController,
-                      decoration: InputDecoration(labelText: 'Diaper Type'),
-                    ),
-                    Text(
-                      message ?? '',
-                      style: TextStyle(
-                        color: message == 'Error' ? Colors.red : Colors.green,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              actions: <Widget>[
-                TextButton(
-                  child: Text('Cancel'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                TextButton(
-                  child: Text('Save'),
-                  onPressed: () async {
-                    final diaperType = await _validateTextField(
-                        context, 'Diaper Type', diaperTypeController.text);
-
-                    if (diaperType != null) {
-                      final newDiaper = DiaperTimes(
-                        time: selectedTime,
-                        diaperType: diaperType,
-                        babyId: '64b01605b55b765169e1c9b6',
-                      );
-
-                      try {
-                        await DiaperService.createDiaper(newDiaper);
-                        message = 'Diaper change record added successfully!';
-                        Navigator.of(context).pop();
-                        _loadDiaperRecords();
-                      } catch (e) {
-                        print('Error in showAddDiaperDialog: $e');
-                      }
-                    }
-                    setState(() {}); // Update the dialog state
-                  },
-                ),
-              ],
-            );
-          },
-        );
-      },
-    );
-  }
-
-
-
-  Future<void> _showEditDiaperDialog(BuildContext context, DiaperTimes existingDiaper) async {
-    DateTime selectedTime = existingDiaper.time ?? DateTime.now();
-    DateTime initialSelectedTime = selectedTime; // Store the initial selected time
-    String? diaperNotes = existingDiaper.diaperNotes;
-    String? diaperType = existingDiaper.diaperType;
-    String? loggedBy = existingDiaper.loggedBy;
-    String? message;
-
-    await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return StatefulBuilder(
-          builder: (context, setState) {
-            String formattedTime =
-            DateFormat('h:mm a').format(selectedTime);
-            String formattedDate =
-            DateFormat(' d MMMM y').format(selectedTime);
-
-            return AlertDialog(
-              content: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Row(
-                      children: [
-                        Text(
-                          '$formattedTime, '
-                              '$formattedDate  ',
-                        ),
-                        SizedBox(width: 10),
-                      ],
-                    ),
-                    ElevatedButton(
-                      onPressed: () async {
-                        DateTime? pickedTime = await showDatePicker(
-                          context: context,
-                          initialDate: selectedTime,
-                          firstDate: DateTime(2000),
-                          lastDate: DateTime(2101),
-                        );
-                        if (pickedTime != null) {
-                          TimeOfDay? pickedTimeOfDay = await showTimePicker(
-                            context: context,
-                            initialTime: TimeOfDay.fromDateTime(selectedTime),
-                          );
-                          if (pickedTimeOfDay != null) {
-                            setState(() {
-                              selectedTime = DateTime(
-                                pickedTime.year,
-                                pickedTime.month,
-                                pickedTime.day,
-                                pickedTimeOfDay.hour,
-                                pickedTimeOfDay.minute,
-                              );
-                            });
-                          }
-                        }
-                      },
-                      child: Text('Update Date/Time'),
-                    ),
-                    TextFormField(
-                      initialValue: diaperType,
-                      onChanged: (value) {
-                        diaperType = value;
-                      },
-                      decoration: InputDecoration(
-                        labelText: 'Diaper Type (wet/mixed/dirty)',
-                      ),
-                    ),
-                    Text(
-                      message ?? '',
-                      style: TextStyle(
-                          color:
-                          message == 'Error' ? Colors.red : Colors.green),
-                    ),
-                  ],
-                ),
-              ),
-              actions: <Widget>[
-                TextButton(
-                  child: Text(
-                    'Cancel',
                   ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                TextButton(
-                  child: Text('Save'),
-                  onPressed: () async {
-                    if (selectedTime != null) {
-                      try {
-                        existingDiaper.time = selectedTime;
-                        existingDiaper.diaperNotes = diaperNotes;
-                        existingDiaper.diaperType = diaperType;
-                        existingDiaper.loggedBy = loggedBy;
-
-                        await DiaperService.updateDiaper(
-                            existingDiaper.id ?? '', existingDiaper);
-
-                        message = 'Diaper change record updated successfully!';
-                        Navigator.of(context).pop();
-                        _loadDiaperRecords();
-                      } catch (e) {
-                        message = 'Error';
-                      }
-                    } else {
-                      message = 'Please select a valid time.';
-                    }
-
-                    setState(() {});
-                  },
-                ),
-              ],
-            );
-          },
-        );
-      },
-    );
-  }
-
-
-  Future<void> _deleteDiaperRecord(String id) async {
-    bool confirmed = await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Confirm Deletion'),
-          content: Text('Are you sure you want to delete this record?'),
-          actions: <Widget>[
-            TextButton(
-              child: Text('No'),
-              onPressed: () {
-                Navigator.of(context).pop(false);
-              },
+                  SizedBox(height: 10), // Add space between titles
+                  Text(
+                    title2,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 22, // Increase font size
+                      color: Color.fromARGB(255, 220, 104, 145), // Change color
+                    ),
+                  ),
+                ],
+              ),
             ),
-            TextButton(
-              child: Text('Yes'),
-              onPressed: () {
-                Navigator.of(context).pop(true);
-              },
+            SizedBox(width: 10),
+
+            Container(
+              width: 70.0, // Adjust the width as needed
+              child: Image(
+                image: AssetImage('assets/images/menu-tiles/diaper.png'),
+              ),
             ),
+
           ],
-        );
-      },
+
+        ),
+
+      ),
     );
-
-    if (confirmed == true) {
-      try {
-        await DiaperService.deleteDiaper(id);
-
-        setState(() {
-          diaperRecords.removeWhere((record) => record.id == id);
-        });
-      } catch (e) {
-        print('Failed to delete diaper change record: $e');
-      }
-    }
   }
 }
