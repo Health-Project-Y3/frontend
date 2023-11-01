@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:thurula/models/baby_model.dart';
+import 'package:thurula/models/user_model.dart';
+import 'package:thurula/services/auth/user_service.dart';
 import 'package:thurula/services/baby_length_service.dart';
 import 'package:thurula/services/baby_service.dart';
 import 'package:thurula/services/baby_weight_service.dart';
@@ -37,7 +39,10 @@ class _ChildHomeViewState extends State<ChildHomeView> {
   }
 
   Future<void> loadBabies() async {
-    var user = context.read<UserProvider>().user!;
+    User? user = context.read<UserProvider>().user!;
+    user = await UserService.getUser(user.id!);
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    userProvider.setUser(user!);
     List<Baby> loadedBabies = [];
     for (var babyId in user.babyIDs!) {
       Baby? baby = await BabyService.getBaby(babyId);
