@@ -1,35 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:thurula/providers/baby_provider.dart';
 import 'package:thurula/services/auth/user_service.dart';
-import 'package:thurula/services/baby_service.dart';
-import 'package:thurula/services/local_service.dart';
-import 'package:thurula/views/childcare/child_home_view.dart';
-import 'package:thurula/views/menu_view.dart';
+import 'package:thurula/views/signup/sign_up_both_view2.dart';
 import 'package:thurula/views/signup/sign_up_question_view.dart';
-import '../../models/baby_model.dart';
+
 import '../../providers/user_provider.dart';
 import 'package:thurula/extensions/buildcontext/loc.dart';
 
-class SignUpChildView extends StatefulWidget {
-  const SignUpChildView({Key? key}) : super(key: key);
+class SignUpBothView1 extends StatefulWidget {
+  const SignUpBothView1({Key? key}) : super(key: key);
 
   @override
-  _SignUpChildViewState createState() => _SignUpChildViewState();
+  _SignUpPregnancyViewState createState() => _SignUpPregnancyViewState();
 }
 
-class _SignUpChildViewState extends State<SignUpChildView> {
-  DateTime? selectedDate;
-  bool isMaleSelected = false;
-  bool isFemaleSelected = false;
-
-  final TextEditingController babyNameController = TextEditingController();
+class _SignUpPregnancyViewState extends State<SignUpBothView1> {
+  DateTime? selectedDueDate;
+  DateTime? selectedPredictedDate;
 
   bool isNextButtonEnabled() {
-    return selectedDate != null &&
-        (isMaleSelected || isFemaleSelected) &&
-        babyNameController.text.isNotEmpty;
+    return selectedDueDate != null;
+  }
+
+  void calculateDueDateFromPredicted() {
+    if (selectedPredictedDate != null) {
+      final calculatedDueDate = selectedPredictedDate!
+          .add(const Duration(days: 270)); // 270 days = 9 months
+      setState(() {
+        selectedDueDate = calculatedDueDate;
+      });
+    }
   }
 
   @override
@@ -49,17 +50,26 @@ class _SignUpChildViewState extends State<SignUpChildView> {
               ),
             ),
             Positioned(
-              top: 170,
+              top: 150,
               left: 16,
               right: 16,
               child: Column(
                 children: [
                   Text(
-                    context.loc.register_page3_Q1,
+                    context.loc.register_page4_C1,
                     style: const TextStyle(
                       color: Color.fromARGB(255, 220, 104, 145),
                       fontFamily: 'Inter',
                       fontSize: 18,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    context.loc.register_page4_C2,
+                    style: const TextStyle(
+                      color: Colors.grey,
+                      fontFamily: 'Inter',
+                      fontSize: 14,
                     ),
                   ),
                 ],
@@ -77,11 +87,12 @@ class _SignUpChildViewState extends State<SignUpChildView> {
                       context: context,
                       initialDate: DateTime.now(),
                       firstDate: DateTime(1900),
-                      lastDate: DateTime.now(),
+                      lastDate: DateTime(DateTime.now().year,
+                          DateTime.now().month + 11, DateTime.now().day),
                     ).then((value) {
                       if (value != null) {
                         setState(() {
-                          selectedDate = value;
+                          selectedDueDate = value;
                         });
                       }
                     });
@@ -97,9 +108,10 @@ class _SignUpChildViewState extends State<SignUpChildView> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          selectedDate != null
-                              ? DateFormat('yyyy-MM-dd').format(selectedDate!)
-                              : context.loc.register_page3_Q1placeholder,
+                          selectedDueDate != null
+                              ? DateFormat('yyyy-MM-dd')
+                                  .format(selectedDueDate!)
+                              : context.loc.register_page4_Q1,
                           style: const TextStyle(
                             color: Colors.grey,
                             fontFamily: 'Inter',
@@ -117,123 +129,106 @@ class _SignUpChildViewState extends State<SignUpChildView> {
               ),
             ),
             Positioned(
-              top: 280,
-              left: 16,
-              right: 16,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: TextField(
-                  controller: babyNameController,
-                  decoration: InputDecoration(
-                    fillColor: Colors.white,
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Color.fromARGB(255, 220, 104, 145),
-                      ),
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Color.fromARGB(255, 220, 104, 145),
-                      ),
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    labelText: context.loc.register_page3_Q2placeholder,
-                    labelStyle: const TextStyle(
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              top: 380,
+              top: 300,
               left: 16,
               right: 16,
               child: Column(
                 children: [
+                  Container(
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Color.fromARGB(255, 220, 104, 145),
+                    ),
+                    padding: const EdgeInsets.all(12.0),
+                    child: Center(
+                      child: Text(
+                        context.loc.register_page4_OR,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 40),
                   Text(
-                    context.loc.register_page3_Q2,
+                    context.loc.register_page4_C3,
                     style: const TextStyle(
                       color: Color.fromARGB(255, 220, 104, 145),
                       fontFamily: 'Inter',
                       fontSize: 18,
                     ),
                   ),
+                  const SizedBox(height: 8),
+                  Text(
+                    context.loc.register_page4_C4,
+                    style: const TextStyle(
+                      color: Colors.grey,
+                      fontFamily: 'Inter',
+                      fontSize: 14,
+                    ),
+                  ),
                 ],
               ),
             ),
             Positioned(
-              top: 430,
+              top: 440,
               left: 16,
               right: 16,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        isMaleSelected = true;
-                        isFemaleSelected = false;
-                      });
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: isMaleSelected
-                          ? const Color.fromARGB(255, 220, 104, 145)
-                          : Colors.grey,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: GestureDetector(
+                  onTap: () {
+                    showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1900),
+                      lastDate: DateTime.now(),
+                    ).then((value) {
+                      if (value != null) {
+                        setState(() {
+                          selectedPredictedDate = value;
+                          // Calculate and set the due date from the predicted date
+                          calculateDueDateFromPredicted();
+                        });
+                      }
+                    });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                          color: const Color.fromARGB(255, 220, 104, 145)),
+                      borderRadius: BorderRadius.circular(15.0),
                     ),
+                    padding: const EdgeInsets.all(10.0),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Icon(
-                          Icons.male,
-                          color: Colors.white,
-                        ),
-                        const SizedBox(width: 8),
                         Text(
-                          context.loc.register_page3_Male,
+                          selectedPredictedDate != null
+                              ? DateFormat('yyyy-MM-dd')
+                                  .format(selectedPredictedDate!)
+                              : context.loc.register_page4_Q2,
                           style: const TextStyle(
-                            color: Colors.white,
+                            color: Colors.grey,
+                            fontFamily: 'Inter',
                             fontSize: 16,
                           ),
+                        ),
+                        const Icon(
+                          Icons.calendar_today,
+                          color: Color.fromARGB(255, 220, 104, 145),
                         ),
                       ],
                     ),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        isMaleSelected = false;
-                        isFemaleSelected = true;
-                      });
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: isFemaleSelected
-                          ? const Color.fromARGB(255, 220, 104, 145)
-                          : Colors.grey,
-                    ),
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.female,
-                          color: Colors.white,
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          context.loc.register_page3_Female,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
             Positioned(
-              top: 710,
               left: 16,
+              bottom: 20,
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -272,30 +267,24 @@ class _SignUpChildViewState extends State<SignUpChildView> {
               ),
             ),
             Positioned(
-              top: 710,
               right: 16,
+              bottom: 20,
               child: ElevatedButton(
                 onPressed: isNextButtonEnabled()
                     ? () {
-                        BabyService.createBaby(Baby(
-                                fname: babyNameController.text,
-                                lname: "",
-                                birthDate: selectedDate,
-                                ownerIDs: [
-                                  context.read<UserProvider>().user?.id ?? ''
-                                ],
-                                gender: isMaleSelected ? "male" : "female"))
-                            .then((baby) => {
-                                  UserService.addBaby(
-                                      context.read<UserProvider>().user!.id!,
-                                      baby.id!),
-                                  LocalService.setCurrentBabyId(baby.id!),
-                                  context.read<BabyProvider>().setBaby(baby),
+                        UserService.getUser(
+                                context.read<UserProvider>().user!.id!)
+                            .then((u) => {
+                                  u?.dueDate = selectedDueDate,
+                                  u?.conceptionDate = DateTime(
+                                      selectedDueDate!.year,
+                                      selectedDueDate!.month - 10,
+                                      selectedDueDate!.day),
                                 });
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const ChildHomeView(),
+                            builder: (context) => const SignUpBothView2(),
                           ),
                         );
                       }
