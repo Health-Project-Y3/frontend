@@ -93,7 +93,7 @@ class _VaccinationTrackerViewState extends State<MomVaccinationTrackerView> {
           future: upcomingVaccinations,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-             return CustomLoadingIndicator();
+              return CustomLoadingIndicator();
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
@@ -102,7 +102,8 @@ class _VaccinationTrackerViewState extends State<MomVaccinationTrackerView> {
               );
             } else {
               List<Vaccination> vaccinations = snapshot.data!;
-              return Column(
+              return SingleChildScrollView(
+                  child: Column(
                 children: [
                   const SizedBox(height: 25.0),
                   for (var vaccination in vaccinations)
@@ -160,7 +161,7 @@ class _VaccinationTrackerViewState extends State<MomVaccinationTrackerView> {
                       ),
                     ),
                 ],
-              );
+              ));
             }
           },
         );
@@ -185,7 +186,8 @@ class _VaccinationTrackerViewState extends State<MomVaccinationTrackerView> {
               );
             } else {
               List<Vaccination> vaccinations = snapshot.data!;
-              return Column(
+              return SingleChildScrollView(
+                  child: Column(
                 children: [
                   const SizedBox(height: 25.0),
                   for (var vaccination in vaccinations)
@@ -199,14 +201,33 @@ class _VaccinationTrackerViewState extends State<MomVaccinationTrackerView> {
                             color: Color.fromARGB(255, 220, 104, 145)),
                         title: Text(vaccination.name ?? ''),
                         subtitle: Text(vaccination.description ?? ''),
-                        trailing: const Icon(
-                          Icons.done,
-                          color: Color.fromARGB(255, 220, 104, 145),
+                        trailing: TextButton(
+                          onPressed: () async {
+                            final value = await UserId;
+                            try {
+                              await VaccinationService
+                                  .undoCompletedMomVaccination(
+                                      value, vaccination.id);
+                              _refreshData();
+                            } catch (error) {
+                              print(
+                                  'Error marking vaccination as completed: $error');
+                            }
+                          },
+                          style: TextButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
+                            backgroundColor:
+                                const Color.fromARGB(255, 220, 104, 145),
+                          ),
+                          child: const Text('Undo'),
                         ),
                       ),
                     ),
                 ],
-              );
+              ));
             }
           },
         );
