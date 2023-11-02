@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thurula/views/menu_view.dart';
 import 'package:thurula/views/pregnancy/add_weight.dart';
 import 'package:thurula/views/pregnancy/add_pressure.dart';
 import 'package:thurula/views/pregnancy/add_water.dart';
@@ -258,7 +259,12 @@ class _HealthTrackerState extends State<MotherHealthTracker1> {
           ),
           onPressed: () {
 
-            Navigator.of(context).pop();
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MenuView(),
+              ),
+            );
           },
         ),
       ),
