@@ -6,6 +6,7 @@ import 'package:thurula/services/user_bp_service.dart';
 import 'package:thurula/views/pregnancy/view_bp_records.dart';
 
 import '../../services/local_service.dart';
+import 'mother_health_tracker.dart';
 
 class AddPressurePage extends StatefulWidget {
   @override
@@ -18,8 +19,8 @@ class _AddPressurePageState extends State<AddPressurePage> {
 
   Future<UserBp> _getLastBloodPressure() async {
     try {
-      String userId = await LocalService.getCurrentUserId();
-      List<UserBp> userBps = await UserBpService.getUserBps(userId, null, null); // Replace with your actual user ID
+
+      List<UserBp> userBps = await UserBpService.getUserBps('650a6c285a1bbcfe70b8ad08', null, null); // Replace with your actual user ID
       if (userBps.isNotEmpty) {
         userBps.sort((a, b) => b.date!.compareTo(a.date!));
         return userBps.first;
@@ -61,7 +62,7 @@ class _AddPressurePageState extends State<AddPressurePage> {
     }
 
     UserBp userBp = UserBp(
-      userId: "your_user_id_hee", // Replace with your actual user ID
+      userId: "650a6c285a1bbcfe70b8ad08", // Replace with your actual user ID
       bloodPressure: bloodPressureText, // Pass the entered blood pressure value
       date: _selectedDate,
     );
@@ -110,6 +111,15 @@ class _AddPressurePageState extends State<AddPressurePage> {
       appBar: AppBar(
         title: Text('Blood Pressure Monitor'),
         backgroundColor: Color.fromARGB(255, 220, 104, 145),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back), // You can use a different icon if desired
+          onPressed: () {
+            // Add navigation logic to go to the "Mother Health Tracker" page
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => MotherHealthTracker1()), // Replace with your actual page widget
+            );
+          },
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(

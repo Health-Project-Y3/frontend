@@ -1131,13 +1131,13 @@ String getBloodPressureStatus(int bpValue) {
 Color getBackgroundColorForStatus(int bloodPressure) {
   String status = getBloodPressureStatus(bloodPressure);
   switch (status) {
-    case "Low":
+    case "Blood Pressuer is Low":
+      return Colors.red;
+    case "Blood Pressure Ideal":
       return Colors.green;
-    case "Ideal":
-      return Colors.blue;
-    case "Pre high":
+    case "Blood Pressure is Pre high":
       return Colors.orange;
-    case "High":
+    case "Blood Pressure is High":
       return Colors.red; // Red background for "High" status
     default:
       return Colors.red; // Default red background for any other status
