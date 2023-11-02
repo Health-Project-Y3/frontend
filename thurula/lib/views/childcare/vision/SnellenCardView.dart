@@ -85,24 +85,36 @@ class _FirstPage extends State<FirstPage> {
     "If the chart seems too dark to see clearly, use the flashlight to illuminate the test letters.",
     "Point at each of the Es, starting with the largest. Have your child point in the direction the E is pointing."
   ];
+  bool isDownloading = false;
 
   Future<void> copyPDFToStorage() async {
+    setState(() {
+      isDownloading = true;
+    });
+    try {
+      print("Downloading");
+      final ByteData data =
+          await rootBundle.load('assets/files/vision_test1.pdf');
+      final List<int> bytes = data.buffer.asUint8List();
+
+      // Get the document directory using path_provider
+      final Directory directory = await getApplicationDocumentsDirectory();
+      print(directory);
+      final String filePath = '${directory.path}/sample.pdf';
+      String _localPath = "/sdcard/download/sample.pdf";
+      // Write the PDF data to the file
+      final File file = File(_localPath);
+      await file.writeAsBytes(bytes, flush: true);
+
+      print('PDF file copied to: $_localPath');
+    } catch (e) {
+      print('Error: $e');
+    } finally {
+      setState(() {
+        isDownloading = false;
+      });
+    }
     // Get the asset file as a byte data
-    print("Downloading");
-    final ByteData data =
-        await rootBundle.load('assets/files/vision_test1.pdf');
-    final List<int> bytes = data.buffer.asUint8List();
-
-    // Get the document directory using path_provider
-    final Directory directory = await getApplicationDocumentsDirectory();
-    print(directory);
-    final String filePath = '${directory.path}/sample.pdf';
-    String _localPath = "/sdcard/download/sample.pdf";
-    // Write the PDF data to the file
-    final File file = File(_localPath);
-    await file.writeAsBytes(bytes, flush: true);
-
-    print('PDF file copied to: $_localPath');
   }
 
   void handleButtonPress() async {
@@ -119,19 +131,26 @@ class _FirstPage extends State<FirstPage> {
             child: Column(children: [
       Padding(
         padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-        child: ElevatedButton(
-          onPressed: () {
-            handleButtonPress();
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color.fromARGB(255, 220, 104, 145),
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 50),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.0),
-            ),
-          ),
-          child: const Text("Download the card"),
-        ),
+        child: isDownloading
+            ? const CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(
+                  Color.fromARGB(255, 220, 104, 145),
+                ),
+              )
+            : ElevatedButton(
+                onPressed: () {
+                  handleButtonPress();
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 220, 104, 145),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 12, horizontal: 50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+                child: const Text("Download the card"),
+              ),
       ),
       Padding(
         padding: const EdgeInsets.fromLTRB(20, 20, 10, 0),

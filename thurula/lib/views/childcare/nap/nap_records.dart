@@ -144,7 +144,7 @@ class _NapRecordsState extends State<NapRecords> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'From:${DateFormat('HH:mm a').format(record.startTime!)} -  To:${DateFormat('HH:mm a').format(record.endTime!)}',
+                    '${DateFormat('HH:mm a').format(record.startTime!)} To ${DateFormat('HH:mm a').format(record.endTime!)}',
                   ),
                   SizedBox(height: 8),
                   Text('Duration: $formattedDuration'),
@@ -158,6 +158,8 @@ class _NapRecordsState extends State<NapRecords> {
                 _showEditNapDialog(context, record);
               },
             ),
+
+
             IconButton(
               icon: Icon(Icons.delete),
               color: const Color.fromARGB(206, 185, 2, 2),
@@ -183,16 +185,17 @@ class _NapRecordsState extends State<NapRecords> {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              // title: Text('Add Nap Record'),
               content: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Row(
                       children: [
-                        Text('From: '),
-                        Text(DateFormat('hh:mm a , d MMMM yyyy')
-                            .format(selectedStartTime.toLocal())),
+
+                        Text(
+                          DateFormat('hh:mm a , d MMMM yyyy')
+                              .format(selectedStartTime.toLocal()),
+                        ),
                         SizedBox(width: 10),
                       ],
                     ),
@@ -206,11 +209,9 @@ class _NapRecordsState extends State<NapRecords> {
                           lastDate: DateTime(2101),
                         );
                         if (pickedStartTime != null) {
-                          TimeOfDay? pickedStartTimeOfDay =
-                              await showTimePicker(
+                          TimeOfDay? pickedStartTimeOfDay = await showTimePicker(
                             context: context,
-                            initialTime:
-                                TimeOfDay.fromDateTime(selectedStartTime),
+                            initialTime: TimeOfDay.fromDateTime(selectedStartTime),
                           );
                           if (pickedStartTimeOfDay != null) {
                             setState(() {
@@ -228,9 +229,11 @@ class _NapRecordsState extends State<NapRecords> {
                     ),
                     Row(
                       children: [
-                        Text('To: '),
-                        Text(DateFormat('hh:mm a , d MMMM yyyy')
-                            .format(selectedEndTime.toLocal())),
+                        Text('To'),
+                        Text(
+                          DateFormat('hh:mm a , d MMMM yyyy')
+                              .format(selectedEndTime.toLocal()),
+                        ),
                         SizedBox(width: 10),
                       ],
                     ),
@@ -246,8 +249,7 @@ class _NapRecordsState extends State<NapRecords> {
                         if (pickedEndTime != null) {
                           TimeOfDay? pickedEndTimeOfDay = await showTimePicker(
                             context: context,
-                            initialTime:
-                                TimeOfDay.fromDateTime(selectedEndTime),
+                            initialTime: TimeOfDay.fromDateTime(selectedEndTime),
                           );
                           if (pickedEndTimeOfDay != null) {
                             setState(() {
@@ -263,11 +265,12 @@ class _NapRecordsState extends State<NapRecords> {
                         }
                       },
                     ),
-                    Text(message ?? '',
-                        style: TextStyle(
-                            color: message == 'Error'
-                                ? Colors.red
-                                : Colors.green)),
+                    Text(
+                      message ?? '',
+                      style: TextStyle(
+                        color: message == 'Error' ? Colors.red : Colors.green,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -281,11 +284,14 @@ class _NapRecordsState extends State<NapRecords> {
                 TextButton(
                   child: Text('Save'),
                   onPressed: () async {
-                    // Validate the new nap record
-                    if (selectedStartTime.isBefore(selectedEndTime)) {
+                    int durationSeconds = selectedEndTime.difference(selectedStartTime).inSeconds;
+
+                    if (durationSeconds > 86400) {
+                      // Prevent adding records with a duration of more than 24 hours
+                      message = 'Nap duration should not exceed 24 hours.';
+                    } else if (selectedStartTime.isBefore(selectedEndTime)) {
                       newNap.startTime = selectedStartTime;
                       newNap.endTime = selectedEndTime;
-
                       try {
                         // Save the new nap record to the backend with the same baby ID
                         // Replace '64b01605b55b765169e1c9b6' with your actual baby ID
@@ -295,10 +301,15 @@ class _NapRecordsState extends State<NapRecords> {
                         // Display a success message
                         message = 'Nap record added successfully!';
 
-                        // Close the dialog
-                        Navigator.of(context).pop();
+                        // After successfully adding the record, refresh the list
+                        await _refreshNapRecords();
 
-                        // Optionally, you can also refresh the nap record list here if needed.
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text('Nap record added successfully!'),
+                          duration: Duration(seconds: 2),
+                        ));
+
+                        Navigator.of(context).pop();
                       } catch (e) {
                         message = 'Error'; // Display the error message
                       }
@@ -315,6 +326,12 @@ class _NapRecordsState extends State<NapRecords> {
         );
       },
     );
+  }
+  Future<void> _refreshNapRecords() async {
+    setState(() {
+      // Reset the future to reload the data
+      _napRecordsFuture = NapService.getBabyNaps('64b01605b55b765169e1c9b6');
+    });
   }
 
   Future<void> _showEditNapDialog(
@@ -352,10 +369,10 @@ class _NapRecordsState extends State<NapRecords> {
                         );
                         if (pickedStartTime != null) {
                           TimeOfDay? pickedStartTimeOfDay =
-                              await showTimePicker(
+                          await showTimePicker(
                             context: context,
                             initialTime:
-                                TimeOfDay.fromDateTime(selectedStartTime),
+                            TimeOfDay.fromDateTime(selectedStartTime),
                           );
                           if (pickedStartTimeOfDay != null) {
                             setState(() {
@@ -392,7 +409,7 @@ class _NapRecordsState extends State<NapRecords> {
                           TimeOfDay? pickedEndTimeOfDay = await showTimePicker(
                             context: context,
                             initialTime:
-                                TimeOfDay.fromDateTime(selectedEndTime),
+                            TimeOfDay.fromDateTime(selectedEndTime),
                           );
                           if (pickedEndTimeOfDay != null) {
                             setState(() {
@@ -428,17 +445,21 @@ class _NapRecordsState extends State<NapRecords> {
                   child: Text('Save'),
                   onPressed: () async {
                     if (selectedStartTime != null && selectedEndTime != null) {
+                      // In _showEditNapDialog after updating the record
                       try {
-                        // Update the nap record and get the response
                         existingNap.startTime = selectedStartTime;
                         existingNap.endTime = selectedEndTime;
                         await NapService.updateNap(existingNap);
 
-                        message = 'Nap record updated successfully!';
-                        Navigator.of(context).pop(); // Close the dialog
+                        // Indicate that a change was made
+                        Navigator.of(context).pop(true); // Set the result to true
+
+                        // Close the dialog
+                        Navigator.of(context).pop();
                       } catch (e) {
                         message = 'Error';
                       }
+
                     } else {
                       message = 'Please select valid start and end times.';
                     }
