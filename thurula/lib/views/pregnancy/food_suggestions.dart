@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/navbar_widget.dart';
+
 class FoodViewPage extends StatefulWidget {
   @override
   _FoodViewPageState createState() => _FoodViewPageState();
@@ -155,6 +157,7 @@ class _FoodViewPageState extends State<FoodViewPage>
           );
         }).toList(),
       ),
+      bottomNavigationBar: const CreateBottomNavigationBar(pageIndex: 1),
     );
   }
 }

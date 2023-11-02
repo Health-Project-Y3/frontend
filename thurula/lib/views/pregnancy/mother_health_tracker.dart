@@ -12,7 +12,8 @@ import 'package:thurula/services/user_drinking_service.dart';
 import 'package:thurula/models/user_drinking_model.dart';
 import 'package:thurula/services/user_bmi_service.dart';
 import 'package:thurula/services/local_service.dart';
-import 'package:thurula/providers/user_provider.dart';
+
+import '../widgets/navbar_widget.dart';
 
 class MotherHealthTracker1 extends StatefulWidget {
   const MotherHealthTracker1({Key? key}) : super(key: key);
@@ -734,6 +735,7 @@ class _HealthTrackerState extends State<MotherHealthTracker1> {
             ),
         ],
       ),
+      bottomNavigationBar: const CreateBottomNavigationBar(pageIndex: 1),
     );
   }
 }

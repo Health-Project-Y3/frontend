@@ -5,6 +5,8 @@ import '../../menu_view.dart';
 import 'package:thurula/views/pregnancy/pregnancy_exercises/pregnancy_exercise_timer_view.dart';
 import 'package:thurula/views/pregnancy/pregnancy_exercises/pregnancy_exercise_history_view.dart';
 
+import '../../widgets/navbar_widget.dart';
+
 
 
 
@@ -436,6 +438,7 @@ class PregnancyExercisesView extends StatelessWidget {
               ),
             ],
           ),
+          bottomNavigationBar: const CreateBottomNavigationBar(pageIndex: 1),
         ),
       ),
     );

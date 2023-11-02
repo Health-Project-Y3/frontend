@@ -42,6 +42,8 @@ import 'package:thurula/views/pregnancy/pregnancy_timeline/week_8.dart';
 import 'package:thurula/views/pregnancy/pregnancy_timeline/week_9.dart';
 import 'package:thurula/providers/user_provider.dart';
 
+import '../widgets/navbar_widget.dart';
+
 class PregnancyTimelineView extends StatelessWidget {
   const PregnancyTimelineView({super.key});
 
@@ -290,6 +292,7 @@ class PregnancyTimelineView extends StatelessWidget {
               Week40View(),
             ],
           ),
+          bottomNavigationBar: const CreateBottomNavigationBar(pageIndex: 1),
         ),
       ),
     );
