@@ -4,6 +4,8 @@ import 'package:thurula/services/naps_service.dart';
 import 'package:thurula/models/naptimes_model.dart';
 import 'dart:ui';
 
+import '../../widgets/navbar_widget.dart';
+
 class NapDetails extends StatefulWidget {
   @override
   _NapDetailsState createState() => _NapDetailsState();
@@ -178,6 +180,7 @@ class _NapDetailsState extends State<NapDetails> {
           },
         ),
       ),
+      bottomNavigationBar: const CreateBottomNavigationBar(pageIndex: 1),
     );
 
 

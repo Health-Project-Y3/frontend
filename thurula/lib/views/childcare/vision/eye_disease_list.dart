@@ -6,6 +6,8 @@ import 'package:thurula/views/childcare/vision/eye_cataract.dart';
 import 'package:thurula/views/childcare/vision/lazy_eye.dart';
 import 'package:thurula/views/childcare/vision/pink_eye.dart';
 import '../../../constants/eye_disease.dart';
+import '../../widgets/navbar_widget.dart';
+import 'chalzion_eye.dart';
 
 class EyeDiseaseList extends StatelessWidget {
   const EyeDiseaseList({super.key});
@@ -16,7 +18,6 @@ class EyeDiseaseList extends StatelessWidget {
         appBar: AppBar(
           title: const Row(children: [Text('Eye Diseases')]),
           backgroundColor: const Color.fromARGB(255, 220, 104, 145),
-      
         ),
         body: SingleChildScrollView(
             child: Column(
@@ -59,7 +60,7 @@ class EyeDiseaseList extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const LazyEye()));
+                                builder: (context) => const ChalzionEye()));
                       } else {
                         Navigator.push(
                             context,
@@ -121,6 +122,8 @@ class EyeDiseaseList extends StatelessWidget {
                   )),
             ]
           ],
-        )));
+        )),
+        bottomNavigationBar: const CreateBottomNavigationBar(pageIndex: 1),
+    );
   }
 }

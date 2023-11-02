@@ -3,6 +3,8 @@ import 'package:thurula/services/diapers_service.dart';
 import 'package:thurula/models/diapertimes_model.dart';
 import 'package:intl/intl.dart';
 
+import '../widgets/navbar_widget.dart';
+
 class DiaperRecords extends StatefulWidget {
   @override
   _DiaperRecordsState createState() => _DiaperRecordsState();
@@ -99,6 +101,7 @@ class _DiaperRecordsState extends State<DiaperRecords> {
         child: Icon(Icons.add),
         backgroundColor: const Color.fromARGB(255, 220, 104, 145),
       ),
+      bottomNavigationBar: const CreateBottomNavigationBar(pageIndex: 1),
     );
   }
   Future<void> showAddDiaperDialog(BuildContext context) async {

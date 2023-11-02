@@ -7,6 +7,7 @@ import 'package:thurula/views/childcare/exercise/week6.dart';
 import 'package:thurula/views/childcare/exercise/week7.dart';
 import '../../../models/checklist_model.dart';
 import '../../../services/checklist_service.dart';
+import '../../widgets/navbar_widget.dart';
 
 final GlobalKey<NavigatorState> _navKey = GlobalKey<NavigatorState>();
 
@@ -125,6 +126,7 @@ class _ExerciseViewState extends State<ExerciseView>
               ),
             ),
           ),
+          bottomNavigationBar: const CreateBottomNavigationBar(pageIndex: 1),
         ));
   }
 }

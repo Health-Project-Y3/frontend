@@ -9,20 +9,8 @@ class DroopyEye extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Row(children: [Text('Crossed Eye')]),
+          title: const Row(children: [Text('Droopy Eyelid')]),
           backgroundColor: const Color.fromARGB(255, 220, 104, 145),
-          actions: <Widget>[
-            Padding(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: IconButton(
-                    icon: const Icon(Icons.menu),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const ChildCareMenuView()));
-                    })),
-          ],
         ),
         body: const SingleChildScrollView(
             child: Column(
