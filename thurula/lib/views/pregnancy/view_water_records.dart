@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:thurula/models/user_drinking_model.dart';
 import 'package:thurula/services/user_drinking_service.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class ViewWaterPage extends StatefulWidget {
-  final String userId;
+import '../../providers/user_provider.dart';
+import 'add_water.dart';
 
-  ViewWaterPage({required this.userId});
+class ViewWaterPage extends StatefulWidget {
+
 
   @override
   _ViewWaterPageState createState() => _ViewWaterPageState();
@@ -18,8 +20,9 @@ class _ViewWaterPageState extends State<ViewWaterPage> {
 
   @override
   void initState() {
+    var userId= context.read<UserProvider>().user?.id ?? '';
     super.initState();
-    UserDrinkingService.getUserDrinkings(widget.userId, null, null).then((drinkings) {
+    UserDrinkingService.getUserDrinkings(userId, null, null).then((drinkings) {
       setState(() {
         userDrinkings = drinkings;
       });
@@ -37,9 +40,12 @@ class _ViewWaterPageState extends State<ViewWaterPage> {
         title: Text('View Water Records'),
         backgroundColor: Color.fromARGB(255, 220, 104, 145),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(Icons.arrow_back), // You can use a different icon if desired
           onPressed: () {
-            // Add navigation logic to go back to the previous page
+            // Add navigation logic to go to the "Mother Health Tracker" page
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => WaterMonitorPage()), // Replace with your actual page widget
+            );
           },
         ),
       ),

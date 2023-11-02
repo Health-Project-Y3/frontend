@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 import 'package:thurula/services/auth/user_service.dart';
 import 'package:thurula/models/user_model.dart';
 import 'package:thurula/models/user_weight_model.dart';
 import 'package:thurula/services/user_weight_service.dart';
 import 'package:thurula/views/pregnancy/view_weight_records.dart';
 import 'package:thurula/views/pregnancy/mother_health_tracker.dart';
+import 'package:thurula/services/local_service.dart';
+
+import '../../providers/user_provider.dart';
 
 class WeightMonitorPage extends StatefulWidget {
   @override
   _WeightMonitorPageState createState() => _WeightMonitorPageState();
 }
+
+
 
 class _WeightMonitorPageState extends State<WeightMonitorPage> {
   DateTime _selectedDate = DateTime.now();
@@ -19,6 +25,16 @@ class _WeightMonitorPageState extends State<WeightMonitorPage> {
   String? _dateError;
   TextEditingController _weightController = TextEditingController();
   String _tempSelectedDate = '';
+  String? userId;
+
+  @override
+  void initState() {
+    userId= context.read<UserProvider>().user?.id ?? '';
+    super.initState();
+
+  }
+
+
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -38,15 +54,21 @@ class _WeightMonitorPageState extends State<WeightMonitorPage> {
     }
   }
 
+   // Declare a global variable
+
+
   Future<User?> _getUserData() async {
-    return UserService.getUser('652a5d43935d40f339c12d8b');
+    String userId = await LocalService.getCurrentUserId();
+    return UserService.getUser(userId);
   }
 
   Future<List<UserWeight>> _getUserWeights() async {
+    String userId = await LocalService.getCurrentUserId();
+
     // Fetch user weights here, using the UserWeightService
     // Pass the user's ID and set null for the start and end date as needed
     List<UserWeight> userWeights =
-    await UserWeightService.getUserWeights('652a5d43935d40f339c12d8b', null, null);
+    await UserWeightService.getUserWeights(userId, null, null);
     return userWeights;
   }
 
@@ -177,12 +199,12 @@ class _WeightMonitorPageState extends State<WeightMonitorPage> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(builder: (context) =>
-                                          ViewWeightPage(userId: '652a5d43935d40f339c12d8b')),
+                                          ViewWeightPage()),
                                     );
                                   },
                                   style: ElevatedButton.styleFrom(
                                     primary: Color.fromARGB(255, 88, 119, 161),
-                                    minimumSize: Size(120, 0),
+                                    minimumSize: Size(100, 0), // Adjust the width as needed
                                     padding: EdgeInsets.all(16.0),
                                   ),
                                   child: Text('View Records'),
@@ -304,7 +326,7 @@ class _WeightMonitorPageState extends State<WeightMonitorPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) =>
-                                ViewWeightPage(userId: '652a5d43935d40f339c12d8b')),
+                                ViewWeightPage()),
                           );
                         },
                         style: ElevatedButton.styleFrom(
@@ -339,7 +361,7 @@ class _WeightMonitorPageState extends State<WeightMonitorPage> {
 
                           if (_userWeight != null && _tempSelectedDate.isNotEmpty) {
                             final userWeight = UserWeight(
-                              userId: '652a5d43935d40f339c12d8b',
+                              userId: userId,
                               weight: _userWeight,
                               date: DateTime.parse(_tempSelectedDate),
                             );
