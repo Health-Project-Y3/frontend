@@ -43,7 +43,7 @@ class _MealTrackerState extends State<MealTracker> {
           SizedBox(height: 10),
           CustomCard(
             title1: 'Total Feedings Today',
-            title2: '${_calculateTotalFeedingsToday(feedingRecords)}',
+            title2: '3',
           ),
           Expanded(
             child: ListView.builder(
@@ -234,10 +234,6 @@ class _MealTrackerState extends State<MealTracker> {
                         newFeeding.endTime = selectedEndDateTime;
                         newFeeding.feedingType = feedingType;
                         newFeeding.babyId = '64b01605b55b765169e1c9b6';
-                        newFeeding.id= '12345';
-                        newFeeding.feedingNotes = 'ew4tw2';
-                        newFeeding.feedingMood = 5;
-                        newFeeding.loggedBy = 'ew4tw2';
 
 
                         // Print the selected values in the terminal
