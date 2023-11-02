@@ -404,7 +404,7 @@ class _PregnancyHomeViewState extends State<PregnancyHomeView> {
                               // ),
                               const SizedBox(height: 7),
                               const Text(
-                                'Food Suggestions',
+                                'Food',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Color.fromARGB(255, 88, 119, 161),
@@ -469,10 +469,110 @@ class _PregnancyHomeViewState extends State<PregnancyHomeView> {
             const SizedBox(height: 5),
 
             // baby size
-            IntrinsicHeight(
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const PregnancyTimelineView(),
+                  ),
+                );
+              },
+              child: IntrinsicHeight(
+                child: Container(
+                  width: 400,
+                  // height: 200,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 0.5,
+                        blurRadius: 3,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            // bullet point
+                            const Icon(
+                              Icons.square,
+                              size: 10,
+                              color: Color.fromARGB(255, 88, 119, 161),
+                            ),
+                            SizedBox(width: 10),
+                            Text(
+                              "Week $week",
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromARGB(255, 88, 119, 161),
+                              ),
+                            ),
+                            Spacer(),
+                            // Spacer to push the length and weight to the right
+                            Text(
+                              BabySize(week),
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Color.fromARGB(255, 88, 119, 161),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          Babyfactor(week),
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey,
+                            height: 1.5,
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              "Your baby is big as " + FruitSize(week),
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromARGB(255, 88, 119, 161),
+                              ),
+                            ),
+                            Image.asset(
+                              "assets/images/pregnancy-home/size/$week.png",
+                              height: 100,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 5),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const MomVaccinationTrackerView(),
+                  ),
+                );
+              },
               child: Container(
                 width: 400,
-                // height: 200,
+                height: 80,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10.0),
@@ -480,123 +580,44 @@ class _PregnancyHomeViewState extends State<PregnancyHomeView> {
                     BoxShadow(
                       color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 0.5,
-                      blurRadius: 3,
+                      blurRadius: 2,
                       offset: const Offset(0, 2),
                     ),
                   ],
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          // bullet point
-                          const Icon(
-                            Icons.square,
-                            size: 10,
-                            color: Color.fromARGB(255, 88, 119, 161),
-                          ),
-                          SizedBox(width: 10),
-                          Text(
-                            "Week $week",
+                child: Center(
+                  child: FutureBuilder<String?>(
+                    future: getRecentDue(
+                        context.read<UserProvider>().user?.id ??
+                            "No due vaccinations"),
+                    builder: (context, dueSnapshot) {
+                      if (dueSnapshot.connectionState ==
+                          ConnectionState.waiting) {
+                        return const CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                              Color.fromARGB(255, 220, 104, 145)),
+                        );
+                      } else if (dueSnapshot.hasError) {
+                        return const Text("No due vaccinations");
+                      } else {
+                        final dueMessage =
+                            dueSnapshot.data ?? "No due vaccinations found";
+                        return Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text(
+                            dueMessage, // Display the due message here
                             style: const TextStyle(
-                              fontSize: 20,
+                              color: Color.fromARGB(255, 220, 104, 145),
+                              fontSize: 17.0,
+                              height: 1.5,
+                              fontFamily: 'Inter',
                               fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 88, 119, 161),
                             ),
                           ),
-                          Spacer(),
-                          // Spacer to push the length and weight to the right
-                          Text(
-                            BabySize(week),
-                            style: const TextStyle(
-                              fontSize: 16,
-                              color: Color.fromARGB(255, 88, 119, 161),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        Babyfactor(week),
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey,
-                          height: 1.5,
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            "Your baby is big as " + FruitSize(week),
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 88, 119, 161),
-                            ),
-                          ),
-                          Image.asset(
-                            "assets/images/pregnancy-home/size/$week.png",
-                            height: 100,
-                          ),
-                        ],
-                      ),
-                    ],
+                        );
+                      }
+                    },
                   ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 5),
-            Container(
-              width: 400,
-              height: 80,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 0.5,
-                    blurRadius: 2,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Center(
-                child: FutureBuilder<String?>(
-                  future: getRecentDue(context.read<UserProvider>().user?.id ??
-                      "No due vaccinations"),
-                  builder: (context, dueSnapshot) {
-                    if (dueSnapshot.connectionState ==
-                        ConnectionState.waiting) {
-                      return CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                            Color.fromARGB(255, 220, 104, 145)),
-                      );
-                    } else if (dueSnapshot.hasError) {
-                      return const Text("No due vaccinations");
-                    } else {
-                      final dueMessage =
-                          dueSnapshot.data ?? "No due vaccinations found";
-                      return Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Text(
-                          dueMessage, // Display the due message here
-                          style: const TextStyle(
-                            color: Color.fromARGB(255, 220, 104, 145),
-                            fontSize: 17.0,
-                            height: 1.5,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      );
-                    }
-                  },
                 ),
               ),
             ),

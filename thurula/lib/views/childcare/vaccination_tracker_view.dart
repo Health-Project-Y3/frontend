@@ -139,7 +139,8 @@ class _VaccinationTrackerViewState extends State<VaccinationTrackerView> {
                     vaccination.daysFromBirth, vaccination.name);
               }
 
-              return Column(
+              return SingleChildScrollView(
+                  child: Column(
                 children: [
                   const SizedBox(height: 25.0),
                   for (var vaccination in vaccinations)
@@ -198,7 +199,7 @@ class _VaccinationTrackerViewState extends State<VaccinationTrackerView> {
                       ),
                     ),
                 ],
-              );
+              ));
             }
           },
         );
@@ -223,7 +224,8 @@ class _VaccinationTrackerViewState extends State<VaccinationTrackerView> {
               );
             } else {
               List<Vaccination> vaccinations = snapshot.data!;
-              return Column(
+              return SingleChildScrollView(
+                  child: Column(
                 children: [
                   const SizedBox(height: 25.0),
                   for (var vaccination in vaccinations)
@@ -231,20 +233,41 @@ class _VaccinationTrackerViewState extends State<VaccinationTrackerView> {
                       padding: const EdgeInsets.all(10.0),
                       child: ListTile(
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0)),
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
                         tileColor: const Color.fromARGB(255, 255, 255, 255),
-                        leading: const Icon(Icons.calendar_today,
-                            color: Color.fromARGB(255, 220, 104, 145)),
-                        title: Text(vaccination.name ?? ''),
-                        subtitle: Text(vaccination.description ?? ''),
-                        trailing: const Icon(
-                          Icons.done,
+                        leading: const Icon(
+                          Icons.calendar_today,
                           color: Color.fromARGB(255, 220, 104, 145),
                         ),
+                        title: Text(vaccination.name ?? ''),
+                        subtitle: Text(vaccination.description ?? ''),
+                        trailing: TextButton(
+                          onPressed: () async {
+                            final value = await babyId;
+                            try {
+                              await VaccinationService
+                                  .undoCompletedBabyVaccination(
+                                      value, vaccination.id);
+                              _refreshData();
+                            } catch (error) {
+                              print('Error undoing vaccination: $error');
+                            }
+                          },
+                          style: TextButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
+                            backgroundColor:
+                                const Color.fromARGB(255, 220, 104, 145),
+                          ),
+                          child: const Text('Undo'),
+                        ),
                       ),
-                    ),
+                    )
                 ],
-              );
+              ));
             }
           },
         );
