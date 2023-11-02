@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 import 'package:thurula/models/user_drinking_model.dart';
 import 'package:thurula/services/user_drinking_service.dart';
 import 'package:thurula/views/pregnancy/view_water_records.dart';
+
+import '../../providers/user_provider.dart';
+import 'mother_health_tracker.dart';
 class WaterMonitorPage extends StatefulWidget {
   @override
   _WaterMonitorPageState createState() => _WaterMonitorPageState();
@@ -10,10 +14,12 @@ class WaterMonitorPage extends StatefulWidget {
 
 class _WaterMonitorPageState extends State<WaterMonitorPage> {
   String? _selectedOption;
+  String? userId;
   late Future<List<UserDrinking>> _userDrinkingsFuture;
 
   @override
   void initState() {
+    userId= context.read<UserProvider>().user?.id ?? '';
     super.initState();
     _userDrinkingsFuture = _fetchUserDrinkings();
   }
@@ -25,7 +31,7 @@ class _WaterMonitorPageState extends State<WaterMonitorPage> {
 
     try {
       final userDrinkings = await UserDrinkingService.getUserDrinkings(
-        '652a5d43935d40f339c12d8b',
+        userId!,
         startDate.toIso8601String(),
         endDate.toIso8601String(),
       );
@@ -114,6 +120,15 @@ class _WaterMonitorPageState extends State<WaterMonitorPage> {
       appBar: AppBar(
         title: Text('Daily Water Intake'),
         backgroundColor: Color.fromARGB(255, 220, 104, 145),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back), // You can use a different icon if desired
+          onPressed: () {
+            // Add navigation logic to go to the "Mother Health Tracker" page
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => MotherHealthTracker1()), // Replace with your actual page widget
+            );
+          },
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -166,19 +181,21 @@ class _WaterMonitorPageState extends State<WaterMonitorPage> {
                         return Column(
                           children: [
                             Text(
-                              "$totalGlasses Glasses",
+                              "I've Drank $totalGlasses Glasses",
                               style: TextStyle(
-                                fontSize: 58,
+                                fontSize: 36,
                                 fontWeight: FontWeight.bold,
                                 color: Color.fromARGB(255, 88, 119, 161),
                               ),
                             ),
                             if (balanceNeeded > 0)
+                              SizedBox(height: 18),
                               Text(
-                                "Balance needed to achieve 11: $balanceNeeded Glasses",
+                                "🎉 $balanceNeeded Glasses to achieve the daily milestone",
                                 style: TextStyle(
                                   fontSize: 16,
-                                  color: Colors.red,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromARGB(255, 220, 104, 145),
                                 ),
                               ),
                           ],
@@ -252,7 +269,7 @@ class _WaterMonitorPageState extends State<WaterMonitorPage> {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) {
-                                return ViewWaterPage(userId: '652a5d43935d40f339c12d8b');
+                                return ViewWaterPage();
                               },
                             ),
                           );
@@ -277,7 +294,7 @@ class _WaterMonitorPageState extends State<WaterMonitorPage> {
                             final glassesDrunk = int.tryParse(selectedOption);
                             if (glassesDrunk != null) {
                               final newUserDrinking = UserDrinking(
-                                userId: '652a5d43935d40f339c12d8b',
+                                userId: userId,
                                 glassesDrunk: glassesDrunk,
                                 date: DateTime.now(),
                               );

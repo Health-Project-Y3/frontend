@@ -5,6 +5,8 @@ import 'package:thurula/models/user_bp_model.dart';
 import 'package:thurula/services/user_bp_service.dart';
 import 'package:thurula/views/pregnancy/view_bp_records.dart';
 
+import '../../services/local_service.dart';
+
 class AddPressurePage extends StatefulWidget {
   @override
   _AddPressurePageState createState() => _AddPressurePageState();
@@ -16,7 +18,8 @@ class _AddPressurePageState extends State<AddPressurePage> {
 
   Future<UserBp> _getLastBloodPressure() async {
     try {
-      List<UserBp> userBps = await UserBpService.getUserBps('650a6c285a1bbcfe70b8ad08', null, null); // Replace with your actual user ID
+      String userId = await LocalService.getCurrentUserId();
+      List<UserBp> userBps = await UserBpService.getUserBps(userId, null, null); // Replace with your actual user ID
       if (userBps.isNotEmpty) {
         userBps.sort((a, b) => b.date!.compareTo(a.date!));
         return userBps.first;
@@ -58,7 +61,7 @@ class _AddPressurePageState extends State<AddPressurePage> {
     }
 
     UserBp userBp = UserBp(
-      userId: "your_user_id_here", // Replace with your actual user ID
+      userId: "your_user_id_hee", // Replace with your actual user ID
       bloodPressure: bloodPressureText, // Pass the entered blood pressure value
       date: _selectedDate,
     );
@@ -96,7 +99,7 @@ class _AddPressurePageState extends State<AddPressurePage> {
     // Navigate to the RecordsPage
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => ViewBloodPressurePage(userId: 'your_user_id_here'),
+        builder: (context) => ViewBloodPressurePage(),
       ),
     );
   }
@@ -157,7 +160,7 @@ class _AddPressurePageState extends State<AddPressurePage> {
                           return Text(
                             "${lastRecord.bloodPressure} mmHg",
                             style: TextStyle(
-                              fontSize: 58,
+                              fontSize: 48,
                               fontWeight: FontWeight.bold,
                               color: Color.fromARGB(255, 88, 119, 161),
                             ),
