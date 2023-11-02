@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:thurula/views/childcare/diaper_records.dart';
+import 'package:thurula/views/pregnancy/food_suggestions.dart';
 import 'package:thurula/views/pregnancy/vaccination_tracker_view.dart';
 import 'forum/forum_home_view.dart';
 import 'widgets/navbar_widget.dart';
@@ -29,7 +30,8 @@ class AllServices extends StatelessWidget {
     'monitor2.png',
     'vaccine2.png',
     'exercise2.png',
-    'names2.png'
+    'names2.png',
+    'meal.png'
   ];
 
   final List<String> titlesPregnancy = [
@@ -38,7 +40,8 @@ class AllServices extends StatelessWidget {
     'Health',
     'Vaccines',
     'Exercises',
-    'Baby Names'
+    'Baby Names',
+    'Meals'
   ];
 
   final List<Widget Function()> pregnancyViews = [
@@ -48,6 +51,7 @@ class AllServices extends StatelessWidget {
     () => const MomVaccinationTrackerView(),
     () => PregnancyExercisesView(),
     () => const BabyNames(),
+    () => FoodViewPage(),
   ];
 
   final List<String> imageNamesChildcare = [
@@ -139,9 +143,8 @@ class TilePage extends StatelessWidget {
             } else {
               return const SizedBox(); // Empty SizedBox for the remaining items in the row
             }
-            // Create a new row for every 3 tiles
           } else {
-            if (index % 3 == 0) {
+            if ((index + 2) % 3 == 0) {
               // Create a new row for every 3 tiles
               return Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -178,10 +181,10 @@ class TilePage extends StatelessWidget {
       },
       child: Container(
         alignment: Alignment.center,
-        margin: const EdgeInsets.all(5.0),
-        padding: const EdgeInsets.all(7.0),
+        margin: const EdgeInsets.all(3.0),
+        padding: const EdgeInsets.all(5.0),
         width: 110,
-        height: 120,
+        height: 100,
         decoration: BoxDecoration(
           // color: const Color.fromARGB(255, 250, 238, 244),
           color: Colors.white,
@@ -201,7 +204,7 @@ class TilePage extends StatelessWidget {
             ClipRRect(
               child: Image.asset(
                 'assets/images/menu-tiles/${imageNamesPregnancy[index]}',
-                height: 80,
+                height: 55,
               ),
             ),
             const SizedBox(height: 7),
@@ -237,10 +240,10 @@ class TilePage extends StatelessWidget {
       },
       child: Container(
         alignment: Alignment.center,
-        margin: const EdgeInsets.all(5.0),
-        padding: const EdgeInsets.all(7.0),
+        margin: const EdgeInsets.all(3.0),
+        padding: const EdgeInsets.all(5.0),
         width: 110,
-        height: 120,
+        height: 100,
         decoration: BoxDecoration(
           // color: const Color.fromARGB(255, 250, 238, 244),
           color: Colors.white,
@@ -260,7 +263,7 @@ class TilePage extends StatelessWidget {
             ClipRRect(
               child: Image.asset(
                 'assets/images/menu-tiles/${imageNamesChildcare[index]}',
-                height: 80,
+                height: 55,
               ),
             ),
             const SizedBox(height: 7),
