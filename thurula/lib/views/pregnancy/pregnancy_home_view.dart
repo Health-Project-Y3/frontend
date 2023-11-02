@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:thurula/models/vaccination_model.dart';
-import 'package:thurula/services/local_service.dart';
 import 'package:thurula/services/vaccination_service.dart';
 import 'package:thurula/views/forum/forum_home_view.dart';
 
-// import 'package:thurula/views/login_view.dart';
 import 'package:thurula/views/pregnancy/mother_health_tracker.dart';
 import 'package:thurula/views/pregnancy/pregnancy_timeline_view.dart';
 import 'package:thurula/views/pregnancy/pregnancy_exercises/pregnancy_exercise_recommendations_view.dart';
@@ -369,8 +366,9 @@ class _PregnancyHomeViewState extends State<PregnancyHomeView> {
                           ),
                         ),
                       )),
+                  // Food Suggestions
                   Padding(
-                      padding: const EdgeInsets.all(1.0),
+                      padding: const EdgeInsets.all(5.0),
                       child: InkResponse(
                         onTap: () {
                           Navigator.push(
@@ -404,7 +402,7 @@ class _PregnancyHomeViewState extends State<PregnancyHomeView> {
                               // ),
                               const SizedBox(height: 7),
                               const Text(
-                                'Food Suggestions',
+                                'Meal Plans',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Color.fromARGB(255, 88, 119, 161),
