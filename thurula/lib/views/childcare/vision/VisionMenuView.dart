@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:thurula/views/childcare/child_care_menu_view.dart';
 import 'package:thurula/views/childcare/vision/eye_disease_list.dart';
 // import '../../signup/Question2View.dart';
+import '../../widgets/navbar_widget.dart';
 import './SnellenCardView.dart';
 
 class VisionMenuView extends StatelessWidget {
@@ -61,6 +62,8 @@ class VisionMenuView extends StatelessWidget {
               ),
             ),
           ],
-        ));
+        ),
+        bottomNavigationBar: const CreateBottomNavigationBar(pageIndex: 1),
+    );
   }
 }

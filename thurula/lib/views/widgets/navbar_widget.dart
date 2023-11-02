@@ -18,8 +18,8 @@ class CreateBottomNavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-      selectedItemColor: const Color.fromARGB(255, 88, 119, 161),
-      unselectedItemColor: const Color.fromARGB(255, 220, 104, 145),
+      selectedItemColor: const Color.fromARGB(255, 220, 104, 145),
+      unselectedItemColor: const Color.fromARGB(255, 88, 119, 161),
       selectedIconTheme: const IconThemeData(size: 30),
       selectedLabelStyle: const TextStyle(height: 0),
       type: BottomNavigationBarType.fixed,
@@ -72,6 +72,32 @@ class CreateBottomNavigationBar extends StatelessWidget {
                 builder: (context) => AllServices(),
               ),
             );
+            break;
+          default:
+            if (context.read<UserProvider>().user?.pregnant ?? false) {
+              if (context.read<UserProvider>().user?.babyIDs != null) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const MenuView(),
+                  ),
+                );
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const PregnancyHomeView(),
+                  ),
+                );
+              }
+            } else {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ChildHomeView(),
+                ),
+              );
+            }
             break;
         }
       },

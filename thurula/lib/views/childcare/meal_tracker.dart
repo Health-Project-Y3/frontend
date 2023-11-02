@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:thurula/services/feeding_service.dart';
 import 'package:thurula/models/feeding_times_model.dart';
 
+import '../widgets/navbar_widget.dart';
+
 class MealTracker extends StatefulWidget {
   @override
   _MealTrackerState createState() => _MealTrackerState();
@@ -102,6 +104,7 @@ class _MealTrackerState extends State<MealTracker> {
         child: Icon(Icons.add),
         backgroundColor: const Color(0xFFDC6891),
       ),
+      bottomNavigationBar: const CreateBottomNavigationBar(pageIndex: 1),
     );
   }
 

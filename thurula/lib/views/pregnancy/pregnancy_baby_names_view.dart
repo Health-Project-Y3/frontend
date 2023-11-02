@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:thurula/views/menu_view.dart';
 
+import '../widgets/navbar_widget.dart';
+
 void main() {
   runApp(const BabyNames());
 }
@@ -34,7 +36,7 @@ class _BabyNamePageState extends State<BabyNamePage> {
     BabyName(name: 'Bhakthi',	meaning: '	Devotion'),
     BabyName(name: 'Buddhika',	meaning: '	Clever and wise'),
     BabyName(name: 'Chandrika',	meaning: '	Moonlight; fair; cool'),
-    BabyName(name: 'Chathura',	meaning: '	SkilLful; smart'),
+    BabyName(name: 'Chathura',	meaning: '	Skillful; smart'),
     BabyName(name: 'Chatura',	meaning: '	Clever; wise'),
     BabyName(name: 'Chithkala',	meaning: '	Knowledge'),
     BabyName(name: 'Dayani',	meaning: '	Friendly'),
@@ -210,6 +212,7 @@ class _BabyNamePageState extends State<BabyNamePage> {
             buildNamesDataTable(filteredBoyNames),
           ],
         ),
+        bottomNavigationBar: const CreateBottomNavigationBar(pageIndex: 1),
       ),
     );
   }

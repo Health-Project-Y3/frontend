@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:thurula/views/childcare/child_care_menu_view.dart';
 // import '../../signup/Question2View.dart';
 
-class DroopyEye extends StatelessWidget {
-  const DroopyEye({super.key});
+class ChalzionEye extends StatelessWidget {
+  const ChalzionEye({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,18 +11,6 @@ class DroopyEye extends StatelessWidget {
         appBar: AppBar(
           title: const Row(children: [Text('Style and Chalzion Eye')]),
           backgroundColor: const Color.fromARGB(255, 220, 104, 145),
-          actions: <Widget>[
-            Padding(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: IconButton(
-                    icon: const Icon(Icons.menu),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const ChildCareMenuView()));
-                    })),
-          ],
         ),
         body: const SingleChildScrollView(
             child: Column(

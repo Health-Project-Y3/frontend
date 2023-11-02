@@ -11,6 +11,8 @@ import 'package:thurula/services/eye_check_service.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../../widgets/navbar_widget.dart';
+
 final GlobalKey<NavigatorState> _navKey = GlobalKey<NavigatorState>();
 
 class SnellenCardView extends StatefulWidget {
@@ -39,7 +41,7 @@ class _SnellenCardViewState extends State<SnellenCardView>
   @override
   Widget build(BuildContext context) {
     final tabs = [
-      'snellen card',
+      'Snellen Card',
       '',
       '',
     ];
@@ -68,7 +70,9 @@ class _SnellenCardViewState extends State<SnellenCardView>
               ),
             ),
           ),
-        ));
+          bottomNavigationBar: const CreateBottomNavigationBar(pageIndex: 1),
+        )
+    );
   }
 }
 

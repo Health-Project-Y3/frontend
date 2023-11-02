@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:thurula/providers/user_provider.dart';
 import 'package:thurula/services/local_service.dart';
 import 'package:thurula/services/vaccination_service.dart';
 import 'package:thurula/models/vaccination_model.dart';
 import 'package:thurula/views/custom_loading_indicator.dart';
+
+import '../widgets/navbar_widget.dart';
 
 class MomVaccinationTrackerView extends StatefulWidget {
   const MomVaccinationTrackerView({super.key});
@@ -80,6 +80,7 @@ class _VaccinationTrackerViewState extends State<MomVaccinationTrackerView> {
               buildVaccinationTabCompleted(), // Completed vaccinations
             ],
           ),
+          bottomNavigationBar: const CreateBottomNavigationBar(pageIndex: 1),
         ),
       ),
     );
