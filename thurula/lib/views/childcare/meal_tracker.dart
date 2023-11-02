@@ -73,18 +73,17 @@ class _MealTrackerState extends State<MealTracker> {
                         icon: Icon(Icons.edit),
                         color: Color.fromARGB(255, 88, 119, 161),
                         onPressed: () {
-                          // Handle the Edit button action for this record
-                          // You can call a function to edit the record here
-                          // _editFeedingRecord(record);
+                          _showEditFeedingDialog(context, record); // Pass the correct context and record
                         },
                       ),
+
                       IconButton(
                         icon: Icon(Icons.delete),
                         color: const Color.fromARGB(206, 185, 2, 2),
                         onPressed: () {
                           // Handle the Delete button action for this record
                           // You can call a function to delete the record here
-                          // _deleteFeedingRecord(record);
+                          _showDeleteFeedingDialog(context, record);
                         },
                       ),
                     ],
@@ -274,6 +273,132 @@ class _MealTrackerState extends State<MealTracker> {
     );
   }
 
+  Future<void> _showEditFeedingDialog(BuildContext context, FeedingTimes existingFeeding) async {
+    DateTime selectedStartDateTime = existingFeeding.startTime ?? DateTime.now();
+    DateTime selectedEndDateTime = existingFeeding.endTime ?? DateTime.now();
+    String feedingType = existingFeeding.feedingType ?? "";
+    String? message;
+
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    // ... (rest of the dialog content remains the same)
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: Text('Cancel'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                TextButton(
+                  child: Text('Save'),
+                  onPressed: () async {
+                    if (selectedStartDateTime != null &&
+                        selectedEndDateTime != null &&
+                        feedingType.isNotEmpty) {
+                      try {
+                        existingFeeding.startTime = selectedStartDateTime;
+                        existingFeeding.endTime = selectedEndDateTime;
+                        existingFeeding.feedingType = feedingType;
+
+                        if (existingFeeding.id != null) {
+                          // Check if the ID is not null before updating
+                          await FeedingService.updateFeeding(existingFeeding.id!, existingFeeding);
+                          message = 'Feeding record updated successfully!';
+                          Navigator.of(context).pop();
+                        } else {
+                          message = 'Error: Feeding record ID is missing.';
+                        }
+                      } catch (e) {
+                        message = 'Error: $e';
+                      }
+                    } else {
+                      message = 'Please enter valid data for all fields.';
+                    }
+
+                    setState(() {});
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Future<void> _showDeleteFeedingDialog(BuildContext context, FeedingTimes record) async {
+    String? message;
+
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text('Are you sure you want to delete this feeding record?'),
+                Text(
+                  'Start Time: ${DateFormat('h:mm a').format(record.startTime ?? DateTime.now())}',
+                  style: TextStyle(fontSize: 16),
+                ),
+                Text(
+                  'End Time: ${DateFormat('h:mm a').format(record.endTime ?? DateTime.now())}',
+                  style: TextStyle(fontSize: 16),
+                ),
+                Text(
+                  'Feeding Type: ${record.feedingType ?? "N/A"}',
+                  style: TextStyle(fontSize: 16),
+                ),
+                Text(
+                  message ?? '',
+                  style: TextStyle(
+                    color: message == 'Error' ? Colors.red : Colors.green,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Delete'),
+              onPressed: () async {
+                try {
+                  // Call your FeedingService to delete the feeding record
+                  await FeedingService.deleteFeeding(record.id!); // Use the null-aware operator to assert non-nullability
+                  message = 'Feeding record deleted successfully!';
+                  Navigator.of(context).pop();
+                } catch (e) {
+                  message = 'Error: $e';
+                }
+                setState(() {});
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
+
 
   int _calculateTotalFeedingsToday(List<FeedingTimes> records) {
     DateTime today = DateTime.now();
@@ -285,6 +410,7 @@ class _MealTrackerState extends State<MealTracker> {
     }).length;
   }
 }
+
 
 class CustomCard extends StatelessWidget {
   final String title1;
@@ -342,3 +468,4 @@ class CustomCard extends StatelessWidget {
     );
   }
 }
+
