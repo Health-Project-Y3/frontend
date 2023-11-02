@@ -88,30 +88,16 @@ class PregnancyExercisesView extends StatelessWidget {
                     // padding
                     Padding(
                       padding: const EdgeInsets.only(right: 30, top: 20),
-                      // calories and time
+                      // time
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
-                          // calories
-                          Image.asset('assets/images/icons/calories.png',
-                              height: 20, width: 20),
-                          const Text(
-                            " 55 kcal",
-                            style: TextStyle(
-                              fontSize: 16,
-                              // fontWeight: FontWeight.bold,
-                              fontFamily: 'Inter',
-                              //   color #878787
-                              color: Color.fromARGB(255, 131, 131, 131),
-                            ),
-                          ),
-
                           // time
                           Container(width: 20),
                           Image.asset('assets/images/icons/clock.png',
                               height: 20, width: 20),
                           const Text(
-                            " 20 min",
+                            " 40 min",
                             style: TextStyle(
                               fontSize: 16,
                               // fontWeight: FontWeight.bold,
@@ -205,7 +191,7 @@ class PregnancyExercisesView extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 15,
                           fontFamily: 'Inter',
-                          color: Color.fromARGB(255, 131, 131, 131),
+                          color: Colors.redAccent,
                         ),
                       ),
                     ),
@@ -220,30 +206,16 @@ class PregnancyExercisesView extends StatelessWidget {
                     // padding
                     Padding(
                       padding: const EdgeInsets.only(right: 30, top: 20),
-                      // calories and time
+                      // time
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
-                          // calories
-                          Image.asset('assets/images/icons/calories.png',
-                              height: 20, width: 20),
-                          const Text(
-                            " 50 kcal",
-                            style: TextStyle(
-                              fontSize: 16,
-                              // fontWeight: FontWeight.bold,
-                              fontFamily: 'Inter',
-                              //   color #878787
-                              color: Color.fromARGB(255, 131, 131, 131),
-                            ),
-                          ),
-
                           //   time
                           Container(width: 20),
                           Image.asset('assets/images/icons/clock.png',
                               height: 20, width: 20),
                           const Text(
-                            " 15 min",
+                            " 30 min",
                             style: TextStyle(
                               fontSize: 16,
                               // fontWeight: FontWeight.bold,
@@ -337,7 +309,7 @@ class PregnancyExercisesView extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 15,
                           fontFamily: 'Inter',
-                          color: Color.fromARGB(255, 131, 131, 131),
+                          color: Colors.redAccent,
                         ),
                       ),
                     ),
@@ -352,30 +324,16 @@ class PregnancyExercisesView extends StatelessWidget {
                     // padding
                     Padding(
                       padding: const EdgeInsets.only(right: 30, top: 20),
-                      // calories and time
+                      // time
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
-                          // calories
-                          Image.asset('assets/images/icons/calories.png',
-                              height: 20, width: 20),
-                          const Text(
-                            " 40 kcal",
-                            style: TextStyle(
-                              fontSize: 16,
-                              // fontWeight: FontWeight.bold,
-                              fontFamily: 'Inter',
-                              //   color #878787
-                              color: Color.fromARGB(255, 131, 131, 131),
-                            ),
-                          ),
-
                           //   time
                           Container(width: 20),
                           Image.asset('assets/images/icons/clock.png',
                               height: 20, width: 20),
                           const Text(
-                            " 10 min",
+                            " 20 min",
                             style: TextStyle(
                               fontSize: 16,
                               // fontWeight: FontWeight.bold,
@@ -469,7 +427,7 @@ class PregnancyExercisesView extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 15,
                           fontFamily: 'Inter',
-                          color: Color.fromARGB(255, 131, 131, 131),
+                          color: Colors.redAccent,
                         ),
                       ),
                     ),

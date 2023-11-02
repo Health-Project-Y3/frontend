@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:thurula/services/local_service.dart';
 import 'package:thurula/services/user_exercise_service.dart';
 import 'package:thurula/models/user_exercise_model.dart';
+import 'package:thurula/views/custom_loading_indicator.dart';
 
 import 'package:thurula/views/pregnancy/pregnancy_exercises/pregnancy_exercise_recommendations_view.dart';
 
@@ -109,7 +110,7 @@ class _ExerciseHistorysViewState extends State<ExercisesHistoryView> {
             future: last7DaysRecords,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator();
+                return CustomLoadingIndicator();
               } else if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
               } else if (!snapshot.hasData) {
@@ -216,7 +217,7 @@ class _ExerciseHistorysViewState extends State<ExercisesHistoryView> {
           future: exerciseRecords,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
+              return CustomLoadingIndicator();
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else if (!snapshot.hasData) {
