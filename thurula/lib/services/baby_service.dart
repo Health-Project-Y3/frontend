@@ -4,13 +4,19 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'package:thurula/constants/routes.dart';
 import '../models/baby_model.dart';
+import 'local_service.dart';
 
 class BabyService {
   static Future<Baby?> getBaby(String id) async {
+    String jwt = await LocalService.getCurrentUserToken();
+
     try {
       var response = await http.get(
         Uri.parse(getRoute("baby/$id")),
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $jwt'
+        },
       );
 
       // check the status code of the response
@@ -27,9 +33,13 @@ class BabyService {
   }
 
   static Future<bool> patchBaby(String id, String key, dynamic value) async {
+    String jwt = await LocalService.getCurrentUserToken();
     var response = await http.patch(
       Uri.parse(getRoute('Baby/$id')),
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
       body: jsonEncode([
         {"op": "replace", "path": "/$key", "value": value}
       ]),
@@ -42,10 +52,14 @@ class BabyService {
   }
 
   static Future<Baby> createBaby(Baby baby) async {
+    String jwt = await LocalService.getCurrentUserToken();
     String body = json.encode(Baby.toJson(baby));
     var response = await http.post(
       Uri.parse(getRoute("Baby")),
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
       body: body,
     );
     if (response.statusCode == 201) {
@@ -58,7 +72,11 @@ class BabyService {
   }
 
   static Future<void> deleteBaby(String id) async {
-    var response = await http.delete(Uri.parse(getRoute("baby/$id")));
+    String jwt = await LocalService.getCurrentUserToken();
+    var response = await http.delete(Uri.parse(getRoute("baby/$id")), headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $jwt'
+    });
     if (response.statusCode == 200) {
       return;
     } else {

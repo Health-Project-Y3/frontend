@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:thurula/services/feeding_service.dart';
+import 'package:thurula/models/feeding_times_model.dart';
 
 class MealTracker extends StatefulWidget {
   @override
@@ -6,79 +9,82 @@ class MealTracker extends StatefulWidget {
 }
 
 class _MealTrackerState extends State<MealTracker> {
-  DateTime selectedDate = DateTime.now();
-  List<String> feedingEntries = ['Milk', 'Puree', 'Fruits', 'Rice'];
+  List<FeedingTimes> feedingRecords = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadFeedingRecords();
+  }
+
+  Future<void> _loadFeedingRecords() async {
+    try {
+      final records = await FeedingService.getBabyFeedings('64a9cb10ec5c9834ff73fc36');
+      print('Loaded ${records.length} feeding records.');
+      setState(() {
+        feedingRecords = records;
+        feedingRecords.sort((a, b) => b.startTime!.compareTo(a.startTime!));
+      });
+    } catch (e) {
+      print('Error loading feeding records: $e');
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Baby Meal Tracker',
-          style: TextStyle(
-            color: Colors.white, // Title color
-          ),
-        ),
-        backgroundColor: const Color.fromARGB(255, 220, 104, 145), // Background color of the app bar
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.white, // Back icon color
-          ),
-          onPressed: () {
-            // Handle back button press here
-            Navigator.pop(context); // Navigate back
-          },
-        ),
+        title: Text('Feeding Records'),
+        backgroundColor: const Color(0xFFDC6891),
       ),
-
-
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
-            child: Container(
-              height: 100,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: feedingEntries.length + 1,
-                itemBuilder: (context, index) {
-                  if (index < feedingEntries.length) {
-                    return _FeedingTypeCircle(feedingType: feedingEntries[index]);
-
-                  } else {
-                    return _AddFeedingCircle(
-                      onAddPressed: () {
-                        _showAddFeedingDialog(context);
-                      },
-
-                    );
-                  }
-                },
-              ),
-            ),
+        children: <Widget>[
+          SizedBox(height: 10),
+          CustomCard(
+            title1: 'Total Feedings Today',
+            title2: '${_calculateTotalFeedingsToday(feedingRecords)}',
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: 10,
+              itemCount: feedingRecords.length,
               itemBuilder: (context, index) {
+                FeedingTimes record = feedingRecords[index];
+                String formattedStartTime = DateFormat('h:mm a')
+                    .format(record.startTime ?? DateTime.now());
+                String formattedEndTime = DateFormat('h:mm a')
+                    .format(record.endTime ?? DateTime.now());
+
+                // Define a map of feeding types to icons
+                final iconMap = {
+                  'solid': Icons.baby_changing_station,
+                  'rightbreast': Icons.local_drink,
+                  // Add more types and icons as needed
+                };
+
                 return ListTile(
-                  title: Text('Milk'),
-                  subtitle: Text('5.30pm 24-05-2023'),
+                  leading: Icon(iconMap[record.feedingType] ?? Icons.error),
+                  title: Text('Start Time: $formattedStartTime'),
+                  subtitle: Text('End Time: $formattedEndTime'),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       IconButton(
-                        icon: Icon(Icons.edit, color: Color.fromARGB(255, 220, 104, 145)), // Custom edit icon color
+                        icon: Icon(Icons.edit),
+                        color: Color.fromARGB(255, 88, 119, 161),
                         onPressed: () {
-                          // Handle edit action
+                          // Handle the Edit button action for this record
+                          // You can call a function to edit the record here
+                          // _editFeedingRecord(record);
                         },
                       ),
                       IconButton(
-                        icon: Icon(Icons.delete, color: Colors.red), // Change to your custom color
+                        icon: Icon(Icons.delete),
+                        color: const Color.fromARGB(206, 185, 2, 2),
                         onPressed: () {
-                          // Handle delete action
+                          // Handle the Delete button action for this record
+                          // You can call a function to delete the record here
+                          // _deleteFeedingRecord(record);
                         },
                       ),
                     ],
@@ -87,223 +93,252 @@ class _MealTrackerState extends State<MealTracker> {
               },
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text('Statistics and Summary'),
-          ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showAddFeedingDialog(context);
+        },
+        child: Icon(Icons.add),
+        backgroundColor: const Color(0xFFDC6891),
       ),
     );
   }
 
 
-  void _showAddFeedingDialog(BuildContext context) {
-    showDialog(
+  Future<void> showAddFeedingDialog(BuildContext context) async {
+    TextEditingController feedingTypeController = TextEditingController();
+    DateTime selectedStartDateTime = DateTime.now();
+    DateTime selectedEndDateTime = DateTime.now();
+    String? message;
+
+    await showDialog(
       context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Add Feeding Entry'),
-          content: FeedingEntryForm(),
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Row(
+                      children: [
+                        Text('Start Date & Time: '),
+                        Text(
+                          DateFormat('hh:mm a, d M yyyy')
+                              .format(selectedStartDateTime.toLocal()),
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        SizedBox(width: 10),
+                      ],
+                    ),
+                    ElevatedButton(
+                      child: Text('Select Start Date/Time'),
+                      onPressed: () async {
+                        DateTime? pickedDateTime = await showDatePicker(
+                          context: context,
+                          initialDate: selectedStartDateTime,
+                          firstDate: DateTime(2000),
+                          lastDate: DateTime(2101),
+                        );
+                        if (pickedDateTime != null) {
+                          TimeOfDay? pickedTimeOfDay = await showTimePicker(
+                            context: context,
+                            initialTime:
+                            TimeOfDay.fromDateTime(selectedStartDateTime),
+                          );
+                          if (pickedTimeOfDay != null) {
+                            setState(() {
+                              selectedStartDateTime = DateTime(
+                                pickedDateTime.year,
+                                pickedDateTime.month,
+                                pickedDateTime.day,
+                                pickedTimeOfDay.hour,
+                                pickedTimeOfDay.minute,
+                              );
+                            });
+                          }
+                        }
+                      },
+                    ),
+                    Row(
+                      children: [
+                        Text('End Date & Time: '),
+                        Text(
+                          DateFormat('hh:mm a, d M yyyy')
+                              .format(selectedEndDateTime.toLocal()),
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        SizedBox(width: 10),
+                      ],
+                    ),
+                    ElevatedButton(
+                      child: Text('Select End Date/Time'),
+                      onPressed: () async {
+                        DateTime? pickedDateTime = await showDatePicker(
+                          context: context,
+                          initialDate: selectedEndDateTime,
+                          firstDate: DateTime(2000),
+                          lastDate: DateTime(2101),
+                        );
+                        if (pickedDateTime != null) {
+                          TimeOfDay? pickedTimeOfDay = await showTimePicker(
+                            context: context,
+                            initialTime:
+                            TimeOfDay.fromDateTime(selectedEndDateTime),
+                          );
+                          if (pickedTimeOfDay != null) {
+                            setState(() {
+                              selectedEndDateTime = DateTime(
+                                pickedDateTime.year,
+                                pickedDateTime.month,
+                                pickedDateTime.day,
+                                pickedTimeOfDay.hour,
+                                pickedTimeOfDay.minute,
+                              );
+                            });
+                          }
+                        }
+                      },
+                    ),
+                    TextField(
+                      controller: feedingTypeController,
+                      decoration: InputDecoration(labelText: 'Feeding Type'),
+                    ),
+                    Text(
+                      message ?? '',
+                      style: TextStyle(
+                        color: message == 'Error' ? Colors.red : Colors.green,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: Text('Cancel'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                TextButton(
+                  child: Text('Save'),
+                  onPressed: () async {
+                    String feedingType = feedingTypeController.text;
+
+                    if (feedingType.isNotEmpty) {
+                      try {
+                        // Create a new FeedingTimes object and populate it with the selected data
+                        FeedingTimes newFeeding = FeedingTimes();
+                        newFeeding.startTime = selectedStartDateTime;
+                        newFeeding.endTime = selectedEndDateTime;
+                        newFeeding.feedingType = feedingType;
+                        newFeeding.babyId = '64b01605b55b765169e1c9b6';
+                        newFeeding.id= '12345';
+                        newFeeding.feedingNotes = 'ew4tw2';
+                        newFeeding.feedingMood = 5;
+                        newFeeding.loggedBy = 'ew4tw2';
+
+
+                        // Print the selected values in the terminal
+                        print('Start Time: $selectedStartDateTime');
+                        print('End Time: $selectedEndDateTime');
+                        print('Feeding Type: $feedingType');
+                        print('$newFeeding');
+
+                        // Call your FeedingService to save the feeding record
+                        await FeedingService.createFeeding(newFeeding);
+
+                        message = 'Feeding record added successfully!';
+                        Navigator.of(context).pop();
+
+                        // Optionally, you can also refresh the feeding record list here if needed.
+                      } catch (e) {
+                        message = 'Error: $e';
+                      }
+                    } else {
+                      message = 'Please enter a feeding type.';
+                    }
+
+
+                    setState(() {});
+                  },
+                ),
+
+              ],
+            );
+          },
         );
       },
     );
   }
-}
 
-class FeedingEntryForm extends StatefulWidget {
-  @override
-  _FeedingEntryFormState createState() => _FeedingEntryFormState();
-}
 
-class _FeedingEntryFormState extends State<FeedingEntryForm> {
-  String selectedMealType = 'Breakfast';
-  DateTime selectedDateTime = DateTime.now();
-  String specialNote = '';
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        DropdownButton<String>(
-          value: selectedMealType,
-          onChanged: (newValue) {
-            setState(() {
-              selectedMealType = newValue!;
-            });
-          },
-          items: ['Breakfast', 'Lunch', 'Dinner', 'Snack']
-              .map<DropdownMenuItem<String>>(
-                (value) => DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            ),
-          )
-              .toList(),
-        ),
-        const SizedBox(height: 16),
-        ElevatedButton(
-          onPressed: () async {
-            final pickedDateTime = await showDatePicker(
-              context: context,
-              initialDate: selectedDateTime,
-              firstDate: DateTime(2000),
-              lastDate: DateTime(2101),
-            );
-
-            if (pickedDateTime != null && pickedDateTime != selectedDateTime) {
-              setState(() {
-                selectedDateTime = pickedDateTime;
-              });
-            }
-          },
-          child: Text(
-              'Select Date',
-          ),
-        ),
-        SizedBox(height: 16),
-        ElevatedButton(
-          onPressed: () async {
-            final pickedTime = await showTimePicker(
-              context: context,
-              initialTime: TimeOfDay.now(),
-            );
-
-            if (pickedTime != null) {
-              setState(() {
-                selectedDateTime = DateTime(
-                  selectedDateTime.year,
-                  selectedDateTime.month,
-                  selectedDateTime.day,
-                  pickedTime.hour,
-                  pickedTime.minute,
-                );
-              });
-            }
-          },
-          child: Text('Select Time'),
-        ),
-        SizedBox(height: 16),
-        TextFormField(
-          onChanged: (value) {
-            setState(() {
-              specialNote = value;
-            });
-          },
-          decoration: InputDecoration(
-            hintText: 'Add a special note',
-          ),
-        ),
-        SizedBox(height: 16),
-        ElevatedButton(
-          onPressed: () {
-            // Handle form submission and update UI
-            Navigator.of(context).pop(); // Close the dialog
-          },
-          child: Text('Add Entry'),
-        ),
-      ],
-    );
+  int _calculateTotalFeedingsToday(List<FeedingTimes> records) {
+    DateTime today = DateTime.now();
+    return records.where((record) {
+      return record.startTime != null &&
+          record.startTime!.year == today.year &&
+          record.startTime!.month == today.month &&
+          record.startTime!.day == today.day;
+    }).length;
   }
 }
 
-class _FeedingTypeCircle extends StatelessWidget {
-  final String feedingType;
+class CustomCard extends StatelessWidget {
+  final String title1;
+  final String title2;
 
-  const _FeedingTypeCircle({required this.feedingType});
+  CustomCard({required this.title1, required this.title2});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: Stack(
-        alignment: Alignment.bottomRight,
-        children: [
-          Column(
-            children: [
-              Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: const Color.fromARGB(255, 220, 104, 145),
-                ),
-                child: Center(
-                  child: Text(
-                    feedingType[0],
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0), // Adjust the border radius as needed
+      ),
+      elevation: 4, // Adjust the shadow as needed
+      margin: EdgeInsets.all(10), // Adjust the margin as needed
+      child: Container(
+        width: double.infinity, // Card should be full width
+        height: 100,
+        padding: EdgeInsets.all(10),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title1,
                     style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 16,
                     ),
                   ),
-                ),
-              ),
-              SizedBox(height: 8),
-              Text(feedingType),
-            ],
-          ),
-          GestureDetector(
-            onTap: () {
-              // Handle adding entry for this feeding type
-              // _showAddFeedingDialog(context);
-            },
-            child: Container(
-              width: 20,
-              height: 20,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color.fromARGB(255, 88, 119, 161),
-              ),
-              child: const Center(
-                child: Icon(
-                  Icons.add,
-                  color: Colors.white,
-                  size: 16,
-                ),
+                  SizedBox(height: 10), // Add space between titles
+                  Text(
+                    title2,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 22, // Increase font size
+                      color: const Color(0xFFDC6891), // Change color
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
-        ],
+            SizedBox(width: 10),
+            Container(
+              width: 70.0, // Adjust the width as needed
+              child: Image(
+                image: AssetImage('assets/images/menu-tiles/feeding.png'),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
-
-class _AddFeedingCircle extends StatelessWidget {
-  final VoidCallback onAddPressed;
-
-  const _AddFeedingCircle({required this.onAddPressed});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: Column(
-        children: [
-          GestureDetector(
-            onTap: onAddPressed,
-            child: Container(
-              width: 60,
-              height: 60,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color.fromARGB(255, 88, 119, 161),
-              ),
-              child: Center(
-                child: Icon(
-                  Icons.add,
-                  color: Colors.white,
-                  size: 30,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: 8),
-          Text('Add Meal Type'),
-        ],
-      ),
-    );
-  }
-}
-

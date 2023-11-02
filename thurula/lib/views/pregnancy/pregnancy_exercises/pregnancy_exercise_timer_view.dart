@@ -221,7 +221,7 @@ class _TimerPageState extends State<TimerPage> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ExercisesView()));
+                MaterialPageRoute(builder: (context) => PregnancyExercisesView()));
           },
         ),
         title: Text(
@@ -308,7 +308,7 @@ class _TimerPageState extends State<TimerPage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ExercisesView()));
+                              builder: (context) => PregnancyExercisesView()));
                     }
                   },
                   style: ElevatedButton.styleFrom(

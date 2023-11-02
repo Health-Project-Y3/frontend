@@ -34,6 +34,16 @@ class _ForumAnswerCardState extends State<ForumAnswerCard> {
     // Initialize upvotes and downvotes with values from the ForumAnswer object
     upvotes = widget.answer.upvotes!;
     downvotes = widget.answer.downvotes!;
+    if (widget.answer.upvoters!.contains(
+        context.read<UserProvider>().user?.id)) {
+      // Check if the user has upvoted
+      hasUpvoted = true;
+    }
+    if (widget.answer.downvoters!
+        .contains(context.read<UserProvider>().user?.id)) {
+      // Check if the user has downvoted
+      hasDownvoted = true;
+    }
   }
 
   @override
@@ -200,9 +210,14 @@ class _ForumAnswerCardState extends State<ForumAnswerCard> {
     } else if (difference.inHours < 24) {
       final hours = difference.inHours;
       return '$hours ${hours == 1 ? 'hour' : 'hours'} ago';
-    } else if (difference.inDays < 14) {
+    } else if (difference.inDays < 7) {
       final days = difference.inDays;
       return '$days ${days == 1 ? 'day' : 'days'} ago';
+    } else if (difference.inDays < 14) {
+      return '1 week ago';
+    } else if (difference.inDays < 30) {
+      final weeks = difference.inDays ~/ 7;
+      return '$weeks ${weeks == 1 ? 'week' : 'weeks'} ago';
     } else if (difference.inDays < 365) {
       final months = difference.inDays ~/ 30;
       return '$months ${months == 1 ? 'month' : 'months'} ago';
@@ -211,6 +226,8 @@ class _ForumAnswerCardState extends State<ForumAnswerCard> {
       return '$years ${years == 1 ? 'year' : 'years'} ago';
     }
   }
+
+
 
   // Function to show a delete confirmation dialog
   Future<void> showDeleteConfirmationDialog(BuildContext context) async {

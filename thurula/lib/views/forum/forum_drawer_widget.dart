@@ -38,15 +38,19 @@ class _ForumDrawerState extends State<ForumDrawer> {
         children: [
           // Drawer header with a CircleAvatar and name
           UserAccountsDrawerHeader(
+            decoration: const BoxDecoration(
+              color: Color.fromARGB(255, 220, 104, 145),
+            ),
             accountName: Text(
                 '${context.read<UserProvider>().user?.fname} ${context.read<UserProvider>().user!.lname}'),
             accountEmail: Text(context.read<UserProvider>().user?.email ?? ''),
             currentAccountPicture: CircleAvatar(
               // Add your profile picture here
               // backgroundImage: AssetImage('assets/profile_picture.png'),
-              backgroundColor: Colors.primaries[
-              context.read<UserProvider>().user!.fname![0].codeUnitAt(0) %
-                  Colors.primaries.length],
+              // backgroundColor: Colors.primaries[
+              // context.read<UserProvider>().user!.fname![0].codeUnitAt(0) %
+              //     Colors.primaries.length],
+              backgroundColor: const Color.fromARGB(255, 88, 119, 161),
               child: Text(
                 '${context.read<UserProvider>().user!.fname?[0]}${context.read<UserProvider>().user?.lname?[0]}',
                 style: const TextStyle(
@@ -54,12 +58,11 @@ class _ForumDrawerState extends State<ForumDrawer> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-
             ),
           ),
           // Generate "My Questions" ListTile
           ListTile(
-            leading: const Icon(Icons.home),
+            leading: const Icon(Icons.home, color: Colors.pinkAccent),
             title: const Text('Home'),
             onTap: () {
               // Add navigation to "Home" page here
@@ -74,7 +77,7 @@ class _ForumDrawerState extends State<ForumDrawer> {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.my_library_books),
+            leading: const Icon(Icons.my_library_books, color: Colors.pinkAccent),
             title: const Text('My Questions'),
             onTap: () {
               // Add navigation to "My Questions" page here
@@ -102,7 +105,7 @@ class _ForumDrawerState extends State<ForumDrawer> {
           ),
           for (int i = 0; i < routes.length; i++)
             ListTile(
-              leading: Icon(icons[i]),
+              leading: Icon(icons[i], color: Colors.pinkAccent),
               title: Text(routes[i]),
               onTap: () {
                 // Handle tapping on the corresponding route
@@ -113,6 +116,7 @@ class _ForumDrawerState extends State<ForumDrawer> {
                   MaterialPageRoute(
                     builder: (context) => ForumQuestionsOnTopicView(
                       topic: [routes[i]],
+                      pageIndex: i + 2,
                     ),
                   ),
                 );

@@ -5,6 +5,8 @@ import '../constants/routes.dart';
 import '../models/forum_question_model.dart';
 import 'package:http/http.dart' as http;
 
+import 'local_service.dart';
+
 class ForumService {
   static Future<List<ForumQuestion>> getQuestions() async {
     var response = await http.get(Uri.parse(getForumRoute("questions")));
@@ -121,11 +123,15 @@ class ForumService {
   }
 
   static Future<ForumQuestion> addQuestion(ForumQuestion question) async {
+    String jwt = await LocalService.getCurrentUserToken();
     log(jsonEncode(ForumQuestion.toJson(question)));
     var response = await http.post(
       Uri.parse(getForumRoute("questions")),
       body: jsonEncode(ForumQuestion.toJson(question)),
-      headers: {"Content-Type": "application/json"},
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer $jwt'
+      },
     );
     if (response.statusCode == 200) {
       return ForumQuestion.fromJson(jsonDecode(response.body));
@@ -136,8 +142,14 @@ class ForumService {
   }
 
   static Future<void> deleteQuestion(String id) async {
-    var response =
-        await http.delete(Uri.parse(getForumRoute("questions?id=$id")));
+    String jwt = await LocalService.getCurrentUserToken();
+    var response = await http.delete(
+      Uri.parse(getForumRoute("questions?id=$id")),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
+    );
     if (response.statusCode == 200) {
       return;
     } else {
@@ -146,10 +158,18 @@ class ForumService {
     }
   }
 
-  static Future<void> upvoteQuestion(String questionId, {bool undo = false}) async {
+  static Future<void> upvoteQuestion(String questionId,
+      {bool undo = false}) async {
+    String jwt = await LocalService.getCurrentUserToken();
     var undochar = undo ? "&undo=true" : "";
     var response = await http.put(
-        Uri.parse(getForumRoute("questions/upvote?questionId=$questionId$undochar")));
+      Uri.parse(
+          getForumRoute("questions/upvote?questionId=$questionId$undochar")),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
+    );
     if (response.statusCode == 200) {
       return;
     } else {
@@ -158,10 +178,18 @@ class ForumService {
     }
   }
 
-  static Future<void> downvoteQuestion(String questionId , {bool undo = false}) async {
+  static Future<void> downvoteQuestion(String questionId,
+      {bool undo = false}) async {
+    String jwt = await LocalService.getCurrentUserToken();
     var undochar = undo ? "&undo=true" : "";
     var response = await http.put(
-        Uri.parse(getForumRoute("questions/downvote?questionId=$questionId$undochar")));
+      Uri.parse(
+          getForumRoute("questions/downvote?questionId=$questionId$undochar")),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
+    );
     if (response.statusCode == 200) {
       return;
     } else {
@@ -171,8 +199,15 @@ class ForumService {
   }
 
   static Future<void> switchvoteQuestion(String questionId, bool upvote) async {
+    String jwt = await LocalService.getCurrentUserToken();
     var response = await http.put(
-        Uri.parse(getForumRoute("questions/switchvote?questionId=$questionId&upvote=$upvote")));
+      Uri.parse(getForumRoute(
+          "questions/switchvote?questionId=$questionId&upvote=$upvote")),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
+    );
     if (response.statusCode == 200) {
       return;
     } else {
@@ -181,10 +216,15 @@ class ForumService {
     }
   }
 
-  static Future<ForumAnswer> addAnswer(String questionId, ForumAnswer answer) async {
+  static Future<ForumAnswer> addAnswer(
+      String questionId, ForumAnswer answer) async {
+    String jwt = await LocalService.getCurrentUserToken();
     var response = await http.post(
         Uri.parse(getForumRoute("answers?questionId=$questionId")),
-        headers: {"Content-Type": "application/json"},
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer $jwt'
+        },
         body: jsonEncode(ForumAnswer.toJson(answer)));
     if (response.statusCode == 200) {
       return ForumAnswer.fromJson(jsonDecode(response.body));
@@ -195,8 +235,15 @@ class ForumService {
   }
 
   static Future<void> deleteAnswer(String questionId, String answerId) async {
-    var response = await http.delete(Uri.parse(
-        getForumRoute("answers?questionId=$questionId&answerId=$answerId")));
+    String jwt = await LocalService.getCurrentUserToken();
+    var response = await http.delete(
+      Uri.parse(
+          getForumRoute("answers?questionId=$questionId&answerId=$answerId")),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
+    );
     if (response.statusCode == 200) {
       return;
     } else {
@@ -205,10 +252,18 @@ class ForumService {
     }
   }
 
-  static Future<void> upvoteAnswer(String questionId, String answerId, {bool undo = false}) async {
+  static Future<void> upvoteAnswer(String questionId, String answerId,
+      {bool undo = false}) async {
+    String jwt = await LocalService.getCurrentUserToken();
     var undochar = undo ? "&undo=true" : "";
-    var response = await http.put(Uri.parse(getForumRoute(
-        "answers/upvote?questionId=$questionId&answerId=$answerId$undochar")));
+    var response = await http.put(
+      Uri.parse(getForumRoute(
+          "answers/upvote?questionId=$questionId&answerId=$answerId$undochar")),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
+    );
     if (response.statusCode == 200) {
       return;
     } else {
@@ -217,10 +272,18 @@ class ForumService {
     }
   }
 
-  static Future<void> downvoteAnswer(String questionId, String answerId, {bool undo = false}) async {
+  static Future<void> downvoteAnswer(String questionId, String answerId,
+      {bool undo = false}) async {
+    String jwt = await LocalService.getCurrentUserToken();
     var undochar = undo ? "&undo=true" : "";
-    var response = await http.put(Uri.parse(getForumRoute(
-        "answers/downvote?questionId=$questionId&answerId=$answerId$undochar")));
+    var response = await http.put(
+      Uri.parse(getForumRoute(
+          "answers/downvote?questionId=$questionId&answerId=$answerId$undochar")),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
+    );
     if (response.statusCode == 200) {
       return;
     } else {
@@ -229,9 +292,17 @@ class ForumService {
     }
   }
 
-  static Future<void> switchVoteAnswer(String questionId, String answerId, bool upvote) async {
-    var response = await http.put(Uri.parse(getForumRoute(
-        "answers/switchvote?questionId=$questionId&answerId=$answerId&upvote=$upvote")));
+  static Future<void> switchVoteAnswer(
+      String questionId, String answerId, bool upvote) async {
+    String jwt = await LocalService.getCurrentUserToken();
+    var response = await http.put(
+      Uri.parse(getForumRoute(
+          "answers/switchvote?questionId=$questionId&answerId=$answerId&upvote=$upvote")),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
+    );
     if (response.statusCode == 200) {
       return;
     } else {
@@ -241,8 +312,15 @@ class ForumService {
   }
 
   static Future<void> acceptAnswer(String questionId, String answerId) async {
-    var response = await http.put(Uri.parse(getForumRoute(
-        "answers/accept?questionId=$questionId&answerId=$answerId")));
+    String jwt = await LocalService.getCurrentUserToken();
+    var response = await http.put(
+      Uri.parse(getForumRoute(
+          "answers/accept?questionId=$questionId&answerId=$answerId")),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
+    );
     if (response.statusCode == 200) {
       return;
     } else {

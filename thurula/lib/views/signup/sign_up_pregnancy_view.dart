@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:thurula/services/auth/user_service.dart';
 import 'package:thurula/views/menu_view.dart';
+import 'package:thurula/views/pregnancy/pregnancy_home_view.dart';
 import 'package:thurula/views/signup/sign_up_question_view.dart';
 
 import '../../providers/user_provider.dart';
@@ -26,7 +27,7 @@ class _SignUpPregnancyViewState extends State<SignUpPregnancyView> {
   void calculateDueDateFromPredicted() {
     if (selectedPredictedDate != null) {
       final calculatedDueDate = selectedPredictedDate!
-          .add(Duration(days: 270)); // 270 days = 9 months
+          .add(const Duration(days: 270)); // 270 days = 9 months
       setState(() {
         selectedDueDate = calculatedDueDate;
       });
@@ -279,7 +280,7 @@ class _SignUpPregnancyViewState extends State<SignUpPregnancyView> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const MenuView(),
+                            builder: (context) => const PregnancyHomeView(),
                           ),
                         );
                       }

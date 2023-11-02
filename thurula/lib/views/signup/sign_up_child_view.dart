@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:thurula/providers/baby_provider.dart';
 import 'package:thurula/services/auth/user_service.dart';
 import 'package:thurula/services/baby_service.dart';
+import 'package:thurula/services/local_service.dart';
+import 'package:thurula/views/childcare/child_home_view.dart';
 import 'package:thurula/views/menu_view.dart';
 import 'package:thurula/views/signup/sign_up_question_view.dart';
 import '../../models/baby_model.dart';
@@ -18,7 +21,7 @@ class SignUpChildView extends StatefulWidget {
 
 class _SignUpChildViewState extends State<SignUpChildView> {
   DateTime? selectedDate;
-  bool isMaleSelected = true;
+  bool isMaleSelected = false;
   bool isFemaleSelected = false;
 
   final TextEditingController babyNameController = TextEditingController();
@@ -179,7 +182,7 @@ class _SignUpChildViewState extends State<SignUpChildView> {
                           ? const Color.fromARGB(255, 220, 104, 145)
                           : Colors.grey,
                     ),
-                    child:  Row(
+                    child: Row(
                       children: [
                         const Icon(
                           Icons.male,
@@ -229,8 +232,8 @@ class _SignUpChildViewState extends State<SignUpChildView> {
               ),
             ),
             Positioned(
+              top: 710,
               left: 16,
-              bottom: 20,
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -258,7 +261,7 @@ class _SignUpChildViewState extends State<SignUpChildView> {
                       color: Colors.white,
                     ),
                     Text(
-                      context.loc.next,
+                      context.loc.back,
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 16,
@@ -269,8 +272,8 @@ class _SignUpChildViewState extends State<SignUpChildView> {
               ),
             ),
             Positioned(
+              top: 710,
               right: 16,
-              bottom: 20,
               child: ElevatedButton(
                 onPressed: isNextButtonEnabled()
                     ? () {
@@ -285,12 +288,14 @@ class _SignUpChildViewState extends State<SignUpChildView> {
                             .then((baby) => {
                                   UserService.addBaby(
                                       context.read<UserProvider>().user!.id!,
-                                      baby.id!)
+                                      baby.id!),
+                                  LocalService.setCurrentBabyId(baby.id!),
+                                  context.read<BabyProvider>().setBaby(baby),
                                 });
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const MenuView(),
+                            builder: (context) => const ChildHomeView(),
                           ),
                         );
                       }
