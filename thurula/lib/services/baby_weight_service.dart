@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:thurula/constants/routes.dart';
+import 'package:thurula/services/local_service.dart';
 import '../views/widgets/graphs/point_widget.dart';
 import 'local_service.dart';
 
