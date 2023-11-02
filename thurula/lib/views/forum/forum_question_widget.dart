@@ -41,6 +41,16 @@ class _ForumQuestionCardState extends State<ForumQuestionCard> {
     // Initialize upvotes and downvotes with values from the ForumQuestion object
     upvotes = widget.question.upvotes ?? 0;
     downvotes = widget.question.downvotes ?? 0;
+    if (widget.question.upvoters != null &&
+        widget.question.upvoters!.contains(
+            context.read<UserProvider>().user?.id)) {
+      hasUpvoted = true;
+    }
+    if (widget.question.downvoters != null &&
+        widget.question.downvoters!.contains(
+            context.read<UserProvider>().user?.id)) {
+      hasDownvoted = true;
+    }
   }
 
   @override
@@ -229,6 +239,7 @@ class _ForumQuestionCardState extends State<ForumQuestionCard> {
                       const Icon(
                         Icons.message,
                         size: 24,
+                        color: Colors.pinkAccent,
                       ),
                       Text(
                         '${widget.question.answers?.length ?? 0}',

@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:thurula/constants/routes.dart';
 import 'package:thurula/services/local_service.dart';
 import '../views/widgets/graphs/point_widget.dart';
+import 'local_service.dart';
 
 class BabyWeightService {
   Future<List<Point>> getReferenceWeight(gender, percentile) async {
@@ -25,9 +26,15 @@ class BabyWeightService {
   }
 
   Future<List<Point>> getBabyWeight(id) async {
+    String jwt = await LocalService.getCurrentUserToken();
     //send a get request to the API endpoint
-    var response =
-        await http.get(Uri.parse(getRoute("babychart/weight/get?id=$id")));
+    var response = await http.get(
+      Uri.parse(getRoute("babychart/weight/get?id=$id")),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
+    );
     // check the status code of the response
     if (response.statusCode == 200) {
       //read the body and make a list of points
@@ -44,9 +51,13 @@ class BabyWeightService {
   }
 
   Future<void> addBabyWeight(id, month, value) async {
+    String jwt = await LocalService.getCurrentUserToken();
     //send a post request to the API endpoint
     var response = await http.post(Uri.parse(getRoute("babychart/weight/add")),
-        headers: {"Content-Type": "application/json"},
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer $jwt'
+        },
         body: jsonEncode({
           "id": id,
           "month": month,
@@ -62,9 +73,13 @@ class BabyWeightService {
   }
 
   Future<void> editBabyWeight(id, month, value) async {
+    String jwt = await LocalService.getCurrentUserToken();
     //send a post request to the API endpoint
     var response = await http.post(Uri.parse(getRoute("babychart/weight/edit")),
-        headers: {"Content-Type": "application/json"},
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer $jwt'
+        },
         body: jsonEncode({
           "id": id,
           "month": month,
@@ -80,14 +95,18 @@ class BabyWeightService {
   }
 
   Future<void> deleteBabyWeight(id, month) async {
+    String jwt = await LocalService.getCurrentUserToken();
     //send a post request to the API endpoint
-    var response =
-        await http.post(Uri.parse(getRoute("babychart/weight/delete")),
-            headers: {"Content-Type": "application/json"},
-            body: jsonEncode({
-              "id": id,
-              "month": month,
-            }));
+    var response = await http.post(
+        Uri.parse(getRoute("babychart/weight/delete")),
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer $jwt'
+        },
+        body: jsonEncode({
+          "id": id,
+          "month": month,
+        }));
     // check the status code of the response
     if (response.statusCode == 204) {
       //read the body and make a list of points
@@ -99,11 +118,15 @@ class BabyWeightService {
   }
 
   Future<double?> getRecentBabyWeight(id) async {
+    String jwt = await LocalService.getCurrentUserToken();
     // Send a get request to the API endpoint
-    // id ??= await LocalService.getCurrentBabyId();
-    id = '64cd599fc65bbef9519bc04c';
-    var response =
-        await http.get(Uri.parse(getRoute("babychart/weight/get?id=$id")));
+    var response = await http.get(
+      Uri.parse(getRoute("babychart/weight/get?id=$id")),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
+    );
 
     // Check the status code of the response
     if (response.statusCode == 200) {

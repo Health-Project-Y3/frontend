@@ -3,11 +3,17 @@ import '../models/diapertimes_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'local_service.dart';
+
 class DiaperService {
   static Future<DiaperTimes> getDiaper(String diaperId) async {
+    String jwt = await LocalService.getCurrentUserToken();
     var response = await http.get(
       Uri.parse(getRoute('diapers/$diaperId')),
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
     );
     if (response.statusCode == 200) {
       return DiaperTimes.fromJson(jsonDecode(response.body));
@@ -17,9 +23,13 @@ class DiaperService {
   }
 
   static Future<List<DiaperTimes>> getBabyDiapers(String babyId) async {
+    String jwt = await LocalService.getCurrentUserToken();
     var response = await http.get(
       Uri.parse(getRoute('diapers/baby/$babyId')),
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
     );
     if (response.statusCode == 200) {
       List<DiaperTimes> diapers = [];
@@ -34,9 +44,13 @@ class DiaperService {
   }
 
   static Future<DiaperTimes> createDiaper(DiaperTimes diaper) async {
+    String jwt = await LocalService.getCurrentUserToken();
     var response = await http.post(
       Uri.parse(getRoute('diapers')),
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
       body: jsonEncode(DiaperTimes.toJson(diaper)),
     );
     if (response.statusCode == 201) {
@@ -47,9 +61,13 @@ class DiaperService {
   }
 
   static Future<void> deleteDiaper(String id) async {
+    String jwt = await LocalService.getCurrentUserToken();
     var response = await http.delete(
       Uri.parse(getRoute('diapers/$id')),
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
     );
     if (response.statusCode == 204) {
       return;
@@ -59,9 +77,13 @@ class DiaperService {
   }
 
   static Future<DiaperTimes> updateDiaper(String id, DiaperTimes diaper) async {
+    String jwt = await LocalService.getCurrentUserToken();
     var response = await http.put(
       Uri.parse(getRoute('diapers/$id')),
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
       body: jsonEncode(DiaperTimes.toJson(diaper)),
     );
     if (response.statusCode == 201) {
@@ -73,9 +95,13 @@ class DiaperService {
 
   static Future<DiaperTimes> patchDiaper(
       String id, String key, dynamic value) async {
+    String jwt = await LocalService.getCurrentUserToken();
     var response = await http.patch(
       Uri.parse(getRoute('diapers/$id')),
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
       body: jsonEncode([
         {"op": "replace", "path": "/$key", "value": value}
       ]),

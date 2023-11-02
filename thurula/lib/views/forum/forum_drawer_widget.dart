@@ -62,7 +62,7 @@ class _ForumDrawerState extends State<ForumDrawer> {
           ),
           // Generate "My Questions" ListTile
           ListTile(
-            leading: const Icon(Icons.home),
+            leading: const Icon(Icons.home, color: Colors.pinkAccent),
             title: const Text('Home'),
             onTap: () {
               // Add navigation to "Home" page here
@@ -77,7 +77,7 @@ class _ForumDrawerState extends State<ForumDrawer> {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.my_library_books),
+            leading: const Icon(Icons.my_library_books, color: Colors.pinkAccent),
             title: const Text('My Questions'),
             onTap: () {
               // Add navigation to "My Questions" page here
@@ -105,7 +105,7 @@ class _ForumDrawerState extends State<ForumDrawer> {
           ),
           for (int i = 0; i < routes.length; i++)
             ListTile(
-              leading: Icon(icons[i]),
+              leading: Icon(icons[i], color: Colors.pinkAccent),
               title: Text(routes[i]),
               onTap: () {
                 // Handle tapping on the corresponding route

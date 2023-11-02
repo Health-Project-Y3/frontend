@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:thurula/constants/routes.dart';
 import '../views/widgets/graphs/point_widget.dart';
+import 'local_service.dart';
 
 class BabyLengthService {
   Future<List<Point>> getReferenceLength(gender, percentile) async {
@@ -24,9 +25,15 @@ class BabyLengthService {
   }
 
   Future<List<Point>> getBabyLength(id) async {
+    String jwt = await LocalService.getCurrentUserToken();
     //send a get request to the API endpoint
-    var response =
-        await http.get(Uri.parse(getRoute("babychart/length/get?id=$id")));
+    var response = await http.get(
+      Uri.parse(getRoute("babychart/length/get?id=$id")),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
+    );
     // check the status code of the response
     if (response.statusCode == 200) {
       //read the body and make a list of points
@@ -43,9 +50,13 @@ class BabyLengthService {
   }
 
   Future<void> addBabyLength(id, month, value) async {
+    String jwt = await LocalService.getCurrentUserToken();
     //send a post request to the API endpoint
     var response = await http.post(Uri.parse(getRoute("babychart/length/add")),
-        headers: {"Content-Type": "application/json"},
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer $jwt'
+        },
         body: jsonEncode({
           "id": id,
           "month": month,
@@ -61,9 +72,13 @@ class BabyLengthService {
   }
 
   Future<void> editBabyLength(id, month, value) async {
+    String jwt = await LocalService.getCurrentUserToken();
     //send a post request to the API endpoint
     var response = await http.post(Uri.parse(getRoute("babychart/length/edit")),
-        headers: {"Content-Type": "application/json"},
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer $jwt'
+        },
         body: jsonEncode({
           "id": id,
           "month": month,
@@ -80,14 +95,18 @@ class BabyLengthService {
   }
 
   Future<void> deleteBabyLength(id, month) async {
+    String jwt = await LocalService.getCurrentUserToken();
     //send a post request to the API endpoint
-    var response =
-        await http.post(Uri.parse(getRoute("babychart/length/delete")),
-            headers: {"Content-Type": "application/json"},
-            body: jsonEncode({
-              "id": id,
-              "month": month,
-            }));
+    var response = await http.post(
+        Uri.parse(getRoute("babychart/length/delete")),
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer $jwt'
+        },
+        body: jsonEncode({
+          "id": id,
+          "month": month,
+        }));
     // check the status code of the response
     if (response.statusCode == 204) {
       //read the body and make a list of points
@@ -99,11 +118,15 @@ class BabyLengthService {
   }
 
   Future<double?> getRecentBabyLength(id) async {
+    String jwt = await LocalService.getCurrentUserToken();
     // Send a get request to the API endpoint
-    id = '64cd599fc65bbef9519bc04c';
-
-    var response =
-        await http.get(Uri.parse(getRoute("babychart/length/get?id=$id")));
+    var response = await http.get(
+      Uri.parse(getRoute("babychart/length/get?id=$id")),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwt'
+      },
+    );
 
     // Check the status code of the response
     if (response.statusCode == 200) {

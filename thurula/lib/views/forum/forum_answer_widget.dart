@@ -34,6 +34,16 @@ class _ForumAnswerCardState extends State<ForumAnswerCard> {
     // Initialize upvotes and downvotes with values from the ForumAnswer object
     upvotes = widget.answer.upvotes!;
     downvotes = widget.answer.downvotes!;
+    if (widget.answer.upvoters!.contains(
+        context.read<UserProvider>().user?.id)) {
+      // Check if the user has upvoted
+      hasUpvoted = true;
+    }
+    if (widget.answer.downvoters!
+        .contains(context.read<UserProvider>().user?.id)) {
+      // Check if the user has downvoted
+      hasDownvoted = true;
+    }
   }
 
   @override

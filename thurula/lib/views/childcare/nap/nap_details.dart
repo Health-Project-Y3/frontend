@@ -20,6 +20,18 @@ class _NapDetailsState extends State<NapDetails> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    // Listen for the named route pop result
+    final shouldRefresh = ModalRoute.of(context)!.settings.arguments as bool?;
+
+    if (shouldRefresh == true) {
+      // Refresh data when coming back from the NapRecords page
+      _refreshNapRecords();
+    }
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -42,130 +54,139 @@ class _NapDetailsState extends State<NapDetails> {
           },
         ),
       ),
-      body: FutureBuilder<List<NapTimes>>(
-        future: _napRecordsFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No nap records found.'));
-          } else {
-            napRecords = snapshot.data!;
-            final sleepDurationByDay = _calculateSleepDurationByDay(napRecords);
-            final List<DataPoint> dataPoints = sleepDurationByDay.entries
-                .map((entry) => DataPoint(
-                      x: entry.key, // Use the DateTime representing the day
-                      y: entry.value,
-                    ))
-                .toList();
+      body: RefreshIndicator(
+        onRefresh: _refreshNapRecords,
+        child: FutureBuilder<List<NapTimes>>(
+          future: _napRecordsFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return Center(child: Text('No nap records found.'));
+            } else {
+              napRecords = snapshot.data!;
+              final sleepDurationByDay = _calculateSleepDurationByDay(napRecords);
+              final List<DataPoint> dataPoints = sleepDurationByDay.entries
+                  .map((entry) => DataPoint(
+                x: entry.key, // Use the DateTime representing the day
+                y: entry.value,
+              ))
+                  .toList();
 
-            int totalNapsToday = _calculateTotalNapsToday(napRecords);
-            double totalSleepDurationMinutes =
-                _calculateTotalSleepDurationToday(napRecords);
-            String totalSleepDurationFormatted =
-                _formatDuration(totalSleepDurationMinutes);
+              int totalNapsToday = _calculateTotalNapsToday(napRecords);
+              double totalSleepDurationMinutes =
+              _calculateTotalSleepDurationToday(napRecords);
+              String totalSleepDurationFormatted =
+              _formatDuration(totalSleepDurationMinutes);
 
-            return SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const SizedBox(height: 2),
-                    Column(
-                      children: [
-                        CustomCard(
-                          title1: 'Total Naps Today',
-                          title2: totalNapsToday.toString(),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 2),
-                    Column(
-                      children: [
-                        CustomCard(
-                          title1: 'Total Sleep Time Today',
-                          title2: totalSleepDurationFormatted,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 4),
-                    Card(
-                      elevation: 10,
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Container(
-                          width: double.infinity,
-                          height: 240,
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(20.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 10.0,
-                                    vertical: 50.0,
-                                  ),
-                                  child: Container(
-                                    width: dataPoints.length * 80,
-                                    height: 200,
-                                    child: CustomPaint(
-                                      size: Size(dataPoints.length * 80, 200),
-                                      painter: ChartPainter(dataPoints),
+              return SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const SizedBox(height: 2),
+                      Column(
+                        children: [
+                          CustomCard(
+                            title1: 'Total Naps Today',
+                            title2: totalNapsToday.toString(),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 2),
+                      Column(
+                        children: [
+                          CustomCard(
+                            title1: 'Total Sleep Time Today',
+                            title2: totalSleepDurationFormatted,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 4),
+                      Card(
+                        elevation: 10,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Container(
+                            width: double.infinity,
+                            height: 240,
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      children: [],
                                     ),
                                   ),
-                                ),
-                                const SizedBox(width: 20),
-                              ],
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 10.0,
+                                      vertical: 50.0,
+                                    ),
+                                    child: Container(
+                                      width: dataPoints.length * 80,
+                                      height: 200,
+                                      child: CustomPaint(
+                                        size: Size(dataPoints.length * 80, 200),
+                                        painter: ChartPainter(dataPoints),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 20),
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    Center(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => NapRecords(),
+                      Center(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => NapRecords(),
+                              ),
+                            );
+                          },
+                          style: ButtonStyle(
+                            minimumSize: MaterialStateProperty.all(
+                                Size(50, 40)), // Adjust height and width
+                            backgroundColor: MaterialStateProperty.all(
+                              const Color(
+                                  0xFFDC6891), // Change to the desired color
                             ),
-                          );
-                        },
-                        style: ButtonStyle(
-                          minimumSize: MaterialStateProperty.all(
-                              Size(50, 40)), // Adjust height and width
-                          backgroundColor: MaterialStateProperty.all(
-                            const Color(
-                                0xFFDC6891), // Change to the desired color
+                          ),
+                          child: const Text(
+                            'View All Nap Records',
+                            style: TextStyle(color: Colors.white), // Text color
                           ),
                         ),
-                        child: const Text(
-                          'View All Nap Records',
-                          style: TextStyle(color: Colors.white), // Text color
-                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            );
-          }
-        },
+              );
+            }
+          },
+        ),
       ),
     );
-  }
 
+
+  }
+  Future<void> _refreshNapRecords() async {
+    setState(() {
+      _napRecordsFuture = NapService.getBabyNaps('64b01605b55b765169e1c9b6');
+    });
+  }
   int _calculateTotalNapsToday(List<NapTimes> records) {
     DateTime today = DateTime.now();
     return records.where((record) {
@@ -206,7 +227,7 @@ class _NapDetailsState extends State<NapDetails> {
       final duration = record.endTime!.difference(record.startTime!).inMinutes;
       sleepDurationByDay.update(
         day,
-        (value) => value + duration.toDouble(),
+            (value) => value + duration.toDouble(),
         ifAbsent: () => duration.toDouble(),
       );
     });
@@ -265,7 +286,7 @@ class ChartPainter extends CustomPainter {
       ..strokeWidth = 2;
 
     final maxY =
-        dataPoints.map((point) => point.y).reduce((a, b) => a > b ? a : b);
+    dataPoints.map((point) => point.y).reduce((a, b) => a > b ? a : b);
 
     final xAxisStart = Offset(0, size.height);
     final xAxisEnd = Offset(size.width, size.height);
@@ -339,7 +360,7 @@ class ChartPainter extends CustomPainter {
     );
     final dayLabelPainter = TextPainter(
       text: TextSpan(
-        text: 'Day (mm:dd)',
+        text: 'Day (d/MM)',
         style: dayLabelStyle,
       ),
       textAlign: TextAlign.center,
@@ -366,7 +387,7 @@ class ChartPainter extends CustomPainter {
       return '0 Hr';
     }
     int hours = (minutes / 60).floor();
-    return '$hours Hr';
+    return '$hours Hrs';
   }
 
   @override
@@ -393,7 +414,7 @@ class CustomCard extends StatelessWidget {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius:
-            BorderRadius.circular(15.0), // Adjust the border radius as needed
+        BorderRadius.circular(15.0), // Adjust the border radius as needed
       ),
       elevation: 4, // Adjust the shadow as needed
       margin: EdgeInsets.all(10), // Adjust the margin as needed
@@ -438,4 +459,6 @@ class CustomCard extends StatelessWidget {
       ),
     );
   }
+
+
 }
