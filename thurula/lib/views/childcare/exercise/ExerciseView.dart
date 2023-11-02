@@ -47,7 +47,7 @@ class _ExerciseViewState extends State<ExerciseView>
   late final TabController _tabController;
   @override
   void initState() {
-    _tabController = TabController(length: 21, vsync: this);
+    _tabController = TabController(length: 7, vsync: this);
     super.initState();
   }
 
@@ -63,20 +63,20 @@ class _ExerciseViewState extends State<ExerciseView>
       '5 Weeks',
       '6 Weeks',
       '7 Weeks',
-      '2 Months',
-      '9 Weeks',
-      '10 Weeks',
-      '11 Weeks',
-      '3 Months',
-      '4 Months',
-      '5 Months',
-      '6 Months',
-      '7 Months',
-      '8 Months',
-      '9 Months',
-      '10 Months',
-      '11 Months',
-      '1 Year'
+      // '2 Months',
+      // '9 Weeks',
+      // '10 Weeks',
+      // '11 Weeks',
+      // '3 Months',
+      // '4 Months',
+      // '5 Months',
+      // '6 Months',
+      // '7 Months',
+      // '8 Months',
+      // '9 Months',
+      // '10 Months',
+      // '11 Months',
+      // '1 Year'
     ];
 
     return DefaultTabController(
@@ -107,20 +107,20 @@ class _ExerciseViewState extends State<ExerciseView>
                   Week5(),
                   Week6(),
                   Week7(),
-                  Month2(),
-                  Week9(),
-                  Week10(),
-                  Week11(),
-                  Month3(),
-                  Month4(),
-                  Month5(),
-                  Month6(),
-                  Month7(),
-                  Month8(),
-                  Month9(),
-                  Month10(),
-                  Month11(),
-                  Year1(),
+                  // Month2(),
+                  // Week9(),
+                  // Week10(),
+                  // Week11(),
+                  // Month3(),
+                  // Month4(),
+                  // Month5(),
+                  // Month6(),
+                  // Month7(),
+                  // Month8(),
+                  // Month9(),
+                  // Month10(),
+                  // Month11(),
+                  // Year1(),
                 ],
               ),
             ),
@@ -232,160 +232,6 @@ class _NewbornState extends State<Newborn> {
     );
   }
 }
-
-// class _Week2State extends State<Week2> {
-//   late Future<List<Checklists>> _week2;
-
-//   @override
-//   void initState() {
-//     super.initState();
-
-//     _week2 = ChecklistService.fetchWeek2();
-//   }
-
-//   final List<bool> expanded = [
-//     false,
-//     false,
-//     false,
-//     false,
-//     false,
-//     false,
-//     false,
-//     false
-//   ];
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return FutureBuilder<List<Checklists>>(
-//       future: _week2,
-//       builder: (context, snapshot) {
-//         if (snapshot.connectionState == ConnectionState.waiting) {
-//           return const SizedBox(
-//             height: 10.0,
-//             width: 10.0,
-//             child: Center(
-//                 child: CircularProgressIndicator(
-//               //   color
-//               color: Color.fromARGB(255, 220, 104, 145),
-//             )),
-//           );
-//         } else if (snapshot.hasError) {
-//           return Text('Error: ${snapshot.error}');
-//         } else if (snapshot.hasData) {
-//           final week2borns = snapshot.data!;
-//           return Scaffold(
-//             body: SingleChildScrollView(
-//               child: Column(children: [
-//                 ExpansionPanelList(
-//                   expansionCallback: (panelIndex, isExpanded) {
-//                     setState(() {
-//                       expanded[int.parse(week2borns[panelIndex].id ?? "0")] =
-//                           !isExpanded;
-//                     });
-//                   },
-//                   animationDuration: const Duration(seconds: 2),
-//                   //animation duration while expanding/collapsing
-//                   children: week2borns.map((week2) {
-//                     return ExpansionPanel(
-//                         headerBuilder: (context, isOpen) {
-//                           return Padding(
-//                               padding: const EdgeInsets.all(15),
-//                               child: Text(week2.category ?? 'Default Category',
-//                                   style: const TextStyle(fontSize: 16)));
-//                         },
-//                         body: Container(
-//                             padding: const EdgeInsets.all(20),
-//                             color: const Color.fromARGB(255, 250, 219, 219),
-//                             width: double.infinity,
-//                             child: Column(
-//                               children: week2.instructions.map((instruction) {
-//                                 return Column(
-//                                   children: [
-//                                     Text(
-//                                       instruction.instruction ??
-//                                           'Default Instruction',
-//                                       style: const TextStyle(fontSize: 14),
-//                                     ),
-//                                     const Divider(
-//                                       color: Colors.black,
-//                                     ),
-//                                   ],
-//                                 );
-//                               }).toList(),
-//                             )),
-//                         isExpanded: expanded[int.parse(week2.id ?? "0")]);
-//                   }).toList(),
-//                 )
-//               ]),
-//             ),
-//           );
-//         } else {
-//           return const Text('No data available.');
-//         }
-//       },
-//     );
-//   }
-// }
-
-// class Week3 extends StatelessWidget {
-//   const Week3({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return const Scaffold(
-//         body: Column(
-//       children: [Text("hi")],
-//     ));
-//   }
-// }
-
-// class Month1 extends StatelessWidget {
-//   const Month1({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return const Scaffold(
-//         body: Column(
-//       children: [Text("hi")],
-//     ));
-//   }
-// }
-
-// class Week5 extends StatelessWidget {
-//   const Week5({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return const Scaffold(
-//         body: Column(
-//       children: [Text("hi")],
-//     ));
-//   }
-// }
-
-// class Week6 extends StatelessWidget {
-//   const Week6({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return const Scaffold(
-//         body: Column(
-//       children: [Text("hi")],
-//     ));
-//   }
-// }
-
-// class Week7 extends StatelessWidget {
-//   const Week7({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return const Scaffold(
-//         body: Column(
-//       children: [Text("hi")],
-//     ));
-//   }
-// }
 
 class Month2 extends StatelessWidget {
   const Month2({Key? key}) : super(key: key);
