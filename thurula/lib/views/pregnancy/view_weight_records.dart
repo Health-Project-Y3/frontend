@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:thurula/models/user_weight_model.dart';
 import 'package:thurula/services/user_weight_service.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:thurula/views/pregnancy/add_weight.dart';
 
-class ViewWeightPage extends StatefulWidget {
-  final String userId;
+import '../../providers/user_provider.dart';
 
-  ViewWeightPage({required this.userId});
+class ViewWeightPage extends StatefulWidget {
+ // Make userId nullable in the constructor
 
   @override
   _ViewWeightPageState createState() => _ViewWeightPageState();
@@ -19,8 +20,9 @@ class _ViewWeightPageState extends State<ViewWeightPage> {
 
   @override
   void initState() {
+    var userId= context.read<UserProvider>().user?.id ?? '';
     super.initState();
-    UserWeightService.getUserWeights(widget.userId, null, null).then((weights) {
+    UserWeightService.getUserWeights(userId, null, null).then((weights) {
       setState(() {
         userWeights = weights;
         userWeights.sort((a, b) => b.date!.compareTo(a.date!));

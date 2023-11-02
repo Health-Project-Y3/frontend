@@ -133,7 +133,7 @@ class _HealthTrackerState extends State<MotherHealthTracker1> {
           Color textColor;
 
           if (bmiResult == 'low') {
-            changeText = 'Healthy';
+            changeText = 'Healthy Weight';
             textColor = Colors.green;
           } else if (bmiResult == 'average') {
             changeText = 'Over Weight';
@@ -147,7 +147,7 @@ class _HealthTrackerState extends State<MotherHealthTracker1> {
           }
 
           return Container(
-            padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             decoration: BoxDecoration(
               color: textColor,
               borderRadius: BorderRadius.circular(10),
@@ -525,7 +525,7 @@ class _HealthTrackerState extends State<MotherHealthTracker1> {
                                                           child: Text(
                                                             bpStatus,
                                                             style: TextStyle(
-                                                              fontSize: 10,
+                                                              fontSize: 14,
                                                               color: Colors.white,
                                                             ),
                                                           ),
@@ -687,11 +687,11 @@ class _HealthTrackerState extends State<MotherHealthTracker1> {
                                               ),
                                               if (balanceNeeded > 0)
                                                 Container(
-                                                  padding: EdgeInsets.only(top: 20), // Adjust the left padding as needed
+                                                  padding: EdgeInsets.only(top: 10), // Adjust the left padding as needed
                                                   child: Text(
-                                                    "Drink $balanceNeeded More Glasess",
+                                                    "🎉 $balanceNeeded Glasses to daily milestone",
                                                     style: TextStyle(
-                                                      fontSize: 14,
+                                                      fontSize: 12,
                                                       color: Color.fromARGB(255, 88, 119, 161),
                                                     ),
                                                   ),
@@ -1119,25 +1119,25 @@ String getBloodPressureStatus(int bpValue) {
 
 
   if (bpValue >= 70 && bpValue < 90) {
-    return "Low";
+    return "Blood Pressuer is Low";
   } else if (bpValue >= 90 && bpValue < 120) {
-    return "Ideal";
+    return "Blood Pressure Ideal";
   } else if (bpValue >= 120 && bpValue < 140) {
-    return "Pre high";
+    return "Blood Pressure is Pre high";
   } else {
-    return "High";
+    return "Blood Pressure is High";
   }
 }
 Color getBackgroundColorForStatus(int bloodPressure) {
   String status = getBloodPressureStatus(bloodPressure);
   switch (status) {
-    case "Low":
+    case "Blood Pressuer is Low":
+      return Colors.red;
+    case "Blood Pressure Ideal":
       return Colors.green;
-    case "Ideal":
-      return Colors.blue;
-    case "Pre high":
+    case "Blood Pressure is Pre high":
       return Colors.orange;
-    case "High":
+    case "Blood Pressure is High":
       return Colors.red; // Red background for "High" status
     default:
       return Colors.red; // Default red background for any other status

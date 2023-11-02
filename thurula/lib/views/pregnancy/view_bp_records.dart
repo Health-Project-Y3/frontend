@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:thurula/models/user_bp_model.dart';
 import 'package:thurula/services/user_bp_service.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class ViewBloodPressurePage extends StatefulWidget {
-  final String userId;
+import '../../providers/user_provider.dart';
 
-  ViewBloodPressurePage({required this.userId});
+class ViewBloodPressurePage extends StatefulWidget {
 
   @override
   _ViewBloodPressurePageState createState() => _ViewBloodPressurePageState();
@@ -18,8 +18,9 @@ class _ViewBloodPressurePageState extends State<ViewBloodPressurePage> {
 
   @override
   void initState() {
+    var userId= context.read<UserProvider>().user?.id ?? '';
     super.initState();
-    UserBpService.getUserBps(widget.userId, null, null).then((bps) {
+    UserBpService.getUserBps(userId, null, null).then((bps) {
       setState(() {
         userBps = bps;
         userBps.sort((a, b) => b.date!.compareTo(a.date!));
