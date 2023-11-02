@@ -58,8 +58,8 @@ class ForumQuestion {
             'accepted': answer.accepted,
             'upvotes': answer.upvotes,
             'downvotes': answer.downvotes,
-            'upvoters': answer.upvoters,
-            'downvoters': answer.downvoters,
+            // 'upvoters': jsonEncode(answer.upvoters),
+            // 'downvoters': jsonEncode(answer.downvoters),
           }
       ]
     };
@@ -103,8 +103,8 @@ class ForumAnswer {
   bool? accepted;
   int? upvotes;
   int? downvotes;
-  List<String>? upvoters;
-  List<String>? downvoters;
+  // List<String>? upvoters;
+  // List<String>? downvoters;
 
   ForumAnswer({
     this.id,
@@ -117,8 +117,8 @@ class ForumAnswer {
     this.accepted,
     this.upvotes,
     this.downvotes,
-    this.upvoters,
-    this.downvoters,
+    // this.upvoters,
+    // this.downvoters,
   });
 
   static Map<String, dynamic> toJson(ForumAnswer answer) {
@@ -132,8 +132,8 @@ class ForumAnswer {
       'accepted': answer.accepted,
       'upvotes': answer.upvotes,
       'downvotes': answer.downvotes,
-      'upvoters': answer.upvoters,
-      'downvoters': answer.downvoters,
+      // 'upvoters': jsonEncode(answer.upvoters),
+      // 'downvoters': jsonEncode(answer.downvoters)
     };
   }
 
@@ -149,8 +149,8 @@ class ForumAnswer {
       accepted: jsonDecode['accepted'] == 1,
       upvotes: jsonDecode['upvotes'],
       downvotes: jsonDecode['downvotes'],
-      upvoters: jsonDecode['upvoters'].cast<String>(),
-      downvoters: jsonDecode['downvoters'].cast<String>(),
+      // upvoters: jsonDecode['upvoters'].cast<String>(),
+      // downvoters: jsonDecode['downvoters'].cast<String>(),
     );
   }
 
